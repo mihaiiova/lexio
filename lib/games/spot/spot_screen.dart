@@ -3,11 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../design/animations.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_button.dart';
-import '../../design/components/lexio_card.dart';
-import '../../design/components/lexio_feedback.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
 import 'spot_content.dart';
@@ -16,9 +13,7 @@ import 'widgets/spot_summary.dart';
 import 'widgets/text_token.dart';
 
 class SpotScreen extends StatefulWidget {
-  final SpotGameMode mode;
-
-  const SpotScreen({super.key, this.mode = SpotGameMode.normal});
+  const SpotScreen({super.key});
 
   @override
   State<SpotScreen> createState() => _SpotScreenState();
@@ -28,7 +23,6 @@ class _SpotScreenState extends State<SpotScreen> {
   SpotGameState? _state;
   bool _isLoading = true;
   Timer? _timer;
-  SpotMistake? _lastFoundMistake;
 
   @override
   void initState() {
@@ -40,19 +34,16 @@ class _SpotScreenState extends State<SpotScreen> {
     await SpotContent.load();
     final texts = SpotContent.session(5);
     setState(() {
-      _state = SpotGameState(texts: texts, mode: widget.mode);
+      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
       _isLoading = false;
     });
-    if (widget.mode == SpotGameMode.timed) {
-      _startTimer();
-    }
+    _startTimer();
   }
 
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (_state == null || _state!.isFinished) {
-        _timer?.cancel();
+      if (_state == null || _state!.isFinished || _state!.isChecking) {
         return;
       }
       setState(() {
@@ -71,7 +62,7 @@ class _SpotScreenState extends State<SpotScreen> {
   }
 
   void _handleTapWord(int wordIndex) {
-    if (_state == null) return;
+    if (_state == null || _state!.isChecking) return;
 
     final outcome = _state!.tapWord(wordIndex);
 
@@ -79,7 +70,6 @@ class _SpotScreenState extends State<SpotScreen> {
       HapticFeedback.lightImpact();
       setState(() {
         _state = outcome.state;
-        _lastFoundMistake = outcome.mistake;
       });
     } else if (outcome.result == SpotTapResult.incorrect) {
       HapticFeedback.heavyImpact();
@@ -96,10 +86,15 @@ class _SpotScreenState extends State<SpotScreen> {
     }
   }
 
+  void _handleCheck() {
+    setState(() {
+      _state = _state!.checkAnswers();
+    });
+  }
+
   void _handleNextText() {
     setState(() {
       _state = _state!.nextText();
-      _lastFoundMistake = null;
     });
   }
 
@@ -107,12 +102,9 @@ class _SpotScreenState extends State<SpotScreen> {
     _timer?.cancel();
     final texts = SpotContent.session(5);
     setState(() {
-      _state = SpotGameState(texts: texts, mode: widget.mode);
-      _lastFoundMistake = null;
+      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
     });
-    if (widget.mode == SpotGameMode.timed) {
-      _startTimer();
-    }
+    _startTimer();
   }
 
   void _handleBack() {
@@ -140,18 +132,12 @@ class _SpotScreenState extends State<SpotScreen> {
   Widget _buildSummary(SpotGameState state) {
     return Scaffold(
       backgroundColor: LexioColors.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: _handleBack,
+      body: SafeArea(
+        child: SpotSummary(
+          state: state,
+          onPlayAgain: _handlePlayAgain,
+          onBack: _handleBack,
         ),
-      ),
-      body: SpotSummary(
-        state: state,
-        onPlayAgain: _handlePlayAgain,
-        onBack: _handleBack,
       ),
     );
   }
@@ -160,276 +146,230 @@ class _SpotScreenState extends State<SpotScreen> {
     return Scaffold(
       backgroundColor: LexioColors.background,
       appBar: _buildAppBar(state),
-      body: Column(
-        children: [
-          _buildProgressBar(state),
-          _buildFeedbackBar(state),
-          Expanded(child: _buildTextArea(state)),
-          _buildBottomBar(state),
-        ],
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(
+            horizontal: LexioSpacing.screenHorizontal,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: LexioSpacing.xl),
+              _buildTextEyebrow(state),
+              const SizedBox(height: LexioSpacing.md),
+              _buildParagraphs(state),
+              const SizedBox(height: LexioSpacing.xxl),
+            ],
+          ),
+        ),
       ),
+      bottomNavigationBar: _buildBottomBar(state),
     );
   }
 
   PreferredSizeWidget _buildAppBar(SpotGameState state) {
-    final isTimed = state.mode == SpotGameMode.timed;
-
     return AppBar(
       backgroundColor: Colors.transparent,
       scrolledUnderElevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.close),
+        icon: const Icon(Icons.arrow_back),
         onPressed: _handleBack,
       ),
-      title: Column(
-        children: [
-          Text(
-            'Găsește greșeala',
-            style: LexioTextStyles.labelLarge.copyWith(
-              color: LexioColors.textPrimary,
-            ),
-          ),
-          if (isTimed)
-            Text(
-              _formatTime(state.remainingSeconds),
-              style: LexioTextStyles.headingSmall.copyWith(
-                color: state.remainingSeconds <= 10
-                    ? LexioColors.error
-                    : LexioColors.accent,
-              ),
-            ),
-        ],
+      title: Padding(
+        padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
+        child: _buildProgressSegments(state),
       ),
-      centerTitle: true,
+      titleSpacing: 0,
       actions: [
-        if (!isTimed)
-          Padding(
-            padding: const EdgeInsets.only(right: LexioSpacing.sm),
-            child: Center(
-              child: Text(
-                'Text ${state.currentTextIndex + 1}/${state.texts.length}',
-                style: LexioTextStyles.bodySmall.copyWith(
-                  color: LexioColors.textSecondary,
-                ),
-              ),
+        Padding(
+          padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
+          child: Text(
+            _formatTime(state.remainingSeconds),
+            style: LexioTextStyles.labelLarge.copyWith(
+              color: state.remainingSeconds <= 10
+                  ? LexioColors.error
+                  : LexioColors.textSecondary,
             ),
           ),
-        if (isTimed)
-          Padding(
-            padding: const EdgeInsets.only(right: LexioSpacing.sm),
-            child: Center(
-              child: Text(
-                'Text ${state.currentTextIndex + 1}',
-                style: LexioTextStyles.bodySmall.copyWith(
-                  color: LexioColors.textSecondary,
-                ),
-              ),
-            ),
-          ),
+        ),
       ],
     );
   }
 
-  Widget _buildProgressBar(SpotGameState state) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: LexioSpacing.screenHorizontal,
-        vertical: LexioSpacing.sm,
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.search,
-            size: 16,
-            color: LexioColors.textSecondary,
-          ),
-          const SizedBox(width: LexioSpacing.xs),
-          Text(
-            'Găsit ${state.mistakesFound} / ${state.totalMistakesInCurrentText} greșeli',
-            style: LexioTextStyles.labelSmall.copyWith(
-              color: state.allMistakesFoundInCurrentText
-                  ? LexioColors.success
-                  : LexioColors.textSecondary,
-            ),
-          ),
-          const Spacer(),
-          _buildMiniDots(state),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMiniDots(SpotGameState state) {
-    final found = state.foundMistakeIndices[state.currentTextIndex];
+  Widget _buildProgressSegments(SpotGameState state) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(state.totalMistakesInCurrentText, (i) {
-        return Container(
-          width: 6,
-          height: 6,
-          margin: const EdgeInsets.symmetric(horizontal: 2),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: found.contains(i)
-                ? LexioColors.success
-                : LexioColors.textTertiary,
+      children: List.generate(state.texts.length, (i) {
+        final isCompleted = state.foundMistakeIndices[i].length ==
+            state.texts[i].mistakes.length;
+        final isCurrent = i == state.currentTextIndex;
+
+        Color color;
+        if (isCompleted) {
+          color = LexioColors.success;
+        } else if (isCurrent) {
+          color = LexioColors.primary;
+        } else {
+          color = LexioColors.surfaceTertiary;
+        }
+
+        return Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: i == 0 ? 0 : LexioSpacing.xxs,
+            ),
+            child: Container(
+              height: isCurrent ? 4 : 3,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
           ),
         );
       }),
     );
   }
 
-  Widget _buildFeedbackBar(SpotGameState state) {
-    if (_lastFoundMistake == null) {
-      return const SizedBox.shrink();
+  Widget _buildTextEyebrow(SpotGameState state) {
+    final label = switch (state.currentText.type) {
+      'whatsapp' => 'Conversație',
+      'email' => 'Email',
+      'story' => 'Poveste',
+      'news' => 'Știre',
+      _ => 'Text',
+    };
+
+    return Text(
+      label.toUpperCase(),
+      style: LexioTextStyles.labelSmall.copyWith(
+        color: LexioColors.textTertiary,
+        letterSpacing: 1.2,
+        fontSize: 11,
+      ),
+    );
+  }
+
+  Widget _buildParagraphs(SpotGameState state) {
+    final ranges = state.currentText.paragraphRanges;
+    final children = <Widget>[];
+
+    for (int p = 0; p < ranges.length; p++) {
+      final start = ranges[p][0];
+      final end = ranges[p][1];
+      children.add(_buildWordTokens(state, start, end));
+      if (p < ranges.length - 1) {
+        children.add(const SizedBox(height: LexioSpacing.lg));
+      }
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: LexioSpacing.screenHorizontal,
-        vertical: LexioSpacing.xs,
-      ),
-      child: TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0.0, end: 1.0),
-        duration: LexioDurations.normal,
-        curve: LexioCurves.smooth,
-        builder: (context, value, child) {
-          return Opacity(
-            opacity: value,
-            child: Transform.translate(
-              offset: Offset(0, (1 - value) * 8),
-              child: child,
-            ),
-          );
-        },
-        child: LexioFeedback(
-          type: LexioFeedbackType.success,
-          message: _lastFoundMistake!.explanation,
-        ),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
     );
   }
 
-  Widget _buildTextArea(SpotGameState state) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(
-        horizontal: LexioSpacing.screenHorizontal,
-        vertical: LexioSpacing.md,
-      ),
-      child: LexioCard(
-        padding: const EdgeInsets.all(LexioSpacing.cardPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTextTypeLabel(state),
-            const SizedBox(height: LexioSpacing.md),
-            _buildWordTokens(state),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextTypeLabel(SpotGameState state) {
-    String label;
-    IconData icon;
-
-    switch (state.currentText.type) {
-      case 'whatsapp':
-        label = 'Conversație';
-        icon = Icons.chat_bubble_outline;
-        break;
-      case 'email':
-        label = 'Email';
-        icon = Icons.email_outlined;
-        break;
-      case 'story':
-        label = 'Poveste';
-        icon = Icons.auto_stories;
-        break;
-      case 'news':
-        label = 'Știre';
-        icon = Icons.article_outlined;
-        break;
-      default:
-        label = 'Text';
-        icon = Icons.text_fields;
-    }
-
-    return Row(
-      children: [
-        Icon(icon, size: 14, color: LexioColors.textTertiary),
-        const SizedBox(width: LexioSpacing.xs),
-        Text(
-          label,
-          style: LexioTextStyles.labelSmall.copyWith(
-            color: LexioColors.textTertiary,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildWordTokens(SpotGameState state) {
-    final words = state.currentText.words;
+  Widget _buildWordTokens(SpotGameState state, int startIndex, int endIndex) {
     final builders = <Widget>[];
     final shakerIndex = state.shakingWordIndex;
 
-    for (int i = 0; i < words.length; i++) {
+    for (int i = startIndex; i <= endIndex; i++) {
       TextTokenState tokenState;
       if (state.isFoundMistakeWord(i)) {
         tokenState = TextTokenState.found;
+      } else if (state.isChecking && state.isUnfoundMistakeWord(i)) {
+        tokenState = TextTokenState.checking;
       } else if (shakerIndex == i) {
         tokenState = TextTokenState.shaking;
       } else {
         tokenState = TextTokenState.normal;
       }
 
+      String correction = '';
+      if (tokenState == TextTokenState.found ||
+          tokenState == TextTokenState.checking) {
+        correction = _getCorrectionForWord(state, i);
+      }
+
+      final tappable = !state.isFoundMistakeWord(i) && !state.isChecking;
+
       builders.add(
         TextToken(
           key: ValueKey('${state.currentTextIndex}_$i'),
-          text: state.displayedWord(i),
+          originalText: state.displayedWord(i),
+          correctionText: correction,
           state: tokenState,
-          onTap: state.isFoundMistakeWord(i) ? null : () => _handleTapWord(i),
+          onTap: tappable ? () => _handleTapWord(i) : null,
         ),
       );
     }
 
     return Wrap(
       spacing: 2,
-      runSpacing: 0,
+      runSpacing: 4,
       children: builders,
     );
   }
 
-  Widget _buildBottomBar(SpotGameState state) {
-    if (!state.allMistakesFoundInCurrentText) {
-      return const SizedBox(height: LexioSpacing.xxl);
+  String _getCorrectionForWord(SpotGameState state, int wordIndex) {
+    for (int i = 0; i < state.currentText.mistakes.length; i++) {
+      if (state.currentText.mistakes[i].wordIndex == wordIndex) {
+        return state.currentText.mistakes[i].replacement;
+      }
     }
+    return '';
+  }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: LexioSpacing.screenHorizontal,
-        vertical: LexioSpacing.lg,
-      ),
-      child: TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0.0, end: 1.0),
-        duration: LexioDurations.normal,
-        curve: LexioCurves.bouncy,
-        builder: (context, value, child) {
-          return Transform.scale(
-            scale: 0.9 + (0.1 * value),
-            child: Opacity(opacity: value, child: child),
-          );
-        },
-        child: LexioButton(
-          label: state.isLastText ? 'Vezi rezumatul' : 'Continuă',
-          variant: LexioButtonVariant.primary,
-          icon: state.isLastText ? Icons.emoji_events : Icons.arrow_forward,
-          isExpanded: true,
-          onPressed: _handleNextText,
+  Widget _buildBottomBar(SpotGameState state) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(
+          LexioSpacing.screenHorizontal,
+          LexioSpacing.md,
+          LexioSpacing.screenHorizontal,
+          LexioSpacing.lg,
         ),
+        child: state.isChecking
+            ? _buildNextButton(state)
+            : state.allMistakesFoundInCurrentText
+                ? _buildNextButton(state)
+                : _buildPlayActions(state),
       ),
+    );
+  }
+
+  Widget _buildNextButton(SpotGameState state) {
+    return LexioButton(
+      label: state.isLastText ? 'Vezi rezumatul' : 'Continuă',
+      variant: LexioButtonVariant.primary,
+      icon: state.isLastText ? Icons.emoji_events : Icons.arrow_forward,
+      isExpanded: true,
+      onPressed: _handleNextText,
+    );
+  }
+
+  Widget _buildPlayActions(SpotGameState state) {
+    final mistakesText =
+        '${state.mistakesFound} / ${state.totalMistakesInCurrentText} greșeli';
+
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            mistakesText,
+            style: LexioTextStyles.labelSmall.copyWith(
+              color: LexioColors.textSecondary,
+            ),
+          ),
+        ),
+        const SizedBox(width: LexioSpacing.md),
+        LexioButton(
+          label: 'Arată toate greșelile',
+          variant: LexioButtonVariant.ghost,
+          size: LexioButtonSize.small,
+          onPressed: _handleCheck,
+        ),
+      ],
     );
   }
 

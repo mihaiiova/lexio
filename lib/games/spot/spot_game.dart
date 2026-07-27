@@ -25,6 +25,7 @@ final class SpotGameState {
   final DateTime startTime;
   final int remainingSeconds;
   final bool isFinished;
+  final bool isChecking;
   final int? shakingWordIndex;
 
   static const _timerDuration = 60;
@@ -38,6 +39,7 @@ final class SpotGameState {
     DateTime? startTime,
     this.remainingSeconds = _timerDuration,
     this.isFinished = false,
+    this.isChecking = false,
     this.shakingWordIndex,
   })  : foundMistakeIndices = foundMistakeIndices ??
             List.generate(texts.length, (_) => <int>{}),
@@ -93,13 +95,6 @@ final class SpotGameState {
   }
 
   String displayedWord(int wordIndex) {
-    final found = foundMistakeIndices[currentTextIndex];
-    for (int i = 0; i < currentText.mistakes.length; i++) {
-      if (currentText.mistakes[i].wordIndex == wordIndex &&
-          found.contains(i)) {
-        return currentText.mistakes[i].replacement;
-      }
-    }
     return currentText.words[wordIndex];
   }
 
@@ -177,25 +172,38 @@ final class SpotGameState {
 
   SpotGameState nextText() {
     if (isLastText) {
-      return _copyWith(isFinished: true);
+      return _copyWith(isFinished: true, isChecking: false);
     }
-    return _copyWith(currentTextIndex: currentTextIndex + 1);
+    return _copyWith(
+      currentTextIndex: currentTextIndex + 1,
+      remainingSeconds: _timerDuration,
+      isChecking: false,
+    );
   }
 
   SpotGameState tick() {
-    if (mode != SpotGameMode.timed || isFinished) return this;
+    if (isFinished) return this;
     final newRemaining = remainingSeconds - 1;
     if (newRemaining <= 0) {
-      return _copyWith(remainingSeconds: 0, isFinished: true);
+      if (isLastText) {
+        return _copyWith(remainingSeconds: 0, isFinished: true);
+      }
+      return _copyWith(
+        remainingSeconds: _timerDuration,
+        currentTextIndex: currentTextIndex + 1,
+      );
     }
     return _copyWith(remainingSeconds: newRemaining);
   }
+
+  SpotGameState checkAnswers() => _copyWith(isChecking: true);
 
   SpotGameState _copyWith({
     List<Set<int>>? foundMistakeIndices,
     List<Set<int>>? incorrectTapWordIndices,
     int? currentTextIndex,
     bool? isFinished,
+    bool? isChecking,
     int? remainingSeconds,
     int? shakingWordIndex,
     bool clearShaker = false,
@@ -210,6 +218,7 @@ final class SpotGameState {
       startTime: startTime,
       remainingSeconds: remainingSeconds ?? this.remainingSeconds,
       isFinished: isFinished ?? this.isFinished,
+      isChecking: isChecking ?? this.isChecking,
       shakingWordIndex:
           clearShaker ? null : (shakingWordIndex ?? this.shakingWordIndex),
     );

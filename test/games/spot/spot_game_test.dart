@@ -129,12 +129,12 @@ void main() {
       expect(afterFind.state.isUnfoundMistakeWord(4), true);
     });
 
-    test('displayedWord shows replacement after finding', () {
+    test('displayedWord always returns the original word', () {
       final state = createState();
 
       expect(state.displayedWord(3), 'in');
       final afterFind = state.tapWord(3);
-      expect(afterFind.state.displayedWord(3), 'în');
+      expect(afterFind.state.displayedWord(3), 'in');
     });
 
     test('allMistakesFoundInCurrentText is true after all found', () {
@@ -167,7 +167,7 @@ void main() {
       expect(finished.textsCompleted, 2);
     });
 
-    test('tick decrements remainingSeconds in timed mode', () {
+    test('tick decrements remainingSeconds', () {
       final state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
       expect(state.remainingSeconds, 60);
 
@@ -175,21 +175,43 @@ void main() {
       expect(afterTick.remainingSeconds, 59);
     });
 
-    test('tick finishes game when timer reaches 0', () {
+    test('tick auto-advances when timer expires on non-last text', () {
       final state = SpotGameState(
         texts: texts,
         mode: SpotGameMode.timed,
         remainingSeconds: 1,
       );
       final afterTick = state.tick();
-      expect(afterTick.remainingSeconds, 0);
+      expect(afterTick.currentTextIndex, 1);
+      expect(afterTick.remainingSeconds, 60);
+      expect(afterTick.isFinished, false);
+    });
+
+    test('tick finishes game when timer expires on last text', () {
+      final state = SpotGameState(
+        texts: texts,
+        mode: SpotGameMode.timed,
+        currentTextIndex: 1,
+        remainingSeconds: 1,
+      );
+      final afterTick = state.tick();
       expect(afterTick.isFinished, true);
     });
 
-    test('tick does nothing in normal mode', () {
-      final state = SpotGameState(texts: texts, mode: SpotGameMode.normal);
+    test('nextText resets timer', () {
+      final state = createState()
+          .tapWord(3)
+          .state
+          .tapWord(4)
+          .state;
+      expect(state.remainingSeconds, 60);
+
       final afterTick = state.tick();
-      expect(afterTick.remainingSeconds, 60);
+      expect(afterTick.remainingSeconds, 59);
+
+      final next = afterTick.nextText();
+      expect(next.currentTextIndex, 1);
+      expect(next.remainingSeconds, 60);
     });
 
     test('score calculation', () {

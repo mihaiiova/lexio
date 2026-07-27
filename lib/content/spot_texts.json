@@ -2,194 +2,90 @@
   {
     "id": "text_001",
     "type": "whatsapp",
-    "title": "Planuri de weekend",
+    "title": "Întâlnire la cafea",
     "difficulty": 1,
-    "content": "Salut! Ce faci in weekendul asta? Eu vreau sa merg la munte cu cativa prieteni. Mia spus Andrei ca vine si el sambata dimineata. O sa fie foarte frumos daca vremea tine cu noi. Tu ce planuri ai?",
+    "content": "Salut, Ana! Vroiam să ajung mai devreme, dar autobuzul a întârziat. Defapt, putem muta întâlnirea după-amiază?",
     "mistakes": [
       {
-        "wordIndex": 3,
-        "token": "in",
-        "replacement": "în",
-        "explanation": "„În\" se scrie cu „î\" din a, nu cu „i\".",
-        "category": "ortografie",
-        "topic": "diacritice"
+        "wordIndex": 2,
+        "token": "Vroiam",
+        "replacement": "Voiam",
+        "explanation": "Forma corectă este „voiam”, nu „vroiam”.",
+        "category": "lexic",
+        "topic": "forme verbale"
       },
       {
-        "wordIndex": 8,
-        "token": "sa",
-        "replacement": "să",
-        "explanation": "„Să\" se scrie cu „ă\", nu cu „a\".",
+        "wordIndex": 11,
+        "token": "Defapt,",
+        "replacement": "De fapt,",
+        "explanation": "„De fapt” se scrie separat.",
         "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
-        "wordIndex": 13,
-        "token": "cativa",
-        "replacement": "câțiva",
-        "explanation": "„Câțiva\" se scrie cu „â\" și „ț\", nu cu „a\" și „t\".",
-        "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
-        "wordIndex": 15,
-        "token": "Mia",
-        "replacement": "Mi-a",
-        "explanation": "„Mi-a\" se scrie cu cratimă, fiind contracția dintre „îmi\" și „a\".",
-        "category": "ortografie",
-        "topic": "cratimă"
-      },
-      {
-        "wordIndex": 25,
-        "token": "sa",
-        "replacement": "să",
-        "explanation": "„Să\" se scrie cu „ă\", nu cu „a\".",
-        "category": "ortografie",
-        "topic": "diacritice"
+        "topic": "cuvinte compuse"
       }
     ]
   },
   {
     "id": "text_002",
     "type": "whatsapp",
-    "title": "Tema la română",
+    "title": "Film pentru seară",
     "difficulty": 1,
-    "content": "Buna! Ai facut tema la romana? Eu nam inteles foarte bine cerinta. Cred ca trebuie sa scriem o compunere despre vacanta de vara. Ma poti ajuta te rog cu niste idei? Ms mult!",
+    "content": "Ai văzut filmul nou? Eu abea am terminat munca și caut ceva amuzant. Deobicei, aleg comedii când sunt obosit.",
     "mistakes": [
       {
-        "wordIndex": 0,
-        "token": "Buna!",
-        "replacement": "Bună!",
-        "explanation": "„Bună\" se scrie cu „ă\", nu cu „a\".",
-        "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
         "wordIndex": 5,
-        "token": "romana?",
-        "replacement": "română?",
-        "explanation": "„Română\" se scrie cu „â\" și „ă\".",
-        "category": "ortografie",
-        "topic": "diacritice"
+        "token": "abea",
+        "replacement": "abia",
+        "explanation": "Forma corectă este „abia”, nu „abea”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
       },
       {
-        "wordIndex": 7,
-        "token": "nam",
-        "replacement": "n-am",
-        "explanation": "„N-am\" se scrie cu cratimă, fiind contracția dintre „nu\" și „am\".",
+        "wordIndex": 13,
+        "token": "Deobicei,",
+        "replacement": "De obicei,",
+        "explanation": "„De obicei” se scrie separat.",
         "category": "ortografie",
-        "topic": "cratimă"
-      },
-      {
-        "wordIndex": 15,
-        "token": "sa",
-        "replacement": "să",
-        "explanation": "„Să\" se scrie cu „ă\", nu cu „a\".",
-        "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
-        "wordIndex": 20,
-        "token": "vacanta",
-        "replacement": "vacanța",
-        "explanation": "„Vacanța\" se scrie cu „ț\", nu cu „t\".",
-        "category": "ortografie",
-        "topic": "diacritice"
+        "topic": "cuvinte compuse"
       }
     ]
   },
   {
     "id": "text_003",
-    "type": "email",
-    "title": "Cerere de concediu",
+    "type": "whatsapp",
+    "title": "Meciul de sâmbătă",
     "difficulty": 1,
-    "content": "Buna ziua, Va rog sa imi aprobati concediul de odihna pentru perioada 10-15 august. Am depus deja documentele necesare la secretariat. Nui nicio problema cu orele suplimentare, leam lucrat pe toate luna trecuta. Va multumesc anticipat.",
+    "content": "Ne vedem sâmbătă la teren? Am adus mingii noi pentru echipă. Să nu uiți, te rog, teneșii.",
     "mistakes": [
       {
-        "wordIndex": 0,
-        "token": "Buna",
-        "replacement": "Bună",
-        "explanation": "„Bună\" se scrie cu „ă\", nu cu „a\".",
-        "category": "ortografie",
-        "topic": "diacritice"
+        "wordIndex": 7,
+        "token": "mingii",
+        "replacement": "mingi",
+        "explanation": "Pluralul nearticulat corect este „mingi”.",
+        "category": "lexic",
+        "topic": "forme de plural"
       },
       {
-        "wordIndex": 4,
-        "token": "sa",
-        "replacement": "să",
-        "explanation": "„Să\" se scrie cu „ă\", nu cu „a\".",
-        "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
-        "wordIndex": 9,
-        "token": "odihna",
-        "replacement": "odihnă",
-        "explanation": "„Odihnă\" se scrie cu „ă\", nu cu „a\".",
-        "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
-        "wordIndex": 21,
-        "token": "Nui",
-        "replacement": "Nu-i",
-        "explanation": "„Nu-i\" se scrie cu cratimă, fiind contracția dintre „nu\" și „îi\".",
-        "category": "ortografie",
-        "topic": "cratimă"
-      },
-      {
-        "wordIndex": 27,
-        "token": "leam",
-        "replacement": "le-am",
-        "explanation": "„Le-am\" se scrie cu cratimă, fiind contracția dintre „le\" și „am\".",
-        "category": "ortografie",
-        "topic": "cratimă"
+        "wordIndex": 16,
+        "token": "teneșii.",
+        "replacement": "tenișii.",
+        "explanation": "Forma corectă este „teniși”, nu „teneși”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
       }
     ]
   },
   {
     "id": "text_004",
-    "type": "story",
-    "title": "Întâmplare din parc",
+    "type": "email",
+    "title": "Confirmare programare",
     "difficulty": 1,
-    "content": "Era o zi frumoasa de primavara cand mam hotarat sa ies la plimbare prin parc. Pasarile cantau vesele, iar soarele stralucea puternic. La un moment dat am vazut un copil care sia pierdut jucaria preferata. Lam ajutat sa o gasesca si mam simtit foarte bine dupa aceea.",
+    "content": "Bună ziua,\n\nVă confirm programarea de marți, la ora zece. Întradevăr, am nevoie de o discuție mai lungă despre proiect.\n\nCu mulțumiri,\nIrina",
     "mistakes": [
       {
-        "wordIndex": 3,
-        "token": "frumoasa",
-        "replacement": "frumoasă",
-        "explanation": "„Frumoasă\" se scrie cu „ă\", nu cu „a\".",
-        "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
-        "wordIndex": 7,
-        "token": "mam",
-        "replacement": "m-am",
-        "explanation": "„M-am\" se scrie cu cratimă, fiind contracția dintre „mă\" și „am\".",
-        "category": "ortografie",
-        "topic": "cratimă"
-      },
-      {
-        "wordIndex": 31,
-        "token": "sia",
-        "replacement": "și-a",
-        "explanation": "„Și-a\" se scrie cu cratimă, fiind contracția dintre „își\" și „a\".",
-        "category": "ortografie",
-        "topic": "cratimă"
-      },
-      {
-        "wordIndex": 35,
-        "token": "Lam",
-        "replacement": "L-am",
-        "explanation": "„L-am\" se scrie cu cratimă, fiind contracția dintre „îl\" și „am\".",
-        "category": "ortografie",
-        "topic": "cratimă"
-      },
-      {
-        "wordIndex": 41,
-        "token": "mam",
-        "replacement": "m-am",
-        "explanation": "„M-am\" se scrie cu cratimă, fiind contracția dintre „mă\" și „am\".",
+        "wordIndex": 10,
+        "token": "Întradevăr,",
+        "replacement": "Într-adevăr,",
+        "explanation": "„Într-adevăr” se scrie cu cratimă.",
         "category": "ortografie",
         "topic": "cratimă"
       }
@@ -197,50 +93,413 @@
   },
   {
     "id": "text_005",
-    "type": "news",
-    "title": "Știri locale",
+    "type": "email",
+    "title": "Rezervare cazare",
     "difficulty": 1,
-    "content": "Primaria orasului a anuntat ieri ca va incepe renovarea parcului central saptamana viitoare. Proiectul include plantarea a peste o suta de copaci noi si reabilitarea aleilor. Locuitorii sau declarat multumiti de aceasta initiativa. Lucrarile vor fi finantate din bugetul local.",
+    "content": "Bună ziua,\n\nAș dori să rezerv două hotele pentru delegația noastră. Deasemenea, vă rog să îmi trimiteți lista serviciilor incluse.\n\nO zi bună,\nRadu Ionescu",
     "mistakes": [
       {
-        "wordIndex": 0,
-        "token": "Primaria",
-        "replacement": "Primăria",
-        "explanation": "„Primăria\" se scrie cu „ă\", nu cu „a\".",
-        "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
-        "wordIndex": 1,
-        "token": "orasului",
-        "replacement": "orașului",
-        "explanation": "„Orașului\" se scrie cu „ș\", nu cu „s\".",
-        "category": "ortografie",
-        "topic": "diacritice"
-      },
-      {
         "wordIndex": 7,
-        "token": "incepe",
-        "replacement": "începe",
-        "explanation": "„Începe\" se scrie cu „î\" din a, nu cu „i\".",
-        "category": "ortografie",
-        "topic": "diacritice"
+        "token": "hotele",
+        "replacement": "hoteluri",
+        "explanation": "Forma corectă de plural este „hoteluri”.",
+        "category": "lexic",
+        "topic": "forme de plural"
       },
       {
         "wordIndex": 11,
-        "token": "saptamana",
-        "replacement": "săptămâna",
-        "explanation": "„Săptămâna\" se scrie cu „ă\" și „â\", nu cu „a\".",
+        "token": "Deasemenea,",
+        "replacement": "De asemenea,",
+        "explanation": "„De asemenea” se scrie separat.",
         "category": "ortografie",
-        "topic": "diacritice"
+        "topic": "cuvinte compuse"
+      }
+    ]
+  },
+  {
+    "id": "text_006",
+    "type": "email",
+    "title": "Trimitere documente",
+    "difficulty": 1,
+    "content": "Bună ziua,\n\nAtașez documentele solicitate pentru concurs. Am verificat toate aliniatele înainte de expediere.\n\nCu stimă,\nMara Pop",
+    "mistakes": [
+      {
+        "wordIndex": 10,
+        "token": "aliniatele",
+        "replacement": "alineatele",
+        "explanation": "Forma corectă este „alineate”, nu „aliniate”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      }
+    ]
+  },
+  {
+    "id": "text_007",
+    "type": "news",
+    "title": "Lucrări pe bulevard",
+    "difficulty": 2,
+    "content": "Primăria anunță lucrări de reparații pe bulevardul central. Traficul va scade temporar pe durata intervenției. Șoferii sunt rugați să aleagă rute alternative.",
+    "mistakes": [
+      {
+        "wordIndex": 10,
+        "token": "scade",
+        "replacement": "scădea",
+        "explanation": "Forma corectă la viitor este „va scădea”.",
+        "category": "lexic",
+        "topic": "forme verbale"
+      }
+    ]
+  },
+  {
+    "id": "text_008",
+    "type": "news",
+    "title": "Expoziție la muzeu",
+    "difficulty": 2,
+    "content": "Muzeul orașului deschide o expoziție cu albume vechi și hărți. Vizitatorii pot vedea și câteva atlasuri din secolul trecut. Intrarea este gratuită duminică.",
+    "mistakes": [
+      {
+        "wordIndex": 15,
+        "token": "atlasuri",
+        "replacement": "atlase",
+        "explanation": "Forma corectă de plural este „atlase”, nu „atlasuri”.",
+        "category": "lexic",
+        "topic": "forme de plural"
+      }
+    ]
+  },
+  {
+    "id": "text_009",
+    "type": "news",
+    "title": "Avertizare meteo",
+    "difficulty": 2,
+    "content": "Meteorologii anunță furtune puternice în nordul țării. Până seara, pe alocuri, ar putea să fulguie. Autoritățile recomandă prudență la drum.",
+    "mistakes": [
+      {
+        "wordIndex": 2,
+        "token": "furtune",
+        "replacement": "furtuni",
+        "explanation": "Forma corectă de plural este „furtuni”.",
+        "category": "lexic",
+        "topic": "forme de plural"
       },
       {
-        "wordIndex": 27,
-        "token": "sau",
-        "replacement": "s-au",
-        "explanation": "„S-au\" se scrie cu cratimă, fiind contracția dintre „se\" și „au\".",
+        "wordIndex": 14,
+        "token": "fulguie.",
+        "replacement": "fulguiască.",
+        "explanation": "Forma corectă este „să fulguiască”.",
+        "category": "lexic",
+        "topic": "forme verbale"
+      }
+    ]
+  },
+  {
+    "id": "text_010",
+    "type": "story",
+    "title": "Cutia din pod",
+    "difficulty": 2,
+    "content": "În podul bunicii am găsit o cutie plină cu fotografii. Era și o caramelă învelită în hârtie aurie. Deobicei, bunica păstra acolo lucrurile dragi.",
+    "mistakes": [
+      {
+        "wordIndex": 13,
+        "token": "caramelă",
+        "replacement": "caramea",
+        "explanation": "Forma corectă este „caramea”, nu „caramelă”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      },
+      {
+        "wordIndex": 18,
+        "token": "Deobicei,",
+        "replacement": "De obicei,",
+        "explanation": "„De obicei” se scrie separat.",
         "category": "ortografie",
-        "topic": "cratimă"
+        "topic": "cuvinte compuse"
+      }
+    ]
+  },
+  {
+    "id": "text_011",
+    "type": "story",
+    "title": "Drumul prin pădure",
+    "difficulty": 2,
+    "content": "Pe poteca umedă, Daria a văzut urme de vulpei. Apoi a zărit câțiva păianjăni între ramuri. A grăbit pasul până la cabană.",
+    "mistakes": [
+      {
+        "wordIndex": 8,
+        "token": "vulpei.",
+        "replacement": "vulpii.",
+        "explanation": "Forma corectă este „vulpii”.",
+        "category": "lexic",
+        "topic": "forme de plural"
+      },
+      {
+        "wordIndex": 13,
+        "token": "păianjăni",
+        "replacement": "păianjeni",
+        "explanation": "Forma corectă este „păianjeni”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      }
+    ]
+  },
+  {
+    "id": "text_012",
+    "type": "story",
+    "title": "Prima ninsoare",
+    "difficulty": 1,
+    "content": "Seara, a început să fulguie peste casele liniștite. Mihai și-a pus mănuși groase și a ieșit în curte. Pe alee se formase deja ghiață.",
+    "mistakes": [
+      {
+        "wordIndex": 4,
+        "token": "fulguie",
+        "replacement": "fulguiască",
+        "explanation": "Forma corectă este „să fulguiască”.",
+        "category": "lexic",
+        "topic": "forme verbale"
+      },
+      {
+        "wordIndex": 23,
+        "token": "ghiață.",
+        "replacement": "gheață.",
+        "explanation": "Forma corectă este „gheață”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      }
+    ]
+  },
+  {
+    "id": "text_013",
+    "type": "child_composition",
+    "title": "Excursia mea",
+    "difficulty": 1,
+    "content": "În vacanță am fost într-o escursie la munte cu clasa mea. Am văzut curcubee după ploaie și am făcut multe poze. A fost cea mai frumoasă zi.",
+    "mistakes": [
+      {
+        "wordIndex": 5,
+        "token": "escursie",
+        "replacement": "excursie",
+        "explanation": "Forma corectă este „excursie”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      },
+      {
+        "wordIndex": 13,
+        "token": "curcubee",
+        "replacement": "curcubeie",
+        "explanation": "Forma corectă de plural este „curcubeie”.",
+        "category": "lexic",
+        "topic": "forme de plural"
+      }
+    ]
+  },
+  {
+    "id": "text_014",
+    "type": "child_composition",
+    "title": "Cățelul meu",
+    "difficulty": 1,
+    "content": "Cățelul meu se numește Pufi și are ghiare mici. Când plouă, îi place să se cațere pe fotoliu. Eu îl spăl cu grijă în fiecare duminică.",
+    "mistakes": [
+      {
+        "wordIndex": 7,
+        "token": "ghiare",
+        "replacement": "gheare",
+        "explanation": "Forma corectă este „gheare”, nu „ghiare”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      },
+      {
+        "wordIndex": 15,
+        "token": "cațere",
+        "replacement": "cațăre",
+        "explanation": "Forma corectă este „să se cațăre”.",
+        "category": "lexic",
+        "topic": "forme verbale"
+      }
+    ]
+  },
+  {
+    "id": "text_015",
+    "type": "child_composition",
+    "title": "Ziua sportului",
+    "difficulty": 1,
+    "content": "La școală am făcut genoflexiuni și am alergat în curte. Colegii mei au adus mingii colorate pentru joc. Doamna ne-a spus să fim atenți.",
+    "mistakes": [
+      {
+        "wordIndex": 4,
+        "token": "genoflexiuni",
+        "replacement": "genuflexiuni",
+        "explanation": "Forma corectă este „genuflexiuni”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      },
+      {
+        "wordIndex": 14,
+        "token": "mingii",
+        "replacement": "mingi",
+        "explanation": "Pluralul nearticulat corect este „mingi”.",
+        "category": "lexic",
+        "topic": "forme de plural"
+      }
+    ]
+  },
+  {
+    "id": "text_016",
+    "type": "professional",
+    "title": "Actualizare proiect",
+    "difficulty": 2,
+    "content": "Bună ziua, echipă. Am finalizat protocoalele pentru întâlnirea de joi. Deasemenea, vă rog să verificați ultimile modificări înainte de aprobare.",
+    "mistakes": [
+      {
+        "wordIndex": 10,
+        "token": "Deasemenea,",
+        "replacement": "De asemenea,",
+        "explanation": "„De asemenea” se scrie separat.",
+        "category": "ortografie",
+        "topic": "cuvinte compuse"
+      },
+      {
+        "wordIndex": 15,
+        "token": "ultimile",
+        "replacement": "ultimele",
+        "explanation": "Forma corectă este „ultimele”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      }
+    ]
+  },
+  {
+    "id": "text_017",
+    "type": "professional",
+    "title": "Ședință de coordonare",
+    "difficulty": 2,
+    "content": "Vă invit la ședința de coordonare de mâine. Fiecare au ales deja subiectul prezentării. Vă rog să trimiteți materialele până la prânz.",
+    "mistakes": [
+      {
+        "wordIndex": 9,
+        "token": "au",
+        "replacement": "a",
+        "explanation": "Cu „fiecare”, verbul se folosește la singular: „a ales”.",
+        "category": "gramatică",
+        "topic": "acord"
+      }
+    ]
+  },
+  {
+    "id": "text_018",
+    "type": "professional",
+    "title": "Raport lunar",
+    "difficulty": 2,
+    "content": "Raportul arată că vânzările au crescut constant. Această soluție inovatoare poate aduce rezultate bune. Vom discuta concluziile la următoarea întâlnire.",
+    "mistakes": [
+      {
+        "wordIndex": 9,
+        "token": "inovatoare",
+        "replacement": "novatoare",
+        "explanation": "O soluție este „novatoare”; „inovatoare” se referă la o persoană.",
+        "category": "lexic",
+        "topic": "sensul cuvintelor"
+      }
+    ]
+  },
+  {
+    "id": "text_019",
+    "type": "social_media",
+    "title": "Recomandare de film",
+    "difficulty": 1,
+    "content": "Am văzut aseară un film excelent! Defapt, cred că este cel mai bun din seria asta. Voi ce filme mai recomandați?",
+    "mistakes": [
+      {
+        "wordIndex": 6,
+        "token": "Defapt,",
+        "replacement": "De fapt,",
+        "explanation": "„De fapt” se scrie separat.",
+        "category": "ortografie",
+        "topic": "cuvinte compuse"
+      }
+    ]
+  },
+  {
+    "id": "text_020",
+    "type": "social_media",
+    "title": "Dimineață în parc",
+    "difficulty": 1,
+    "content": "Azi am alergat prin parc înainte de servici. Era răcoare, iar frunzele aveau o culoare maron superbă. Sper să păstrăm locul curat!",
+    "mistakes": [
+      {
+        "wordIndex": 15,
+        "token": "maron",
+        "replacement": "maro",
+        "explanation": "Forma corectă este „maro”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      }
+    ]
+  },
+  {
+    "id": "text_021",
+    "type": "social_media",
+    "title": "Gustare rapidă",
+    "difficulty": 1,
+    "content": "Am găsit o rețetă simplă de sanviș cu legume coapte. Se face repede și este foarte gustoasă. O încercați și voi?",
+    "mistakes": [
+      {
+        "wordIndex": 6,
+        "token": "sanviș",
+        "replacement": "sandvici",
+        "explanation": "Forma corectă este „sandvici” sau „sendviș”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
+      }
+    ]
+  },
+  {
+    "id": "text_022",
+    "type": "blog",
+    "title": "Cum alegi o cazare",
+    "difficulty": 2,
+    "content": "Când alegi cazarea, citește recenziile cu atenție. Deobicei, fotografiile arată doar cele mai bune camere. Verifică și serviciile incluse în preț.",
+    "mistakes": [
+      {
+        "wordIndex": 7,
+        "token": "Deobicei,",
+        "replacement": "De obicei,",
+        "explanation": "„De obicei” se scrie separat.",
+        "category": "ortografie",
+        "topic": "cuvinte compuse"
+      }
+    ]
+  },
+  {
+    "id": "text_023",
+    "type": "blog",
+    "title": "Plante pentru balcon",
+    "difficulty": 2,
+    "content": "O măslină are nevoie de multă lumină și de apă moderată. Ghiveciul trebuie să aibă găuri pentru scurgere. Astfel, rădăcinile rămân sănătoase.",
+    "mistakes": [
+      {
+        "wordIndex": 1,
+        "token": "măslină",
+        "replacement": "măslin",
+        "explanation": "Arborele se numește „măslin”; „măslină” este fructul.",
+        "category": "lexic",
+        "topic": "sensul cuvintelor"
+      }
+    ]
+  },
+  {
+    "id": "text_024",
+    "type": "blog",
+    "title": "Ordinea în birou",
+    "difficulty": 2,
+    "content": "Un birou ordonat te ajută să lucrezi mai bine. Pune documentele în mape și verifică zilnic ordinei lor. Vei găsi mai ușor ce ai nevoie.",
+    "mistakes": [
+      {
+        "wordIndex": 16,
+        "token": "ordinei",
+        "replacement": "ordinii",
+        "explanation": "Forma corectă este „ordinii”.",
+        "category": "lexic",
+        "topic": "forme incorecte"
       }
     ]
   }

@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../../../design/animations.dart';
 import '../../../design/colors.dart';
-import '../../../design/radius.dart';
 import '../../../design/typography.dart';
 
-enum TextTokenState { normal, found, shaking }
+TextStyle _wordStyle(Color color) {
+  return GoogleFonts.noticiaText(
+    textStyle: LexioTextStyles.bodyLarge.copyWith(
+      fontSize: 20,
+      height: 1.35,
+      color: color,
+    ),
+  );
+}
+
+enum TextTokenState { normal, found, shaking, checking }
 
 class TextToken extends StatelessWidget {
-  final String text;
+  final String originalText;
+  final String correctionText;
   final TextTokenState state;
   final VoidCallback? onTap;
 
   const TextToken({
     super.key,
-    required this.text,
+    required this.originalText,
+    this.correctionText = '',
     this.state = TextTokenState.normal,
     this.onTap,
   });
@@ -34,11 +45,19 @@ class TextToken extends StatelessWidget {
   Widget _buildContent() {
     switch (state) {
       case TextTokenState.normal:
-        return _NormalToken(text: text);
+        return _NormalToken(text: originalText);
       case TextTokenState.found:
-        return _FoundToken(text: text);
+        return _FoundToken(
+          original: originalText,
+          correction: correctionText,
+        );
       case TextTokenState.shaking:
-        return _ShakingToken(text: text);
+        return _ShakingToken(text: originalText);
+      case TextTokenState.checking:
+        return _CheckingToken(
+          original: originalText,
+          correction: correctionText,
+        );
     }
   }
 }
@@ -49,54 +68,74 @@ class _NormalToken extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(LexioRadius.sm),
-      ),
-      child: Text(
-        text,
-        style: LexioTextStyles.bodyLarge.copyWith(
-          color: LexioColors.textPrimary,
-        ),
-      ),
+    return Text(
+      text,
+      style: _wordStyle(LexioColors.textPrimary),
     );
   }
 }
 
 class _FoundToken extends StatelessWidget {
-  final String text;
-  const _FoundToken({required this.text});
+  final String original;
+  final String correction;
+  const _FoundToken({required this.original, required this.correction});
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.0, end: 1.0),
-      duration: LexioDurations.fast,
-      curve: LexioCurves.bouncy,
-      builder: (context, value, child) {
-        return Transform.scale(
-          scale: 0.8 + (0.2 * value),
-          child: child,
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-        decoration: BoxDecoration(
-          color: LexioColors.successBackground,
-          borderRadius: BorderRadius.circular(LexioRadius.sm),
-          border: Border.all(
-            color: LexioColors.success.withValues(alpha: 0.3),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Text(
+          original,
+          style: _wordStyle(LexioColors.textPrimary),
+        ),
+        TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0.0, end: 1.0),
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeOut,
+          builder: (context, value, child) {
+            return Opacity(
+              opacity: value.clamp(0.0, 1.0),
+              child: child,
+            );
+          },
+          child: Text(
+            original,
+            style: _wordStyle(LexioColors.error).copyWith(
+              decoration: TextDecoration.lineThrough,
+              decorationColor: LexioColors.error.withValues(alpha: 0.6),
+              decorationThickness: 1.5,
+            ),
           ),
         ),
-        child: Text(
-          text,
-          style: LexioTextStyles.bodyLarge.copyWith(
-            color: LexioColors.success,
-            fontWeight: FontWeight.w600,
+        Positioned(
+          top: -11,
+          left: 0,
+          right: 0,
+          child: TweenAnimationBuilder<double>(
+            tween: Tween(begin: 0.0, end: 1.0),
+            duration: const Duration(milliseconds: 450),
+            curve: Curves.easeOut,
+            builder: (context, value, child) {
+              return Opacity(
+                opacity: value.clamp(0.0, 1.0),
+                child: Transform.translate(
+                  offset: Offset(0, (1 - value) * 4),
+                  child: child,
+                ),
+              );
+            },
+            child: Text(
+              correction,
+              style: _wordStyle(LexioColors.success).copyWith(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -107,6 +146,46 @@ class _ShakingToken extends StatefulWidget {
 
   @override
   State<_ShakingToken> createState() => _ShakingTokenState();
+}
+
+class _CheckingToken extends StatelessWidget {
+  final String original;
+  final String correction;
+  const _CheckingToken({required this.original, required this.correction});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Text(
+          original,
+          style: _wordStyle(LexioColors.textPrimary),
+        ),
+        Text(
+          original,
+          style: _wordStyle(LexioColors.textSecondary).copyWith(
+            decoration: TextDecoration.lineThrough,
+            decorationColor: LexioColors.textSecondary.withValues(alpha: 0.5),
+            decorationThickness: 1.5,
+          ),
+        ),
+        Positioned(
+          top: -11,
+          left: 0,
+          right: 0,
+          child: Text(
+            correction,
+            style: _wordStyle(LexioColors.textPrimary).copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class _ShakingTokenState extends State<_ShakingToken>
@@ -122,11 +201,11 @@ class _ShakingTokenState extends State<_ShakingToken>
       vsync: this,
     );
     _shakeAnimation = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 0, end: 6), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: 6, end: -5), weight: 2),
-      TweenSequenceItem(tween: Tween(begin: -5, end: 3), weight: 2),
-      TweenSequenceItem(tween: Tween(begin: 3, end: -2), weight: 2),
-      TweenSequenceItem(tween: Tween(begin: -2, end: 0), weight: 1),
+      TweenSequenceItem(tween: Tween(begin: 0, end: 4), weight: 1),
+      TweenSequenceItem(tween: Tween(begin: 4, end: -3), weight: 2),
+      TweenSequenceItem(tween: Tween(begin: -3, end: 2), weight: 2),
+      TweenSequenceItem(tween: Tween(begin: 2, end: -1), weight: 2),
+      TweenSequenceItem(tween: Tween(begin: -1, end: 0), weight: 1),
     ]).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -147,18 +226,9 @@ class _ShakingTokenState extends State<_ShakingToken>
       builder: (context, child) {
         return Transform.translate(
           offset: Offset(_shakeAnimation.value, 0),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-            decoration: BoxDecoration(
-              color: LexioColors.errorBackground.withValues(alpha: 0.5),
-              borderRadius: BorderRadius.circular(LexioRadius.sm),
-            ),
-            child: Text(
-              widget.text,
-              style: LexioTextStyles.bodyLarge.copyWith(
-                color: LexioColors.error.withValues(alpha: 0.7),
-              ),
-            ),
+          child: Text(
+            widget.text,
+            style: _wordStyle(LexioColors.textPrimary),
           ),
         );
       },

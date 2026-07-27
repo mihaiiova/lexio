@@ -7,7 +7,6 @@ import '../design/shadows.dart';
 import '../design/components/lexio_card.dart';
 import '../games/grammar/grammar_screen.dart';
 import '../games/spot/spot_screen.dart';
-import '../games/spot/spot_game.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -143,7 +142,7 @@ class HomeScreen extends StatelessWidget {
                 width: 4,
                 height: 20,
                 decoration: BoxDecoration(
-                  color: LexioColors.success,
+                  color: LexioColors.accent,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -162,59 +161,32 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: LexioSpacing.screenHorizontal,
           ),
-          child: _SpotChallengeCard(
-            title: 'Găsește greșeala',
-            description:
-                'Citește texte reale și descoperă greșelile gramaticale atingând cuvintele incorecte.',
-            accentColor: LexioColors.success,
-            emoji: '🔍',
-            mode: SpotGameMode.normal,
-            onTap: () => _navigateToGame(context, SpotGameMode.normal),
-          ),
-        ),
-        const SizedBox(height: LexioSpacing.md),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: LexioSpacing.screenHorizontal,
-          ),
-          child: _SpotChallengeCard(
-            title: 'Contra cronometru',
-            description:
-                'Găsește cât mai multe greșeli în 60 de secunde. Testează-ți viteza și precizia!',
-            accentColor: LexioColors.accent,
-            emoji: '⚡',
-            mode: SpotGameMode.timed,
-            onTap: () => _navigateToGame(context, SpotGameMode.timed),
-          ),
+          child: _SpotChallengeCard(onTap: () {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const SpotScreen(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, 0.05),
+                        end: Offset.zero,
+                      ).animate(CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOut,
+                      )),
+                      child: child,
+                    ),
+                  );
+                },
+                transitionDuration: const Duration(milliseconds: 350),
+              ),
+            );
+          }),
         ),
       ],
-    );
-  }
-
-  void _navigateToGame(BuildContext context, SpotGameMode mode) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => SpotScreen(
-          mode: mode,
-        ),
-        transitionsBuilder:
-            (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(0, 0.05),
-                end: Offset.zero,
-              ).animate(CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeOut,
-              )),
-              child: child,
-            ),
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 350),
-      ),
     );
   }
 
@@ -357,20 +329,8 @@ class _ComingSoonItem extends StatelessWidget {
 }
 
 class _SpotChallengeCard extends StatelessWidget {
-  const _SpotChallengeCard({
-    required this.title,
-    required this.description,
-    required this.accentColor,
-    required this.emoji,
-    required this.mode,
-    required this.onTap,
-  });
+  const _SpotChallengeCard({required this.onTap});
 
-  final String title;
-  final String description;
-  final Color accentColor;
-  final String emoji;
-  final SpotGameMode mode;
   final VoidCallback onTap;
 
   @override
@@ -378,8 +338,8 @@ class _SpotChallengeCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: LexioCard(
-        backgroundColor: accentColor,
-        padding: const EdgeInsets.all(LexioSpacing.lg),
+        backgroundColor: LexioColors.accent,
+        padding: const EdgeInsets.all(LexioSpacing.xl),
         shadows: LexioShadows.elevatedCombined,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -397,31 +357,54 @@ class _SpotChallengeCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(LexioRadius.sm),
                   ),
                   child: Text(
-                    mode == SpotGameMode.normal ? 'Liber' : '60 secunde',
+                    'Contra cronometru',
                     style: LexioTextStyles.labelSmall.copyWith(
                       color: LexioColors.textOnPrimary.withValues(alpha: 0.9),
                     ),
                   ),
                 ),
-                Text(
-                  emoji,
-                  style: const TextStyle(fontSize: 22),
+                const Icon(
+                  Icons.arrow_forward,
+                  color: LexioColors.textOnPrimary,
+                  size: 20,
                 ),
               ],
             ),
-            const SizedBox(height: LexioSpacing.md),
+            const SizedBox(height: LexioSpacing.lg),
             Text(
-              title,
-              style: LexioTextStyles.headingSmall.copyWith(
+              'Găsește greșeala',
+              style: LexioTextStyles.headingMedium.copyWith(
                 color: LexioColors.textOnPrimary,
               ),
             ),
-            const SizedBox(height: LexioSpacing.xs),
+            const SizedBox(height: LexioSpacing.sm),
             Text(
-              description,
-              style: LexioTextStyles.bodySmall.copyWith(
+              'Citește texte reale și atinge cuvintele greșite pentru a le corecta.',
+              style: LexioTextStyles.bodyMedium.copyWith(
                 color: LexioColors.textOnPrimary.withValues(alpha: 0.8),
               ),
+            ),
+            const SizedBox(height: LexioSpacing.lg),
+            Row(
+              children: [
+                const Icon(Icons.timer, size: 16, color: LexioColors.textOnPrimary),
+                const SizedBox(width: LexioSpacing.xs),
+                Text(
+                  '60 de secunde',
+                  style: LexioTextStyles.labelSmall.copyWith(
+                    color: LexioColors.textOnPrimary.withValues(alpha: 0.8),
+                  ),
+                ),
+                const SizedBox(width: LexioSpacing.lg),
+                const Icon(Icons.auto_stories, size: 16, color: LexioColors.textOnPrimary),
+                const SizedBox(width: LexioSpacing.xs),
+                Text(
+                  '5 texte',
+                  style: LexioTextStyles.labelSmall.copyWith(
+                    color: LexioColors.textOnPrimary.withValues(alpha: 0.8),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

@@ -42,10 +42,10 @@ abstract class LexioColors {
   static const info = blue;
 
   // --- Surfaces ---
-  static const background = Color(0xFFF2F4F4);
+  static const background = Color(0xFFFFFFFF);
   static const surface = Color(0xFFFFFFFF);
-  static const surfaceSecondary = Color(0xFFEDEFF0);
-  static const surfaceTertiary = Color(0xFFE5E8E9);
+  static const surfaceSecondary = Color(0xFFFFFFFF);
+  static const surfaceTertiary = Color(0xFFFFFFFF);
 
   // --- Semantic backgrounds ---
   static const successBackground = greenMuted;
@@ -54,9 +54,9 @@ abstract class LexioColors {
   static const infoBackground = blueMuted;
 
   // --- Text ---
-  static const textPrimary = Color(0xFF4C4F50);
-  static const textSecondary = Color(0xFF838788);
-  static const textTertiary = Color(0xFFB0B3B5);
+  static const textPrimary = Color(0xFF1A1C1D);
+  static const textSecondary = Color(0xFF5A5D5F);
+  static const textTertiary = Color(0xFF8A8D8F);
   static const textOnPrimary = Color(0xFFFFFFFF);
 
   // --- Misc ---

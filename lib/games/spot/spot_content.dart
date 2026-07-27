@@ -48,6 +48,7 @@ final class SpotText {
   final String content;
   final List<SpotMistake> mistakes;
   late final List<String> _words;
+  late final List<List<int>> _paragraphRanges;
 
   SpotText({
     required this.id,
@@ -57,7 +58,8 @@ final class SpotText {
     required this.content,
     required this.mistakes,
   }) {
-    _words = content.split(RegExp(r'\s+'));
+    _words = content.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+    _paragraphRanges = _computeParagraphRanges();
   }
 
   factory SpotText.fromJson(Map<String, dynamic> json) {
@@ -76,6 +78,26 @@ final class SpotText {
 
   List<String> get words => List.unmodifiable(_words);
   int get wordCount => _words.length;
+  List<List<int>> get paragraphRanges => _paragraphRanges;
+
+  List<List<int>> _computeParagraphRanges() {
+    final paragraphs = content.split(RegExp(r'\n\n|\n\s*\n'));
+    final ranges = <List<int>>[];
+    int offset = 0;
+
+    for (final p in paragraphs) {
+      final trimmed = p.trim();
+      if (trimmed.isEmpty) continue;
+      final wordsInParagraph =
+          trimmed.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
+      if (wordsInParagraph > 0) {
+        ranges.add([offset, offset + wordsInParagraph - 1]);
+        offset += wordsInParagraph;
+      }
+    }
+
+    return ranges;
+  }
 }
 
 final class SpotContent {
