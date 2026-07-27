@@ -1,0 +1,247 @@
+[
+  {
+    "id": "text_001",
+    "type": "whatsapp",
+    "title": "Planuri de weekend",
+    "difficulty": 1,
+    "content": "Salut! Ce faci in weekendul asta? Eu vreau sa merg la munte cu cativa prieteni. Mia spus Andrei ca vine si el sambata dimineata. O sa fie foarte frumos daca vremea tine cu noi. Tu ce planuri ai?",
+    "mistakes": [
+      {
+        "wordIndex": 3,
+        "token": "in",
+        "replacement": "în",
+        "explanation": "„În\" se scrie cu „î\" din a, nu cu „i\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 8,
+        "token": "sa",
+        "replacement": "să",
+        "explanation": "„Să\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 13,
+        "token": "cativa",
+        "replacement": "câțiva",
+        "explanation": "„Câțiva\" se scrie cu „â\" și „ț\", nu cu „a\" și „t\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 15,
+        "token": "Mia",
+        "replacement": "Mi-a",
+        "explanation": "„Mi-a\" se scrie cu cratimă, fiind contracția dintre „îmi\" și „a\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      },
+      {
+        "wordIndex": 25,
+        "token": "sa",
+        "replacement": "să",
+        "explanation": "„Să\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      }
+    ]
+  },
+  {
+    "id": "text_002",
+    "type": "whatsapp",
+    "title": "Tema la română",
+    "difficulty": 1,
+    "content": "Buna! Ai facut tema la romana? Eu nam inteles foarte bine cerinta. Cred ca trebuie sa scriem o compunere despre vacanta de vara. Ma poti ajuta te rog cu niste idei? Ms mult!",
+    "mistakes": [
+      {
+        "wordIndex": 0,
+        "token": "Buna!",
+        "replacement": "Bună!",
+        "explanation": "„Bună\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 5,
+        "token": "romana?",
+        "replacement": "română?",
+        "explanation": "„Română\" se scrie cu „â\" și „ă\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 7,
+        "token": "nam",
+        "replacement": "n-am",
+        "explanation": "„N-am\" se scrie cu cratimă, fiind contracția dintre „nu\" și „am\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      },
+      {
+        "wordIndex": 15,
+        "token": "sa",
+        "replacement": "să",
+        "explanation": "„Să\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 20,
+        "token": "vacanta",
+        "replacement": "vacanța",
+        "explanation": "„Vacanța\" se scrie cu „ț\", nu cu „t\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      }
+    ]
+  },
+  {
+    "id": "text_003",
+    "type": "email",
+    "title": "Cerere de concediu",
+    "difficulty": 1,
+    "content": "Buna ziua, Va rog sa imi aprobati concediul de odihna pentru perioada 10-15 august. Am depus deja documentele necesare la secretariat. Nui nicio problema cu orele suplimentare, leam lucrat pe toate luna trecuta. Va multumesc anticipat.",
+    "mistakes": [
+      {
+        "wordIndex": 0,
+        "token": "Buna",
+        "replacement": "Bună",
+        "explanation": "„Bună\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 4,
+        "token": "sa",
+        "replacement": "să",
+        "explanation": "„Să\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 9,
+        "token": "odihna",
+        "replacement": "odihnă",
+        "explanation": "„Odihnă\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 21,
+        "token": "Nui",
+        "replacement": "Nu-i",
+        "explanation": "„Nu-i\" se scrie cu cratimă, fiind contracția dintre „nu\" și „îi\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      },
+      {
+        "wordIndex": 27,
+        "token": "leam",
+        "replacement": "le-am",
+        "explanation": "„Le-am\" se scrie cu cratimă, fiind contracția dintre „le\" și „am\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      }
+    ]
+  },
+  {
+    "id": "text_004",
+    "type": "story",
+    "title": "Întâmplare din parc",
+    "difficulty": 1,
+    "content": "Era o zi frumoasa de primavara cand mam hotarat sa ies la plimbare prin parc. Pasarile cantau vesele, iar soarele stralucea puternic. La un moment dat am vazut un copil care sia pierdut jucaria preferata. Lam ajutat sa o gasesca si mam simtit foarte bine dupa aceea.",
+    "mistakes": [
+      {
+        "wordIndex": 3,
+        "token": "frumoasa",
+        "replacement": "frumoasă",
+        "explanation": "„Frumoasă\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 7,
+        "token": "mam",
+        "replacement": "m-am",
+        "explanation": "„M-am\" se scrie cu cratimă, fiind contracția dintre „mă\" și „am\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      },
+      {
+        "wordIndex": 31,
+        "token": "sia",
+        "replacement": "și-a",
+        "explanation": "„Și-a\" se scrie cu cratimă, fiind contracția dintre „își\" și „a\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      },
+      {
+        "wordIndex": 35,
+        "token": "Lam",
+        "replacement": "L-am",
+        "explanation": "„L-am\" se scrie cu cratimă, fiind contracția dintre „îl\" și „am\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      },
+      {
+        "wordIndex": 41,
+        "token": "mam",
+        "replacement": "m-am",
+        "explanation": "„M-am\" se scrie cu cratimă, fiind contracția dintre „mă\" și „am\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      }
+    ]
+  },
+  {
+    "id": "text_005",
+    "type": "news",
+    "title": "Știri locale",
+    "difficulty": 1,
+    "content": "Primaria orasului a anuntat ieri ca va incepe renovarea parcului central saptamana viitoare. Proiectul include plantarea a peste o suta de copaci noi si reabilitarea aleilor. Locuitorii sau declarat multumiti de aceasta initiativa. Lucrarile vor fi finantate din bugetul local.",
+    "mistakes": [
+      {
+        "wordIndex": 0,
+        "token": "Primaria",
+        "replacement": "Primăria",
+        "explanation": "„Primăria\" se scrie cu „ă\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 1,
+        "token": "orasului",
+        "replacement": "orașului",
+        "explanation": "„Orașului\" se scrie cu „ș\", nu cu „s\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 7,
+        "token": "incepe",
+        "replacement": "începe",
+        "explanation": "„Începe\" se scrie cu „î\" din a, nu cu „i\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 11,
+        "token": "saptamana",
+        "replacement": "săptămâna",
+        "explanation": "„Săptămâna\" se scrie cu „ă\" și „â\", nu cu „a\".",
+        "category": "ortografie",
+        "topic": "diacritice"
+      },
+      {
+        "wordIndex": 27,
+        "token": "sau",
+        "replacement": "s-au",
+        "explanation": "„S-au\" se scrie cu cratimă, fiind contracția dintre „se\" și „au\".",
+        "category": "ortografie",
+        "topic": "cratimă"
+      }
+    ]
+  }
+]

@@ -1,0 +1,6561 @@
+[
+  {
+    "id": "w0",
+    "sentence": "Am pus bagajele pe bări în tren.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „bare”, nu „bări”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p0",
+    "correctSentence": "Am pus bagajele pe bare în tren."
+  },
+  {
+    "id": "w0c",
+    "sentence": "Am pus bagajele pe bare în tren.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „bare”, nu „bări”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p0",
+    "correctSentence": null
+  },
+  {
+    "id": "w1",
+    "sentence": "Antrenorul ne-a pus să facem genoflexiuni.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „genuflexiuni”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p1",
+    "correctSentence": "Antrenorul ne-a pus să facem genuflexiuni."
+  },
+  {
+    "id": "w1c",
+    "sentence": "Antrenorul ne-a pus să facem genuflexiuni.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „genuflexiuni”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p1",
+    "correctSentence": null
+  },
+  {
+    "id": "w2",
+    "sentence": "Am avut coșmare toată noaptea.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „coșmaruri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p2",
+    "correctSentence": "Am avut coșmaruri toată noaptea."
+  },
+  {
+    "id": "w2c",
+    "sentence": "Am avut coșmaruri toată noaptea.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „coșmaruri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p2",
+    "correctSentence": null
+  },
+  {
+    "id": "w3",
+    "sentence": "El crează mereu probleme la birou.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „creează”, de la verbul „a crea”.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă"
+    ],
+    "pairId": "p3",
+    "correctSentence": "El creează mereu probleme la birou."
+  },
+  {
+    "id": "w3c",
+    "sentence": "El creează mereu probleme la birou.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „creează”, de la verbul „a crea”.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p3",
+    "correctSentence": null
+  },
+  {
+    "id": "w4",
+    "sentence": "Trebuie să încep a curăți camera.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „a curăța”, conjugarea I.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p4",
+    "correctSentence": "Trebuie să încep a curăța camera."
+  },
+  {
+    "id": "w4c",
+    "sentence": "Trebuie să încep a curăța camera.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „a curăța”, conjugarea I.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p4",
+    "correctSentence": null
+  },
+  {
+    "id": "w5",
+    "sentence": "Prețul benzinei va scade luna viitoare.",
+    "isCorrect": false,
+    "explanation": "Viitorul verbului „a scădea” este „va scădea”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p5",
+    "correctSentence": "Prețul benzinei va scădea luna viitoare."
+  },
+  {
+    "id": "w5c",
+    "sentence": "Prețul benzinei va scădea luna viitoare.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Viitorul verbului „a scădea” este „va scădea”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p5",
+    "correctSentence": null
+  },
+  {
+    "id": "w6",
+    "sentence": "Noi tacem când vorbește profesorul.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „tăcem”, de la verbul „a tăcea”.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă"
+    ],
+    "pairId": "p6",
+    "correctSentence": "Noi tăcem când vorbește profesorul."
+  },
+  {
+    "id": "w6c",
+    "sentence": "Noi tăcem când vorbește profesorul.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „tăcem”, de la verbul „a tăcea”.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p6",
+    "correctSentence": null
+  },
+  {
+    "id": "w7",
+    "sentence": "Bunica s-a așezat pe taburelul din bucătărie.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „taburet”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p7",
+    "correctSentence": "Bunica s-a așezat pe taburetul din bucătărie."
+  },
+  {
+    "id": "w7c",
+    "sentence": "Bunica s-a așezat pe taburetul din bucătărie.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „taburet”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p7",
+    "correctSentence": null
+  },
+  {
+    "id": "w8",
+    "sentence": "Funerariile au avut loc la biserica veche.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „funeraliile”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p8",
+    "correctSentence": "Funeraliile au avut loc la biserica veche."
+  },
+  {
+    "id": "w8c",
+    "sentence": "Funeraliile au avut loc la biserica veche.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „funeraliile”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p8",
+    "correctSentence": null
+  },
+  {
+    "id": "w9",
+    "sentence": "Copilul s-a împiedicat pe trotoar.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „trotuar”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p9",
+    "correctSentence": "Copilul s-a împiedicat pe trotuar."
+  },
+  {
+    "id": "w9c",
+    "sentence": "Copilul s-a împiedicat pe trotuar.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „trotuar”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p9",
+    "correctSentence": null
+  },
+  {
+    "id": "w10",
+    "sentence": "Te rog să uite-te la mine când vorbesc.",
+    "isCorrect": false,
+    "explanation": "Imperativul corect este „uită-te”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă"
+    ],
+    "pairId": "p10",
+    "correctSentence": "Te rog să uită-te la mine când vorbesc."
+  },
+  {
+    "id": "w10c",
+    "sentence": "Te rog să uită-te la mine când vorbesc.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Imperativul corect este „uită-te”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p10",
+    "correctSentence": null
+  },
+  {
+    "id": "w11",
+    "sentence": "Ne-am dus la patinuar să patinăm.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „patinoar”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p11",
+    "correctSentence": "Ne-am dus la patinoar să patinăm."
+  },
+  {
+    "id": "w11c",
+    "sentence": "Ne-am dus la patinoar să patinăm.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „patinoar”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p11",
+    "correctSentence": null
+  },
+  {
+    "id": "w12",
+    "sentence": "Norei i-a adus un buchet frumos de flori.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de dativ este „nurorii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "dativ"
+    ],
+    "pairId": "p12",
+    "correctSentence": "Nurorii i-a adus un buchet frumos de flori."
+  },
+  {
+    "id": "w12c",
+    "sentence": "Nurorii i-a adus un buchet frumos de flori.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de dativ este „nurorii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "dativ",
+      "confirmare"
+    ],
+    "pairId": "p12",
+    "correctSentence": null
+  },
+  {
+    "id": "w13",
+    "sentence": "Copiii s-au jucat cu mingiile în curte.",
+    "isCorrect": false,
+    "explanation": "Articularea corectă este „mingile”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p13",
+    "correctSentence": "Copiii s-au jucat cu mingile în curte."
+  },
+  {
+    "id": "w13c",
+    "sentence": "Copiii s-au jucat cu mingile în curte.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Articularea corectă este „mingile”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p13",
+    "correctSentence": null
+  },
+  {
+    "id": "w14",
+    "sentence": "Am nevoie de un servici de calitate.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „serviciu”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p14",
+    "correctSentence": "Am nevoie de un serviciu de calitate."
+  },
+  {
+    "id": "w14c",
+    "sentence": "Am nevoie de un serviciu de calitate.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „serviciu”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p14",
+    "correctSentence": null
+  },
+  {
+    "id": "w15",
+    "sentence": "Am stabilit protocoluri stricte pentru eveniment.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „protocoale”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p15",
+    "correctSentence": "Am stabilit protocoale stricte pentru eveniment."
+  },
+  {
+    "id": "w15c",
+    "sentence": "Am stabilit protocoale stricte pentru eveniment.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „protocoale”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p15",
+    "correctSentence": null
+  },
+  {
+    "id": "w16",
+    "sentence": "Ea a adus o monstră de parfum la magazin.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „mostră”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p16",
+    "correctSentence": "Ea a adus o mostră de parfum la magazin."
+  },
+  {
+    "id": "w16c",
+    "sentence": "Ea a adus o mostră de parfum la magazin.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „mostră”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p16",
+    "correctSentence": null
+  },
+  {
+    "id": "w17",
+    "sentence": "Am cumpărat mingii noi pentru meci.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de plural nearticulat este „mingi”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p17",
+    "correctSentence": "Am cumpărat mingi noi pentru meci."
+  },
+  {
+    "id": "w17c",
+    "sentence": "Am cumpărat mingi noi pentru meci.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de plural nearticulat este „mingi”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p17",
+    "correctSentence": null
+  },
+  {
+    "id": "w18",
+    "sentence": "Am aflat adevărul minciunei abia a doua zi.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „minciunii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p18",
+    "correctSentence": "Am aflat adevărul minciunii abia a doua zi."
+  },
+  {
+    "id": "w18c",
+    "sentence": "Am aflat adevărul minciunii abia a doua zi.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „minciunii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p18",
+    "correctSentence": null
+  },
+  {
+    "id": "w19",
+    "sentence": "Ele au respectat toate regulile ordinei de zi.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „ordinii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p19",
+    "correctSentence": "Ele au respectat toate regulile ordinii de zi."
+  },
+  {
+    "id": "w19c",
+    "sentence": "Ele au respectat toate regulile ordinii de zi.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „ordinii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p19",
+    "correctSentence": null
+  },
+  {
+    "id": "w20",
+    "sentence": "Am strâns ouălelor de la găini.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv plural este „ouălor”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p20",
+    "correctSentence": "Am strâns ouălor de la găini."
+  },
+  {
+    "id": "w20c",
+    "sentence": "Am strâns ouălor de la găini.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv plural este „ouălor”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p20",
+    "correctSentence": null
+  },
+  {
+    "id": "w21",
+    "sentence": "Pescarii au aruncat năvoduri în Dunăre.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „năvoade”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p21",
+    "correctSentence": "Pescarii au aruncat năvoade în Dunăre."
+  },
+  {
+    "id": "w21c",
+    "sentence": "Pescarii au aruncat năvoade în Dunăre.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „năvoade”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p21",
+    "correctSentence": null
+  },
+  {
+    "id": "w22",
+    "sentence": "Am vizitat o moscheie veche din Istanbul.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „moschee”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p22",
+    "correctSentence": "Am vizitat o moschee veche din Istanbul."
+  },
+  {
+    "id": "w22c",
+    "sentence": "Am vizitat o moschee veche din Istanbul.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „moschee”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p22",
+    "correctSentence": null
+  },
+  {
+    "id": "w23",
+    "sentence": "Vreau să miroase a flori de tei.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de conjunctiv este „să miroasă”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă"
+    ],
+    "pairId": "p23",
+    "correctSentence": "Vreau să miroasă a flori de tei."
+  },
+  {
+    "id": "w23c",
+    "sentence": "Vreau să miroasă a flori de tei.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de conjunctiv este „să miroasă”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p23",
+    "correctSentence": null
+  },
+  {
+    "id": "w24",
+    "sentence": "Culoarea mingei s-a pierdut după spălare.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „mingii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p24",
+    "correctSentence": "Culoarea mingii s-a pierdut după spălare."
+  },
+  {
+    "id": "w24c",
+    "sentence": "Culoarea mingii s-a pierdut după spălare.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „mingii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p24",
+    "correctSentence": null
+  },
+  {
+    "id": "w25",
+    "sentence": "Nu se merită să mai încerci o dată.",
+    "isCorrect": false,
+    "explanation": "Corect este „merită”, fără pronumele reflexiv.",
+    "category": "morfologie",
+    "topic": "pronume",
+    "difficulty": 2,
+    "tags": [
+      "pronume",
+      "greșeală frecventă"
+    ],
+    "pairId": "p25",
+    "correctSentence": "Nu merită să mai încerci o dată."
+  },
+  {
+    "id": "w25c",
+    "sentence": "Nu merită să mai încerci o dată.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Corect este „merită”, fără pronumele reflexiv.",
+    "category": "morfologie",
+    "topic": "pronume",
+    "difficulty": 2,
+    "tags": [
+      "pronume",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p25",
+    "correctSentence": null
+  },
+  {
+    "id": "w26",
+    "sentence": "Clima mediteraneană este foarte plăcută.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „mediteraneeană”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p26",
+    "correctSentence": "Clima mediteraneeană este foarte plăcută."
+  },
+  {
+    "id": "w26c",
+    "sentence": "Clima mediteraneeană este foarte plăcută.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „mediteraneeană”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p26",
+    "correctSentence": null
+  },
+  {
+    "id": "w27",
+    "sentence": "Am mâncat o măzlină delicioasă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „măslină”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p27",
+    "correctSentence": "Am mâncat o măslină delicioasă."
+  },
+  {
+    "id": "w27c",
+    "sentence": "Am mâncat o măslină delicioasă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „măslină”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p27",
+    "correctSentence": null
+  },
+  {
+    "id": "w28",
+    "sentence": "Am cumpărat un pulover de culoare maron.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „maro”, invariabil.",
+    "category": "morfologie",
+    "topic": "adverb",
+    "difficulty": 2,
+    "tags": [
+      "adverb"
+    ],
+    "pairId": "p28",
+    "correctSentence": "Am cumpărat un pulover de culoare maro."
+  },
+  {
+    "id": "w28c",
+    "sentence": "Am cumpărat un pulover de culoare maro.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „maro”, invariabil.",
+    "category": "morfologie",
+    "topic": "adverb",
+    "difficulty": 2,
+    "tags": [
+      "adverb",
+      "confirmare"
+    ],
+    "pairId": "p28",
+    "correctSentence": null
+  },
+  {
+    "id": "w29",
+    "sentence": "I-am dat mătușei un cadou frumos.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de dativ este „mătușii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "dativ"
+    ],
+    "pairId": "p29",
+    "correctSentence": "I-am dat mătușii un cadou frumos."
+  },
+  {
+    "id": "w29c",
+    "sentence": "I-am dat mătușii un cadou frumos.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de dativ este „mătușii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "dativ",
+      "confirmare"
+    ],
+    "pairId": "p29",
+    "correctSentence": null
+  },
+  {
+    "id": "w30",
+    "sentence": "Am văzut păianjăni mari în podul casei.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „păianjeni”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p30",
+    "correctSentence": "Am văzut păianjeni mari în podul casei."
+  },
+  {
+    "id": "w30c",
+    "sentence": "Am văzut păianjeni mari în podul casei.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „păianjeni”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p30",
+    "correctSentence": null
+  },
+  {
+    "id": "w31",
+    "sentence": "Am cumpărat mânuși de lână de la piață.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „mănuși”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p31",
+    "correctSentence": "Am cumpărat mănuși de lână de la piață."
+  },
+  {
+    "id": "w31c",
+    "sentence": "Am cumpărat mănuși de lână de la piață.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „mănuși”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p31",
+    "correctSentence": null
+  },
+  {
+    "id": "w32",
+    "sentence": "A fost un accident năpraznic pe autostradă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „năprasnic”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p32",
+    "correctSentence": "A fost un accident năprasnic pe autostradă."
+  },
+  {
+    "id": "w32c",
+    "sentence": "A fost un accident năprasnic pe autostradă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „năprasnic”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p32",
+    "correctSentence": null
+  },
+  {
+    "id": "w33",
+    "sentence": "Fratele meu este liceean la oraș.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „licean”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p33",
+    "correctSentence": "Fratele meu este licean la oraș."
+  },
+  {
+    "id": "w33c",
+    "sentence": "Fratele meu este licean la oraș.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „licean”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p33",
+    "correctSentence": null
+  },
+  {
+    "id": "w34",
+    "sentence": "Victimile accidentului au fost transportate la spital.",
+    "isCorrect": false,
+    "explanation": "Forma corectă articulată este „victimele”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p34",
+    "correctSentence": "Victimele accidentului au fost transportate la spital."
+  },
+  {
+    "id": "w34c",
+    "sentence": "Victimele accidentului au fost transportate la spital.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă articulată este „victimele”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p34",
+    "correctSentence": null
+  },
+  {
+    "id": "w35",
+    "sentence": "Politicienii au lansat slogane noi în campanie.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „sloganuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p35",
+    "correctSentence": "Politicienii au lansat sloganuri noi în campanie."
+  },
+  {
+    "id": "w35c",
+    "sentence": "Politicienii au lansat sloganuri noi în campanie.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „sloganuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p35",
+    "correctSentence": null
+  },
+  {
+    "id": "w36",
+    "sentence": "Nu știe nimeni mersul soartei tale.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „sorții”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p36",
+    "correctSentence": "Nu știe nimeni mersul sorții tale."
+  },
+  {
+    "id": "w36c",
+    "sentence": "Nu știe nimeni mersul sorții tale.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „sorții”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p36",
+    "correctSentence": null
+  },
+  {
+    "id": "w37",
+    "sentence": "Buretele poate a absoarbe apa foarte repede.",
+    "isCorrect": false,
+    "explanation": "Infinitivul corect este „a absorbi”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p37",
+    "correctSentence": "Buretele poate absorbi apa foarte repede."
+  },
+  {
+    "id": "w37c",
+    "sentence": "Buretele poate absorbi apa foarte repede.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Infinitivul corect este „a absorbi”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p37",
+    "correctSentence": null
+  },
+  {
+    "id": "w38",
+    "sentence": "Am fost la mai multe alimentări în cartier.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de plural este „alimentare”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p38",
+    "correctSentence": "Am fost la mai multe alimentare în cartier."
+  },
+  {
+    "id": "w38c",
+    "sentence": "Am fost la mai multe alimentare în cartier.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de plural este „alimentare”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p38",
+    "correctSentence": null
+  },
+  {
+    "id": "w39",
+    "sentence": "Sportivul îngenunchiază la startul cursei.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „îngenunchează”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p39",
+    "correctSentence": "Sportivul îngenunchează la startul cursei."
+  },
+  {
+    "id": "w39c",
+    "sentence": "Sportivul îngenunchează la startul cursei.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „îngenunchează”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p39",
+    "correctSentence": null
+  },
+  {
+    "id": "w40",
+    "sentence": "Un trăznet a lovit copacul din curte.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „trăsnet”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p40",
+    "correctSentence": "Un trăsnet a lovit copacul din curte."
+  },
+  {
+    "id": "w40c",
+    "sentence": "Un trăsnet a lovit copacul din curte.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „trăsnet”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p40",
+    "correctSentence": null
+  },
+  {
+    "id": "w41",
+    "sentence": "Banii erau păstrați în visteria regală.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „vistierie”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p41",
+    "correctSentence": "Banii erau păstrați în vistieria regală."
+  },
+  {
+    "id": "w41c",
+    "sentence": "Banii erau păstrați în vistieria regală.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „vistierie”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p41",
+    "correctSentence": null
+  },
+  {
+    "id": "w42",
+    "sentence": "Nu du nimic cu tine la examen.",
+    "isCorrect": false,
+    "explanation": "Imperativul negativ corect este „nu duce”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă"
+    ],
+    "pairId": "p42",
+    "correctSentence": "Nu duce nimic cu tine la examen."
+  },
+  {
+    "id": "w42c",
+    "sentence": "Nu duce nimic cu tine la examen.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Imperativul negativ corect este „nu duce”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p42",
+    "correctSentence": null
+  },
+  {
+    "id": "w43",
+    "sentence": "Ultimile zile de vacanță au fost ploioase.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „ultimele”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p43",
+    "correctSentence": "Ultimele zile de vacanță au fost ploioase."
+  },
+  {
+    "id": "w43c",
+    "sentence": "Ultimele zile de vacanță au fost ploioase.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „ultimele”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p43",
+    "correctSentence": null
+  },
+  {
+    "id": "w44",
+    "sentence": "Poliția a prins un excroc cunoscut.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „escroc”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p44",
+    "correctSentence": "Poliția a prins un escroc cunoscut."
+  },
+  {
+    "id": "w44c",
+    "sentence": "Poliția a prins un escroc cunoscut.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „escroc”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p44",
+    "correctSentence": null
+  },
+  {
+    "id": "w45",
+    "sentence": "Soldații au rămas dârzi în luptă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de plural este „dârji”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p45",
+    "correctSentence": "Soldații au rămas dârji în luptă."
+  },
+  {
+    "id": "w45c",
+    "sentence": "Soldații au rămas dârji în luptă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de plural este „dârji”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p45",
+    "correctSentence": null
+  },
+  {
+    "id": "w46",
+    "sentence": "Muzica liniștei m-a adormit imediat.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „liniștii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p46",
+    "correctSentence": "Muzica liniștii m-a adormit imediat."
+  },
+  {
+    "id": "w46c",
+    "sentence": "Muzica liniștii m-a adormit imediat.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „liniștii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p46",
+    "correctSentence": null
+  },
+  {
+    "id": "w47",
+    "sentence": "Mi-am mușcat vârful limbei din greșeală.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „limbii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p47",
+    "correctSentence": "Mi-am mușcat vârful limbii din greșeală."
+  },
+  {
+    "id": "w47c",
+    "sentence": "Mi-am mușcat vârful limbii din greșeală.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „limbii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p47",
+    "correctSentence": null
+  },
+  {
+    "id": "w48",
+    "sentence": "Noștrii prieteni au venit în vizită.",
+    "isCorrect": false,
+    "explanation": "Pronumele „noștri” nu se articulează.",
+    "category": "morfologie",
+    "topic": "pronume",
+    "difficulty": 2,
+    "tags": [
+      "pronume",
+      "greșeală frecventă"
+    ],
+    "pairId": "p48",
+    "correctSentence": "Noștri prieteni au venit în vizită."
+  },
+  {
+    "id": "w48c",
+    "sentence": "Noștri prieteni au venit în vizită.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pronumele „noștri” nu se articulează.",
+    "category": "morfologie",
+    "topic": "pronume",
+    "difficulty": 2,
+    "tags": [
+      "pronume",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p48",
+    "correctSentence": null
+  },
+  {
+    "id": "w49",
+    "sentence": "Mi-am cumpărat un maieu nou de bumbac.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „maiou”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p49",
+    "correctSentence": "Mi-am cumpărat un maiou nou de bumbac."
+  },
+  {
+    "id": "w49c",
+    "sentence": "Mi-am cumpărat un maiou nou de bumbac.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „maiou”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p49",
+    "correctSentence": null
+  },
+  {
+    "id": "w50",
+    "sentence": "Folosește o lopețică pentru prăjituri.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „lopățică”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p50",
+    "correctSentence": "Folosește o lopățică pentru prăjituri."
+  },
+  {
+    "id": "w50c",
+    "sentence": "Folosește o lopățică pentru prăjituri.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „lopățică”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p50",
+    "correctSentence": null
+  },
+  {
+    "id": "w51",
+    "sentence": "Am absolvit două liceuri diferite.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „licee”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p51",
+    "correctSentence": "Am absolvit două licee diferite."
+  },
+  {
+    "id": "w51c",
+    "sentence": "Am absolvit două licee diferite.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „licee”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p51",
+    "correctSentence": null
+  },
+  {
+    "id": "w52",
+    "sentence": "Albaștrii ochi ai fetei m-au impresionat.",
+    "isCorrect": false,
+    "explanation": "Adjectivul „albaștri” nu se articulează în acest context.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p52",
+    "correctSentence": "Albaștri ochi ai fetei m-au impresionat."
+  },
+  {
+    "id": "w52c",
+    "sentence": "Albaștri ochi ai fetei m-au impresionat.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Adjectivul „albaștri” nu se articulează în acest context.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p52",
+    "correctSentence": null
+  },
+  {
+    "id": "w53",
+    "sentence": "Am găsit câteva monezi vechi în pod.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „monede”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p53",
+    "correctSentence": "Am găsit câteva monede vechi în pod."
+  },
+  {
+    "id": "w53c",
+    "sentence": "Am găsit câteva monede vechi în pod.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „monede”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p53",
+    "correctSentence": null
+  },
+  {
+    "id": "w54",
+    "sentence": "El a terminat cursa pe locul al zecilea.",
+    "isCorrect": false,
+    "explanation": "Forma corectă a numeralului este „al zecelea”.",
+    "category": "morfologie",
+    "topic": "numerale",
+    "difficulty": 2,
+    "tags": [
+      "numerale"
+    ],
+    "pairId": "p54",
+    "correctSentence": "El a terminat cursa pe locul al zecelea."
+  },
+  {
+    "id": "w54c",
+    "sentence": "El a terminat cursa pe locul al zecelea.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă a numeralului este „al zecelea”.",
+    "category": "morfologie",
+    "topic": "numerale",
+    "difficulty": 2,
+    "tags": [
+      "numerale",
+      "confirmare"
+    ],
+    "pairId": "p54",
+    "correctSentence": null
+  },
+  {
+    "id": "w55",
+    "sentence": "Merg la salon pentru o manechiură nouă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „manichiură”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p55",
+    "correctSentence": "Merg la salon pentru o manichiură nouă."
+  },
+  {
+    "id": "w55c",
+    "sentence": "Merg la salon pentru o manichiură nouă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „manichiură”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p55",
+    "correctSentence": null
+  },
+  {
+    "id": "w56",
+    "sentence": "Am vizitat mai multe lăcașe sfinte.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „lăcașuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p56",
+    "correctSentence": "Am vizitat mai multe lăcașuri sfinte."
+  },
+  {
+    "id": "w56c",
+    "sentence": "Am vizitat mai multe lăcașuri sfinte.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „lăcașuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p56",
+    "correctSentence": null
+  },
+  {
+    "id": "w57",
+    "sentence": "Întâiele două pagini lipsesc din carte.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „întâile”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p57",
+    "correctSentence": "Întâile două pagini lipsesc din carte."
+  },
+  {
+    "id": "w57c",
+    "sentence": "Întâile două pagini lipsesc din carte.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „întâile”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p57",
+    "correctSentence": null
+  },
+  {
+    "id": "w58",
+    "sentence": "Le-am dat fetelor acestea caietele.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „acestora”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p58",
+    "correctSentence": "Le-am dat fetelor acestora caietele."
+  },
+  {
+    "id": "w58c",
+    "sentence": "Le-am dat fetelor acestora caietele.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „acestora”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p58",
+    "correctSentence": null
+  },
+  {
+    "id": "w59",
+    "sentence": "I-am scris însăși prietenei tale.",
+    "isCorrect": false,
+    "explanation": "Forma corectă pentru feminin este „înseși”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p59",
+    "correctSentence": "I-am scris înseși prietenei tale."
+  },
+  {
+    "id": "w59c",
+    "sentence": "I-am scris înseși prietenei tale.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă pentru feminin este „înseși”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p59",
+    "correctSentence": null
+  },
+  {
+    "id": "w60",
+    "sentence": "Am făcut o escursie frumoasă la munte.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „excursie”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p60",
+    "correctSentence": "Am făcut o excursie frumoasă la munte."
+  },
+  {
+    "id": "w60c",
+    "sentence": "Am făcut o excursie frumoasă la munte.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „excursie”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p60",
+    "correctSentence": null
+  },
+  {
+    "id": "w61",
+    "sentence": "Copilul sughițe de cinci minute.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „sughiță”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p61",
+    "correctSentence": "Copilul sughiță de cinci minute."
+  },
+  {
+    "id": "w61c",
+    "sentence": "Copilul sughiță de cinci minute.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „sughiță”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p61",
+    "correctSentence": null
+  },
+  {
+    "id": "w62",
+    "sentence": "Proprii copii au venit de la școală.",
+    "isCorrect": false,
+    "explanation": "Adjectivul articulat corect este „propriii”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p62",
+    "correctSentence": "Propriii copii au venit de la școală."
+  },
+  {
+    "id": "w62c",
+    "sentence": "Propriii copii au venit de la școală.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Adjectivul articulat corect este „propriii”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p62",
+    "correctSentence": null
+  },
+  {
+    "id": "w63",
+    "sentence": "El va succede la tron după tatăl său.",
+    "isCorrect": false,
+    "explanation": "Viitorul corect este „va succeda”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p63",
+    "correctSentence": "El va succeda la tron după tatăl său."
+  },
+  {
+    "id": "w63c",
+    "sentence": "El va succeda la tron după tatăl său.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Viitorul corect este „va succeda”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p63",
+    "correctSentence": null
+  },
+  {
+    "id": "w64",
+    "sentence": "Se pot întrevede unele probleme.",
+    "isCorrect": false,
+    "explanation": "Infinitivul corect este „a întrevedea”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p64",
+    "correctSentence": "Se pot întrevedea unele probleme."
+  },
+  {
+    "id": "w64c",
+    "sentence": "Se pot întrevedea unele probleme.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Infinitivul corect este „a întrevedea”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p64",
+    "correctSentence": null
+  },
+  {
+    "id": "w65",
+    "sentence": "Am ajuns la timp, întradevăr.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „într-adevăr”, cu cratimă.",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 2,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă"
+    ],
+    "pairId": "p65",
+    "correctSentence": "Am ajuns la timp, într-adevăr."
+  },
+  {
+    "id": "w65c",
+    "sentence": "Am ajuns la timp, într-adevăr.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „într-adevăr”, cu cratimă.",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 2,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p65",
+    "correctSentence": null
+  },
+  {
+    "id": "w66",
+    "sentence": "Am mâncat un sanviș la prânz.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „sendviș” sau „sandvici”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p66",
+    "correctSentence": "Am mâncat un sendviș la prânz."
+  },
+  {
+    "id": "w66c",
+    "sentence": "Am mâncat un sendviș la prânz.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „sendviș” sau „sandvici”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p66",
+    "correctSentence": null
+  },
+  {
+    "id": "w67",
+    "sentence": "Am cumpărat ridichii proaspete din piață.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „ridichi”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p67",
+    "correctSentence": "Am cumpărat ridichi proaspete din piață."
+  },
+  {
+    "id": "w67c",
+    "sentence": "Am cumpărat ridichi proaspete din piață.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „ridichi”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p67",
+    "correctSentence": null
+  },
+  {
+    "id": "w68",
+    "sentence": "Am o grije mare pentru sănătatea ta.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „grijă”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p68",
+    "correctSentence": "Am o grijă mare pentru sănătatea ta."
+  },
+  {
+    "id": "w68c",
+    "sentence": "Am o grijă mare pentru sănătatea ta.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „grijă”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p68",
+    "correctSentence": null
+  },
+  {
+    "id": "w69",
+    "sentence": "Am notat tema în caietul la o colegă.",
+    "isCorrect": false,
+    "explanation": "Construcția corectă folosește genitivul: „colegei”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p69",
+    "correctSentence": "Am notat tema în caietul colegei."
+  },
+  {
+    "id": "w69c",
+    "sentence": "Am notat tema în caietul colegei.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Construcția corectă folosește genitivul: „colegei”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p69",
+    "correctSentence": null
+  },
+  {
+    "id": "w70",
+    "sentence": "Este important să fi atent la ore.",
+    "isCorrect": false,
+    "explanation": "Conjunctivul corect este „să fii”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă"
+    ],
+    "pairId": "p70",
+    "correctSentence": "Este important să fii atent la ore."
+  },
+  {
+    "id": "w70c",
+    "sentence": "Este important să fii atent la ore.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Conjunctivul corect este „să fii”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p70",
+    "correctSentence": null
+  },
+  {
+    "id": "w71",
+    "sentence": "Câștigul este de doisprezece mii de lei.",
+    "isCorrect": false,
+    "explanation": "Forma corectă pentru feminin este „douăsprezece”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p71",
+    "correctSentence": "Câștigul este de douăsprezece mii de lei."
+  },
+  {
+    "id": "w71c",
+    "sentence": "Câștigul este de douăsprezece mii de lei.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă pentru feminin este „douăsprezece”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p71",
+    "correctSentence": null
+  },
+  {
+    "id": "w72",
+    "sentence": "Am cunoscut niște japoneji foarte prietenoși.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „japonezi”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p72",
+    "correctSentence": "Am cunoscut niște japonezi foarte prietenoși."
+  },
+  {
+    "id": "w72c",
+    "sentence": "Am cunoscut niște japonezi foarte prietenoși.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „japonezi”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p72",
+    "correctSentence": null
+  },
+  {
+    "id": "w73",
+    "sentence": "Am cumpărat mai multe jambonuri de curcan.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „jamboane”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p73",
+    "correctSentence": "Am cumpărat mai multe jamboane de curcan."
+  },
+  {
+    "id": "w73c",
+    "sentence": "Am cumpărat mai multe jamboane de curcan.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „jamboane”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p73",
+    "correctSentence": null
+  },
+  {
+    "id": "w74",
+    "sentence": "Mi-am luat cisme noi de piele.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „cizme”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p74",
+    "correctSentence": "Mi-am luat cizme noi de piele."
+  },
+  {
+    "id": "w74c",
+    "sentence": "Mi-am luat cizme noi de piele.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „cizme”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p74",
+    "correctSentence": null
+  },
+  {
+    "id": "w75",
+    "sentence": "Pe moșie sunt câteva heleșteuri mari.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „heleșteie”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p75",
+    "correctSentence": "Pe moșie sunt câteva heleșteie mari."
+  },
+  {
+    "id": "w75c",
+    "sentence": "Pe moșie sunt câteva heleșteie mari.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „heleșteie”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p75",
+    "correctSentence": null
+  },
+  {
+    "id": "w76",
+    "sentence": "Am cumpărat un ștecher nou pentru priză.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „ștecăr”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p76",
+    "correctSentence": "Am cumpărat un ștecăr nou pentru priză."
+  },
+  {
+    "id": "w76c",
+    "sentence": "Am cumpărat un ștecăr nou pentru priză.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „ștecăr”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p76",
+    "correctSentence": null
+  },
+  {
+    "id": "w77",
+    "sentence": "Furtunele puternice au rupt mai mulți copaci.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „furtuni”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p77",
+    "correctSentence": "Furtunile puternice au rupt mai mulți copaci."
+  },
+  {
+    "id": "w77c",
+    "sentence": "Furtunile puternice au rupt mai mulți copaci.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „furtuni”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p77",
+    "correctSentence": null
+  },
+  {
+    "id": "w78",
+    "sentence": "Mi-am cumpărat jenți noi pentru mașină.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „jante”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p78",
+    "correctSentence": "Mi-am cumpărat jante noi pentru mașină."
+  },
+  {
+    "id": "w78c",
+    "sentence": "Mi-am cumpărat jante noi pentru mașină.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „jante”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p78",
+    "correctSentence": null
+  },
+  {
+    "id": "w79",
+    "sentence": "Am schimbat becul lampei din birou.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „lămpii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p79",
+    "correctSentence": "Am schimbat becul lămpii din birou."
+  },
+  {
+    "id": "w79c",
+    "sentence": "Am schimbat becul lămpii din birou.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „lămpii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p79",
+    "correctSentence": null
+  },
+  {
+    "id": "w80",
+    "sentence": "Am plantat jalonuri pentru noul gard.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „jaloane”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p80",
+    "correctSentence": "Am plantat jaloane pentru noul gard."
+  },
+  {
+    "id": "w80c",
+    "sentence": "Am plantat jaloane pentru noul gard.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „jaloane”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p80",
+    "correctSentence": null
+  },
+  {
+    "id": "w81",
+    "sentence": "Aceasta este o intreprindere de succes.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „întreprindere”, cu â.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p81",
+    "correctSentence": "Aceasta este o întreprindere de succes."
+  },
+  {
+    "id": "w81c",
+    "sentence": "Aceasta este o întreprindere de succes.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „întreprindere”, cu â.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p81",
+    "correctSentence": null
+  },
+  {
+    "id": "w82",
+    "sentence": "Fazele lunei influențează mareele.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „lunii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p82",
+    "correctSentence": "Fazele lunii influențează mareele."
+  },
+  {
+    "id": "w82c",
+    "sentence": "Fazele lunii influențează mareele.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „lunii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p82",
+    "correctSentence": null
+  },
+  {
+    "id": "w83",
+    "sentence": "Dragele mele prietene mi-au trimis flori.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de vocativ este „dragile”.",
+    "category": "morfologie",
+    "topic": "vocativ",
+    "difficulty": 2,
+    "tags": [
+      "vocativ"
+    ],
+    "pairId": "p83",
+    "correctSentence": "Dragile mele prietene mi-au trimis flori."
+  },
+  {
+    "id": "w83c",
+    "sentence": "Dragile mele prietene mi-au trimis flori.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de vocativ este „dragile”.",
+    "category": "morfologie",
+    "topic": "vocativ",
+    "difficulty": 2,
+    "tags": [
+      "vocativ",
+      "confirmare"
+    ],
+    "pairId": "p83",
+    "correctSentence": null
+  },
+  {
+    "id": "w84",
+    "sentence": "Am pus înnăbuși focul cu nisip.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „înăbuși”, cu un singur n.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p84",
+    "correctSentence": "Am pus să înăbușe focul cu nisip."
+  },
+  {
+    "id": "w84c",
+    "sentence": "Am pus să înăbușe focul cu nisip.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „înăbuși”, cu un singur n.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p84",
+    "correctSentence": null
+  },
+  {
+    "id": "w85",
+    "sentence": "Am tăiat mai multe butucuri pentru iarnă.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „butuci”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p85",
+    "correctSentence": "Am tăiat mai multe butuci pentru iarnă."
+  },
+  {
+    "id": "w85c",
+    "sentence": "Am tăiat mai multe butuci pentru iarnă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „butuci”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p85",
+    "correctSentence": null
+  },
+  {
+    "id": "w86",
+    "sentence": "Ea este o ieșană mândră de orașul ei.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „ieșeană”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p86",
+    "correctSentence": "Ea este o ieșeană mândră de orașul ei."
+  },
+  {
+    "id": "w86c",
+    "sentence": "Ea este o ieșeană mândră de orașul ei.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „ieșeană”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p86",
+    "correctSentence": null
+  },
+  {
+    "id": "w87",
+    "sentence": "Am studiat harta mapamondului la ora de geografie.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „harta lumii”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p87",
+    "correctSentence": "Am studiat harta lumii la ora de geografie."
+  },
+  {
+    "id": "w87c",
+    "sentence": "Am studiat harta lumii la ora de geografie.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „harta lumii”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p87",
+    "correctSentence": null
+  },
+  {
+    "id": "w88",
+    "sentence": "Am făcut o greșală în calculul final.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „greșeală”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p88",
+    "correctSentence": "Am făcut o greșeală în calculul final."
+  },
+  {
+    "id": "w88c",
+    "sentence": "Am făcut o greșeală în calculul final.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „greșeală”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p88",
+    "correctSentence": null
+  },
+  {
+    "id": "w89",
+    "sentence": "Mi-am cumpărat o caramelă de la cofetărie.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „caramea”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p89",
+    "correctSentence": "Mi-am cumpărat o caramea de la cofetărie."
+  },
+  {
+    "id": "w89c",
+    "sentence": "Mi-am cumpărat o caramea de la cofetărie.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „caramea”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p89",
+    "correctSentence": null
+  },
+  {
+    "id": "w90",
+    "sentence": "Am vizitat Istambul anul trecut.",
+    "isCorrect": false,
+    "explanation": "Numele corect al orașului este „Istanbul”.",
+    "category": "ortografie",
+    "topic": "nume proprii",
+    "difficulty": 1,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p90",
+    "correctSentence": "Am vizitat Istanbul anul trecut."
+  },
+  {
+    "id": "w90c",
+    "sentence": "Am vizitat Istanbul anul trecut.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Numele corect al orașului este „Istanbul”.",
+    "category": "ortografie",
+    "topic": "nume proprii",
+    "difficulty": 1,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p90",
+    "correctSentence": null
+  },
+  {
+    "id": "w91",
+    "sentence": "Noi înmuiăm rufele înainte de spălare.",
+    "isCorrect": false,
+    "explanation": "Forma corectă la persoana I plural este „înmuiem”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p91",
+    "correctSentence": "Noi înmuiem rufele înainte de spălare."
+  },
+  {
+    "id": "w91c",
+    "sentence": "Noi înmuiem rufele înainte de spălare.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă la persoana I plural este „înmuiem”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p91",
+    "correctSentence": null
+  },
+  {
+    "id": "w92",
+    "sentence": "A început să înopte înainte de ora cinci.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „înnopta”, cu doi n.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p92",
+    "correctSentence": "A început să înnopte înainte de ora cinci."
+  },
+  {
+    "id": "w92c",
+    "sentence": "A început să înnopte înainte de ora cinci.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „înnopta”, cu doi n.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p92",
+    "correctSentence": null
+  },
+  {
+    "id": "w93",
+    "sentence": "Am urmat un itinerariu strict în excursie.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „itinerar”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p93",
+    "correctSentence": "Am urmat un itinerar strict în excursie."
+  },
+  {
+    "id": "w93c",
+    "sentence": "Am urmat un itinerar strict în excursie.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „itinerar”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p93",
+    "correctSentence": null
+  },
+  {
+    "id": "w94",
+    "sentence": "Știrile cotidiane sunt publicate zilnic.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „cotidiene”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p94",
+    "correctSentence": "Știrile cotidiene sunt publicate zilnic."
+  },
+  {
+    "id": "w94c",
+    "sentence": "Știrile cotidiene sunt publicate zilnic.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „cotidiene”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p94",
+    "correctSentence": null
+  },
+  {
+    "id": "w95",
+    "sentence": "A întârziat, deasemenea, la ședință.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „de asemenea”, separat.",
+    "category": "ortografie",
+    "topic": "ortografie",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p95",
+    "correctSentence": "A întârziat, de asemenea, la ședință."
+  },
+  {
+    "id": "w95c",
+    "sentence": "A întârziat, de asemenea, la ședință.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „de asemenea”, separat.",
+    "category": "ortografie",
+    "topic": "ortografie",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p95",
+    "correctSentence": null
+  },
+  {
+    "id": "w96",
+    "sentence": "Nu zi nimic despre surpriza de mâine.",
+    "isCorrect": false,
+    "explanation": "Imperativul negativ corect este „nu zice”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă"
+    ],
+    "pairId": "p96",
+    "correctSentence": "Nu zice nimic despre surpriza de mâine."
+  },
+  {
+    "id": "w96c",
+    "sentence": "Nu zice nimic despre surpriza de mâine.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Imperativul negativ corect este „nu zice”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p96",
+    "correctSentence": null
+  },
+  {
+    "id": "w97",
+    "sentence": "Mi-am cumpărat teneși albi de sport.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „teniși”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p97",
+    "correctSentence": "Mi-am cumpărat teniși albi de sport."
+  },
+  {
+    "id": "w97c",
+    "sentence": "Mi-am cumpărat teniși albi de sport.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „teniși”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p97",
+    "correctSentence": null
+  },
+  {
+    "id": "w98",
+    "sentence": "Am scris mai multe esee pentru concurs.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „eseuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p98",
+    "correctSentence": "Am scris mai multe eseuri pentru concurs."
+  },
+  {
+    "id": "w98c",
+    "sentence": "Am scris mai multe eseuri pentru concurs.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „eseuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p98",
+    "correctSentence": null
+  },
+  {
+    "id": "w99",
+    "sentence": "Pisica vrea să se cațere în copac.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de conjunctiv este „să se cațăre”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă"
+    ],
+    "pairId": "p99",
+    "correctSentence": "Pisica vrea să se cațăre în copac."
+  },
+  {
+    "id": "w99c",
+    "sentence": "Pisica vrea să se cațăre în copac.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de conjunctiv este „să se cațăre”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p99",
+    "correctSentence": null
+  },
+  {
+    "id": "w100",
+    "sentence": "Fii regelui au moștenit tronul.",
+    "isCorrect": false,
+    "explanation": "Forma corectă articulată este „fiii”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p100",
+    "correctSentence": "Fiii regelui au moștenit tronul."
+  },
+  {
+    "id": "w100c",
+    "sentence": "Fiii regelui au moștenit tronul.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă articulată este „fiii”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p100",
+    "correctSentence": null
+  },
+  {
+    "id": "w101",
+    "sentence": "Preotul a sfințit aghiasma pentru credincioși.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „agheasmă”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p101",
+    "correctSentence": "Preotul a sfințit agheasma pentru credincioși."
+  },
+  {
+    "id": "w101c",
+    "sentence": "Preotul a sfințit agheasma pentru credincioși.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „agheasmă”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p101",
+    "correctSentence": null
+  },
+  {
+    "id": "w102",
+    "sentence": "După ploaie au apărut curcubee pe cer.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „curcubeie”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p102",
+    "correctSentence": "După ploaie au apărut curcubeie pe cer."
+  },
+  {
+    "id": "w102c",
+    "sentence": "După ploaie au apărut curcubeie pe cer.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „curcubeie”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p102",
+    "correctSentence": null
+  },
+  {
+    "id": "w103",
+    "sentence": "Noi vroiam să mergem la film aseară.",
+    "isCorrect": false,
+    "explanation": "Imperfectul corect este „voiam”, nu „vroiam”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p103",
+    "correctSentence": "Noi voiam să mergem la film aseară."
+  },
+  {
+    "id": "w103c",
+    "sentence": "Noi voiam să mergem la film aseară.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Imperfectul corect este „voiam”, nu „vroiam”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p103",
+    "correctSentence": null
+  },
+  {
+    "id": "w104",
+    "sentence": "Am văzut urmele vulpei în zăpadă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „vulpii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p104",
+    "correctSentence": "Am văzut urmele vulpii în zăpadă."
+  },
+  {
+    "id": "w104c",
+    "sentence": "Am văzut urmele vulpii în zăpadă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „vulpii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p104",
+    "correctSentence": null
+  },
+  {
+    "id": "w105",
+    "sentence": "Am lipit afișuri pe peretele clasei.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „afișe”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p105",
+    "correctSentence": "Am lipit afișe pe peretele clasei."
+  },
+  {
+    "id": "w105c",
+    "sentence": "Am lipit afișe pe peretele clasei.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „afișe”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p105",
+    "correctSentence": null
+  },
+  {
+    "id": "w106",
+    "sentence": "Am cumpărat căciule groase pentru schi.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „căciuli”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p106",
+    "correctSentence": "Am cumpărat căciuli groase pentru schi."
+  },
+  {
+    "id": "w106c",
+    "sentence": "Am cumpărat căciuli groase pentru schi.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „căciuli”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p106",
+    "correctSentence": null
+  },
+  {
+    "id": "w107",
+    "sentence": "Mașina de poliție avea girofare aprinse.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „girofaruri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p107",
+    "correctSentence": "Mașina de poliție avea girofaruri aprinse."
+  },
+  {
+    "id": "w107c",
+    "sentence": "Mașina de poliție avea girofaruri aprinse.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „girofaruri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p107",
+    "correctSentence": null
+  },
+  {
+    "id": "w108",
+    "sentence": "Am vizitat o gogoșerie în Deltă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „gogoșărie”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p108",
+    "correctSentence": "Am vizitat o gogoșărie în Deltă."
+  },
+  {
+    "id": "w108c",
+    "sentence": "Am vizitat o gogoșărie în Deltă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „gogoșărie”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p108",
+    "correctSentence": null
+  },
+  {
+    "id": "w109",
+    "sentence": "Am separat gălbenușe de albușuri.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „gălbenușuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p109",
+    "correctSentence": "Am separat gălbenușuri de albușuri."
+  },
+  {
+    "id": "w109c",
+    "sentence": "Am separat gălbenușuri de albușuri.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „gălbenușuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p109",
+    "correctSentence": null
+  },
+  {
+    "id": "w110",
+    "sentence": "Părul lui a început să fie grizonat.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „grizonant”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p110",
+    "correctSentence": "Părul lui a început să fie grizonant."
+  },
+  {
+    "id": "w110c",
+    "sentence": "Părul lui a început să fie grizonant.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „grizonant”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p110",
+    "correctSentence": null
+  },
+  {
+    "id": "w111",
+    "sentence": "Am rezervat două hotele în stațiune.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „hoteluri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p111",
+    "correctSentence": "Am rezervat două hoteluri în stațiune."
+  },
+  {
+    "id": "w111c",
+    "sentence": "Am rezervat două hoteluri în stațiune.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „hoteluri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p111",
+    "correctSentence": null
+  },
+  {
+    "id": "w112",
+    "sentence": "Am vizitat Iașul în weekend.",
+    "isCorrect": false,
+    "explanation": "Forma corectă articulată este „Iașiul”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p112",
+    "correctSentence": "Am vizitat Iașiul în weekend."
+  },
+  {
+    "id": "w112c",
+    "sentence": "Am vizitat Iașiul în weekend.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă articulată este „Iașiul”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p112",
+    "correctSentence": null
+  },
+  {
+    "id": "w113",
+    "sentence": "Boala poate fi asimtomatică la început.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „asimptomatică”, cu p.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p113",
+    "correctSentence": "Boala poate fi asimptomatică la început."
+  },
+  {
+    "id": "w113c",
+    "sentence": "Boala poate fi asimptomatică la început.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „asimptomatică”, cu p.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p113",
+    "correctSentence": null
+  },
+  {
+    "id": "w114",
+    "sentence": "Am parcat autovehicolul în fața blocului.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „autovehicul”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p114",
+    "correctSentence": "Am parcat autovehiculul în fața blocului."
+  },
+  {
+    "id": "w114c",
+    "sentence": "Am parcat autovehiculul în fața blocului.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „autovehicul”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p114",
+    "correctSentence": null
+  },
+  {
+    "id": "w115",
+    "sentence": "Am avut mai multe succesuri în carieră.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „succese”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p115",
+    "correctSentence": "Am avut mai multe succese în carieră."
+  },
+  {
+    "id": "w115c",
+    "sentence": "Am avut mai multe succese în carieră.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „succese”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p115",
+    "correctSentence": null
+  },
+  {
+    "id": "w116",
+    "sentence": "Am cumpărat o foarfece nouă pentru grădină.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „foarfece”, nu „foarfeci”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p116",
+    "correctSentence": "Am cumpărat un foarfece nou pentru grădină."
+  },
+  {
+    "id": "w116c",
+    "sentence": "Am cumpărat un foarfece nou pentru grădină.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „foarfece”, nu „foarfeci”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p116",
+    "correctSentence": null
+  },
+  {
+    "id": "w117",
+    "sentence": "Copiii au înălțat zmee pe câmp.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „zmeie”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p117",
+    "correctSentence": "Copiii au înălțat zmeie pe câmp."
+  },
+  {
+    "id": "w117c",
+    "sentence": "Copiii au înălțat zmeie pe câmp.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „zmeie”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p117",
+    "correctSentence": null
+  },
+  {
+    "id": "w118",
+    "sentence": "Am cumpărat mai multe ciocolăți de casă.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „ciocolate”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p118",
+    "correctSentence": "Am cumpărat mai multe ciocolate de casă."
+  },
+  {
+    "id": "w118c",
+    "sentence": "Am cumpărat mai multe ciocolate de casă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „ciocolate”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p118",
+    "correctSentence": null
+  },
+  {
+    "id": "w119",
+    "sentence": "Am mâncat un crenvurșt cu muștar.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „crenvurst”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p119",
+    "correctSentence": "Am mâncat un crenvurst cu muștar."
+  },
+  {
+    "id": "w119c",
+    "sentence": "Am mâncat un crenvurst cu muștar.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „crenvurst”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p119",
+    "correctSentence": null
+  },
+  {
+    "id": "w120",
+    "sentence": "Ne-am întâlnit la cazino diseară.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „cazinou”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p120",
+    "correctSentence": "Ne-am întâlnit la cazinou diseară."
+  },
+  {
+    "id": "w120c",
+    "sentence": "Ne-am întâlnit la cazinou diseară.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „cazinou”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p120",
+    "correctSentence": null
+  },
+  {
+    "id": "w121",
+    "sentence": "Acest hotel oferă mult comfort clienților.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „confort”, fără m.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p121",
+    "correctSentence": "Acest hotel oferă mult confort clienților."
+  },
+  {
+    "id": "w121c",
+    "sentence": "Acest hotel oferă mult confort clienților.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „confort”, fără m.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p121",
+    "correctSentence": null
+  },
+  {
+    "id": "w122",
+    "sentence": "Din cauza ceței, avionul a aterizat mai târziu.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „ceții”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p122",
+    "correctSentence": "Din cauza ceții, avionul a aterizat mai târziu."
+  },
+  {
+    "id": "w122c",
+    "sentence": "Din cauza ceții, avionul a aterizat mai târziu.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „ceții”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p122",
+    "correctSentence": null
+  },
+  {
+    "id": "w123",
+    "sentence": "Am cumpărat chibrite de la magazin.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „chibrituri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p123",
+    "correctSentence": "Am cumpărat chibrituri de la magazin."
+  },
+  {
+    "id": "w123c",
+    "sentence": "Am cumpărat chibrituri de la magazin.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „chibrituri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p123",
+    "correctSentence": null
+  },
+  {
+    "id": "w124",
+    "sentence": "Se pare că începe să fulguie afară.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „să fulguiască”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p124",
+    "correctSentence": "Se pare că începe să fulguiască afară."
+  },
+  {
+    "id": "w124c",
+    "sentence": "Se pare că începe să fulguiască afară.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „să fulguiască”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p124",
+    "correctSentence": null
+  },
+  {
+    "id": "w125",
+    "sentence": "Rezultatul a fost ales aleator, fără criterii.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „aleatoriu”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p125",
+    "correctSentence": "Rezultatul a fost ales aleatoriu, fără criterii."
+  },
+  {
+    "id": "w125c",
+    "sentence": "Rezultatul a fost ales aleatoriu, fără criterii.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „aleatoriu”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p125",
+    "correctSentence": null
+  },
+  {
+    "id": "w126",
+    "sentence": "Ași vrea să plec în vacanță.",
+    "isCorrect": false,
+    "explanation": "Condiționalul corect este „aș vrea”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "condițional",
+      "greșeală frecventă"
+    ],
+    "pairId": "p126",
+    "correctSentence": "Aș vrea să plec în vacanță."
+  },
+  {
+    "id": "w126c",
+    "sentence": "Aș vrea să plec în vacanță.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Condiționalul corect este „aș vrea”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "condițional",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p126",
+    "correctSentence": null
+  },
+  {
+    "id": "w127",
+    "sentence": "Însuți dumneavoastră ați spus asta.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „dumneavoastră înșivă”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p127",
+    "correctSentence": "Dumneavoastră înșivă ați spus asta."
+  },
+  {
+    "id": "w127c",
+    "sentence": "Dumneavoastră înșivă ați spus asta.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „dumneavoastră înșivă”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p127",
+    "correctSentence": null
+  },
+  {
+    "id": "w128",
+    "sentence": "Craca a început să se înconvoaie sub greutate.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „a se încovoia”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p128",
+    "correctSentence": "Craca a început să se încovoaie sub greutate."
+  },
+  {
+    "id": "w128c",
+    "sentence": "Craca a început să se încovoaie sub greutate.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „a se încovoia”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p128",
+    "correctSentence": null
+  },
+  {
+    "id": "w129",
+    "sentence": "A-ți citit cartea recomandată de profesor?",
+    "isCorrect": false,
+    "explanation": "Auxiliarul corect este „ați” (de la „a avea”), nu „a-ți”.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă"
+    ],
+    "pairId": "p129",
+    "correctSentence": "Ați citit cartea recomandată de profesor?"
+  },
+  {
+    "id": "w129c",
+    "sentence": "Ați citit cartea recomandată de profesor?",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Auxiliarul corect este „ați” (de la „a avea”), nu „a-ți”.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p129",
+    "correctSentence": null
+  },
+  {
+    "id": "w130",
+    "sentence": "Simbolul asterix este folosit pentru note.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „asterisc”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p130",
+    "correctSentence": "Simbolul asterisc este folosit pentru note."
+  },
+  {
+    "id": "w130c",
+    "sentence": "Simbolul asterisc este folosit pentru note.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „asterisc”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p130",
+    "correctSentence": null
+  },
+  {
+    "id": "w131",
+    "sentence": "A fost o vizită inopinantă a rudelor.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „inopinată”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p131",
+    "correctSentence": "A fost o vizită inopinată a rudelor."
+  },
+  {
+    "id": "w131c",
+    "sentence": "A fost o vizită inopinată a rudelor.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „inopinată”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p131",
+    "correctSentence": null
+  },
+  {
+    "id": "w132",
+    "sentence": "Noile reglementări au avut impacte majore.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „impacturi”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p132",
+    "correctSentence": "Noile reglementări au avut impacturi majore."
+  },
+  {
+    "id": "w132c",
+    "sentence": "Noile reglementări au avut impacturi majore.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „impacturi”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p132",
+    "correctSentence": null
+  },
+  {
+    "id": "w133",
+    "sentence": "Ar fii bine să plecăm mai devreme.",
+    "isCorrect": false,
+    "explanation": "Condiționalul corect este „ar fi”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "condițional",
+      "greșeală frecventă"
+    ],
+    "pairId": "p133",
+    "correctSentence": "Ar fi bine să plecăm mai devreme."
+  },
+  {
+    "id": "w133c",
+    "sentence": "Ar fi bine să plecăm mai devreme.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Condiționalul corect este „ar fi”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "condițional",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p133",
+    "correctSentence": null
+  },
+  {
+    "id": "w134",
+    "sentence": "Am pus ghiață în paharul cu limonadă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „gheață”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p134",
+    "correctSentence": "Am pus gheață în paharul cu limonadă."
+  },
+  {
+    "id": "w134c",
+    "sentence": "Am pus gheață în paharul cu limonadă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „gheață”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p134",
+    "correctSentence": null
+  },
+  {
+    "id": "w135",
+    "sentence": "Pisica are ghiare foarte ascuțite.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „gheare”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p135",
+    "correctSentence": "Pisica are gheare foarte ascuțite."
+  },
+  {
+    "id": "w135c",
+    "sentence": "Pisica are gheare foarte ascuțite.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „gheare”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p135",
+    "correctSentence": null
+  },
+  {
+    "id": "w136",
+    "sentence": "Nu este voie să copii la examen.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „să copiezi”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p136",
+    "correctSentence": "Nu este voie să copiezi la examen."
+  },
+  {
+    "id": "w136c",
+    "sentence": "Nu este voie să copiezi la examen.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „să copiezi”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p136",
+    "correctSentence": null
+  },
+  {
+    "id": "w137",
+    "sentence": "Abea am reușit să termin la timp.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „abia”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p137",
+    "correctSentence": "Abia am reușit să termin la timp."
+  },
+  {
+    "id": "w137c",
+    "sentence": "Abia am reușit să termin la timp.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „abia”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p137",
+    "correctSentence": null
+  },
+  {
+    "id": "w138",
+    "sentence": "El bănuie că va ploua mâine.",
+    "isCorrect": false,
+    "explanation": "Forma corectă a verbului este „bănuiește”.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă"
+    ],
+    "pairId": "p138",
+    "correctSentence": "El bănuiește că va ploua mâine."
+  },
+  {
+    "id": "w138c",
+    "sentence": "El bănuiește că va ploua mâine.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă a verbului este „bănuiește”.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p138",
+    "correctSentence": null
+  },
+  {
+    "id": "w139",
+    "sentence": "Defapt, nu am știut de această regulă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „de fapt”, separat.",
+    "category": "ortografie",
+    "topic": "ortografie",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p139",
+    "correctSentence": "De fapt, nu am știut de această regulă."
+  },
+  {
+    "id": "w139c",
+    "sentence": "De fapt, nu am știut de această regulă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „de fapt”, separat.",
+    "category": "ortografie",
+    "topic": "ortografie",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p139",
+    "correctSentence": null
+  },
+  {
+    "id": "w140",
+    "sentence": "Avionul are un fuselaj foarte aerodinamic.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „fuzelaj”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p140",
+    "correctSentence": "Avionul are un fuzelaj foarte aerodinamic."
+  },
+  {
+    "id": "w140c",
+    "sentence": "Avionul are un fuzelaj foarte aerodinamic.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „fuzelaj”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p140",
+    "correctSentence": null
+  },
+  {
+    "id": "w141",
+    "sentence": "Am udat grădina cu furtunele noi.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „furtunuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p141",
+    "correctSentence": "Am udat grădina cu furtunurile noi."
+  },
+  {
+    "id": "w141c",
+    "sentence": "Am udat grădina cu furtunurile noi.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „furtunuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p141",
+    "correctSentence": null
+  },
+  {
+    "id": "w142",
+    "sentence": "Evenimentul a avut un aer funegru.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „funebru”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p142",
+    "correctSentence": "Evenimentul a avut un aer funebru."
+  },
+  {
+    "id": "w142c",
+    "sentence": "Evenimentul a avut un aer funebru.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „funebru”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p142",
+    "correctSentence": null
+  },
+  {
+    "id": "w143",
+    "sentence": "Fiecare dintre elevi au ales un proiect.",
+    "isCorrect": false,
+    "explanation": "Verbul se acordă cu „fiecare”, la singular.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă"
+    ],
+    "pairId": "p143",
+    "correctSentence": "Fiecare dintre elevi a ales un proiect."
+  },
+  {
+    "id": "w143c",
+    "sentence": "Fiecare dintre elevi a ales un proiect.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Verbul se acordă cu „fiecare”, la singular.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p143",
+    "correctSentence": null
+  },
+  {
+    "id": "w144",
+    "sentence": "Te rog să nu fii nepoliticos.",
+    "isCorrect": false,
+    "explanation": "Imperativul negativ corect este „nu fi”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă"
+    ],
+    "pairId": "p144",
+    "correctSentence": "Te rog să nu fi nepoliticos."
+  },
+  {
+    "id": "w144c",
+    "sentence": "Te rog să nu fi nepoliticos.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Imperativul negativ corect este „nu fi”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p144",
+    "correctSentence": null
+  },
+  {
+    "id": "w145",
+    "sentence": "Vreau să fi atent la ce îți spun.",
+    "isCorrect": false,
+    "explanation": "Imperativul afirmativ corect este „fii”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă"
+    ],
+    "pairId": "p145",
+    "correctSentence": "Vreau să fii atent la ce îți spun."
+  },
+  {
+    "id": "w145c",
+    "sentence": "Vreau să fii atent la ce îți spun.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Imperativul afirmativ corect este „fii”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "imperativ",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p145",
+    "correctSentence": null
+  },
+  {
+    "id": "w146",
+    "sentence": "Voi făceți curat, eu nu fac nimic.",
+    "isCorrect": false,
+    "explanation": "Formele corecte sunt „faceți” și „nu face”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p146",
+    "correctSentence": "Voi faceți curat, eu nu fac nimic."
+  },
+  {
+    "id": "w146c",
+    "sentence": "Voi faceți curat, eu nu fac nimic.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Formele corecte sunt „faceți” și „nu face”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p146",
+    "correctSentence": null
+  },
+  {
+    "id": "w148",
+    "sentence": "Țara a impus un embargo asupra importurilor.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „embargou”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p147",
+    "correctSentence": "Țara a impus un embargou asupra importurilor."
+  },
+  {
+    "id": "w148c",
+    "sentence": "Țara a impus un embargou asupra importurilor.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „embargou”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p147",
+    "correctSentence": null
+  },
+  {
+    "id": "w149",
+    "sentence": "Problema ar dispare dacă am acționa.",
+    "isCorrect": false,
+    "explanation": "Condiționalul corect este „ar dispărea”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "condițional",
+      "greșeală frecventă"
+    ],
+    "pairId": "p148",
+    "correctSentence": "Problema ar dispărea dacă am acționa."
+  },
+  {
+    "id": "w149c",
+    "sentence": "Problema ar dispărea dacă am acționa.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Condiționalul corect este „ar dispărea”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "condițional",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p148",
+    "correctSentence": null
+  },
+  {
+    "id": "w150",
+    "sentence": "Echipele de dezăpezire au ieșit pe străzi.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „deszăpezire”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p149",
+    "correctSentence": "Echipele de deszăpezire au ieșit pe străzi."
+  },
+  {
+    "id": "w150c",
+    "sentence": "Echipele de deszăpezire au ieșit pe străzi.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „deszăpezire”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p149",
+    "correctSentence": null
+  },
+  {
+    "id": "w151",
+    "sentence": "Am desumflat salteaua după vacanță.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „dezumflat”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p150",
+    "correctSentence": "Am dezumflat salteaua după vacanță."
+  },
+  {
+    "id": "w151c",
+    "sentence": "Am dezumflat salteaua după vacanță.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „dezumflat”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p150",
+    "correctSentence": null
+  },
+  {
+    "id": "w152",
+    "sentence": "Au venit destui de mulți oameni la concert.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „destul de”, invariabil.",
+    "category": "morfologie",
+    "topic": "adverb",
+    "difficulty": 2,
+    "tags": [
+      "adverb"
+    ],
+    "pairId": "p151",
+    "correctSentence": "Au venit destul de mulți oameni la concert."
+  },
+  {
+    "id": "w152c",
+    "sentence": "Au venit destul de mulți oameni la concert.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „destul de”, invariabil.",
+    "category": "morfologie",
+    "topic": "adverb",
+    "difficulty": 2,
+    "tags": [
+      "adverb",
+      "confirmare"
+    ],
+    "pairId": "p151",
+    "correctSentence": null
+  },
+  {
+    "id": "w153",
+    "sentence": "Tânărul delicvent a fost arestat.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „delincvent”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p152",
+    "correctSentence": "Tânărul delincvent a fost arestat."
+  },
+  {
+    "id": "w153c",
+    "sentence": "Tânărul delincvent a fost arestat.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „delincvent”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p152",
+    "correctSentence": null
+  },
+  {
+    "id": "w154",
+    "sentence": "Au pus trupul în cosciug.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „coșciug”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p153",
+    "correctSentence": "Au pus trupul în coșciug."
+  },
+  {
+    "id": "w154c",
+    "sentence": "Au pus trupul în coșciug.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „coșciug”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p153",
+    "correctSentence": null
+  },
+  {
+    "id": "w155",
+    "sentence": "Am citit contoarul de energie electrică.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „contor”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p154",
+    "correctSentence": "Am citit contorul de energie electrică."
+  },
+  {
+    "id": "w155c",
+    "sentence": "Am citit contorul de energie electrică.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „contor”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p154",
+    "correctSentence": null
+  },
+  {
+    "id": "w156",
+    "sentence": "Nu mă pot complace în această situație.",
+    "isCorrect": false,
+    "explanation": "Forma corectă a infinitivului este „a complăcea”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p155",
+    "correctSentence": "Nu mă pot complăcea în această situație."
+  },
+  {
+    "id": "w156c",
+    "sentence": "Nu mă pot complăcea în această situație.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă a infinitivului este „a complăcea”.",
+    "category": "morfologie",
+    "topic": "conjugare",
+    "difficulty": 2,
+    "tags": [
+      "verb",
+      "conjugare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p155",
+    "correctSentence": null
+  },
+  {
+    "id": "w157",
+    "sentence": "Nu mă combăteți, vă rog frumos.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „combateți”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p156",
+    "correctSentence": "Nu mă combateți, vă rog frumos."
+  },
+  {
+    "id": "w157c",
+    "sentence": "Nu mă combateți, vă rog frumos.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „combateți”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p156",
+    "correctSentence": null
+  },
+  {
+    "id": "w158",
+    "sentence": "Bunica stătea să coase la fereastră.",
+    "isCorrect": false,
+    "explanation": "Conjunctivul corect este „să coasă”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă"
+    ],
+    "pairId": "p157",
+    "correctSentence": "Bunica stătea să coasă la fereastră."
+  },
+  {
+    "id": "w158c",
+    "sentence": "Bunica stătea să coasă la fereastră.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Conjunctivul corect este „să coasă”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p157",
+    "correctSentence": null
+  },
+  {
+    "id": "w159",
+    "sentence": "Am ambalat cadoul în ciolofan.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „celofan”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p158",
+    "correctSentence": "Am ambalat cadoul în celofan."
+  },
+  {
+    "id": "w159c",
+    "sentence": "Am ambalat cadoul în celofan.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „celofan”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p158",
+    "correctSentence": null
+  },
+  {
+    "id": "w160",
+    "sentence": "Ciocănitoarele bat în copaci toată ziua.",
+    "isCorrect": false,
+    "explanation": "Forma corectă articulată este „ciocănitorile”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă"
+    ],
+    "pairId": "p159",
+    "correctSentence": "Ciocănitorile bat în copaci toată ziua."
+  },
+  {
+    "id": "w160c",
+    "sentence": "Ciocănitorile bat în copaci toată ziua.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă articulată este „ciocănitorile”.",
+    "category": "morfologie",
+    "topic": "articulare",
+    "difficulty": 2,
+    "tags": [
+      "articulare",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p159",
+    "correctSentence": null
+  },
+  {
+    "id": "w161",
+    "sentence": "Am cinsprezece lei în buzunar.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „cincisprezece”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p160",
+    "correctSentence": "Am cincisprezece lei în buzunar."
+  },
+  {
+    "id": "w161c",
+    "sentence": "Am cincisprezece lei în buzunar.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „cincisprezece”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p160",
+    "correctSentence": null
+  },
+  {
+    "id": "w162",
+    "sentence": "El este al cincelea copil din familie.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „al cincilea”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p161",
+    "correctSentence": "El este al cincilea copil din familie."
+  },
+  {
+    "id": "w162c",
+    "sentence": "El este al cincilea copil din familie.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „al cincilea”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p161",
+    "correctSentence": null
+  },
+  {
+    "id": "w163",
+    "sentence": "Ochii cenușei ai pisicii străluceau.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de plural este „cenușii”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p162",
+    "correctSentence": "Ochii cenușii ai pisicii străluceau."
+  },
+  {
+    "id": "w163c",
+    "sentence": "Ochii cenușii ai pisicii străluceau.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de plural este „cenușii”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p162",
+    "correctSentence": null
+  },
+  {
+    "id": "w164",
+    "sentence": "Ea este cea mai puțin apreciată din echipă.",
+    "isCorrect": false,
+    "explanation": "Corect este „cel mai puțin”, invariabil.",
+    "category": "morfologie",
+    "topic": "adverb",
+    "difficulty": 2,
+    "tags": [
+      "adverb"
+    ],
+    "pairId": "p163",
+    "correctSentence": "Ea este cel mai puțin apreciată din echipă."
+  },
+  {
+    "id": "w164c",
+    "sentence": "Ea este cel mai puțin apreciată din echipă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Corect este „cel mai puțin”, invariabil.",
+    "category": "morfologie",
+    "topic": "adverb",
+    "difficulty": 2,
+    "tags": [
+      "adverb",
+      "confirmare"
+    ],
+    "pairId": "p163",
+    "correctSentence": null
+  },
+  {
+    "id": "w165",
+    "sentence": "Au venit câțiva zeci de spectatori.",
+    "isCorrect": false,
+    "explanation": "Forma corectă pentru feminin este „câteva”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p164",
+    "correctSentence": "Au venit câteva zeci de spectatori."
+  },
+  {
+    "id": "w165c",
+    "sentence": "Au venit câteva zeci de spectatori.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă pentru feminin este „câteva”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p164",
+    "correctSentence": null
+  },
+  {
+    "id": "w166",
+    "sentence": "Am participat la mai multe carnavale anul acesta.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „carnavaluri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p165",
+    "correctSentence": "Am participat la mai multe carnavaluri anul acesta."
+  },
+  {
+    "id": "w166c",
+    "sentence": "Am participat la mai multe carnavaluri anul acesta.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „carnavaluri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p165",
+    "correctSentence": null
+  },
+  {
+    "id": "w167",
+    "sentence": "Cartea care am citit-o a fost fascinantă.",
+    "isCorrect": false,
+    "explanation": "Lipsește prepoziția „pe” înaintea pronumelui relativ.",
+    "category": "morfologie",
+    "topic": "pronume",
+    "difficulty": 2,
+    "tags": [
+      "pronume",
+      "greșeală frecventă"
+    ],
+    "pairId": "p166",
+    "correctSentence": "Cartea pe care am citit-o a fost fascinantă."
+  },
+  {
+    "id": "w167c",
+    "sentence": "Cartea pe care am citit-o a fost fascinantă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Lipsește prepoziția „pe” înaintea pronumelui relativ.",
+    "category": "morfologie",
+    "topic": "pronume",
+    "difficulty": 2,
+    "tags": [
+      "pronume",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p166",
+    "correctSentence": null
+  },
+  {
+    "id": "w168",
+    "sentence": "Trebuie să păstrăm bunăcuviință.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „bună-cuviință”, cu cratimă.",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 2,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă"
+    ],
+    "pairId": "p167",
+    "correctSentence": "Trebuie să păstrăm buna-cuviință."
+  },
+  {
+    "id": "w168c",
+    "sentence": "Trebuie să păstrăm buna-cuviință.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „bună-cuviință”, cu cratimă.",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 2,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p167",
+    "correctSentence": null
+  },
+  {
+    "id": "w169",
+    "sentence": "Am cumpărat mai multe briceaguri de colecție.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „bricege”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p168",
+    "correctSentence": "Am cumpărat mai multe bricege de colecție."
+  },
+  {
+    "id": "w169c",
+    "sentence": "Am cumpărat mai multe bricege de colecție.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „bricege”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p168",
+    "correctSentence": null
+  },
+  {
+    "id": "w170",
+    "sentence": "Uniforma școlii este de culoare bleumaren.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „bleumarin”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p169",
+    "correctSentence": "Uniforma școlii este de culoare bleumarin."
+  },
+  {
+    "id": "w170c",
+    "sentence": "Uniforma școlii este de culoare bleumarin.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „bleumarin”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p169",
+    "correctSentence": null
+  },
+  {
+    "id": "w171",
+    "sentence": "El blesteamă în fiecare zi de supărare.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „blestemă”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p170",
+    "correctSentence": "El blestemă în fiecare zi de supărare."
+  },
+  {
+    "id": "w171c",
+    "sentence": "El blestemă în fiecare zi de supărare.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „blestemă”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p170",
+    "correctSentence": null
+  },
+  {
+    "id": "w172",
+    "sentence": "Am mâncat un biscuite cu ciocolată.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „biscuit”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p171",
+    "correctSentence": "Am mâncat un biscuit cu ciocolată."
+  },
+  {
+    "id": "w172c",
+    "sentence": "Am mâncat un biscuit cu ciocolată.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „biscuit”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p171",
+    "correctSentence": null
+  },
+  {
+    "id": "w173",
+    "sentence": "Noi bătem covoarele în fiecare primăvară.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „batem”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p172",
+    "correctSentence": "Noi batem covoarele în fiecare primăvară."
+  },
+  {
+    "id": "w173c",
+    "sentence": "Noi batem covoarele în fiecare primăvară.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „batem”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p172",
+    "correctSentence": null
+  },
+  {
+    "id": "w174",
+    "sentence": "Am văzut cuibul barzei pe casă.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „berzei”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p173",
+    "correctSentence": "Am văzut cuibul berzei pe casă."
+  },
+  {
+    "id": "w174c",
+    "sentence": "Am văzut cuibul berzei pe casă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „berzei”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p173",
+    "correctSentence": null
+  },
+  {
+    "id": "w175",
+    "sentence": "Am calculat baremuri diferite pentru examen.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „bareme”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p174",
+    "correctSentence": "Am calculat bareme diferite pentru examen."
+  },
+  {
+    "id": "w175c",
+    "sentence": "Am calculat bareme diferite pentru examen.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „bareme”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p174",
+    "correctSentence": null
+  },
+  {
+    "id": "w176",
+    "sentence": "Au montat balustrăzi noi la balcon.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „balustrade”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p175",
+    "correctSentence": "Au montat balustrade noi la balcon."
+  },
+  {
+    "id": "w176c",
+    "sentence": "Au montat balustrade noi la balcon.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „balustrade”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p175",
+    "correctSentence": null
+  },
+  {
+    "id": "w177",
+    "sentence": "Profesorul atribuiește notele la final.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „atribuie”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p176",
+    "correctSentence": "Profesorul atribuie notele la final."
+  },
+  {
+    "id": "w177c",
+    "sentence": "Profesorul atribuie notele la final.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „atribuie”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p176",
+    "correctSentence": null
+  },
+  {
+    "id": "w178",
+    "sentence": "Am cumpărat mai multe atlasuri geografice.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „atlase”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p177",
+    "correctSentence": "Am cumpărat mai multe atlase geografice."
+  },
+  {
+    "id": "w178c",
+    "sentence": "Am cumpărat mai multe atlase geografice.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „atlase”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p177",
+    "correctSentence": null
+  },
+  {
+    "id": "w179",
+    "sentence": "Căldura amiezei era greu de suportat.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „amiezii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p178",
+    "correctSentence": "Căldura amiezii era greu de suportat."
+  },
+  {
+    "id": "w179c",
+    "sentence": "Căldura amiezii era greu de suportat.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „amiezii”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p178",
+    "correctSentence": null
+  },
+  {
+    "id": "w180",
+    "sentence": "Le-am mulțumit amândorura părinților.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de dativ este „amândurora”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "dativ"
+    ],
+    "pairId": "p179",
+    "correctSentence": "Le-am mulțumit amândurora părinților."
+  },
+  {
+    "id": "w180c",
+    "sentence": "Le-am mulțumit amândurora părinților.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de dativ este „amândurora”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "dativ",
+      "confirmare"
+    ],
+    "pairId": "p179",
+    "correctSentence": null
+  },
+  {
+    "id": "w181",
+    "sentence": "Am corectat câteva aliniate din document.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „alineate”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p180",
+    "correctSentence": "Am corectat câteva alineate din document."
+  },
+  {
+    "id": "w181c",
+    "sentence": "Am corectat câteva alineate din document.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „alineate”.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p180",
+    "correctSentence": null
+  },
+  {
+    "id": "w182",
+    "sentence": "Rezultatele au fost complet aleatoare.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de plural este „aleatorii”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p181",
+    "correctSentence": "Rezultatele au fost complet aleatorii."
+  },
+  {
+    "id": "w182c",
+    "sentence": "Rezultatele au fost complet aleatorii.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de plural este „aleatorii”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p181",
+    "correctSentence": null
+  },
+  {
+    "id": "w183",
+    "sentence": "Am răsfoit mai multe albumuri cu fotografii.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „albume”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p182",
+    "correctSentence": "Am răsfoit mai multe albume cu fotografii."
+  },
+  {
+    "id": "w183c",
+    "sentence": "Am răsfoit mai multe albume cu fotografii.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „albume”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p182",
+    "correctSentence": null
+  },
+  {
+    "id": "w184",
+    "sentence": "Este important să aibe toate actele în regulă.",
+    "isCorrect": false,
+    "explanation": "Conjunctivul corect este „să aibă”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă"
+    ],
+    "pairId": "p183",
+    "correctSentence": "Este important să aibă toate actele în regulă."
+  },
+  {
+    "id": "w184c",
+    "sentence": "Este important să aibă toate actele în regulă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Conjunctivul corect este „să aibă”.",
+    "category": "morfologie",
+    "topic": "moduri verbale",
+    "difficulty": 3,
+    "tags": [
+      "verb",
+      "conjunctiv",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p183",
+    "correctSentence": null
+  },
+  {
+    "id": "w185",
+    "sentence": "Aceiași fată a câștigat concursul.",
+    "isCorrect": false,
+    "explanation": "Forma corectă pentru feminin singular este „aceeași”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p184",
+    "correctSentence": "Aceeași fată a câștigat concursul."
+  },
+  {
+    "id": "w185c",
+    "sentence": "Aceeași fată a câștigat concursul.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă pentru feminin singular este „aceeași”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p184",
+    "correctSentence": null
+  },
+  {
+    "id": "w186",
+    "sentence": "Ne vedem deobicei dimineața la cafenea.",
+    "isCorrect": false,
+    "explanation": "Forma corectă este „de obicei”, separat.",
+    "category": "ortografie",
+    "topic": "ortografie",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "p185",
+    "correctSentence": "Ne vedem de obicei dimineața la cafenea."
+  },
+  {
+    "id": "w186c",
+    "sentence": "Ne vedem de obicei dimineața la cafenea.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă este „de obicei”, separat.",
+    "category": "ortografie",
+    "topic": "ortografie",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p185",
+    "correctSentence": null
+  },
+  {
+    "id": "w187",
+    "sentence": "Dragele mele, vă mulțumesc pentru cadou.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de vocativ este „dragile”.",
+    "category": "morfologie",
+    "topic": "vocativ",
+    "difficulty": 2,
+    "tags": [
+      "vocativ"
+    ],
+    "pairId": "p186",
+    "correctSentence": "Dragile mele, vă mulțumesc pentru cadou."
+  },
+  {
+    "id": "w187c",
+    "sentence": "Dragile mele, vă mulțumesc pentru cadou.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de vocativ este „dragile”.",
+    "category": "morfologie",
+    "topic": "vocativ",
+    "difficulty": 2,
+    "tags": [
+      "vocativ",
+      "confirmare"
+    ],
+    "pairId": "p186",
+    "correctSentence": null
+  },
+  {
+    "id": "w188",
+    "sentence": "Am avut câteva eșece în afaceri.",
+    "isCorrect": false,
+    "explanation": "Pluralul corect este „eșecuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "p187",
+    "correctSentence": "Am avut câteva eșecuri în afaceri."
+  },
+  {
+    "id": "w188c",
+    "sentence": "Am avut câteva eșecuri în afaceri.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pluralul corect este „eșecuri”.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p187",
+    "correctSentence": null
+  },
+  {
+    "id": "w189",
+    "sentence": "I-am scris copilului cel interesat de înscriere.",
+    "isCorrect": false,
+    "explanation": "Forma corectă de genitiv este „celui”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv"
+    ],
+    "pairId": "p188",
+    "correctSentence": "I-am scris copilului celui interesat de înscriere."
+  },
+  {
+    "id": "w189c",
+    "sentence": "I-am scris copilului celui interesat de înscriere.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Forma corectă de genitiv este „celui”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "genitiv",
+      "confirmare"
+    ],
+    "pairId": "p188",
+    "correctSentence": null
+  },
+  {
+    "id": "w190",
+    "sentence": "Compania a prezentat o soluție inovatoare pentru reducerea costurilor.",
+    "isCorrect": false,
+    "explanation": "„Inovatoare” se referă la persoane; pentru lucruri se folosește „novatoare”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p189",
+    "correctSentence": "Compania a prezentat o soluție novatoare pentru reducerea costurilor."
+  },
+  {
+    "id": "w190c",
+    "sentence": "Compania a prezentat o soluție novatoare pentru reducerea costurilor.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. „Inovatoare” se referă la persoane; pentru lucruri se folosește „novatoare”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p189",
+    "correctSentence": null
+  },
+  {
+    "id": "w191",
+    "sentence": "Am luat cartea după masă și am pus-o în geantă.",
+    "isCorrect": false,
+    "explanation": "Pentru sens spațial se folosește „de pe”, nu „după”.",
+    "category": "sintaxă",
+    "topic": "prepoziții",
+    "difficulty": 2,
+    "tags": [
+      "prepoziție",
+      "greșeală frecventă"
+    ],
+    "pairId": "p190",
+    "correctSentence": "Am luat cartea de pe masă și am pus-o în geantă."
+  },
+  {
+    "id": "w191c",
+    "sentence": "Am luat cartea de pe masă și am pus-o în geantă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pentru sens spațial se folosește „de pe”, nu „după”.",
+    "category": "sintaxă",
+    "topic": "prepoziții",
+    "difficulty": 2,
+    "tags": [
+      "prepoziție",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p190",
+    "correctSentence": null
+  },
+  {
+    "id": "w192",
+    "sentence": "Elevii care le-am dat teme au lipsit astăzi.",
+    "isCorrect": false,
+    "explanation": "În dativ se folosește „cărora”, nu „care”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "dativ"
+    ],
+    "pairId": "p191",
+    "correctSentence": "Elevii cărora le-am dat teme au lipsit astăzi."
+  },
+  {
+    "id": "w192c",
+    "sentence": "Elevii cărora le-am dat teme au lipsit astăzi.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. În dativ se folosește „cărora”, nu „care”.",
+    "category": "acord",
+    "topic": "genitiv-dativ",
+    "difficulty": 3,
+    "tags": [
+      "greșeală frecventă",
+      "dativ",
+      "confirmare"
+    ],
+    "pairId": "p191",
+    "correctSentence": null
+  },
+  {
+    "id": "w193",
+    "sentence": "Săptămâna viitoare au loc alegeri electorale în toată țara.",
+    "isCorrect": false,
+    "explanation": "Pleonasm: „alegeri” implică deja caracter electoral.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță"
+    ],
+    "pairId": "p192",
+    "correctSentence": "Săptămâna viitoare au loc alegeri în toată țara."
+  },
+  {
+    "id": "w193c",
+    "sentence": "Săptămâna viitoare au loc alegeri în toată țara.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pleonasm: „alegeri” implică deja caracter electoral.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță",
+      "confirmare"
+    ],
+    "pairId": "p192",
+    "correctSentence": null
+  },
+  {
+    "id": "w194",
+    "sentence": "Meteorologii au anunțat averse de ploaie pentru după-amiază.",
+    "isCorrect": false,
+    "explanation": "Pleonasm: „averse” se referă deja la ploaie.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță"
+    ],
+    "pairId": "p193",
+    "correctSentence": "Meteorologii au anunțat averse pentru după-amiază."
+  },
+  {
+    "id": "w194c",
+    "sentence": "Meteorologii au anunțat averse pentru după-amiază.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pleonasm: „averse” se referă deja la ploaie.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță",
+      "confirmare"
+    ],
+    "pairId": "p193",
+    "correctSentence": null
+  },
+  {
+    "id": "w195",
+    "sentence": "Sportul este foarte benefic pentru sănătate.",
+    "isCorrect": false,
+    "explanation": "„Benefic” nu admite intensificatori; se spune doar „benefic”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p194",
+    "correctSentence": "Sportul este benefic pentru sănătate."
+  },
+  {
+    "id": "w195c",
+    "sentence": "Sportul este benefic pentru sănătate.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. „Benefic” nu admite intensificatori; se spune doar „benefic”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p194",
+    "correctSentence": null
+  },
+  {
+    "id": "w196",
+    "sentence": "Am cumpărat decât pâine de la magazin.",
+    "isCorrect": false,
+    "explanation": "„Decât” se folosește doar în enunțuri negative. În enunț afirmativ se folosește „doar”.",
+    "category": "exprimare",
+    "topic": "decât vs doar",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p195",
+    "correctSentence": "Am cumpărat doar pâine de la magazin."
+  },
+  {
+    "id": "w196c",
+    "sentence": "Am cumpărat doar pâine de la magazin.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. „Decât” se folosește doar în enunțuri negative. În enunț afirmativ se folosește „doar”.",
+    "category": "exprimare",
+    "topic": "decât vs doar",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p195",
+    "correctSentence": null
+  },
+  {
+    "id": "w197",
+    "sentence": "Poliția a descoperit o rețea de contrabandă ilegală cu țigări.",
+    "isCorrect": false,
+    "explanation": "Pleonasm: „contrabandă” este prin definiție ilegală.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță"
+    ],
+    "pairId": "p196",
+    "correctSentence": "Poliția a descoperit o rețea de contrabandă cu țigări."
+  },
+  {
+    "id": "w197c",
+    "sentence": "Poliția a descoperit o rețea de contrabandă cu țigări.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pleonasm: „contrabandă” este prin definiție ilegală.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță",
+      "confirmare"
+    ],
+    "pairId": "p196",
+    "correctSentence": null
+  },
+  {
+    "id": "w198",
+    "sentence": "Echipa noastră colaborează împreună cu partenerii externi.",
+    "isCorrect": false,
+    "explanation": "Pleonasm: „a colabora” implică deja ideea de împreună.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță"
+    ],
+    "pairId": "p197",
+    "correctSentence": "Echipa noastră colaborează cu partenerii externi."
+  },
+  {
+    "id": "w198c",
+    "sentence": "Echipa noastră colaborează cu partenerii externi.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pleonasm: „a colabora” implică deja ideea de împreună.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță",
+      "confirmare"
+    ],
+    "pairId": "p197",
+    "correctSentence": null
+  },
+  {
+    "id": "w199",
+    "sentence": "Profesorul al cărei carte a fost publicată e foarte mândru.",
+    "isCorrect": false,
+    "explanation": "Pentru masculin se folosește „a cărui”, nu „al cărei”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p198",
+    "correctSentence": "Profesorul a cărui carte a fost publicată e foarte mândru."
+  },
+  {
+    "id": "w199c",
+    "sentence": "Profesorul a cărui carte a fost publicată e foarte mândru.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pentru masculin se folosește „a cărui”, nu „al cărei”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p198",
+    "correctSentence": null
+  },
+  {
+    "id": "w200",
+    "sentence": "Am reușit la examen din cauza efortului depus.",
+    "isCorrect": false,
+    "explanation": "„Datorită” se folosește pentru contexte pozitive, nu „din cauza”.",
+    "category": "exprimare",
+    "topic": "datorită vs din cauza",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p199",
+    "correctSentence": "Am reușit la examen datorită efortului depus."
+  },
+  {
+    "id": "w200c",
+    "sentence": "Am reușit la examen datorită efortului depus.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. „Datorită” se folosește pentru contexte pozitive, nu „din cauza”.",
+    "category": "exprimare",
+    "topic": "datorită vs din cauza",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p199",
+    "correctSentence": null
+  },
+  {
+    "id": "w201",
+    "sentence": "Este important ca să fii punctual la întâlnire.",
+    "isCorrect": false,
+    "explanation": "În subordonatele subiective se folosește doar „să”, nu „ca să”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă"
+    ],
+    "pairId": "p200",
+    "correctSentence": "Este important să fii punctual la întâlnire."
+  },
+  {
+    "id": "w201c",
+    "sentence": "Este important să fii punctual la întâlnire.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. În subordonatele subiective se folosește doar „să”, nu „ca să”.",
+    "category": "exprimare",
+    "topic": "utilizare corectă",
+    "difficulty": 2,
+    "tags": [
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "p200",
+    "correctSentence": null
+  },
+  {
+    "id": "w202",
+    "sentence": "La un anumit moment dat, ne-am dat seama că am greșit drumul.",
+    "isCorrect": false,
+    "explanation": "Pleonasm: expresia corectă este „la un moment dat”, fără „anumit”.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță"
+    ],
+    "pairId": "p201",
+    "correctSentence": "La un moment dat, ne-am dat seama că am greșit drumul."
+  },
+  {
+    "id": "w202c",
+    "sentence": "La un moment dat, ne-am dat seama că am greșit drumul.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pleonasm: expresia corectă este „la un moment dat”, fără „anumit”.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță",
+      "confirmare"
+    ],
+    "pairId": "p201",
+    "correctSentence": null
+  },
+  {
+    "id": "w203",
+    "sentence": "Șoferul avea o alcoolemie în sânge peste limita legală.",
+    "isCorrect": false,
+    "explanation": "Pleonasm: „alcoolemie” înseamnă deja concentrația de alcool în sânge.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță"
+    ],
+    "pairId": "p202",
+    "correctSentence": "Șoferul avea o alcoolemie peste limita legală."
+  },
+  {
+    "id": "w203c",
+    "sentence": "Șoferul avea o alcoolemie peste limita legală.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Pleonasm: „alcoolemie” înseamnă deja concentrația de alcool în sânge.",
+    "category": "exprimare",
+    "topic": "pleonasm",
+    "difficulty": 2,
+    "tags": [
+      "pleonasm",
+      "redundanță",
+      "confirmare"
+    ],
+    "pairId": "p202",
+    "correctSentence": null
+  },
+  {
+    "id": "g1",
+    "sentence": "Mie îmi place foarte mult să citesc.",
+    "isCorrect": false,
+    "explanation": "«Mie» este redundant deoarece «îmi» indică deja persoana.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3000",
+    "correctSentence": "Îmi place foarte mult să citesc."
+  },
+  {
+    "id": "g1c",
+    "sentence": "Îmi place foarte mult să citesc.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. «Mie» este redundant deoarece «îmi» indică deja persoana.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "g3000",
+    "correctSentence": null
+  },
+  {
+    "id": "g2",
+    "sentence": "El sa dus la școală ieri dimineață.",
+    "isCorrect": false,
+    "explanation": "«s-a» provine din «se a» și se scrie cu cratimă.",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 1,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3001",
+    "correctSentence": "El s-a dus la școală ieri dimineață."
+  },
+  {
+    "id": "g2c",
+    "sentence": "El s-a dus la școală ieri dimineață.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. «s-a» provine din «se a» și se scrie cu cratimă.",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 1,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "g3001",
+    "correctSentence": null
+  },
+  {
+    "id": "g3",
+    "sentence": "Copiii se joacă în parc în fiecare zi.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. «Copiii» este forma corectă de plural.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3002",
+    "correctSentence": null
+  },
+  {
+    "id": "g4",
+    "sentence": "Nu am nici o idee despre ce vorbești.",
+    "isCorrect": false,
+    "explanation": "«Nicio» se scrie într-un cuvânt când are sens negativ.",
+    "category": "ortografie",
+    "topic": "ortografie",
+    "difficulty": 2,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3003",
+    "correctSentence": "Nu am nicio idee despre ce vorbești."
+  },
+  {
+    "id": "g4c",
+    "sentence": "Nu am nicio idee despre ce vorbești.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. «Nicio» se scrie într-un cuvânt când are sens negativ.",
+    "category": "ortografie",
+    "topic": "ortografie",
+    "difficulty": 2,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "g3003",
+    "correctSentence": null
+  },
+  {
+    "id": "g5",
+    "sentence": "Cartea pe care am citito a fost fascinantă.",
+    "isCorrect": false,
+    "explanation": "Cratima unește verbul cu pronumele: «am citit-o».",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 1,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3004",
+    "correctSentence": "Cartea pe care am citit-o a fost fascinantă."
+  },
+  {
+    "id": "g5c",
+    "sentence": "Cartea pe care am citit-o a fost fascinantă.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Cratima unește verbul cu pronumele: «am citit-o».",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 1,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "g3004",
+    "correctSentence": null
+  },
+  {
+    "id": "g6",
+    "sentence": "M-am întâlnit cu prietenii mei la cafenea.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. «M-am» este contracția corectă a lui «mă am».",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3005",
+    "correctSentence": null
+  },
+  {
+    "id": "g8",
+    "sentence": "Aceasta este casa părinților mei.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. «Părinților» este forma corectă de genitiv plural.",
+    "category": "plural",
+    "topic": "pluralul substantivelor",
+    "difficulty": 1,
+    "tags": [
+      "plural",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3006",
+    "correctSentence": null
+  },
+  {
+    "id": "g9",
+    "sentence": "Serviciul de care îți spuneam s-a închis.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Construcția relativă și forma «s-a» sunt corecte.",
+    "category": "morfologie",
+    "topic": "pronume",
+    "difficulty": 2,
+    "tags": [
+      "pronume",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3007",
+    "correctSentence": null
+  },
+  {
+    "id": "g10",
+    "sentence": "Leam spus tuturor despre eveniment.",
+    "isCorrect": false,
+    "explanation": "Cratima este obligatorie între pronumele «le» și auxiliarul «am».",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 1,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3008",
+    "correctSentence": "Le-am spus tuturor despre eveniment."
+  },
+  {
+    "id": "g10c",
+    "sentence": "Le-am spus tuturor despre eveniment.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Cratima este obligatorie între pronumele «le» și auxiliarul «am».",
+    "category": "cratimă",
+    "topic": "cratima",
+    "difficulty": 1,
+    "tags": [
+      "cratimă",
+      "greșeală frecventă",
+      "confirmare"
+    ],
+    "pairId": "g3008",
+    "correctSentence": null
+  },
+  {
+    "id": "g11",
+    "sentence": "Nu știu cine va veni la petrecere.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Folosirea lui «va» și a lui «cine» este corectă.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3009",
+    "correctSentence": null
+  },
+  {
+    "id": "g13",
+    "sentence": "S-au vândut toate biletele pentru concert.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Acordul verbului cu subiectul «biletele» este corect.",
+    "category": "morfologie",
+    "topic": "verbe",
+    "difficulty": 1,
+    "tags": [
+      "verb",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3010",
+    "correctSentence": null
+  },
+  {
+    "id": "g15",
+    "sentence": "Mulțumesc pentru ajutorul acordat.",
+    "isCorrect": true,
+    "explanation": "Propoziția este corectă. Construcția este gramatical corectă și formală.",
+    "category": "ortografie",
+    "topic": "formă corectă",
+    "difficulty": 1,
+    "tags": [
+      "ortografie",
+      "greșeală frecventă"
+    ],
+    "pairId": "g3011",
+    "correctSentence": null
+  }
+]
