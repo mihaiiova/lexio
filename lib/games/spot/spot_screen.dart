@@ -200,7 +200,8 @@ class _SpotScreenState extends State<SpotScreen> {
   Widget _buildProgressSegments(SpotGameState state) {
     return Row(
       children: List.generate(state.texts.length, (i) {
-        final isCompleted = state.foundMistakeIndices[i].length ==
+        final isCompleted =
+            state.foundMistakeIndices[i].length ==
             state.texts[i].mistakes.length;
         final isCurrent = i == state.currentTextIndex;
 
@@ -215,9 +216,7 @@ class _SpotScreenState extends State<SpotScreen> {
 
         return Expanded(
           child: Padding(
-            padding: EdgeInsets.only(
-              left: i == 0 ? 0 : LexioSpacing.xxs,
-            ),
+            padding: EdgeInsets.only(left: i == 0 ? 0 : LexioSpacing.xxs),
             child: Container(
               height: isCurrent ? 4 : 3,
               decoration: BoxDecoration(
@@ -233,10 +232,13 @@ class _SpotScreenState extends State<SpotScreen> {
 
   Widget _buildTextEyebrow(SpotGameState state) {
     final label = switch (state.currentText.type) {
-      'whatsapp' => 'Conversație',
       'email' => 'Email',
       'story' => 'Poveste',
       'news' => 'Știre',
+      'child_composition' => 'Compunere',
+      'professional' => 'Text profesional',
+      'social_media' => 'Rețea socială',
+      'blog' => 'Blog',
       _ => 'Text',
     };
 
@@ -274,6 +276,8 @@ class _SpotScreenState extends State<SpotScreen> {
     final shakerIndex = state.shakingWordIndex;
 
     for (int i = startIndex; i <= endIndex; i++) {
+      final mistake = state.currentText.mistakeStartingAt(i);
+      final wordCount = mistake?.wordCount ?? 1;
       TextTokenState tokenState;
       if (state.isFoundMistakeWord(i)) {
         tokenState = TextTokenState.found;
@@ -296,24 +300,21 @@ class _SpotScreenState extends State<SpotScreen> {
       builders.add(
         TextToken(
           key: ValueKey('${state.currentTextIndex}_$i'),
-          originalText: state.displayedWord(i),
+          originalText: mistake?.token ?? state.displayedWord(i),
           correctionText: correction,
           state: tokenState,
           onTap: tappable ? () => _handleTapWord(i) : null,
         ),
       );
+      i += wordCount - 1;
     }
 
-    return Wrap(
-      spacing: 2,
-      runSpacing: 4,
-      children: builders,
-    );
+    return Wrap(spacing: 2, runSpacing: 4, children: builders);
   }
 
   String _getCorrectionForWord(SpotGameState state, int wordIndex) {
     for (int i = 0; i < state.currentText.mistakes.length; i++) {
-      if (state.currentText.mistakes[i].wordIndex == wordIndex) {
+      if (state.currentText.mistakes[i].containsWordIndex(wordIndex)) {
         return state.currentText.mistakes[i].replacement;
       }
     }
@@ -332,8 +333,8 @@ class _SpotScreenState extends State<SpotScreen> {
         child: state.isChecking
             ? _buildNextButton(state)
             : state.allMistakesFoundInCurrentText
-                ? _buildNextButton(state)
-                : _buildPlayActions(state),
+            ? _buildNextButton(state)
+            : _buildPlayActions(state),
       ),
     );
   }

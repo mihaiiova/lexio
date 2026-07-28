@@ -41,11 +41,12 @@ final class SpotGameState {
     this.isFinished = false,
     this.isChecking = false,
     this.shakingWordIndex,
-  })  : foundMistakeIndices = foundMistakeIndices ??
-            List.generate(texts.length, (_) => <int>{}),
-        incorrectTapWordIndices = incorrectTapWordIndices ??
-            List.generate(texts.length, (_) => <int>{}),
-        startTime = startTime ?? DateTime.now();
+  }) : foundMistakeIndices =
+           foundMistakeIndices ?? List.generate(texts.length, (_) => <int>{}),
+       incorrectTapWordIndices =
+           incorrectTapWordIndices ??
+           List.generate(texts.length, (_) => <int>{}),
+       startTime = startTime ?? DateTime.now();
 
   SpotText get currentText => texts[currentTextIndex];
   int get mistakesFound => foundMistakeIndices[currentTextIndex].length;
@@ -89,8 +90,7 @@ final class SpotGameState {
   int get score {
     final base = totalCorrectTaps * 100;
     final penalty = totalIncorrectTaps * 25;
-    final timeBonus =
-        mode == SpotGameMode.normal ? 0 : remainingSeconds * 5;
+    final timeBonus = mode == SpotGameMode.normal ? 0 : remainingSeconds * 5;
     return (base - penalty + timeBonus).clamp(0, 999999);
   }
 
@@ -101,7 +101,7 @@ final class SpotGameState {
   bool isFoundMistakeWord(int wordIndex) {
     final found = foundMistakeIndices[currentTextIndex];
     for (int i = 0; i < currentText.mistakes.length; i++) {
-      if (currentText.mistakes[i].wordIndex == wordIndex &&
+      if (currentText.mistakes[i].containsWordIndex(wordIndex) &&
           found.contains(i)) {
         return true;
       }
@@ -111,7 +111,7 @@ final class SpotGameState {
 
   bool isUnfoundMistakeWord(int wordIndex) {
     for (int i = 0; i < currentText.mistakes.length; i++) {
-      if (currentText.mistakes[i].wordIndex == wordIndex &&
+      if (currentText.mistakes[i].containsWordIndex(wordIndex) &&
           !foundMistakeIndices[currentTextIndex].contains(i)) {
         return true;
       }
@@ -121,17 +121,11 @@ final class SpotGameState {
 
   SpotTapOutcome tapWord(int wordIndex) {
     if (isFinished) {
-      return SpotTapOutcome(
-        state: this,
-        result: SpotTapResult.incorrect,
-      );
+      return SpotTapOutcome(state: this, result: SpotTapResult.incorrect);
     }
 
     if (isFoundMistakeWord(wordIndex)) {
-      return SpotTapOutcome(
-        state: this,
-        result: SpotTapResult.alreadyFound,
-      );
+      return SpotTapOutcome(state: this, result: SpotTapResult.alreadyFound);
     }
 
     final mistakeIndex = _findMistakeIndex(wordIndex);
@@ -140,8 +134,8 @@ final class SpotGameState {
       final newFound = List<Set<int>>.from(
         foundMistakeIndices.map((s) => Set<int>.from(s)),
       );
-      newFound[currentTextIndex] =
-          Set<int>.from(newFound[currentTextIndex])..add(mistakeIndex);
+      newFound[currentTextIndex] = Set<int>.from(newFound[currentTextIndex])
+        ..add(mistakeIndex);
 
       return SpotTapOutcome(
         state: _copyWith(foundMistakeIndices: newFound),
@@ -153,8 +147,9 @@ final class SpotGameState {
     final newIncorrect = List<Set<int>>.from(
       incorrectTapWordIndices.map((s) => Set<int>.from(s)),
     );
-    newIncorrect[currentTextIndex] =
-        Set<int>.from(newIncorrect[currentTextIndex])..add(wordIndex);
+    newIncorrect[currentTextIndex] = Set<int>.from(
+      newIncorrect[currentTextIndex],
+    )..add(wordIndex);
 
     return SpotTapOutcome(
       state: _copyWith(
@@ -219,15 +214,16 @@ final class SpotGameState {
       remainingSeconds: remainingSeconds ?? this.remainingSeconds,
       isFinished: isFinished ?? this.isFinished,
       isChecking: isChecking ?? this.isChecking,
-      shakingWordIndex:
-          clearShaker ? null : (shakingWordIndex ?? this.shakingWordIndex),
+      shakingWordIndex: clearShaker
+          ? null
+          : (shakingWordIndex ?? this.shakingWordIndex),
     );
   }
 
   int? _findMistakeIndex(int wordIndex) {
     final found = foundMistakeIndices[currentTextIndex];
     for (int i = 0; i < currentText.mistakes.length; i++) {
-      if (currentText.mistakes[i].wordIndex == wordIndex &&
+      if (currentText.mistakes[i].containsWordIndex(wordIndex) &&
           !found.contains(i)) {
         return i;
       }

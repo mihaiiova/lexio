@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": "n_am",
+      "hyphenatedForm": "n-am",
+      "components": ["nu", "am"],
+      "hyphenatedExplanation": "Forma scurtă a structurii «nu am» se scrie cu cratimă.",
+      "hyphenatedExample": "N-am primit încă răspunsul.",
+      "unhyphenatedForm": "nam",
+      "unhyphenatedIsValid": false,
+      "unhyphenatedExplanation": null,
+      "unhyphenatedExample": null
+    },
+    {
+      "id": "s_a_sa",
+      "hyphenatedForm": "s-a",
+      "components": ["s", "a"],
+      "hyphenatedExplanation": "«S-a» conține pronumele reflexiv «s-» și verbul auxiliar «a».",
+      "hyphenatedExample": "Maria s-a întors acasă.",
+      "unhyphenatedForm": "sa",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Sa» este adjectiv posesiv și însoțește un substantiv feminin singular.",
+      "unhyphenatedExample": "Cartea sa este pe masă."
+    },
+    {
+      "id": "s_au_sau",
+      "hyphenatedForm": "s-au",
+      "components": ["s", "au"],
+      "hyphenatedExplanation": "«S-au» conține pronumele reflexiv «s-» și verbul auxiliar «au».",
+      "hyphenatedExample": "Copiii s-au jucat în curte.",
+      "unhyphenatedForm": "sau",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Sau» este conjuncție și exprimă o alternativă.",
+      "unhyphenatedExample": "Preferi ceai sau cafea?"
+    },
+    {
+      "id": "l_a_la",
+      "hyphenatedForm": "l-a",
+      "components": ["l", "a"],
+      "hyphenatedExplanation": "«L-a» conține pronumele personal «l-» și verbul auxiliar «a».",
+      "hyphenatedExample": "Profesorul l-a felicitat.",
+      "unhyphenatedForm": "la",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«La» este prepoziție și introduce, de regulă, un complement.",
+      "unhyphenatedExample": "Mergem la bibliotecă."
+    },
+    {
+      "id": "i_a_ia",
+      "hyphenatedForm": "i-a",
+      "components": ["i", "a"],
+      "hyphenatedExplanation": "«I-a» conține pronumele personal «i-» și verbul auxiliar «a».",
+      "hyphenatedExample": "Andrei i-a trimis un mesaj.",
+      "unhyphenatedForm": "ia",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Ia» poate fi o formă a verbului «a lua».",
+      "unhyphenatedExample": "Ia umbrela cu tine."
+    },
+    {
+      "id": "i_au_iau",
+      "hyphenatedForm": "i-au",
+      "components": ["i", "au"],
+      "hyphenatedExplanation": "«I-au» conține pronumele personal «i-» și verbul auxiliar «au».",
+      "hyphenatedExample": "Colegii i-au oferit ajutor.",
+      "unhyphenatedForm": "iau",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Iau» este o formă a verbului «a lua».",
+      "unhyphenatedExample": "Eu iau autobuzul dimineața."
+    },
+    {
+      "id": "m_ai_mai",
+      "hyphenatedForm": "m-ai",
+      "components": ["m", "ai"],
+      "hyphenatedExplanation": "«M-ai» conține pronumele personal «m-» și verbul auxiliar «ai».",
+      "hyphenatedExample": "M-ai ajutat foarte mult.",
+      "unhyphenatedForm": "mai",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Mai» este, cel mai frecvent, adverb.",
+      "unhyphenatedExample": "Mai așteptăm câteva minute."
+    },
+    {
+      "id": "v_a_va",
+      "hyphenatedForm": "v-a",
+      "components": ["v", "a"],
+      "hyphenatedExplanation": "«V-a» conține pronumele personal «v-» și verbul auxiliar «a».",
+      "hyphenatedExample": "Directorul v-a trimis programul.",
+      "unhyphenatedForm": "va",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Va» este verb auxiliar folosit la formarea viitorului.",
+      "unhyphenatedExample": "Ea va trimite programul mâine."
+    },
+    {
+      "id": "n_ai_nai",
+      "hyphenatedForm": "n-ai",
+      "components": ["nu", "ai"],
+      "hyphenatedExplanation": "Forma scurtă a structurii «nu ai» se scrie cu cratimă.",
+      "hyphenatedExample": "N-ai uitat caietul acasă?",
+      "unhyphenatedForm": "nai",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Nai» este numele unui instrument muzical de suflat.",
+      "unhyphenatedExample": "Muzicianul cântă la nai."
+    },
+    {
+      "id": "c_ai_cai",
+      "hyphenatedForm": "c-ai",
+      "components": ["că", "ai"],
+      "hyphenatedExplanation": "«C-ai» este forma contractată a structurii «că ai».",
+      "hyphenatedExample": "Știu c-ai înțeles explicația.",
+      "unhyphenatedForm": "cai",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Cai» este pluralul substantivului «cal» și poate fi și formă verbală.",
+      "unhyphenatedExample": "Pe câmp aleargă doi cai."
+    },
+    {
+      "id": "ne_am_neam",
+      "hyphenatedForm": "ne-am",
+      "components": ["ne", "am"],
+      "hyphenatedExplanation": "«Ne-am» conține pronumele reflexiv «ne» și verbul auxiliar «am».",
+      "hyphenatedExample": "Ne-am întâlnit în parc.",
+      "unhyphenatedForm": "neam",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Neam» este substantiv și poate desemna originea sau rudele unei persoane.",
+      "unhyphenatedExample": "Tot neamul s-a adunat la sărbătoare."
+    },
+    {
+      "id": "ce_ai_ceai",
+      "hyphenatedForm": "ce-ai",
+      "components": ["ce", "ai"],
+      "hyphenatedExplanation": "«Ce-ai» este forma contractată a structurii «ce ai».",
+      "hyphenatedExample": "Ce-ai cumpărat de la piață?",
+      "unhyphenatedForm": "ceai",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Ceai» este substantiv și denumește planta sau băutura obținută prin infuzare.",
+      "unhyphenatedExample": "Beau un ceai cald."
+    },
+    {
+      "id": "a_l_al",
+      "hyphenatedForm": "a-l",
+      "components": ["a", "l"],
+      "hyphenatedExplanation": "«A-l» conține marca infinitivului «a» și pronumele personal «-l».",
+      "hyphenatedExample": "Am venit pentru a-l ajuta.",
+      "unhyphenatedForm": "al",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Al» poate fi articol posesiv sau genitival.",
+      "unhyphenatedExample": "Este un coleg al fratelui meu."
+    },
+    {
+      "id": "a_i_ai",
+      "hyphenatedForm": "a-i",
+      "components": ["a", "i"],
+      "hyphenatedExplanation": "«A-i» conține marca infinitivului «a» și pronumele personal «-i».",
+      "hyphenatedExample": "A venit pentru a-i explica regula.",
+      "unhyphenatedForm": "ai",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Ai» poate fi o formă a verbului auxiliar «a avea».",
+      "unhyphenatedExample": "Ai terminat exercițiul?"
+    },
+    {
+      "id": "a_ti_ati",
+      "hyphenatedForm": "a-ți",
+      "components": ["a", "ți"],
+      "hyphenatedExplanation": "«A-ți» conține marca infinitivului «a» și pronumele personal «-ți».",
+      "hyphenatedExample": "Am venit pentru a-ți aduce cartea.",
+      "unhyphenatedForm": "ați",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Ați» este verb auxiliar folosit la persoana a II-a plural.",
+      "unhyphenatedExample": "Ați citit toate instrucțiunile?"
+    },
+    {
+      "id": "sa_i_sai",
+      "hyphenatedForm": "să-i",
+      "components": ["să", "i"],
+      "hyphenatedExplanation": "«Să-i» conține conjuncția «să» și pronumele personal «-i».",
+      "hyphenatedExample": "Trebuie să-i spunem adevărul.",
+      "unhyphenatedForm": "săi",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Săi» este adjectiv sau pronume posesiv la plural.",
+      "unhyphenatedExample": "Prietenii săi au sosit."
+    },
+    {
+      "id": "ca_i_cai",
+      "hyphenatedForm": "că-i",
+      "components": ["că", "i"],
+      "hyphenatedExplanation": "«Că-i» reunește conjuncția «că» și o formă neaccentuată care înlocuiește «este» sau «îi».",
+      "hyphenatedExample": "Știu că-i acasă.",
+      "unhyphenatedForm": "căi",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Căi» poate fi pluralul substantivului «cale».",
+      "unhyphenatedExample": "Există mai multe căi de rezolvare."
+    },
+    {
+      "id": "ce_a_cea",
+      "hyphenatedForm": "ce-a",
+      "components": ["ce", "a"],
+      "hyphenatedExplanation": "«Ce-a» este forma contractată a structurii «ce a».",
+      "hyphenatedExample": "Ce-a spus profesorul?",
+      "unhyphenatedForm": "cea",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Cea» este articol demonstrativ sau pronume demonstrativ.",
+      "unhyphenatedExample": "Cea mai bună soluție este simplă."
+    },
+    {
+      "id": "ce_l_cel",
+      "hyphenatedForm": "ce-l",
+      "components": ["ce", "l"],
+      "hyphenatedExplanation": "«Ce-l» conține pronumele «ce» și pronumele personal «-l».",
+      "hyphenatedExample": "Nu știu ce-l neliniștește.",
+      "unhyphenatedForm": "cel",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Cel» poate fi articol demonstrativ sau pronume demonstrativ.",
+      "unhyphenatedExample": "Cel din dreapta este fratele meu."
+    },
+    {
+      "id": "de_a_dea",
+      "hyphenatedForm": "de-a",
+      "components": ["de", "a"],
+      "hyphenatedExplanation": "«De-a» apare în locuțiuni și construcții precum «de-a lungul» sau «de-a v-ați ascunselea».",
+      "hyphenatedExample": "Am mers de-a lungul râului.",
+      "unhyphenatedForm": "dea",
+      "unhyphenatedIsValid": true,
+      "unhyphenatedExplanation": "«Dea» este o formă a verbului «a da», folosită de obicei după «să».",
+      "unhyphenatedExample": "Așteptăm să dea un răspuns."
+    },
+    {
+      "id": "intr_o",
+      "hyphenatedForm": "într-o",
+      "components": ["într", "o"],
+      "hyphenatedExplanation": "Prepoziția compusă «într-o» se scrie întotdeauna cu cratimă.",
+      "hyphenatedExample": "Locuiește într-o casă veche.",
+      "unhyphenatedForm": "intro",
+      "unhyphenatedIsValid": false,
+      "unhyphenatedExplanation": null,
+      "unhyphenatedExample": null
+    },
+    {
+      "id": "intr_un",
+      "hyphenatedForm": "într-un",
+      "components": ["într", "un"],
+      "hyphenatedExplanation": "Prepoziția compusă «într-un» se scrie întotdeauna cu cratimă.",
+      "hyphenatedExample": "Am găsit cheia într-un sertar.",
+      "unhyphenatedForm": "intrun",
+      "unhyphenatedIsValid": false,
+      "unhyphenatedExplanation": null,
+      "unhyphenatedExample": null
+    },
+    {
+      "id": "dintr_o",
+      "hyphenatedForm": "dintr-o",
+      "components": ["dintr", "o"],
+      "hyphenatedExplanation": "Prepoziția compusă «dintr-o» se scrie întotdeauna cu cratimă.",
+      "hyphenatedExample": "A scos cartea dintr-o cutie.",
+      "unhyphenatedForm": "dintro",
+      "unhyphenatedIsValid": false,
+      "unhyphenatedExplanation": null,
+      "unhyphenatedExample": null
+    },
+    {
+      "id": "printr_o",
+      "hyphenatedForm": "printr-o",
+      "components": ["printr", "o"],
+      "hyphenatedExplanation": "Prepoziția compusă «printr-o» se scrie întotdeauna cu cratimă.",
+      "hyphenatedExample": "Lumina pătrunde printr-o fereastră mică.",
+      "unhyphenatedForm": "printro",
+      "unhyphenatedIsValid": false,
+      "unhyphenatedExplanation": null,
+      "unhyphenatedExample": null
+    },
+    {
+      "id": "si_a",
+      "hyphenatedForm": "și-a",
+      "components": ["și", "a"],
+      "hyphenatedExplanation": "«Și-a» conține pronumele reflexiv «și-» și verbul auxiliar «a».",
+      "hyphenatedExample": "Și-a pregătit ghiozdanul de cu seară.",
+      "unhyphenatedForm": "șia",
+      "unhyphenatedIsValid": false,
+      "unhyphenatedExplanation": null,
+      "unhyphenatedExample": null
+    },
+    {
+      "id": "ti_a",
+      "hyphenatedForm": "ți-a",
+      "components": ["ți", "a"],
+      "hyphenatedExplanation": "«Ți-a» conține pronumele personal «ți-» și verbul auxiliar «a».",
+      "hyphenatedExample": "Ți-a plăcut spectacolul?",
+      "unhyphenatedForm": "ția",
+      "unhyphenatedIsValid": false,
+      "unhyphenatedExplanation": null,
+      "unhyphenatedExample": null
+    }
+  ]
+}

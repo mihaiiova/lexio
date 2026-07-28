@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:flutter/services.dart' show rootBundle;
+
+import '../../content/hyphenation_content.dart';
+import '../../design/doom.dart';
 
 final class GrammarExercise {
   final String id;
@@ -13,6 +17,9 @@ final class GrammarExercise {
   final int difficulty;
   final List<String> tags;
   final String? pairId;
+  final String? doomWord;
+  final String? doomDefinition;
+  final String? hyphenationPairId;
 
   const GrammarExercise({
     required this.id,
@@ -25,7 +32,12 @@ final class GrammarExercise {
     required this.difficulty,
     required this.tags,
     required this.pairId,
+    this.doomWord,
+    this.doomDefinition,
+    this.hyphenationPairId,
   });
+
+  String? get doomUrl => doomWord != null ? DoomUrl.forWord(doomWord!) : null;
 
   factory GrammarExercise.fromJson(Map<String, dynamic> json) {
     return GrammarExercise(
@@ -39,21 +51,27 @@ final class GrammarExercise {
       difficulty: (json['difficulty'] as num).toInt(),
       tags: (json['tags'] as List<dynamic>).cast<String>(),
       pairId: json['pairId'] as String?,
+      doomWord: json['doomWord'] as String?,
+      doomDefinition: json['doomDefinition'] as String?,
+      hyphenationPairId: json['hyphenationPairId'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'sentence': sentence,
-        'category': category,
-        'topic': topic,
-        'isCorrect': isCorrect,
-        'explanation': explanation,
-        'correctSentence': correctSentence,
-        'difficulty': difficulty,
-        'tags': tags,
-        'pairId': pairId,
-      };
+    'id': id,
+    'sentence': sentence,
+    'category': category,
+    'topic': topic,
+    'isCorrect': isCorrect,
+    'explanation': explanation,
+    'correctSentence': correctSentence,
+    'difficulty': difficulty,
+    'tags': tags,
+    'pairId': pairId,
+    'doomWord': doomWord,
+    'doomDefinition': doomDefinition,
+    'hyphenationPairId': hyphenationPairId,
+  };
 }
 
 final class GrammarContent {
@@ -63,13 +81,93 @@ final class GrammarContent {
 
   static Future<List<GrammarExercise>> load() async {
     if (_cached != null) return _cached!;
-    final jsonString =
-        await rootBundle.loadString('lib/content/grammar_exercises.json');
+    final jsonString = await rootBundle.loadString(
+      'lib/content/grammar_exercises.json',
+    );
     final List<dynamic> jsonList = json.decode(jsonString) as List<dynamic>;
-    _cached = jsonList
-        .map((e) => GrammarExercise.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final hyphenationPairs = await HyphenationContent.load();
+    _cached = [
+      ...jsonList.map(
+        (entry) => GrammarExercise.fromJson(entry as Map<String, dynamic>),
+      ),
+      ..._buildHyphenationExercises(hyphenationPairs),
+    ];
     return _cached!;
+  }
+
+  static Iterable<GrammarExercise> _buildHyphenationExercises(
+    List<HyphenationPair> pairs,
+  ) sync* {
+    for (final pair in pairs) {
+      final hyphenatedPairId = 'hyphenated_${pair.id}';
+      final difficulty = pair.unhyphenatedIsValid ? 2 : 1;
+      yield GrammarExercise(
+        id: '${hyphenatedPairId}_wrong',
+        sentence: pair.missingHyphenExample,
+        category: 'cratimă',
+        topic: 'cratima',
+        isCorrect: false,
+        explanation: pair.hyphenatedExplanation,
+        correctSentence: pair.hyphenatedExample,
+        difficulty: difficulty,
+        tags: const ['cratimă', 'greșeală frecventă'],
+        pairId: hyphenatedPairId,
+        hyphenationPairId: pair.id,
+      );
+      yield GrammarExercise(
+        id: '${hyphenatedPairId}_correct',
+        sentence: pair.hyphenatedExample,
+        category: 'cratimă',
+        topic: 'cratima',
+        isCorrect: true,
+        explanation: 'Propoziția este corectă. ${pair.hyphenatedExplanation}',
+        correctSentence: null,
+        difficulty: difficulty,
+        tags: const ['cratimă', 'confirmare'],
+        pairId: hyphenatedPairId,
+        hyphenationPairId: pair.id,
+      );
+
+      final unnecessaryHyphenExample = pair.unnecessaryHyphenExample;
+      final unhyphenatedExample = pair.unhyphenatedExample;
+      final unhyphenatedExplanation = pair.unhyphenatedExplanation;
+      if (unnecessaryHyphenExample == null ||
+          unhyphenatedExample == null ||
+          unhyphenatedExplanation == null) {
+        continue;
+      }
+
+      final unhyphenatedPairId = 'unhyphenated_${pair.id}';
+      final explanation =
+          'În acest context, „${pair.unhyphenatedForm}” se scrie fără cratimă. '
+          '$unhyphenatedExplanation';
+      yield GrammarExercise(
+        id: '${unhyphenatedPairId}_wrong',
+        sentence: unnecessaryHyphenExample,
+        category: 'cratimă',
+        topic: 'cratima',
+        isCorrect: false,
+        explanation: explanation,
+        correctSentence: unhyphenatedExample,
+        difficulty: 2,
+        tags: const ['cratimă', 'forme omofone', 'greșeală frecventă'],
+        pairId: unhyphenatedPairId,
+        hyphenationPairId: pair.id,
+      );
+      yield GrammarExercise(
+        id: '${unhyphenatedPairId}_correct',
+        sentence: unhyphenatedExample,
+        category: 'cratimă',
+        topic: 'cratima',
+        isCorrect: true,
+        explanation: 'Propoziția este corectă. $explanation',
+        correctSentence: null,
+        difficulty: 2,
+        tags: const ['cratimă', 'forme omofone', 'confirmare'],
+        pairId: unhyphenatedPairId,
+        hyphenationPairId: pair.id,
+      );
+    }
   }
 
   static List<GrammarExercise> randomRound(int count) {

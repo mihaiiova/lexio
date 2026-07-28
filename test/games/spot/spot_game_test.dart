@@ -7,7 +7,7 @@ void main() {
     final texts = [
       SpotText(
         id: 'test_1',
-        type: 'whatsapp',
+        type: 'story',
         title: 'Test text',
         difficulty: 1,
         content: 'Salut ce faci in oras',
@@ -199,11 +199,7 @@ void main() {
     });
 
     test('nextText resets timer', () {
-      final state = createState()
-          .tapWord(3)
-          .state
-          .tapWord(4)
-          .state;
+      final state = createState().tapWord(3).state.tapWord(4).state;
       expect(state.remainingSeconds, 60);
 
       final afterTick = state.tick();
@@ -240,6 +236,38 @@ void main() {
 
       state = state.tapWord(4).state;
       expect(state.accuracy, 2 / 3);
+    });
+
+    test('multi-word mistakes can be found from any word in their range', () {
+      final state = SpotGameState(
+        texts: [
+          SpotText(
+            id: 'multi_word',
+            type: 'news',
+            title: 'Test expresie',
+            difficulty: 2,
+            content: 'Au fost anunțate alegeri electorale pentru luna mai.',
+            mistakes: const [
+              SpotMistake(
+                wordIndex: 3,
+                wordCount: 2,
+                token: 'alegeri electorale',
+                replacement: 'alegeri',
+                explanation: 'Cuvântul „electorale” este redundant.',
+                category: 'exprimare',
+                topic: 'pleonasm',
+              ),
+            ],
+          ),
+        ],
+      );
+
+      final outcome = state.tapWord(4);
+
+      expect(outcome.result, SpotTapResult.found);
+      expect(outcome.state.isFoundMistakeWord(3), isTrue);
+      expect(outcome.state.isFoundMistakeWord(4), isTrue);
+      expect(outcome.state.mistakesFound, 1);
     });
   });
 }

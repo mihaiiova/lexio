@@ -1,42 +1,68 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import '../../design/doom.dart';
 
 final class SpotMistake {
   final int wordIndex;
+  final int wordCount;
   final String token;
   final String replacement;
   final String explanation;
   final String category;
   final String topic;
+  final String? doomWord;
+  final String? doomDefinition;
+  final String? hyphenationPairId;
+  final int? commonErrorPairIndex;
 
   const SpotMistake({
     required this.wordIndex,
+    this.wordCount = 1,
     required this.token,
     required this.replacement,
     required this.explanation,
     required this.category,
     required this.topic,
+    this.doomWord,
+    this.doomDefinition,
+    this.hyphenationPairId,
+    this.commonErrorPairIndex,
   });
+
+  bool containsWordIndex(int index) =>
+      index >= wordIndex && index < wordIndex + wordCount;
+
+  String? get doomUrl => doomWord != null ? DoomUrl.forWord(doomWord!) : null;
 
   factory SpotMistake.fromJson(Map<String, dynamic> json) {
     return SpotMistake(
       wordIndex: json['wordIndex'] as int,
+      wordCount: json['wordCount'] as int? ?? 1,
       token: json['token'] as String,
       replacement: json['replacement'] as String,
       explanation: json['explanation'] as String,
       category: json['category'] as String,
       topic: json['topic'] as String,
+      doomWord: json['doomWord'] as String?,
+      doomDefinition: json['doomDefinition'] as String?,
+      hyphenationPairId: json['hyphenationPairId'] as String?,
+      commonErrorPairIndex: json['commonErrorPairIndex'] as int?,
     );
   }
 
   Map<String, dynamic> toJson() => {
     'wordIndex': wordIndex,
+    'wordCount': wordCount,
     'token': token,
     'replacement': replacement,
     'explanation': explanation,
     'category': category,
     'topic': topic,
+    'doomWord': doomWord,
+    'doomDefinition': doomDefinition,
+    'hyphenationPairId': hyphenationPairId,
+    'commonErrorPairIndex': commonErrorPairIndex,
   };
 }
 
@@ -80,6 +106,13 @@ final class SpotText {
   int get wordCount => _words.length;
   List<List<int>> get paragraphRanges => _paragraphRanges;
 
+  SpotMistake? mistakeStartingAt(int wordIndex) {
+    for (final mistake in mistakes) {
+      if (mistake.wordIndex == wordIndex) return mistake;
+    }
+    return null;
+  }
+
   List<List<int>> _computeParagraphRanges() {
     final paragraphs = content.split(RegExp(r'\n\n|\n\s*\n'));
     final ranges = <List<int>>[];
@@ -88,8 +121,10 @@ final class SpotText {
     for (final p in paragraphs) {
       final trimmed = p.trim();
       if (trimmed.isEmpty) continue;
-      final wordsInParagraph =
-          trimmed.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
+      final wordsInParagraph = trimmed
+          .split(RegExp(r'\s+'))
+          .where((w) => w.isNotEmpty)
+          .length;
       if (wordsInParagraph > 0) {
         ranges.add([offset, offset + wordsInParagraph - 1]);
         offset += wordsInParagraph;
@@ -108,8 +143,9 @@ final class SpotContent {
   static Future<List<SpotText>> load() async {
     if (_cached != null) return _cached!;
 
-    final jsonString =
-        await rootBundle.loadString('lib/content/spot_texts.json');
+    final jsonString = await rootBundle.loadString(
+      'lib/content/spot_texts.json',
+    );
     final jsonList = json.decode(jsonString) as List<dynamic>;
     _cached = jsonList
         .map((item) => SpotText.fromJson(item as Map<String, dynamic>))

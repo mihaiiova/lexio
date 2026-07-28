@@ -12,7 +12,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p0",
-    "correctSentence": "Am pus bagajele pe bare în tren."
+    "correctSentence": "Am pus bagajele pe bare în tren.",
+    "doomWord": "bară",
+    "doomDefinition": "bară s. f., g.-d. art. barei; pl. bare"
   },
   {
     "id": "w0c",
@@ -28,7 +30,8 @@
       "confirmare"
     ],
     "pairId": "p0",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w1",
@@ -43,7 +46,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p1",
-    "correctSentence": "Antrenorul ne-a pus să facem genuflexiuni."
+    "correctSentence": "Antrenorul ne-a pus să facem genuflexiuni.",
+    "doomWord": "genuflexiune",
+    "doomDefinition": "genuflexiune (desp. -nu-fle-xi-u-) s. f., g.-d. art. genuflexiunii; pl. genuflexiuni"
   },
   {
     "id": "w1c",
@@ -59,7 +64,8 @@
       "confirmare"
     ],
     "pairId": "p1",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w2",
@@ -74,7 +80,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p2",
-    "correctSentence": "Am avut coșmaruri toată noaptea."
+    "correctSentence": "Am avut coșmaruri toată noaptea.",
+    "doomWord": "coșmar",
+    "doomDefinition": "coșmar s. n., pl. coșmaruri"
   },
   {
     "id": "w2c",
@@ -90,7 +98,8 @@
       "confirmare"
     ],
     "pairId": "p2",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w3",
@@ -105,7 +114,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p3",
-    "correctSentence": "El creează mereu probleme la birou."
+    "correctSentence": "El creează mereu probleme la birou.",
+    "doomWord": "crea",
+    "doomDefinition": "crea (a ~) (desp. -cre-a) vb., ind. prez. 1 sg. creez (desp. cre-ez), 3 creează (desp. cre-ea-), 1 pl. creăm (desp. cre-ăm); conj. prez. 1 să creez, 3 să creeze; ger. creând (desp. cre-ând)"
   },
   {
     "id": "w3c",
@@ -121,7 +132,8 @@
       "confirmare"
     ],
     "pairId": "p3",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w4",
@@ -137,7 +149,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p4",
-    "correctSentence": "Trebuie să încep a curăța camera."
+    "correctSentence": "Trebuie să încep a curăța camera.",
+    "doomWord": "curăța",
+    "doomDefinition": "curăța (a ~) vb., ind. prez. 1 sg. curăț, 2 sg. cureți, 3 curăță; conj. prez. 1 sg. să curăț, 3 să curețe"
   },
   {
     "id": "w4c",
@@ -154,7 +168,8 @@
       "confirmare"
     ],
     "pairId": "p4",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w5",
@@ -170,7 +185,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p5",
-    "correctSentence": "Prețul benzinei va scădea luna viitoare."
+    "correctSentence": "Prețul benzinei va scădea luna viitoare.",
+    "doomWord": "scădea",
+    "doomDefinition": "scădea (a ~) vb., ind. prez. 1 sg. și 3 pl. scad, 2 sg. scazi, 3 sg. scade, perf. s. 1 sg. scăzui, m.m.c.p. 1 pl. scăzuserăm; conj. prez. 1 sg. să scad, 3 să scadă; imper. 2 sg. afirm. scade; ger. scăzând; part. scăzut"
   },
   {
     "id": "w5c",
@@ -187,7 +204,8 @@
       "confirmare"
     ],
     "pairId": "p5",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w6",
@@ -202,7 +220,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p6",
-    "correctSentence": "Noi tăcem când vorbește profesorul."
+    "correctSentence": "Noi tăcem când vorbește profesorul.",
+    "doomWord": "tăcea",
+    "doomDefinition": "tăcea (a ~) vb., ind. prez. 1 sg. și 3 pl. tac, 2 sg. taci, 3 sg. tace, conj. prez. 1 sg. să tac, 3 să tacă; imper. 2 sg. afirm. taci, 2 pl. tăceți; ger. tăcând; part. tăcut"
   },
   {
     "id": "w6c",
@@ -218,7 +238,8 @@
       "confirmare"
     ],
     "pairId": "p6",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w7",
@@ -233,7 +254,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p7",
-    "correctSentence": "Bunica s-a așezat pe taburetul din bucătărie."
+    "correctSentence": "Bunica s-a așezat pe taburetul din bucătărie.",
+    "doomWord": "taburet",
+    "doomDefinition": "taburet s. n., pl. taburete"
   },
   {
     "id": "w7c",
@@ -249,7 +272,8 @@
       "confirmare"
     ],
     "pairId": "p7",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w8",
@@ -264,7 +288,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p8",
-    "correctSentence": "Funeraliile au avut loc la biserica veche."
+    "correctSentence": "Funeraliile au avut loc la biserica veche.",
+    "doomWord": "funeraliile",
+    "doomDefinition": "funeralii s. n. pl., art. funeraliile (desp. -li-i-)"
   },
   {
     "id": "w8c",
@@ -280,7 +306,8 @@
       "confirmare"
     ],
     "pairId": "p8",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w9",
@@ -295,7 +322,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p9",
-    "correctSentence": "Copilul s-a împiedicat pe trotuar."
+    "correctSentence": "Copilul s-a împiedicat pe trotuar.",
+    "doomWord": "trotuar",
+    "doomDefinition": "trotuar (desp. -tuar) s. n., pl. trotuare"
   },
   {
     "id": "w9c",
@@ -311,7 +340,8 @@
       "confirmare"
     ],
     "pairId": "p9",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w10",
@@ -327,7 +357,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p10",
-    "correctSentence": "Te rog să uită-te la mine când vorbesc."
+    "correctSentence": "Te rog să uită-te la mine când vorbesc.",
+    "doomWord": "uita",
+    "doomDefinition": "uita1 (a ~) (a da uitării) vb., ind. prez. 1 sg. uit, 2 sg. uiți, 3 uită; conj. prez. 1 sg. să uit, 3 să uite"
   },
   {
     "id": "w10c",
@@ -344,7 +376,8 @@
       "confirmare"
     ],
     "pairId": "p10",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w11",
@@ -359,7 +392,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p11",
-    "correctSentence": "Ne-am dus la patinoar să patinăm."
+    "correctSentence": "Ne-am dus la patinoar să patinăm.",
+    "doomWord": "patinoar",
+    "doomDefinition": "patinoar (desp. -noar) s. n., pl. patinoare"
   },
   {
     "id": "w11c",
@@ -375,7 +410,8 @@
       "confirmare"
     ],
     "pairId": "p11",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w12",
@@ -390,7 +426,9 @@
       "dativ"
     ],
     "pairId": "p12",
-    "correctSentence": "Nurorii i-a adus un buchet frumos de flori."
+    "correctSentence": "Nurorii i-a adus un buchet frumos de flori.",
+    "doomWord": "nurorii",
+    "doomDefinition": "noră s. f., g.-d. art. nurorii; pl. nurori"
   },
   {
     "id": "w12c",
@@ -406,7 +444,8 @@
       "confirmare"
     ],
     "pairId": "p12",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w13",
@@ -421,7 +460,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p13",
-    "correctSentence": "Copiii s-au jucat cu mingile în curte."
+    "correctSentence": "Copiii s-au jucat cu mingile în curte.",
+    "doomWord": "minge",
+    "doomDefinition": "minge s. f., art. mingea, g.-d. mingi, art. mingii; pl. mingi, art. mingile"
   },
   {
     "id": "w13c",
@@ -437,7 +478,8 @@
       "confirmare"
     ],
     "pairId": "p13",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w14",
@@ -452,7 +494,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p14",
-    "correctSentence": "Am nevoie de un serviciu de calitate."
+    "correctSentence": "Am nevoie de un serviciu de calitate.",
+    "doomWord": "serviciu",
+    "doomDefinition": "serviciu s. n., art. serviciul; pl. servicii, art. serviciile (desp. -ci-i-)"
   },
   {
     "id": "w14c",
@@ -468,7 +512,8 @@
       "confirmare"
     ],
     "pairId": "p14",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w15",
@@ -483,7 +528,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p15",
-    "correctSentence": "Am stabilit protocoale stricte pentru eveniment."
+    "correctSentence": "Am stabilit protocoale stricte pentru eveniment.",
+    "doomWord": "protocol",
+    "doomDefinition": "protocol s. n., (acte) pl. protocoale"
   },
   {
     "id": "w15c",
@@ -499,7 +546,8 @@
       "confirmare"
     ],
     "pairId": "p15",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w16",
@@ -514,7 +562,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p16",
-    "correctSentence": "Ea a adus o mostră de parfum la magazin."
+    "correctSentence": "Ea a adus o mostră de parfum la magazin.",
+    "doomWord": "mostră",
+    "doomDefinition": "mostră (eșantion) s. f., g.-d. art. mostrei; pl. mostre"
   },
   {
     "id": "w16c",
@@ -530,7 +580,8 @@
       "confirmare"
     ],
     "pairId": "p16",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w17",
@@ -545,7 +596,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p17",
-    "correctSentence": "Am cumpărat mingi noi pentru meci."
+    "correctSentence": "Am cumpărat mingi noi pentru meci.",
+    "doomWord": "minge",
+    "doomDefinition": "minge s. f., art. mingea, g.-d. mingi, art. mingii; pl. mingi, art. mingile"
   },
   {
     "id": "w17c",
@@ -561,7 +614,8 @@
       "confirmare"
     ],
     "pairId": "p17",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w18",
@@ -576,7 +630,9 @@
       "genitiv"
     ],
     "pairId": "p18",
-    "correctSentence": "Am aflat adevărul minciunii abia a doua zi."
+    "correctSentence": "Am aflat adevărul minciunii abia a doua zi.",
+    "doomWord": "minciună",
+    "doomDefinition": "minciună s. f., g.-d. art. minciunii; pl. minciuni"
   },
   {
     "id": "w18c",
@@ -592,7 +648,8 @@
       "confirmare"
     ],
     "pairId": "p18",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w19",
@@ -607,7 +664,9 @@
       "genitiv"
     ],
     "pairId": "p19",
-    "correctSentence": "Ele au respectat toate regulile ordinii de zi."
+    "correctSentence": "Ele au respectat toate regulile ordinii de zi.",
+    "doomWord": "ordine",
+    "doomDefinition": "ordin s. n., pl. ordine"
   },
   {
     "id": "w19c",
@@ -623,7 +682,8 @@
       "confirmare"
     ],
     "pairId": "p19",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w20",
@@ -638,7 +698,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p20",
-    "correctSentence": "Am strâns ouălor de la găini."
+    "correctSentence": "Am strâns ouălor de la găini.",
+    "doomWord": "ou",
+    "doomDefinition": "ou s. n., art. oul; pl. ouă, art. ouăle, g.-d. art. ouălor"
   },
   {
     "id": "w20c",
@@ -654,7 +716,8 @@
       "confirmare"
     ],
     "pairId": "p20",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w21",
@@ -669,7 +732,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p21",
-    "correctSentence": "Pescarii au aruncat năvoade în Dunăre."
+    "correctSentence": "Pescarii au aruncat năvoade în Dunăre.",
+    "doomWord": "năvod",
+    "doomDefinition": "năvod s. n., pl. năvoade"
   },
   {
     "id": "w21c",
@@ -685,7 +750,8 @@
       "confirmare"
     ],
     "pairId": "p21",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w22",
@@ -700,7 +766,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p22",
-    "correctSentence": "Am vizitat o moschee veche din Istanbul."
+    "correctSentence": "Am vizitat o moschee veche din Istanbul.",
+    "doomWord": "moschee",
+    "doomDefinition": "moschee s. f., art. moscheea, g.-d. art. moscheii; pl. moschei, art. moscheile (desp. -che-i-)"
   },
   {
     "id": "w22c",
@@ -716,7 +784,8 @@
       "confirmare"
     ],
     "pairId": "p22",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w23",
@@ -732,7 +801,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p23",
-    "correctSentence": "Vreau să miroasă a flori de tei."
+    "correctSentence": "Vreau să miroasă a flori de tei.",
+    "doomWord": "mirosi",
+    "doomDefinition": "mirosi (a ~) vb., ind. prez. 1 sg. și 3 pl. miros, 2 sg. miroși, 3 sg. miroase, imperf. 1 miroseam; conj. prez. 1 sg. să miros, 3 să miroasă, imper. 2 sg. afirm. miroase"
   },
   {
     "id": "w23c",
@@ -749,7 +820,8 @@
       "confirmare"
     ],
     "pairId": "p23",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w24",
@@ -764,7 +836,9 @@
       "genitiv"
     ],
     "pairId": "p24",
-    "correctSentence": "Culoarea mingii s-a pierdut după spălare."
+    "correctSentence": "Culoarea mingii s-a pierdut după spălare.",
+    "doomWord": "minge",
+    "doomDefinition": "minge s. f., art. mingea, g.-d. mingi, art. mingii; pl. mingi, art. mingile"
   },
   {
     "id": "w24c",
@@ -780,7 +854,8 @@
       "confirmare"
     ],
     "pairId": "p24",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w25",
@@ -795,7 +870,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p25",
-    "correctSentence": "Nu merită să mai încerci o dată."
+    "correctSentence": "Nu merită să mai încerci o dată.",
+    "doomWord": "merita",
+    "doomDefinition": "merita (a ~) vb., ind. prez. 1 sg. merit, 2 sg. meriți, 3 merită; conj. prez. 1 sg. să merit, 3 să merite (Acest lucru merită să fie menționat.)"
   },
   {
     "id": "w25c",
@@ -811,7 +888,8 @@
       "confirmare"
     ],
     "pairId": "p25",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w26",
@@ -826,7 +904,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p26",
-    "correctSentence": "Clima mediteraneeană este foarte plăcută."
+    "correctSentence": "Clima mediteraneeană este foarte plăcută.",
+    "doomWord": "mediteraneean",
+    "doomDefinition": "mediteraneean (desp. -ne-ean) adj. m., pl. mediteraneeni (desp. -ne-eni); f. mediteraneeană, pl. mediteraneene"
   },
   {
     "id": "w26c",
@@ -842,7 +922,8 @@
       "confirmare"
     ],
     "pairId": "p26",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w27",
@@ -857,7 +938,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p27",
-    "correctSentence": "Am mâncat o măslină delicioasă."
+    "correctSentence": "Am mâncat o măslină delicioasă.",
+    "doomWord": "măslină",
+    "doomDefinition": "măslină s. f., g.-d. art. măslinei; pl. măsline"
   },
   {
     "id": "w27c",
@@ -873,7 +956,8 @@
       "confirmare"
     ],
     "pairId": "p27",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w28",
@@ -887,7 +971,9 @@
       "adverb"
     ],
     "pairId": "p28",
-    "correctSentence": "Am cumpărat un pulover de culoare maro."
+    "correctSentence": "Am cumpărat un pulover de culoare maro.",
+    "doomWord": "maro",
+    "doomDefinition": "maro1 adj. invar. (pantofi ~)"
   },
   {
     "id": "w28c",
@@ -902,7 +988,8 @@
       "confirmare"
     ],
     "pairId": "p28",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w29",
@@ -917,7 +1004,9 @@
       "dativ"
     ],
     "pairId": "p29",
-    "correctSentence": "I-am dat mătușii un cadou frumos."
+    "correctSentence": "I-am dat mătușii un cadou frumos.",
+    "doomWord": "mătușă",
+    "doomDefinition": "mătușă s. f., art. mătușa, g.-d. art. mătușii; pl. mătuși"
   },
   {
     "id": "w29c",
@@ -933,7 +1022,8 @@
       "confirmare"
     ],
     "pairId": "p29",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w30",
@@ -948,7 +1038,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p30",
-    "correctSentence": "Am văzut păianjeni mari în podul casei."
+    "correctSentence": "Am văzut păianjeni mari în podul casei.",
+    "doomWord": "păianjen",
+    "doomDefinition": "păianjen s. m., pl. păianjeni"
   },
   {
     "id": "w30c",
@@ -964,7 +1056,8 @@
       "confirmare"
     ],
     "pairId": "p30",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w31",
@@ -979,7 +1072,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p31",
-    "correctSentence": "Am cumpărat mănuși de lână de la piață."
+    "correctSentence": "Am cumpărat mănuși de lână de la piață.",
+    "doomWord": "mănușă",
+    "doomDefinition": "mănușă s. f., art. mănușa, g.-d. art. mănușii; pl. mănuși"
   },
   {
     "id": "w31c",
@@ -995,7 +1090,8 @@
       "confirmare"
     ],
     "pairId": "p31",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w32",
@@ -1010,7 +1106,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p32",
-    "correctSentence": "A fost un accident năprasnic pe autostradă."
+    "correctSentence": "A fost un accident năprasnic pe autostradă.",
+    "doomWord": "năprasnic",
+    "doomDefinition": "năprasnic1 (desp. nă-pras-) adj. m., pl. năprasnici; f. năprasnică, pl. năprasnice"
   },
   {
     "id": "w32c",
@@ -1026,7 +1124,8 @@
       "confirmare"
     ],
     "pairId": "p32",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w33",
@@ -1041,7 +1140,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p33",
-    "correctSentence": "Fratele meu este licean la oraș."
+    "correctSentence": "Fratele meu este licean la oraș.",
+    "doomWord": "licean",
+    "doomDefinition": "licean (desp. -ce-an) s. m., pl. liceeni"
   },
   {
     "id": "w33c",
@@ -1057,7 +1158,8 @@
       "confirmare"
     ],
     "pairId": "p33",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w34",
@@ -1072,7 +1174,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p34",
-    "correctSentence": "Victimele accidentului au fost transportate la spital."
+    "correctSentence": "Victimele accidentului au fost transportate la spital.",
+    "doomWord": "victimă",
+    "doomDefinition": "victimă s. f., g.-d. art. victimei; pl. victime"
   },
   {
     "id": "w34c",
@@ -1088,7 +1192,8 @@
       "confirmare"
     ],
     "pairId": "p34",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w35",
@@ -1103,7 +1208,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p35",
-    "correctSentence": "Politicienii au lansat sloganuri noi în campanie."
+    "correctSentence": "Politicienii au lansat sloganuri noi în campanie.",
+    "doomWord": "slogan",
+    "doomDefinition": "slogan s. n., pl. sloganuri"
   },
   {
     "id": "w35c",
@@ -1119,7 +1226,8 @@
       "confirmare"
     ],
     "pairId": "p35",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w36",
@@ -1134,7 +1242,9 @@
       "genitiv"
     ],
     "pairId": "p36",
-    "correctSentence": "Nu știe nimeni mersul sorții tale."
+    "correctSentence": "Nu știe nimeni mersul sorții tale.",
+    "doomWord": "soartă",
+    "doomDefinition": "soartă (destin, placentă) s. f., g.-d. art. sorții/soartei (mai ales în: în/la voia ~); pl. sorți"
   },
   {
     "id": "w36c",
@@ -1150,7 +1260,8 @@
       "confirmare"
     ],
     "pairId": "p36",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w37",
@@ -1166,7 +1277,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p37",
-    "correctSentence": "Buretele poate absorbi apa foarte repede."
+    "correctSentence": "Buretele poate absorbi apa foarte repede.",
+    "doomWord": "absorbi",
+    "doomDefinition": "absorbi (a ~) (a încorpora) vb., ind. prez. 1 sg. și 3 pl. absorb, 3 sg. absoarbe, imperf. 1 absorbeam; conj. prez. 1 sg. să absorb, 3 să absoarbă, imper. 2 sg. afirm. absoarbe"
   },
   {
     "id": "w37c",
@@ -1183,7 +1296,8 @@
       "confirmare"
     ],
     "pairId": "p37",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w38",
@@ -1198,7 +1312,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p38",
-    "correctSentence": "Am fost la mai multe alimentare în cartier."
+    "correctSentence": "Am fost la mai multe alimentare în cartier.",
+    "doomWord": "alimentare",
+    "doomDefinition": "alimentar adj. m., pl. alimentari; f. alimentară, pl. alimentare"
   },
   {
     "id": "w38c",
@@ -1214,7 +1330,8 @@
       "confirmare"
     ],
     "pairId": "p38",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w39",
@@ -1229,7 +1346,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p39",
-    "correctSentence": "Sportivul îngenunchează la startul cursei."
+    "correctSentence": "Sportivul îngenunchează la startul cursei.",
+    "doomWord": "îngenunchea",
+    "doomDefinition": "îngenunchea (a ~) vb., ind. prez. 1 sg. îngenunchez, 3 îngenunchează, 1 pl. îngenunchem; conj. prez. 1 sg. să îngenunchez, 3 să îngenuncheze; ger. îngenunchind"
   },
   {
     "id": "w39c",
@@ -1245,7 +1364,8 @@
       "confirmare"
     ],
     "pairId": "p39",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w40",
@@ -1260,7 +1380,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p40",
-    "correctSentence": "Un trăsnet a lovit copacul din curte."
+    "correctSentence": "Un trăsnet a lovit copacul din curte.",
+    "doomWord": "trăsnet",
+    "doomDefinition": "trăsnet s. n., pl. trăsnete"
   },
   {
     "id": "w40c",
@@ -1276,7 +1398,8 @@
       "confirmare"
     ],
     "pairId": "p40",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w41",
@@ -1291,7 +1414,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p41",
-    "correctSentence": "Banii erau păstrați în vistieria regală."
+    "correctSentence": "Banii erau păstrați în vistieria regală.",
+    "doomWord": "vistierie",
+    "doomDefinition": "vistierie (desp. -ti-e-) s. f., art. vistieria, g.-d. art. vistieriei; pl. vistierii, art. vistieriile (desp. -ri-i-)"
   },
   {
     "id": "w41c",
@@ -1307,7 +1432,8 @@
       "confirmare"
     ],
     "pairId": "p41",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w42",
@@ -1323,7 +1449,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p42",
-    "correctSentence": "Nu duce nimic cu tine la examen."
+    "correctSentence": "Nu duce nimic cu tine la examen.",
+    "doomWord": "duce",
+    "doomDefinition": "duce3 s. m., pl. duci"
   },
   {
     "id": "w42c",
@@ -1340,7 +1468,8 @@
       "confirmare"
     ],
     "pairId": "p42",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w43",
@@ -1355,7 +1484,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p43",
-    "correctSentence": "Ultimele zile de vacanță au fost ploioase."
+    "correctSentence": "Ultimele zile de vacanță au fost ploioase.",
+    "doomWord": "ultimele",
+    "doomDefinition": "ultim adj. m., pl. ultimi; f. ultimă, pl. ultime, art. ultimele"
   },
   {
     "id": "w43c",
@@ -1371,7 +1502,8 @@
       "confirmare"
     ],
     "pairId": "p43",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w44",
@@ -1386,7 +1518,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p44",
-    "correctSentence": "Poliția a prins un escroc cunoscut."
+    "correctSentence": "Poliția a prins un escroc cunoscut.",
+    "doomWord": "escroc",
+    "doomDefinition": "escroc s. m., pl. escroci"
   },
   {
     "id": "w44c",
@@ -1402,7 +1536,8 @@
       "confirmare"
     ],
     "pairId": "p44",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w45",
@@ -1417,7 +1552,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p45",
-    "correctSentence": "Soldații au rămas dârji în luptă."
+    "correctSentence": "Soldații au rămas dârji în luptă.",
+    "doomWord": "dârz",
+    "doomDefinition": "dârz adj. m., pl. dârji; f. dârză, pl. dârze"
   },
   {
     "id": "w45c",
@@ -1433,7 +1570,8 @@
       "confirmare"
     ],
     "pairId": "p45",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w46",
@@ -1448,7 +1586,9 @@
       "genitiv"
     ],
     "pairId": "p46",
-    "correctSentence": "Muzica liniștii m-a adormit imediat."
+    "correctSentence": "Muzica liniștii m-a adormit imediat.",
+    "doomWord": "liniște",
+    "doomDefinition": "liniște s. f., g.-d. art. liniștii"
   },
   {
     "id": "w46c",
@@ -1464,7 +1604,8 @@
       "confirmare"
     ],
     "pairId": "p46",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w47",
@@ -1479,7 +1620,9 @@
       "genitiv"
     ],
     "pairId": "p47",
-    "correctSentence": "Mi-am mușcat vârful limbii din greșeală."
+    "correctSentence": "Mi-am mușcat vârful limbii din greșeală.",
+    "doomWord": "limbă",
+    "doomDefinition": "limbă s. f., g.-d. art. limbii; pl. limbi"
   },
   {
     "id": "w47c",
@@ -1495,7 +1638,8 @@
       "confirmare"
     ],
     "pairId": "p47",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w48",
@@ -1510,7 +1654,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p48",
-    "correctSentence": "Noștri prieteni au venit în vizită."
+    "correctSentence": "Noștri prieteni au venit în vizită.",
+    "doomWord": "nostru",
+    "doomDefinition": "nostru1/al nostru1 adj. pr. m., pl. noștri/ai noștri; f. noastră/a noastră, g.-d. noastre/a noastre, pl. noastre/ale noastre (prietenul nostru/un prieten al nostru/al nostru prieten; prietenului nostru/unui prieten al nostru; prietenii noștri/niște prieteni ai noștri/ai noștri prieteni; prietenilor noștri/unor prieteni ai noștri; prietena noastră/o prietenă a noastră/a noastră prietenă; prietenei noastre/unei prietene a noastre; prietenele noastre/niște prietene ale noastre/ale noastre prietene; prietenelor noastre/unor prietene ale noastre)"
   },
   {
     "id": "w48c",
@@ -1526,7 +1672,8 @@
       "confirmare"
     ],
     "pairId": "p48",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w49",
@@ -1541,7 +1688,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p49",
-    "correctSentence": "Mi-am cumpărat un maiou nou de bumbac."
+    "correctSentence": "Mi-am cumpărat un maiou nou de bumbac.",
+    "doomWord": "maiou",
+    "doomDefinition": "maiou (desp. ma-iou) s. n., art. maioul; pl. maiouri"
   },
   {
     "id": "w49c",
@@ -1557,7 +1706,8 @@
       "confirmare"
     ],
     "pairId": "p49",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w50",
@@ -1572,7 +1722,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p50",
-    "correctSentence": "Folosește o lopățică pentru prăjituri."
+    "correctSentence": "Folosește o lopățică pentru prăjituri.",
+    "doomWord": "lopățică",
+    "doomDefinition": "lopățică s. f., g.-d. art. lopățelei; pl. lopățele"
   },
   {
     "id": "w50c",
@@ -1588,7 +1740,8 @@
       "confirmare"
     ],
     "pairId": "p50",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w51",
@@ -1603,7 +1756,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p51",
-    "correctSentence": "Am absolvit două licee diferite."
+    "correctSentence": "Am absolvit două licee diferite.",
+    "doomWord": "liceu",
+    "doomDefinition": "liceu s. n., art. liceul; pl. licee"
   },
   {
     "id": "w51c",
@@ -1619,7 +1774,8 @@
       "confirmare"
     ],
     "pairId": "p51",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w52",
@@ -1634,7 +1790,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p52",
-    "correctSentence": "Albaștri ochi ai fetei m-au impresionat."
+    "correctSentence": "Albaștri ochi ai fetei m-au impresionat.",
+    "doomWord": "albastru",
+    "doomDefinition": "albastru1 adj. m., pl. albaștri, art. albaștrii; f. albastră, pl. albastre"
   },
   {
     "id": "w52c",
@@ -1650,7 +1808,8 @@
       "confirmare"
     ],
     "pairId": "p52",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w53",
@@ -1665,7 +1824,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p53",
-    "correctSentence": "Am găsit câteva monede vechi în pod."
+    "correctSentence": "Am găsit câteva monede vechi în pod.",
+    "doomWord": "monedă",
+    "doomDefinition": "monedă s. f., g.-d. art. monedei; pl. monede"
   },
   {
     "id": "w53c",
@@ -1681,7 +1842,8 @@
       "confirmare"
     ],
     "pairId": "p53",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w54",
@@ -1695,7 +1857,9 @@
       "numerale"
     ],
     "pairId": "p54",
-    "correctSentence": "El a terminat cursa pe locul al zecelea."
+    "correctSentence": "El a terminat cursa pe locul al zecelea.",
+    "doomWord": "zecelea",
+    "doomDefinition": "zecelea (al ~) num. m., f. a zecea; m. al X-lea/al 10-lea, f. a X-a/a 10-a"
   },
   {
     "id": "w54c",
@@ -1710,7 +1874,8 @@
       "confirmare"
     ],
     "pairId": "p54",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w55",
@@ -1725,7 +1890,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p55",
-    "correctSentence": "Merg la salon pentru o manichiură nouă."
+    "correctSentence": "Merg la salon pentru o manichiură nouă.",
+    "doomWord": "manichiură",
+    "doomDefinition": "manichiură (desp. -chiu-) s. f., g.-d. art. manichiurii; pl. manichiuri"
   },
   {
     "id": "w55c",
@@ -1741,7 +1908,8 @@
       "confirmare"
     ],
     "pairId": "p55",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w56",
@@ -1756,7 +1924,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p56",
-    "correctSentence": "Am vizitat mai multe lăcașuri sfinte."
+    "correctSentence": "Am vizitat mai multe lăcașuri sfinte.",
+    "doomWord": "lăcaș",
+    "doomDefinition": "lăcaș (așezământ) s. n., pl. lăcașuri"
   },
   {
     "id": "w56c",
@@ -1772,7 +1942,8 @@
       "confirmare"
     ],
     "pairId": "p56",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w57",
@@ -1787,7 +1958,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p57",
-    "correctSentence": "Întâile două pagini lipsesc din carte."
+    "correctSentence": "Întâile două pagini lipsesc din carte.",
+    "doomWord": "întâile",
+    "doomDefinition": "întâi2 num. m. (premiul ~/I; ~ Ianuarie), art. întâiul (~ premiu), pl. întâi, art. întâii; f. întâi (clasa/clasei/clasele ~)/(fam.) întâia (clasa întâia), art. întâia (~ clasă), g.-d. întâii (~ clase), pl. întâi, art. întâile, g.-d. pl. m. și f. întâilor"
   },
   {
     "id": "w57c",
@@ -1803,7 +1976,8 @@
       "confirmare"
     ],
     "pairId": "p57",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w58",
@@ -1818,7 +1992,9 @@
       "genitiv"
     ],
     "pairId": "p58",
-    "correctSentence": "Le-am dat fetelor acestora caietele."
+    "correctSentence": "Le-am dat fetelor acestora caietele.",
+    "doomWord": "acesta",
+    "doomDefinition": "acesta pr. m., adj. pr. postpus m., g.-d. acestuia, pl. aceștia (desp. -tia); f. aceasta, g.-d. acesteia, pl. acestea; g.-d. pl. m. și f. acestora (omul acesta)"
   },
   {
     "id": "w58c",
@@ -1834,7 +2010,8 @@
       "confirmare"
     ],
     "pairId": "p58",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w59",
@@ -1848,7 +2025,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p59",
-    "correctSentence": "I-am scris înseși prietenei tale."
+    "correctSentence": "I-am scris înseși prietenei tale.",
+    "doomWord": "însăși",
+    "doomDefinition": "însuși1 adj. pr. m. (el, lui, pe el ~); f. însăși (ea, pe ea ~), g.-d. înseși (însuși profesorul, profesorul (acesta) însuși, însuși acest profesor, a fetei ei înseși, ei înseși, el însuși, (rar) însuși el, pe sine însuși)"
   },
   {
     "id": "w59c",
@@ -1863,7 +2042,8 @@
       "confirmare"
     ],
     "pairId": "p59",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w60",
@@ -1878,7 +2058,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p60",
-    "correctSentence": "Am făcut o excursie frumoasă la munte."
+    "correctSentence": "Am făcut o excursie frumoasă la munte.",
+    "doomWord": "excursie",
+    "doomDefinition": "excursie (călătorie) (desp. -si-e) s. f., art. excursia (desp. -si-a), g.-d. art. excursiei; pl. excursii, art. excursiile (desp. si-i-)"
   },
   {
     "id": "w60c",
@@ -1894,7 +2076,8 @@
       "confirmare"
     ],
     "pairId": "p60",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w61",
@@ -1909,7 +2092,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p61",
-    "correctSentence": "Copilul sughiță de cinci minute."
+    "correctSentence": "Copilul sughiță de cinci minute.",
+    "doomWord": "sughiță",
+    "doomDefinition": "sughița (a ~) vb., ind. prez. 1 sg. sughiț, 3 sughiță; conj. prez. 1 sg. să sughiț, 3 să sughițe"
   },
   {
     "id": "w61c",
@@ -1925,7 +2110,8 @@
       "confirmare"
     ],
     "pairId": "p61",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w62",
@@ -1940,7 +2126,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p62",
-    "correctSentence": "Propriii copii au venit de la școală."
+    "correctSentence": "Propriii copii au venit de la școală.",
+    "doomWord": "propriii",
+    "doomDefinition": "propriu [priu pron. prĭu] (desp. pro-priu) adj. m., art. propriul, pl. proprii, art. propriii (desp. -pri-ii); f. proprie (desp. -pri-e), art. propria (desp. -pri-a), g.-d. art. propriei, pl. proprii, art. propriile (desp. -pri-i-) (și: propriu Renașterii)"
   },
   {
     "id": "w62c",
@@ -1956,7 +2144,8 @@
       "confirmare"
     ],
     "pairId": "p62",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w63",
@@ -1972,7 +2161,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p63",
-    "correctSentence": "El va succeda la tron după tatăl său."
+    "correctSentence": "El va succeda la tron după tatăl său.",
+    "doomWord": "succeda",
+    "doomDefinition": "succeda (a ~) vb., ind. prez. 1 sg. succed, 2 sg. succezi, 3 succedă; conj. prez. 1 sg. să succed, 3 să succeadă"
   },
   {
     "id": "w63c",
@@ -1989,7 +2180,8 @@
       "confirmare"
     ],
     "pairId": "p63",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w64",
@@ -2005,7 +2197,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p64",
-    "correctSentence": "Se pot întrevedea unele probleme."
+    "correctSentence": "Se pot întrevedea unele probleme.",
+    "doomWord": "întrevedea",
+    "doomDefinition": "întrevedea (a ~) vb., ind. prez. 1 sg. și 3 pl. întrevăd, 2 sg. întrevezi, 3 sg. întrevede, perf. s. 1 sg. întrevăzăzui, m.m.c.p. 1 pl. întrevăzuserăm; conj. prez. 1 sg. să întrevăd, 3 să întrevadă; imper. 2 sg. afirm. întrevezi; ger. întrevăzând; part. întrevăzut"
   },
   {
     "id": "w64c",
@@ -2022,7 +2216,8 @@
       "confirmare"
     ],
     "pairId": "p64",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w65",
@@ -2037,7 +2232,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p65",
-    "correctSentence": "Am ajuns la timp, într-adevăr."
+    "correctSentence": "Am ajuns la timp, într-adevăr.",
+    "doomWord": "într-adevăr",
+    "doomDefinition": "într-adevăr loc. adv."
   },
   {
     "id": "w65c",
@@ -2053,7 +2250,8 @@
       "confirmare"
     ],
     "pairId": "p65",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w66",
@@ -2068,7 +2266,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p66",
-    "correctSentence": "Am mâncat un sendviș la prânz."
+    "correctSentence": "Am mâncat un sendviș la prânz.",
+    "doomWord": "sendviș",
+    "doomDefinition": "sendviș/sandvici (desp. send-viș/sand-vici) s. n., pl. sendvișuri/sandviciuri"
   },
   {
     "id": "w66c",
@@ -2084,7 +2284,8 @@
       "confirmare"
     ],
     "pairId": "p66",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w67",
@@ -2099,7 +2300,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p67",
-    "correctSentence": "Am cumpărat ridichi proaspete din piață."
+    "correctSentence": "Am cumpărat ridichi proaspete din piață.",
+    "doomWord": "ridichi",
+    "doomDefinition": "ridiche s. f., art. ridichea, g.-d. art. ridichii; pl. ridichi"
   },
   {
     "id": "w67c",
@@ -2115,7 +2318,8 @@
       "confirmare"
     ],
     "pairId": "p67",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w68",
@@ -2130,7 +2334,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p68",
-    "correctSentence": "Am o grijă mare pentru sănătatea ta."
+    "correctSentence": "Am o grijă mare pentru sănătatea ta.",
+    "doomWord": "grijă",
+    "doomDefinition": "grijă s. f., art. grija, g.-d. art. grijii; pl. griji"
   },
   {
     "id": "w68c",
@@ -2146,7 +2352,8 @@
       "confirmare"
     ],
     "pairId": "p68",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w69",
@@ -2161,7 +2368,9 @@
       "genitiv"
     ],
     "pairId": "p69",
-    "correctSentence": "Am notat tema în caietul colegei."
+    "correctSentence": "Am notat tema în caietul colegei.",
+    "doomWord": "colegei",
+    "doomDefinition": "colegă s. f., g.-d. art. colegei; pl. colege"
   },
   {
     "id": "w69c",
@@ -2177,7 +2386,8 @@
       "confirmare"
     ],
     "pairId": "p69",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w70",
@@ -2193,7 +2403,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p70",
-    "correctSentence": "Este important să fii atent la ore."
+    "correctSentence": "Este important să fii atent la ore.",
+    "doomWord": "fii",
+    "doomDefinition": "fi (a~) vb., ind. prez. 1 sg. și 3 pl. sunt, 2 sg. ești [e- pron. ĭe], 3 sg. este [e- pron. ĭe]/e [pron. ĭe], 1 pl. suntem, 2 pl. sunteți, imperf. 1 eram [e- pron. ĭe], perf. s. 1 sg. fui/fusei, 1 pl. furăm/fuserăm, m.m.c.p. 1 pl. fuseserăm; conj. prez. 1 sg. să fiu, 2 sg. să fii, 3 să fie/(în formule fixe) fie, 1 pl. să fim, 2 pl. să fiți; cond. prez. 3 ar fi/(în imprecații) fir-ar; imper. 2 sg. afirm. fii, neg. nu fi; ger. fiind (desp. fi-ind); part. fost"
   },
   {
     "id": "w70c",
@@ -2210,7 +2422,8 @@
       "confirmare"
     ],
     "pairId": "p70",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w71",
@@ -2224,7 +2437,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p71",
-    "correctSentence": "Câștigul este de douăsprezece mii de lei."
+    "correctSentence": "Câștigul este de douăsprezece mii de lei.",
+    "doomWord": "douăsprezece",
+    "doomDefinition": "doisprezece (desp. dois-pre-/doi-spre-) num. m., f. douăsprezece (desp. -uăs-pre-/-uă-spre-); m. și f. 12/XII (data de doisprezece/douăsprezece, Circa doisprezece de Poliție; anul două mii doisprezece; numai: ora douăsprezece, douăsprezece zile)"
   },
   {
     "id": "w71c",
@@ -2239,7 +2454,8 @@
       "confirmare"
     ],
     "pairId": "p71",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w72",
@@ -2254,7 +2470,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p72",
-    "correctSentence": "Am cunoscut niște japonezi foarte prietenoși."
+    "correctSentence": "Am cunoscut niște japonezi foarte prietenoși.",
+    "doomWord": "japonezi",
+    "doomDefinition": "japonez adj. m., s. m., pl. japonezi; adj. f., s. f. japoneză, pl. japoneze"
   },
   {
     "id": "w72c",
@@ -2270,7 +2488,8 @@
       "confirmare"
     ],
     "pairId": "p72",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w73",
@@ -2285,7 +2504,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p73",
-    "correctSentence": "Am cumpărat mai multe jamboane de curcan."
+    "correctSentence": "Am cumpărat mai multe jamboane de curcan.",
+    "doomWord": "jamboane",
+    "doomDefinition": "jambon2 s. n., pl. jamboane"
   },
   {
     "id": "w73c",
@@ -2301,7 +2522,8 @@
       "confirmare"
     ],
     "pairId": "p73",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w74",
@@ -2316,7 +2538,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p74",
-    "correctSentence": "Mi-am luat cizme noi de piele."
+    "correctSentence": "Mi-am luat cizme noi de piele.",
+    "doomWord": "cizme",
+    "doomDefinition": "cizmă s. f., g.-d. art. cizmei; pl. cizme"
   },
   {
     "id": "w74c",
@@ -2332,7 +2556,8 @@
       "confirmare"
     ],
     "pairId": "p74",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w75",
@@ -2347,7 +2572,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p75",
-    "correctSentence": "Pe moșie sunt câteva heleșteie mari."
+    "correctSentence": "Pe moșie sunt câteva heleșteie mari.",
+    "doomWord": "heleșteie",
+    "doomDefinition": "heleșteu s. n., art. heleșteul; pl. heleșteie"
   },
   {
     "id": "w75c",
@@ -2363,7 +2590,8 @@
       "confirmare"
     ],
     "pairId": "p75",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w76",
@@ -2378,7 +2606,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p76",
-    "correctSentence": "Am cumpărat un ștecăr nou pentru priză."
+    "correctSentence": "Am cumpărat un ștecăr nou pentru priză.",
+    "doomWord": "ștecăr",
+    "doomDefinition": "ștecăr s. n., pl. ștecăre"
   },
   {
     "id": "w76c",
@@ -2394,7 +2624,8 @@
       "confirmare"
     ],
     "pairId": "p76",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w77",
@@ -2409,7 +2640,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p77",
-    "correctSentence": "Furtunile puternice au rupt mai mulți copaci."
+    "correctSentence": "Furtunile puternice au rupt mai mulți copaci.",
+    "doomWord": "furtună",
+    "doomDefinition": "furtună s. f., g.-d. art. furtunii; pl. furtuni"
   },
   {
     "id": "w77c",
@@ -2425,7 +2658,8 @@
       "confirmare"
     ],
     "pairId": "p77",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w78",
@@ -2440,7 +2674,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p78",
-    "correctSentence": "Mi-am cumpărat jante noi pentru mașină."
+    "correctSentence": "Mi-am cumpărat jante noi pentru mașină.",
+    "doomWord": "jante",
+    "doomDefinition": "jantă (parte a roții) s. f., g.-d. art. jantei; pl. jante"
   },
   {
     "id": "w78c",
@@ -2456,7 +2692,8 @@
       "confirmare"
     ],
     "pairId": "p78",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w79",
@@ -2471,7 +2708,9 @@
       "genitiv"
     ],
     "pairId": "p79",
-    "correctSentence": "Am schimbat becul lămpii din birou."
+    "correctSentence": "Am schimbat becul lămpii din birou.",
+    "doomWord": "lămpii",
+    "doomDefinition": "lampă s. f., g.-d. art. lămpii; pl. lămpi"
   },
   {
     "id": "w79c",
@@ -2487,7 +2726,8 @@
       "confirmare"
     ],
     "pairId": "p79",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w80",
@@ -2502,7 +2742,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p80",
-    "correctSentence": "Am plantat jaloane pentru noul gard."
+    "correctSentence": "Am plantat jaloane pentru noul gard.",
+    "doomWord": "jaloane",
+    "doomDefinition": "jalon s. n., pl. jaloane"
   },
   {
     "id": "w80c",
@@ -2518,7 +2760,8 @@
       "confirmare"
     ],
     "pairId": "p80",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w81",
@@ -2533,7 +2776,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p81",
-    "correctSentence": "Aceasta este o întreprindere de succes."
+    "correctSentence": "Aceasta este o întreprindere de succes.",
+    "doomWord": "întreprindere",
+    "doomDefinition": "întreprindere (desp. -tre-prin-) s. f., g.-d. art. întreprinderii; pl. întreprinderi"
   },
   {
     "id": "w81c",
@@ -2549,7 +2794,8 @@
       "confirmare"
     ],
     "pairId": "p81",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w82",
@@ -2564,7 +2810,9 @@
       "genitiv"
     ],
     "pairId": "p82",
-    "correctSentence": "Fazele lunii influențează mareele."
+    "correctSentence": "Fazele lunii influențează mareele.",
+    "doomWord": "lunii",
+    "doomDefinition": "Luna (astron.) s. propriu f. art., neart. Lună, g.-d. art. Lunii"
   },
   {
     "id": "w82c",
@@ -2580,7 +2828,8 @@
       "confirmare"
     ],
     "pairId": "p82",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w83",
@@ -2594,7 +2843,9 @@
       "vocativ"
     ],
     "pairId": "p83",
-    "correctSentence": "Dragile mele prietene mi-au trimis flori."
+    "correctSentence": "Dragile mele prietene mi-au trimis flori.",
+    "doomWord": "dragile",
+    "doomDefinition": "drag1 adj. m., voc. drag (prieten ~)/dragă (~ prietene, frate ~), pl. dragi, art. dragii; f. dragă, g.-d. art. dragii (~ mele fiice), voc. dragă (prietenă ~, ~ prietenă), pl. dragi, art. dragile (~ mele fiice) (și: drag nouă)"
   },
   {
     "id": "w83c",
@@ -2609,7 +2860,8 @@
       "confirmare"
     ],
     "pairId": "p83",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w84",
@@ -2624,7 +2876,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p84",
-    "correctSentence": "Am pus să înăbușe focul cu nisip."
+    "correctSentence": "Am pus să înăbușe focul cu nisip.",
+    "doomWord": "înăbuși",
+    "doomDefinition": "înăbuși (a ~) vb., ind. prez. 1 sg. înăbuș, 3 înăbușă, imperf. 1 înăbușeam; conj. prez. 1 sg. să înăbuș, 3 să înăbușe"
   },
   {
     "id": "w84c",
@@ -2640,7 +2894,8 @@
       "confirmare"
     ],
     "pairId": "p84",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w85",
@@ -2655,7 +2910,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p85",
-    "correctSentence": "Am tăiat mai multe butuci pentru iarnă."
+    "correctSentence": "Am tăiat mai multe butuci pentru iarnă.",
+    "doomWord": "butuci",
+    "doomDefinition": "butuc s. m., pl. butuci"
   },
   {
     "id": "w85c",
@@ -2671,7 +2928,8 @@
       "confirmare"
     ],
     "pairId": "p85",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w86",
@@ -2686,7 +2944,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p86",
-    "correctSentence": "Ea este o ieșeană mândră de orașul ei."
+    "correctSentence": "Ea este o ieșeană mândră de orașul ei.",
+    "doomWord": "ieșeană",
+    "doomDefinition": "ieșean adj. m., s. m., pl. ieșeni; adj. f. ieșeană, pl. ieșene"
   },
   {
     "id": "w86c",
@@ -2702,7 +2962,8 @@
       "confirmare"
     ],
     "pairId": "p86",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w87",
@@ -2717,7 +2978,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p87",
-    "correctSentence": "Am studiat harta lumii la ora de geografie."
+    "correctSentence": "Am studiat harta lumii la ora de geografie.",
+    "doomWord": "lumii",
+    "doomDefinition": "lume s. f., g.-d. art. lumii; pl. lumi"
   },
   {
     "id": "w87c",
@@ -2733,7 +2996,8 @@
       "confirmare"
     ],
     "pairId": "p87",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w88",
@@ -2748,7 +3012,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p88",
-    "correctSentence": "Am făcut o greșeală în calculul final."
+    "correctSentence": "Am făcut o greșeală în calculul final.",
+    "doomWord": "greșeală",
+    "doomDefinition": "greșeală s. f., g.-d. art. greșelii; pl. greșeli"
   },
   {
     "id": "w88c",
@@ -2764,7 +3030,8 @@
       "confirmare"
     ],
     "pairId": "p88",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w89",
@@ -2779,7 +3046,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p89",
-    "correctSentence": "Mi-am cumpărat o caramea de la cofetărie."
+    "correctSentence": "Mi-am cumpărat o caramea de la cofetărie.",
+    "doomWord": "caramea",
+    "doomDefinition": "caramea (bomboană) s. f., art. carameaua, g.-d. art. caramelei; pl. caramele"
   },
   {
     "id": "w89c",
@@ -2795,7 +3064,8 @@
       "confirmare"
     ],
     "pairId": "p89",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w90",
@@ -2809,7 +3079,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p90",
-    "correctSentence": "Am vizitat Istanbul anul trecut."
+    "correctSentence": "Am vizitat Istanbul anul trecut.",
+    "doomWord": "istanbul",
+    "doomDefinition": "Istanbul (oraș) s. propriu n."
   },
   {
     "id": "w90c",
@@ -2824,7 +3096,8 @@
       "confirmare"
     ],
     "pairId": "p90",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w91",
@@ -2839,7 +3112,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p91",
-    "correctSentence": "Noi înmuiem rufele înainte de spălare."
+    "correctSentence": "Noi înmuiem rufele înainte de spălare.",
+    "doomWord": "înmuiem",
+    "doomDefinition": "înmuia (a ~) vb., ind. prez. 1 și 2 sg. înmoi, 3 înmoaie, 1 pl. înmuiem; conj. prez. 1 și 2 sg. să înmoi, 3 să înmoaie; imper. 2 sg. afirm. înmoaie (-l, înmoai-o); ger. înmuind"
   },
   {
     "id": "w91c",
@@ -2855,7 +3130,8 @@
       "confirmare"
     ],
     "pairId": "p91",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w92",
@@ -2870,7 +3146,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p92",
-    "correctSentence": "A început să înnopte înainte de ora cinci."
+    "correctSentence": "A început să înnopte înainte de ora cinci.",
+    "doomWord": "înnopta",
+    "doomDefinition": "înnopta1 (a ~) (a petrece noaptea) vb., ind. prez. 1 sg. înnoptez, 3 înnoptează; conj. prez. 1 sg. să înnoptez, 3 să înnopteze"
   },
   {
     "id": "w92c",
@@ -2886,7 +3164,8 @@
       "confirmare"
     ],
     "pairId": "p92",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w93",
@@ -2901,7 +3180,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p93",
-    "correctSentence": "Am urmat un itinerar strict în excursie."
+    "correctSentence": "Am urmat un itinerar strict în excursie.",
+    "doomWord": "itinerar",
+    "doomDefinition": "itinerar s. n., pl. itinerare"
   },
   {
     "id": "w93c",
@@ -2917,7 +3198,8 @@
       "confirmare"
     ],
     "pairId": "p93",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w94",
@@ -2932,7 +3214,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p94",
-    "correctSentence": "Știrile cotidiene sunt publicate zilnic."
+    "correctSentence": "Știrile cotidiene sunt publicate zilnic.",
+    "doomWord": "cotidiene",
+    "doomDefinition": "cotidian1 (desp. -di-an) adj. m., pl. cotidieni (desp. -di-eni); f. cotidiană, pl. cotidiene"
   },
   {
     "id": "w94c",
@@ -2948,7 +3232,8 @@
       "confirmare"
     ],
     "pairId": "p94",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w95",
@@ -2963,7 +3248,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p95",
-    "correctSentence": "A întârziat, de asemenea, la ședință."
+    "correctSentence": "A întârziat, de asemenea, la ședință.",
+    "doomWord": "de asemenea",
+    "doomDefinition": "asemenea (de ~)/(în tempo rapid) de-asemenea loc. adv."
   },
   {
     "id": "w95c",
@@ -2979,7 +3266,8 @@
       "confirmare"
     ],
     "pairId": "p95",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w96",
@@ -2995,7 +3283,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p96",
-    "correctSentence": "Nu zice nimic despre surpriza de mâine."
+    "correctSentence": "Nu zice nimic despre surpriza de mâine.",
+    "doomWord": "zice",
+    "doomDefinition": "zice (a ~) vb., ind. prez. 1 sg. și 3 pl. zic, 3 sg. zice, perf. s. 1 sg. zisei, 1 pl. ziserăm, m.m.c.p. 1 pl. ziseserăm; conj. prez. 1 sg. să zic, 3 să zică; imper. 2 sg. afirm. zi; neg. nu zice, ger. zicând; part. zis"
   },
   {
     "id": "w96c",
@@ -3012,7 +3302,8 @@
       "confirmare"
     ],
     "pairId": "p96",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w97",
@@ -3027,7 +3318,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p97",
-    "correctSentence": "Mi-am cumpărat teniși albi de sport."
+    "correctSentence": "Mi-am cumpărat teniși albi de sport.",
+    "doomWord": "teniși",
+    "doomDefinition": "tenis1 (încălțăminte) s. m., pl. teniși"
   },
   {
     "id": "w97c",
@@ -3043,7 +3336,8 @@
       "confirmare"
     ],
     "pairId": "p97",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w98",
@@ -3058,7 +3352,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p98",
-    "correctSentence": "Am scris mai multe eseuri pentru concurs."
+    "correctSentence": "Am scris mai multe eseuri pentru concurs.",
+    "doomWord": "eseuri",
+    "doomDefinition": "eseu s. n., art. eseul; pl. eseuri"
   },
   {
     "id": "w98c",
@@ -3074,7 +3370,8 @@
       "confirmare"
     ],
     "pairId": "p98",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w99",
@@ -3090,7 +3387,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p99",
-    "correctSentence": "Pisica vrea să se cațăre în copac."
+    "correctSentence": "Pisica vrea să se cațăre în copac.",
+    "doomWord": "cățăra",
+    "doomDefinition": "cățăra (a se ~) vb. refl., ind. prez. 1 sg. mă cațăr, 2 sg. te cațări, 3 se cațără; conj. prez. 1 sg. să mă cațăr, 3 să se cațăre; imper. 2 sg. afirm. cațără-te; ger. cățărându-mă"
   },
   {
     "id": "w99c",
@@ -3107,7 +3406,8 @@
       "confirmare"
     ],
     "pairId": "p99",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w100",
@@ -3122,7 +3422,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p100",
-    "correctSentence": "Fiii regelui au moștenit tronul."
+    "correctSentence": "Fiii regelui au moștenit tronul.",
+    "doomWord": "fiii",
+    "doomDefinition": "fiu [pron. fiŭ] s. m., art. fiul; pl. fii, art. fiii (fi-ii)"
   },
   {
     "id": "w100c",
@@ -3138,7 +3440,8 @@
       "confirmare"
     ],
     "pairId": "p100",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w101",
@@ -3153,7 +3456,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p101",
-    "correctSentence": "Preotul a sfințit agheasma pentru credincioși."
+    "correctSentence": "Preotul a sfințit agheasma pentru credincioși.",
+    "doomWord": "agheasma",
+    "doomDefinition": "agheasmă s. f., g.-d. art. aghesmei"
   },
   {
     "id": "w101c",
@@ -3169,7 +3474,8 @@
       "confirmare"
     ],
     "pairId": "p101",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w102",
@@ -3184,7 +3490,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p102",
-    "correctSentence": "După ploaie au apărut curcubeie pe cer."
+    "correctSentence": "După ploaie au apărut curcubeie pe cer.",
+    "doomWord": "curcubeu",
+    "doomDefinition": "curcubeu s. n., art. curcubeul; pl. curcubeie"
   },
   {
     "id": "w102c",
@@ -3200,7 +3508,8 @@
       "confirmare"
     ],
     "pairId": "p102",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w103",
@@ -3216,7 +3525,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p103",
-    "correctSentence": "Noi voiam să mergem la film aseară."
+    "correctSentence": "Noi voiam să mergem la film aseară.",
+    "doomWord": "voi",
+    "doomDefinition": "voi2 pr., d. acc. vouă, neacc. vă (Vă dă.), -vă (dându-vă), -vă- (Da-vă-voi.), v- (V-a dat.), -v- (dându-v-o-), vi (Vi se dă.), -vi- (dându-vi-l), vi- (Vi-l dă.); ac. acc. voi (prep. + voi), neacc. vă (Vă duce.), -vă (ducându-vă), -vă- (Spăla-vă-voi.), v- (V-a dus.), -v- (Duce-v-aș.)"
   },
   {
     "id": "w103c",
@@ -3233,7 +3544,8 @@
       "confirmare"
     ],
     "pairId": "p103",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w104",
@@ -3248,7 +3560,9 @@
       "genitiv"
     ],
     "pairId": "p104",
-    "correctSentence": "Am văzut urmele vulpii în zăpadă."
+    "correctSentence": "Am văzut urmele vulpii în zăpadă.",
+    "doomWord": "vulpe",
+    "doomDefinition": "vulpe s. f., g.-d. art. vulpii; pl. vulpi"
   },
   {
     "id": "w104c",
@@ -3264,7 +3578,8 @@
       "confirmare"
     ],
     "pairId": "p104",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w105",
@@ -3279,7 +3594,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p105",
-    "correctSentence": "Am lipit afișe pe peretele clasei."
+    "correctSentence": "Am lipit afișe pe peretele clasei.",
+    "doomWord": "afișe",
+    "doomDefinition": "afiș s. n., pl. afișe"
   },
   {
     "id": "w105c",
@@ -3295,7 +3612,8 @@
       "confirmare"
     ],
     "pairId": "p105",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w106",
@@ -3310,7 +3628,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p106",
-    "correctSentence": "Am cumpărat căciuli groase pentru schi."
+    "correctSentence": "Am cumpărat căciuli groase pentru schi.",
+    "doomWord": "căciuli",
+    "doomDefinition": "căciulă s. f., g.-d. art. căciulii; pl. căciuli"
   },
   {
     "id": "w106c",
@@ -3326,7 +3646,8 @@
       "confirmare"
     ],
     "pairId": "p106",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w107",
@@ -3341,7 +3662,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p107",
-    "correctSentence": "Mașina de poliție avea girofaruri aprinse."
+    "correctSentence": "Mașina de poliție avea girofaruri aprinse.",
+    "doomWord": "girofaruri",
+    "doomDefinition": "girofar s. n., pl. girofaruri"
   },
   {
     "id": "w107c",
@@ -3357,7 +3680,8 @@
       "confirmare"
     ],
     "pairId": "p107",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w108",
@@ -3372,7 +3696,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p108",
-    "correctSentence": "Am vizitat o gogoșărie în Deltă."
+    "correctSentence": "Am vizitat o gogoșărie în Deltă.",
+    "doomWord": "gogoșărie",
+    "doomDefinition": "gogoșărie s. f., art. gogoșăria, g.-d. art. gogoșăriei; pl. gogoșării, art. gogoșăriile (desp. -ri-i-)"
   },
   {
     "id": "w108c",
@@ -3388,7 +3714,8 @@
       "confirmare"
     ],
     "pairId": "p108",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w109",
@@ -3403,7 +3730,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p109",
-    "correctSentence": "Am separat gălbenușuri de albușuri."
+    "correctSentence": "Am separat gălbenușuri de albușuri.",
+    "doomWord": "gălbenușuri",
+    "doomDefinition": "gălbenuș s. n., pl. gălbenușuri"
   },
   {
     "id": "w109c",
@@ -3419,7 +3748,8 @@
       "confirmare"
     ],
     "pairId": "p109",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w110",
@@ -3434,7 +3764,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p110",
-    "correctSentence": "Părul lui a început să fie grizonant."
+    "correctSentence": "Părul lui a început să fie grizonant.",
+    "doomWord": "grizonant",
+    "doomDefinition": "grizonant adj. m., pl. grizonanți; f. grizonantă, pl. grizonante"
   },
   {
     "id": "w110c",
@@ -3450,7 +3782,8 @@
       "confirmare"
     ],
     "pairId": "p110",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w111",
@@ -3465,7 +3798,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p111",
-    "correctSentence": "Am rezervat două hoteluri în stațiune."
+    "correctSentence": "Am rezervat două hoteluri în stațiune.",
+    "doomWord": "hotel",
+    "doomDefinition": "hotel (unitate de cazare pe termen limitat) s. n., pl. hoteluri"
   },
   {
     "id": "w111c",
@@ -3481,7 +3816,8 @@
       "confirmare"
     ],
     "pairId": "p111",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w112",
@@ -3496,7 +3832,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p112",
-    "correctSentence": "Am vizitat Iașiul în weekend."
+    "correctSentence": "Am vizitat Iașiul în weekend.",
+    "doomWord": "iașiul",
+    "doomDefinition": "Iași s. propriu n., art. Iașiul, (înv.) pl. art. Iașii (Târgul Iașilor)"
   },
   {
     "id": "w112c",
@@ -3512,7 +3850,8 @@
       "confirmare"
     ],
     "pairId": "p112",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w113",
@@ -3527,7 +3866,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p113",
-    "correctSentence": "Boala poate fi asimptomatică la început."
+    "correctSentence": "Boala poate fi asimptomatică la început.",
+    "doomWord": "asimptomatică",
+    "doomDefinition": "asimptomatic (desp. -simp-to-) adj. m., s. m., pl. asimptomatici; adj. f., s. f. asimptomatică, pl. asimptomatice"
   },
   {
     "id": "w113c",
@@ -3543,7 +3884,8 @@
       "confirmare"
     ],
     "pairId": "p113",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w114",
@@ -3558,7 +3900,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p114",
-    "correctSentence": "Am parcat autovehiculul în fața blocului."
+    "correctSentence": "Am parcat autovehiculul în fața blocului.",
+    "doomWord": "autovehicul",
+    "doomDefinition": "autovehicul (desp. a-u-) s. n., pl. autovehicule"
   },
   {
     "id": "w114c",
@@ -3574,7 +3918,8 @@
       "confirmare"
     ],
     "pairId": "p114",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w115",
@@ -3589,7 +3934,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p115",
-    "correctSentence": "Am avut mai multe succese în carieră."
+    "correctSentence": "Am avut mai multe succese în carieră.",
+    "doomWord": "succese",
+    "doomDefinition": "succes s. n., pl. succese"
   },
   {
     "id": "w115c",
@@ -3605,7 +3952,8 @@
       "confirmare"
     ],
     "pairId": "p115",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w116",
@@ -3620,7 +3968,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p116",
-    "correctSentence": "Am cumpărat un foarfece nou pentru grădină."
+    "correctSentence": "Am cumpărat un foarfece nou pentru grădină.",
+    "doomWord": "un",
+    "doomDefinition": "un1 adj. pr. m., g.-d. unui, pl. unii; f. o, g.-d. unei, pl. unele, g.-d. m. și f. unor (Un elev/O elevă întreabă, altul/alta răspunde.)"
   },
   {
     "id": "w116c",
@@ -3636,7 +3986,8 @@
       "confirmare"
     ],
     "pairId": "p116",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w117",
@@ -3651,7 +4002,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p117",
-    "correctSentence": "Copiii au înălțat zmeie pe câmp."
+    "correctSentence": "Copiii au înălțat zmeie pe câmp.",
+    "doomWord": "zmeie",
+    "doomDefinition": "zmeu2 (jucărie) s. n., art. zmeul (desp. zme-ul); pl. zmeie"
   },
   {
     "id": "w117c",
@@ -3667,7 +4020,8 @@
       "confirmare"
     ],
     "pairId": "p117",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w118",
@@ -3682,7 +4036,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p118",
-    "correctSentence": "Am cumpărat mai multe ciocolate de casă."
+    "correctSentence": "Am cumpărat mai multe ciocolate de casă.",
+    "doomWord": "ciocolate",
+    "doomDefinition": "ciocolată s. f., g.-d. art. ciocolatei; pl. ciocolate"
   },
   {
     "id": "w118c",
@@ -3698,7 +4054,8 @@
       "confirmare"
     ],
     "pairId": "p118",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w119",
@@ -3713,7 +4070,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p119",
-    "correctSentence": "Am mâncat un crenvurst cu muștar."
+    "correctSentence": "Am mâncat un crenvurst cu muștar.",
+    "doomWord": "crenvurst",
+    "doomDefinition": "crenvurst s. m., (mai frecv.) pl. crenvurști"
   },
   {
     "id": "w119c",
@@ -3729,7 +4088,8 @@
       "confirmare"
     ],
     "pairId": "p119",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w120",
@@ -3744,7 +4104,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p120",
-    "correctSentence": "Ne-am întâlnit la cazinou diseară."
+    "correctSentence": "Ne-am întâlnit la cazinou diseară.",
+    "doomWord": "cazinou",
+    "doomDefinition": "cazinou s. n., art. cazinoul; pl. cazinouri"
   },
   {
     "id": "w120c",
@@ -3760,7 +4122,8 @@
       "confirmare"
     ],
     "pairId": "p120",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w121",
@@ -3775,7 +4138,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p121",
-    "correctSentence": "Acest hotel oferă mult confort clienților."
+    "correctSentence": "Acest hotel oferă mult confort clienților.",
+    "doomWord": "confort",
+    "doomDefinition": "confort s. n."
   },
   {
     "id": "w121c",
@@ -3791,7 +4156,8 @@
       "confirmare"
     ],
     "pairId": "p121",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w122",
@@ -3806,7 +4172,9 @@
       "genitiv"
     ],
     "pairId": "p122",
-    "correctSentence": "Din cauza ceții, avionul a aterizat mai târziu."
+    "correctSentence": "Din cauza ceții, avionul a aterizat mai târziu.",
+    "doomWord": "ceții",
+    "doomDefinition": "ceață s. f., g.-d. art. ceții; pl. cețuri"
   },
   {
     "id": "w122c",
@@ -3822,7 +4190,8 @@
       "confirmare"
     ],
     "pairId": "p122",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w123",
@@ -3837,7 +4206,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p123",
-    "correctSentence": "Am cumpărat chibrituri de la magazin."
+    "correctSentence": "Am cumpărat chibrituri de la magazin.",
+    "doomWord": "chibrituri",
+    "doomDefinition": "chibrit (desp. chi-brit) s. n., pl. chibrituri"
   },
   {
     "id": "w123c",
@@ -3853,7 +4224,8 @@
       "confirmare"
     ],
     "pairId": "p123",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w124",
@@ -3868,7 +4240,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p124",
-    "correctSentence": "Se pare că începe să fulguiască afară."
+    "correctSentence": "Se pare că începe să fulguiască afară.",
+    "doomWord": "fulgui",
+    "doomDefinition": "fulgui (a ~) vb., ind. prez. 3 sg. fulguiește, imperf. 3 sg. fulguia; conj. prez. 3 sg. să fulguiască"
   },
   {
     "id": "w124c",
@@ -3884,7 +4258,8 @@
       "confirmare"
     ],
     "pairId": "p124",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w125",
@@ -3899,7 +4274,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p125",
-    "correctSentence": "Rezultatul a fost ales aleatoriu, fără criterii."
+    "correctSentence": "Rezultatul a fost ales aleatoriu, fără criterii.",
+    "doomWord": "aleatoriu",
+    "doomDefinition": "aleatoriu [riu pron. rĭu] (desp. -le-a-) adj. m., f. aleatorie (desp. -ri-e); pl. m. și f. aleatorii"
   },
   {
     "id": "w125c",
@@ -3915,7 +4292,8 @@
       "confirmare"
     ],
     "pairId": "p125",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w126",
@@ -3931,7 +4309,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p126",
-    "correctSentence": "Aș vrea să plec în vacanță."
+    "correctSentence": "Aș vrea să plec în vacanță.",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "w126c",
@@ -3948,7 +4328,8 @@
       "confirmare"
     ],
     "pairId": "p126",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w127",
@@ -3963,7 +4344,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p127",
-    "correctSentence": "Dumneavoastră înșivă ați spus asta."
+    "correctSentence": "Dumneavoastră înșivă ați spus asta.",
+    "doomWord": "dumneavoastră",
+    "doomDefinition": "dumneavoastră pr.; abr. dv./dvs./(rar) d-voastră"
   },
   {
     "id": "w127c",
@@ -3979,7 +4362,8 @@
       "confirmare"
     ],
     "pairId": "p127",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w128",
@@ -3994,7 +4378,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p128",
-    "correctSentence": "Craca a început să se încovoaie sub greutate."
+    "correctSentence": "Craca a început să se încovoaie sub greutate.",
+    "doomWord": "încovoaie",
+    "doomDefinition": "încovoia (a ~) vb., ind. prez. 1 și 2 sg. încovoi, 3 încovoaie, 1 pl. încovoiem; conj. prez. 1 și 2 sg. să încovoi, 3 să încovoaie; imper. 2 sg. afirm. încovoaie; ger. încovoind"
   },
   {
     "id": "w128c",
@@ -4010,7 +4396,8 @@
       "confirmare"
     ],
     "pairId": "p128",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w129",
@@ -4025,7 +4412,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p129",
-    "correctSentence": "Ați citit cartea recomandată de profesor?"
+    "correctSentence": "Ați citit cartea recomandată de profesor?",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "w129c",
@@ -4041,7 +4430,8 @@
       "confirmare"
     ],
     "pairId": "p129",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w130",
@@ -4056,7 +4446,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p130",
-    "correctSentence": "Simbolul asterisc este folosit pentru note."
+    "correctSentence": "Simbolul asterisc este folosit pentru note.",
+    "doomWord": "asterisc",
+    "doomDefinition": "asterisc s. n., pl. asteriscuri; (semn grafic) *"
   },
   {
     "id": "w130c",
@@ -4072,7 +4464,8 @@
       "confirmare"
     ],
     "pairId": "p130",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w131",
@@ -4087,7 +4480,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p131",
-    "correctSentence": "A fost o vizită inopinată a rudelor."
+    "correctSentence": "A fost o vizită inopinată a rudelor.",
+    "doomWord": "inopinată",
+    "doomDefinition": "inopinat (desp. i-no-/in-o-) adj. m., pl. inopinați; f. inopinată, pl. inopinate"
   },
   {
     "id": "w131c",
@@ -4103,7 +4498,8 @@
       "confirmare"
     ],
     "pairId": "p131",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w132",
@@ -4118,7 +4514,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p132",
-    "correctSentence": "Noile reglementări au avut impacturi majore."
+    "correctSentence": "Noile reglementări au avut impacturi majore.",
+    "doomWord": "impacturi",
+    "doomDefinition": "impact s. n., pl. impacturi"
   },
   {
     "id": "w132c",
@@ -4134,7 +4532,8 @@
       "confirmare"
     ],
     "pairId": "p132",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w133",
@@ -4150,7 +4549,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p133",
-    "correctSentence": "Ar fi bine să plecăm mai devreme."
+    "correctSentence": "Ar fi bine să plecăm mai devreme.",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "w133c",
@@ -4167,7 +4568,8 @@
       "confirmare"
     ],
     "pairId": "p133",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w134",
@@ -4182,7 +4584,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p134",
-    "correctSentence": "Am pus gheață în paharul cu limonadă."
+    "correctSentence": "Am pus gheață în paharul cu limonadă.",
+    "doomWord": "gheață",
+    "doomDefinition": "gheață s. f., g.-d. art. gheții; (ghețari, întinderi de gheață) pl. ghețuri"
   },
   {
     "id": "w134c",
@@ -4198,7 +4602,8 @@
       "confirmare"
     ],
     "pairId": "p134",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w135",
@@ -4213,7 +4618,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p135",
-    "correctSentence": "Pisica are gheare foarte ascuțite."
+    "correctSentence": "Pisica are gheare foarte ascuțite.",
+    "doomWord": "gheară",
+    "doomDefinition": "gheară s. f., g.-d. art. ghearei; pl. gheare"
   },
   {
     "id": "w135c",
@@ -4229,7 +4636,8 @@
       "confirmare"
     ],
     "pairId": "p135",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w136",
@@ -4244,7 +4652,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p136",
-    "correctSentence": "Nu este voie să copiezi la examen."
+    "correctSentence": "Nu este voie să copiezi la examen.",
+    "doomWord": "copia",
+    "doomDefinition": "copia (a ~) (desp. -pi-a) vb., ind. prez. 1 sg. copiez (desp. -pi-ez), 3 copiază, 1 pl. copiem; conj. prez. 1 sg. să copiez, 3 să copieze; ger. copiind (desp. -pi-ind)"
   },
   {
     "id": "w136c",
@@ -4260,7 +4670,8 @@
       "confirmare"
     ],
     "pairId": "p136",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w137",
@@ -4275,7 +4686,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p137",
-    "correctSentence": "Abia am reușit să termin la timp."
+    "correctSentence": "Abia am reușit să termin la timp.",
+    "doomWord": "abia",
+    "doomDefinition": "abia (desp. -bia) adv."
   },
   {
     "id": "w137c",
@@ -4291,7 +4704,8 @@
       "confirmare"
     ],
     "pairId": "p137",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w138",
@@ -4306,7 +4720,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p138",
-    "correctSentence": "El bănuiește că va ploua mâine."
+    "correctSentence": "El bănuiește că va ploua mâine.",
+    "doomWord": "bănuiește",
+    "doomDefinition": "bănui (a ~) vb., ind. prez. 1 sg. și 3 pl. bănuiesc, 3 sg. bănuiește, imperf. 1 bănuiam; conj. prez. 1 sg. să bănuiesc, 3 să bănuiască"
   },
   {
     "id": "w138c",
@@ -4322,7 +4738,8 @@
       "confirmare"
     ],
     "pairId": "p138",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w139",
@@ -4337,7 +4754,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p139",
-    "correctSentence": "De fapt, nu am știut de această regulă."
+    "correctSentence": "De fapt, nu am știut de această regulă.",
+    "doomWord": "de fapt",
+    "doomDefinition": "fapt (de ~) loc. adv."
   },
   {
     "id": "w139c",
@@ -4353,7 +4772,8 @@
       "confirmare"
     ],
     "pairId": "p139",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w140",
@@ -4368,7 +4788,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p140",
-    "correctSentence": "Avionul are un fuzelaj foarte aerodinamic."
+    "correctSentence": "Avionul are un fuzelaj foarte aerodinamic.",
+    "doomWord": "fuzelaj",
+    "doomDefinition": "fuzelaj s. n., pl. fuzelaje"
   },
   {
     "id": "w140c",
@@ -4384,7 +4806,8 @@
       "confirmare"
     ],
     "pairId": "p140",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w141",
@@ -4399,7 +4822,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p141",
-    "correctSentence": "Am udat grădina cu furtunurile noi."
+    "correctSentence": "Am udat grădina cu furtunurile noi.",
+    "doomWord": "furtunurile",
+    "doomDefinition": "furtun s. n., pl. furtunuri"
   },
   {
     "id": "w141c",
@@ -4415,7 +4840,8 @@
       "confirmare"
     ],
     "pairId": "p141",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w142",
@@ -4430,7 +4856,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p142",
-    "correctSentence": "Evenimentul a avut un aer funebru."
+    "correctSentence": "Evenimentul a avut un aer funebru.",
+    "doomWord": "funebru",
+    "doomDefinition": "funebru (desp. -ne-bru) adj. m., pl. funebri; f. funebră, pl. funebre"
   },
   {
     "id": "w142c",
@@ -4446,7 +4874,8 @@
       "confirmare"
     ],
     "pairId": "p142",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w143",
@@ -4461,7 +4890,8 @@
       "greșeală frecventă"
     ],
     "pairId": "p143",
-    "correctSentence": "Fiecare dintre elevi a ales un proiect."
+    "correctSentence": "Fiecare dintre elevi a ales un proiect.",
+    "doomWord": null
   },
   {
     "id": "w143c",
@@ -4477,7 +4907,8 @@
       "confirmare"
     ],
     "pairId": "p143",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w144",
@@ -4493,7 +4924,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p144",
-    "correctSentence": "Te rog să nu fi nepoliticos."
+    "correctSentence": "Te rog să nu fi nepoliticos.",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "w144c",
@@ -4510,7 +4943,8 @@
       "confirmare"
     ],
     "pairId": "p144",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w145",
@@ -4526,7 +4960,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p145",
-    "correctSentence": "Vreau să fii atent la ce îți spun."
+    "correctSentence": "Vreau să fii atent la ce îți spun.",
+    "doomWord": "fii",
+    "doomDefinition": "fi (a~) vb., ind. prez. 1 sg. și 3 pl. sunt, 2 sg. ești [e- pron. ĭe], 3 sg. este [e- pron. ĭe]/e [pron. ĭe], 1 pl. suntem, 2 pl. sunteți, imperf. 1 eram [e- pron. ĭe], perf. s. 1 sg. fui/fusei, 1 pl. furăm/fuserăm, m.m.c.p. 1 pl. fuseserăm; conj. prez. 1 sg. să fiu, 2 sg. să fii, 3 să fie/(în formule fixe) fie, 1 pl. să fim, 2 pl. să fiți; cond. prez. 3 ar fi/(în imprecații) fir-ar; imper. 2 sg. afirm. fii, neg. nu fi; ger. fiind (desp. fi-ind); part. fost"
   },
   {
     "id": "w145c",
@@ -4543,7 +4979,8 @@
       "confirmare"
     ],
     "pairId": "p145",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w146",
@@ -4558,7 +4995,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p146",
-    "correctSentence": "Voi faceți curat, eu nu fac nimic."
+    "correctSentence": "Voi faceți curat, eu nu fac nimic.",
+    "doomWord": "faceți",
+    "doomDefinition": "face1 (a ~) (a făuri) vb., ind. prez. 1 sg. și 3 pl. fac, 3 sg. face, 2 pl. faceți, imperf. 1 făceam, perf. s. 1 sg. făcui, m.m.c.p. 1 pl. făcuserăm; conj. prez. 1 sg. să fac, 3 să facă; imper. 2 sg. afirm. fă, neg. nu face; ger. făcând; part. făcut"
   },
   {
     "id": "w146c",
@@ -4574,7 +5013,8 @@
       "confirmare"
     ],
     "pairId": "p146",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w148",
@@ -4589,7 +5029,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p147",
-    "correctSentence": "Țara a impus un embargou asupra importurilor."
+    "correctSentence": "Țara a impus un embargou asupra importurilor.",
+    "doomWord": "embargou",
+    "doomDefinition": "embargou s. n., art. embargoul; pl. embargouri"
   },
   {
     "id": "w148c",
@@ -4605,7 +5047,8 @@
       "confirmare"
     ],
     "pairId": "p147",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w149",
@@ -4621,7 +5064,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p148",
-    "correctSentence": "Problema ar dispărea dacă am acționa."
+    "correctSentence": "Problema ar dispărea dacă am acționa.",
+    "doomWord": "dispărea",
+    "doomDefinition": "dispărea (a ~) vb., ind. prez. 1 sg. și 3 pl. dispar, 2 sg. dispari, 3 sg. dispare; viit. 1 sg. voi dispărea; conj. prez. 1 sg. să dispar, 3 să dispară; cond. prez. 1 sg. aș dispărea; imper. 2 sg. afirm. dispari; ger. dispărând; part. dispărut"
   },
   {
     "id": "w149c",
@@ -4638,7 +5083,8 @@
       "confirmare"
     ],
     "pairId": "p148",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w150",
@@ -4653,7 +5099,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p149",
-    "correctSentence": "Echipele de deszăpezire au ieșit pe străzi."
+    "correctSentence": "Echipele de deszăpezire au ieșit pe străzi.",
+    "doomWord": "deszăpezire",
+    "doomDefinition": "deszăpezire s. f., g.-d. art. deszăpezirii; pl. deszăpeziri"
   },
   {
     "id": "w150c",
@@ -4669,7 +5117,8 @@
       "confirmare"
     ],
     "pairId": "p149",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w151",
@@ -4684,7 +5133,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p150",
-    "correctSentence": "Am dezumflat salteaua după vacanță."
+    "correctSentence": "Am dezumflat salteaua după vacanță.",
+    "doomWord": "dezumflat",
+    "doomDefinition": "dezumflat (desp. de-zum-/dez-um-) s. n."
   },
   {
     "id": "w151c",
@@ -4700,7 +5151,8 @@
       "confirmare"
     ],
     "pairId": "p150",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w152",
@@ -4714,7 +5166,9 @@
       "adverb"
     ],
     "pairId": "p151",
-    "correctSentence": "Au venit destul de mulți oameni la concert."
+    "correctSentence": "Au venit destul de mulți oameni la concert.",
+    "doomWord": "destul",
+    "doomDefinition": "destul1 adj. pr. m. (Produce ~ lapte/lapte ~.), pl. destui (~ tineri); f. destulă (~ apă), pl. destule (~ tinere; cu valoare neutră: A văzut ~.); g.-d. m. și f. pl. destulor (antepus, neprecedat de alt determinant cu forma cazuală marcată) (părerile/a se adresa ~ tineri/tinere.)"
   },
   {
     "id": "w152c",
@@ -4729,7 +5183,8 @@
       "confirmare"
     ],
     "pairId": "p151",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w153",
@@ -4744,7 +5199,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p152",
-    "correctSentence": "Tânărul delincvent a fost arestat."
+    "correctSentence": "Tânărul delincvent a fost arestat.",
+    "doomWord": "delincvent",
+    "doomDefinition": "delincvent s. m., pl. delincvenți"
   },
   {
     "id": "w153c",
@@ -4760,7 +5217,8 @@
       "confirmare"
     ],
     "pairId": "p152",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w154",
@@ -4775,7 +5233,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p153",
-    "correctSentence": "Au pus trupul în coșciug."
+    "correctSentence": "Au pus trupul în coșciug.",
+    "doomWord": "coșciug",
+    "doomDefinition": "coșciug s. n., pl. coșciuge"
   },
   {
     "id": "w154c",
@@ -4791,7 +5251,8 @@
       "confirmare"
     ],
     "pairId": "p153",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w155",
@@ -4806,7 +5267,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p154",
-    "correctSentence": "Am citit contorul de energie electrică."
+    "correctSentence": "Am citit contorul de energie electrică.",
+    "doomWord": "contor",
+    "doomDefinition": "contor (aparat de măsură) s. n., pl. contoare"
   },
   {
     "id": "w155c",
@@ -4822,7 +5285,8 @@
       "confirmare"
     ],
     "pairId": "p154",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w156",
@@ -4838,7 +5302,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p155",
-    "correctSentence": "Nu mă pot complăcea în această situație."
+    "correctSentence": "Nu mă pot complăcea în această situație.",
+    "doomWord": "complăcea",
+    "doomDefinition": "complăcea (a se ~) vb. refl., ind. prez. 1 sg. mă complac, 2 sg. te complaci, 3 sg. se complace, perf. s. 1 sg. mă complăcui, m.m.c.p. 1 pl. ne complăcuserăm; conj. prez. 1 sg. să mă complac, 3 să se complacă; cond. prez. 1 sg. m-aș complăcea; ger. complăcându-mă; part. complăcut"
   },
   {
     "id": "w156c",
@@ -4855,7 +5321,8 @@
       "confirmare"
     ],
     "pairId": "p155",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w157",
@@ -4870,7 +5337,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p156",
-    "correctSentence": "Nu mă combateți, vă rog frumos."
+    "correctSentence": "Nu mă combateți, vă rog frumos.",
+    "doomWord": "combate",
+    "doomDefinition": "combate (a ~) vb., ind. 1 sg. și 3 pl. combat, 2 sg. combați, 3 sg. combate, imperf. 1 combăteam, perf. s. 1 sg. combătui, m.m.c.p. 1 pl. combătuserăm; conj. prez. 1 sg. să combat, 3 să combată; ger. combătând; part. combătut"
   },
   {
     "id": "w157c",
@@ -4886,7 +5355,8 @@
       "confirmare"
     ],
     "pairId": "p156",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w158",
@@ -4902,7 +5372,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p157",
-    "correctSentence": "Bunica stătea să coasă la fereastră."
+    "correctSentence": "Bunica stătea să coasă la fereastră.",
+    "doomWord": "coasă",
+    "doomDefinition": "coasă s. f., g.-d. art. coasei; pl. coase"
   },
   {
     "id": "w158c",
@@ -4919,7 +5391,8 @@
       "confirmare"
     ],
     "pairId": "p157",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w159",
@@ -4934,7 +5407,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p158",
-    "correctSentence": "Am ambalat cadoul în celofan."
+    "correctSentence": "Am ambalat cadoul în celofan.",
+    "doomWord": "celofan",
+    "doomDefinition": "celofan s. n."
   },
   {
     "id": "w159c",
@@ -4950,7 +5425,8 @@
       "confirmare"
     ],
     "pairId": "p158",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w160",
@@ -4965,7 +5441,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p159",
-    "correctSentence": "Ciocănitorile bat în copaci toată ziua."
+    "correctSentence": "Ciocănitorile bat în copaci toată ziua.",
+    "doomWord": "ciocănitoare",
+    "doomDefinition": "ciocănitoare s. f., g.-d. art. ciocănitorii; pl. ciocănitori"
   },
   {
     "id": "w160c",
@@ -4981,7 +5459,8 @@
       "confirmare"
     ],
     "pairId": "p159",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w161",
@@ -4996,7 +5475,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p160",
-    "correctSentence": "Am cincisprezece lei în buzunar."
+    "correctSentence": "Am cincisprezece lei în buzunar.",
+    "doomWord": "cincisprezece",
+    "doomDefinition": "cincisprezece [(în tempo rapid) cinci pron. čin] (desp. cinci-spre-) num. invar.; 15, XV"
   },
   {
     "id": "w161c",
@@ -5012,7 +5493,8 @@
       "confirmare"
     ],
     "pairId": "p160",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w162",
@@ -5027,7 +5509,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p161",
-    "correctSentence": "El este al cincilea copil din familie."
+    "correctSentence": "El este al cincilea copil din familie.",
+    "doomWord": "cincilea",
+    "doomDefinition": "cincilea (al ~) num. m., f. a cincea; m. al V-lea/al 5-lea, f. a V-a/a 5-a"
   },
   {
     "id": "w162c",
@@ -5043,7 +5527,8 @@
       "confirmare"
     ],
     "pairId": "p161",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w163",
@@ -5058,7 +5543,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p162",
-    "correctSentence": "Ochii cenușii ai pisicii străluceau."
+    "correctSentence": "Ochii cenușii ai pisicii străluceau.",
+    "doomWord": "cenușii",
+    "doomDefinition": "cenușă s. f., art. cenușa, g.-d. art. cenușii; pl. cenuși"
   },
   {
     "id": "w163c",
@@ -5074,7 +5561,8 @@
       "confirmare"
     ],
     "pairId": "p162",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w164",
@@ -5088,7 +5576,9 @@
       "adverb"
     ],
     "pairId": "p163",
-    "correctSentence": "Ea este cel mai puțin apreciată din echipă."
+    "correctSentence": "Ea este cel mai puțin apreciată din echipă.",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "w164c",
@@ -5103,7 +5593,8 @@
       "confirmare"
     ],
     "pairId": "p163",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w165",
@@ -5117,7 +5608,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p164",
-    "correctSentence": "Au venit câteva zeci de spectatori."
+    "correctSentence": "Au venit câteva zeci de spectatori.",
+    "doomWord": "câteva",
+    "doomDefinition": "câtva1 adj. pr. m., pl. câțiva; f. câtăva, pl. câteva; g.-d. pl. m. și f. câtorva (câtva timp, câtăva vreme, câțiva elevi, câteva eleve, câtorva elevi/eleve; și: a câțiva...)"
   },
   {
     "id": "w165c",
@@ -5132,7 +5625,8 @@
       "confirmare"
     ],
     "pairId": "p164",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w166",
@@ -5147,7 +5641,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p165",
-    "correctSentence": "Am participat la mai multe carnavaluri anul acesta."
+    "correctSentence": "Am participat la mai multe carnavaluri anul acesta.",
+    "doomWord": "carnavaluri",
+    "doomDefinition": "carnaval s. n., pl. carnavaluri (și: D-ale carnavalului)"
   },
   {
     "id": "w166c",
@@ -5163,7 +5659,8 @@
       "confirmare"
     ],
     "pairId": "p165",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w167",
@@ -5178,7 +5675,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p166",
-    "correctSentence": "Cartea pe care am citit-o a fost fascinantă."
+    "correctSentence": "Cartea pe care am citit-o a fost fascinantă.",
+    "doomWord": "pe",
+    "doomDefinition": "pe prep."
   },
   {
     "id": "w167c",
@@ -5194,7 +5693,8 @@
       "confirmare"
     ],
     "pairId": "p166",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w168",
@@ -5209,7 +5709,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p167",
-    "correctSentence": "Trebuie să păstrăm buna-cuviință."
+    "correctSentence": "Trebuie să păstrăm buna-cuviință.",
+    "doomWord": "buna-cuviință",
+    "doomDefinition": "bună-cuviință (purtare bună) (desp. -vi-in-) s. f., art. buna-cuviință, g.-d. art. bunei-cuviințe"
   },
   {
     "id": "w168c",
@@ -5225,7 +5727,8 @@
       "confirmare"
     ],
     "pairId": "p167",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w169",
@@ -5240,7 +5743,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p168",
-    "correctSentence": "Am cumpărat mai multe bricege de colecție."
+    "correctSentence": "Am cumpărat mai multe bricege de colecție.",
+    "doomWord": "bricege",
+    "doomDefinition": "briceag s. n., pl. bricege"
   },
   {
     "id": "w169c",
@@ -5256,7 +5761,8 @@
       "confirmare"
     ],
     "pairId": "p168",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w170",
@@ -5271,7 +5777,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p169",
-    "correctSentence": "Uniforma școlii este de culoare bleumarin."
+    "correctSentence": "Uniforma școlii este de culoare bleumarin.",
+    "doomWord": "bleumarin",
+    "doomDefinition": "bleumarin1 [eu pron. fr. ö] (desp. bleu-) adj. invar. (pantaloni ~)"
   },
   {
     "id": "w170c",
@@ -5287,7 +5795,8 @@
       "confirmare"
     ],
     "pairId": "p169",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w171",
@@ -5302,7 +5811,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p170",
-    "correctSentence": "El blestemă în fiecare zi de supărare."
+    "correctSentence": "El blestemă în fiecare zi de supărare.",
+    "doomWord": "blestemă",
+    "doomDefinition": "blestema (a ~) vb., ind. prez. 1 sg. blestem, 3 blestemă; conj. prez. 1 sg. să blestem, 3 să blesteme"
   },
   {
     "id": "w171c",
@@ -5318,7 +5829,8 @@
       "confirmare"
     ],
     "pairId": "p170",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w172",
@@ -5333,7 +5845,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p171",
-    "correctSentence": "Am mâncat un biscuit cu ciocolată."
+    "correctSentence": "Am mâncat un biscuit cu ciocolată.",
+    "doomWord": "biscuit",
+    "doomDefinition": "biscuit s. m., pl. biscuiți"
   },
   {
     "id": "w172c",
@@ -5349,7 +5863,8 @@
       "confirmare"
     ],
     "pairId": "p171",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w173",
@@ -5364,7 +5879,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p172",
-    "correctSentence": "Noi batem covoarele în fiecare primăvară."
+    "correctSentence": "Noi batem covoarele în fiecare primăvară.",
+    "doomWord": "bate",
+    "doomDefinition": "bate (a ~) vb., ind. prez. 1 sg. și 3 pl. bat, 2 sg. bați, 3 sg. bate, imperf. 1 băteam, perf. s. 1 sg. bătui, m.m.c.p. 1 pl. bătuserăm; conj. prez. 1 sg. să bat, 3 să bată; imper. 2 pl. (nu) bateți; ger. bătând; part. bătut"
   },
   {
     "id": "w173c",
@@ -5380,7 +5897,8 @@
       "confirmare"
     ],
     "pairId": "p172",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w174",
@@ -5395,7 +5913,9 @@
       "genitiv"
     ],
     "pairId": "p173",
-    "correctSentence": "Am văzut cuibul berzei pe casă."
+    "correctSentence": "Am văzut cuibul berzei pe casă.",
+    "doomWord": "berzei",
+    "doomDefinition": "barză s. f., g.-d. art. berzei; pl. berze"
   },
   {
     "id": "w174c",
@@ -5411,7 +5931,8 @@
       "confirmare"
     ],
     "pairId": "p173",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w175",
@@ -5426,7 +5947,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p174",
-    "correctSentence": "Am calculat bareme diferite pentru examen."
+    "correctSentence": "Am calculat bareme diferite pentru examen.",
+    "doomWord": "bareme",
+    "doomDefinition": "barem2 s. n., pl. bareme"
   },
   {
     "id": "w175c",
@@ -5442,7 +5965,8 @@
       "confirmare"
     ],
     "pairId": "p174",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w176",
@@ -5457,7 +5981,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p175",
-    "correctSentence": "Au montat balustrade noi la balcon."
+    "correctSentence": "Au montat balustrade noi la balcon.",
+    "doomWord": "balustrade",
+    "doomDefinition": "balustradă s. f., g.-d. art. balustradei; pl. balustrade"
   },
   {
     "id": "w176c",
@@ -5473,7 +5999,8 @@
       "confirmare"
     ],
     "pairId": "p175",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w177",
@@ -5488,7 +6015,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p176",
-    "correctSentence": "Profesorul atribuie notele la final."
+    "correctSentence": "Profesorul atribuie notele la final.",
+    "doomWord": "atribuie",
+    "doomDefinition": "atribui (a ~) (desp. a-tri-) vb., ind. prez. 1 și 2 sg. atribui, 3 atribuie, imperf. 1 atribuiam; conj. prez. 1 și 2 sg. să atribui, 3 să atribuie; imper. 2 sg. afirm. atribuie (-l, atribui-o)"
   },
   {
     "id": "w177c",
@@ -5504,7 +6033,8 @@
       "confirmare"
     ],
     "pairId": "p176",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w178",
@@ -5519,7 +6049,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p177",
-    "correctSentence": "Am cumpărat mai multe atlase geografice."
+    "correctSentence": "Am cumpărat mai multe atlase geografice.",
+    "doomWord": "atlas",
+    "doomDefinition": "atlas (vertebră; colecție de hărți) (desp. a-tlas) s. n., pl. atlase"
   },
   {
     "id": "w178c",
@@ -5535,7 +6067,8 @@
       "confirmare"
     ],
     "pairId": "p177",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w179",
@@ -5550,7 +6083,9 @@
       "genitiv"
     ],
     "pairId": "p178",
-    "correctSentence": "Căldura amiezii era greu de suportat."
+    "correctSentence": "Căldura amiezii era greu de suportat.",
+    "doomWord": "amiezii",
+    "doomDefinition": "amiază (desp. -mia-) s. f., g.-d. art. amiezii (desp. -mie-); pl. amiezi"
   },
   {
     "id": "w179c",
@@ -5566,7 +6101,8 @@
       "confirmare"
     ],
     "pairId": "p178",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w180",
@@ -5581,7 +6117,9 @@
       "dativ"
     ],
     "pairId": "p179",
-    "correctSentence": "Le-am mulțumit amândurora părinților."
+    "correctSentence": "Le-am mulțumit amândurora părinților.",
+    "doomWord": "amândurora",
+    "doomDefinition": "amândoi pr. m., adj. pr. m., f. amândouă, g.-d. (antepus) amânduror, (singur/postpus) amândurora (Amândoi (elevii)/Elevii amândoi au promovat.)"
   },
   {
     "id": "w180c",
@@ -5597,7 +6135,8 @@
       "confirmare"
     ],
     "pairId": "p179",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w181",
@@ -5612,7 +6151,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p180",
-    "correctSentence": "Am corectat câteva alineate din document."
+    "correctSentence": "Am corectat câteva alineate din document.",
+    "doomWord": "alineate",
+    "doomDefinition": "alineat (desp. -ne-at) s. n., pl. alineate; abr. al./alin."
   },
   {
     "id": "w181c",
@@ -5628,7 +6169,8 @@
       "confirmare"
     ],
     "pairId": "p180",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w182",
@@ -5643,7 +6185,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p181",
-    "correctSentence": "Rezultatele au fost complet aleatorii."
+    "correctSentence": "Rezultatele au fost complet aleatorii.",
+    "doomWord": "aleatorii",
+    "doomDefinition": "aleatoriu [riu pron. rĭu] (desp. -le-a-) adj. m., f. aleatorie (desp. -ri-e); pl. m. și f. aleatorii"
   },
   {
     "id": "w182c",
@@ -5659,7 +6203,8 @@
       "confirmare"
     ],
     "pairId": "p181",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w183",
@@ -5674,7 +6219,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p182",
-    "correctSentence": "Am răsfoit mai multe albume cu fotografii."
+    "correctSentence": "Am răsfoit mai multe albume cu fotografii.",
+    "doomWord": "albume",
+    "doomDefinition": "album s. n., pl. albume"
   },
   {
     "id": "w183c",
@@ -5690,7 +6237,8 @@
       "confirmare"
     ],
     "pairId": "p182",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w184",
@@ -5706,7 +6254,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p183",
-    "correctSentence": "Este important să aibă toate actele în regulă."
+    "correctSentence": "Este important să aibă toate actele în regulă.",
+    "doomWord": "aibă",
+    "doomDefinition": "avea2 (a ~) vb. pred., ind. prez. 1 sg. am, 2 sg. ai, 3 sg. are, 1 pl. avem, 2 pl. aveți, 3 pl. au; imperf. 1 aveam, perf. s. 1 sg. avui, 1 pl. avurăm, m.m.c.p. 1 pl. avuseserăm; conj. prez. 1 sg. să am, 3 să aibă; imper. 2 sg. afirm. ai, neg. nu avea/(în tempo rapid) n-avea; ger. având; part. avut"
   },
   {
     "id": "w184c",
@@ -5723,7 +6273,8 @@
       "confirmare"
     ],
     "pairId": "p183",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w185",
@@ -5737,7 +6288,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p184",
-    "correctSentence": "Aceeași fată a câștigat concursul."
+    "correctSentence": "Aceeași fată a câștigat concursul.",
+    "doomWord": "aceeași",
+    "doomDefinition": "același pr. m., adj. pr. m., g.-d. aceluiași, pl. aceiași; f. aceeași, g.-d. aceleiași, pl. aceleași (desp. -leași); g.-d. pl. m. și f. acelorași (dar și: unui același)"
   },
   {
     "id": "w185c",
@@ -5752,7 +6305,8 @@
       "confirmare"
     ],
     "pairId": "p184",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w186",
@@ -5767,7 +6321,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p185",
-    "correctSentence": "Ne vedem de obicei dimineața la cafenea."
+    "correctSentence": "Ne vedem de obicei dimineața la cafenea.",
+    "doomWord": "de obicei",
+    "doomDefinition": "obicei (de ~)/(în tempo rapid) de-obicei loc. adv."
   },
   {
     "id": "w186c",
@@ -5783,7 +6339,8 @@
       "confirmare"
     ],
     "pairId": "p185",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w187",
@@ -5797,7 +6354,9 @@
       "vocativ"
     ],
     "pairId": "p186",
-    "correctSentence": "Dragile mele, vă mulțumesc pentru cadou."
+    "correctSentence": "Dragile mele, vă mulțumesc pentru cadou.",
+    "doomWord": "dragile",
+    "doomDefinition": "drag1 adj. m., voc. drag (prieten ~)/dragă (~ prietene, frate ~), pl. dragi, art. dragii; f. dragă, g.-d. art. dragii (~ mele fiice), voc. dragă (prietenă ~, ~ prietenă), pl. dragi, art. dragile (~ mele fiice) (și: drag nouă)"
   },
   {
     "id": "w187c",
@@ -5812,7 +6371,8 @@
       "confirmare"
     ],
     "pairId": "p186",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w188",
@@ -5827,7 +6387,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p187",
-    "correctSentence": "Am avut câteva eșecuri în afaceri."
+    "correctSentence": "Am avut câteva eșecuri în afaceri.",
+    "doomWord": "eșecuri",
+    "doomDefinition": "eșec s. n., pl. eșecuri"
   },
   {
     "id": "w188c",
@@ -5843,7 +6405,8 @@
       "confirmare"
     ],
     "pairId": "p187",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w189",
@@ -5858,7 +6421,9 @@
       "genitiv"
     ],
     "pairId": "p188",
-    "correctSentence": "I-am scris copilului celui interesat de înscriere."
+    "correctSentence": "I-am scris copilului celui interesat de înscriere.",
+    "doomWord": "celui",
+    "doomDefinition": "cel2 art. m. (elevul ~ bun, elevul ~ mai bun​), g.-d. celui (omului ~ bun, dar: lui Ioan Vodă cel Cumplit), pl. cei ((Toți) ~ trei copii sunt olimpici.); f. cea, g.-d. celei, pl. cele; g.-d. pl. m. și f. celor"
   },
   {
     "id": "w189c",
@@ -5874,7 +6439,8 @@
       "confirmare"
     ],
     "pairId": "p188",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w190",
@@ -5888,7 +6454,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p189",
-    "correctSentence": "Compania a prezentat o soluție novatoare pentru reducerea costurilor."
+    "correctSentence": "Compania a prezentat o soluție novatoare pentru reducerea costurilor.",
+    "doomWord": "novator",
+    "doomDefinition": "novator adj. m., s. m., pl. novatori; adj. f., s. f. sg. și pl. novatoare"
   },
   {
     "id": "w190c",
@@ -5903,7 +6471,8 @@
       "confirmare"
     ],
     "pairId": "p189",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w191",
@@ -5918,7 +6487,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p190",
-    "correctSentence": "Am luat cartea de pe masă și am pus-o în geantă."
+    "correctSentence": "Am luat cartea de pe masă și am pus-o în geantă.",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "w191c",
@@ -5934,7 +6505,8 @@
       "confirmare"
     ],
     "pairId": "p190",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w192",
@@ -5949,7 +6521,9 @@
       "dativ"
     ],
     "pairId": "p191",
-    "correctSentence": "Elevii cărora le-am dat teme au lipsit astăzi."
+    "correctSentence": "Elevii cărora le-am dat teme au lipsit astăzi.",
+    "doomWord": "cărora",
+    "doomDefinition": "care2 pr. int. m. și f. sg. și pl.; g. sg. m. căruia/cărui, f. căreia/cărei, pl. cărora/căror; d. sg. m. căruia, f. căreia, pl. m. și f. cărora (independent/postpus: A căruia dintre ei este casa? În casa căruia ai intrat? A căreia dintre ele este casa? În casa căreia ai intrat?; antepus: + al, a, ai, ale: În a cărui casă ai intrat? În ale cărui case ai intrat? În a cărei casă ai intrat? În ale cărei case ai intrat?; independent/postpus: În casa cărora ai intrat?; antepus: + al, a, ai, ale: În a căror casă ai intrat?; Căruia dintre ei i-ai dat? Căreia dintre ele i-ai dat? Cărora dintre ei/dintre ele le-ai dat?)"
   },
   {
     "id": "w192c",
@@ -5965,7 +6539,8 @@
       "confirmare"
     ],
     "pairId": "p191",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w193",
@@ -5980,7 +6555,9 @@
       "redundanță"
     ],
     "pairId": "p192",
-    "correctSentence": "Săptămâna viitoare au loc alegeri în toată țara."
+    "correctSentence": "Săptămâna viitoare au loc alegeri în toată țara.",
+    "doomWord": "în",
+    "doomDefinition": "în prep."
   },
   {
     "id": "w193c",
@@ -5996,7 +6573,8 @@
       "confirmare"
     ],
     "pairId": "p192",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w194",
@@ -6011,7 +6589,9 @@
       "redundanță"
     ],
     "pairId": "p193",
-    "correctSentence": "Meteorologii au anunțat averse pentru după-amiază."
+    "correctSentence": "Meteorologii au anunțat averse pentru după-amiază.",
+    "doomWord": "pentru",
+    "doomDefinition": "pentru prep., adv. (a vota ~ moțiune, a vota ~)"
   },
   {
     "id": "w194c",
@@ -6027,7 +6607,8 @@
       "confirmare"
     ],
     "pairId": "p193",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w195",
@@ -6041,7 +6622,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p194",
-    "correctSentence": "Sportul este benefic pentru sănătate."
+    "correctSentence": "Sportul este benefic pentru sănătate.",
+    "doomWord": "benefic",
+    "doomDefinition": "benefic adj. m., pl. benefici; f. benefică, pl. benefice"
   },
   {
     "id": "w195c",
@@ -6056,7 +6639,8 @@
       "confirmare"
     ],
     "pairId": "p194",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w196",
@@ -6070,7 +6654,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p195",
-    "correctSentence": "Am cumpărat doar pâine de la magazin."
+    "correctSentence": "Am cumpărat doar pâine de la magazin.",
+    "doomWord": "doar",
+    "doomDefinition": "doar (numai) (în construcții pozitive și negative) adv. ((Nu) are ~ douăzeci de ani.)"
   },
   {
     "id": "w196c",
@@ -6085,7 +6671,8 @@
       "confirmare"
     ],
     "pairId": "p195",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w197",
@@ -6100,7 +6687,9 @@
       "redundanță"
     ],
     "pairId": "p196",
-    "correctSentence": "Poliția a descoperit o rețea de contrabandă cu țigări."
+    "correctSentence": "Poliția a descoperit o rețea de contrabandă cu țigări.",
+    "doomWord": "cu",
+    "doomDefinition": "cu prep. (Zboară ~ elicopterul. Zboară ~ frică.)"
   },
   {
     "id": "w197c",
@@ -6116,7 +6705,8 @@
       "confirmare"
     ],
     "pairId": "p196",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w198",
@@ -6131,7 +6721,9 @@
       "redundanță"
     ],
     "pairId": "p197",
-    "correctSentence": "Echipa noastră colaborează cu partenerii externi."
+    "correctSentence": "Echipa noastră colaborează cu partenerii externi.",
+    "doomWord": "cu",
+    "doomDefinition": "cu prep. (Zboară ~ elicopterul. Zboară ~ frică.)"
   },
   {
     "id": "w198c",
@@ -6147,7 +6739,8 @@
       "confirmare"
     ],
     "pairId": "p197",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w199",
@@ -6161,7 +6754,8 @@
       "greșeală frecventă"
     ],
     "pairId": "p198",
-    "correctSentence": "Profesorul a cărui carte a fost publicată e foarte mândru."
+    "correctSentence": "Profesorul a cărui carte a fost publicată e foarte mândru.",
+    "doomWord": null
   },
   {
     "id": "w199c",
@@ -6176,7 +6770,8 @@
       "confirmare"
     ],
     "pairId": "p198",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w200",
@@ -6190,7 +6785,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p199",
-    "correctSentence": "Am reușit la examen datorită efortului depus."
+    "correctSentence": "Am reușit la examen datorită efortului depus.",
+    "doomWord": "datorită",
+    "doomDefinition": "datorită (grație, mulțumită) prep. (~ lui)"
   },
   {
     "id": "w200c",
@@ -6205,7 +6802,8 @@
       "confirmare"
     ],
     "pairId": "p199",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w201",
@@ -6219,7 +6817,9 @@
       "greșeală frecventă"
     ],
     "pairId": "p200",
-    "correctSentence": "Este important să fii punctual la întâlnire."
+    "correctSentence": "Este important să fii punctual la întâlnire.",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "w201c",
@@ -6234,7 +6834,8 @@
       "confirmare"
     ],
     "pairId": "p200",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w202",
@@ -6249,7 +6850,9 @@
       "redundanță"
     ],
     "pairId": "p201",
-    "correctSentence": "La un moment dat, ne-am dat seama că am greșit drumul."
+    "correctSentence": "La un moment dat, ne-am dat seama că am greșit drumul.",
+    "doomWord": "moment",
+    "doomDefinition": "moment s. n., pl. momente"
   },
   {
     "id": "w202c",
@@ -6265,7 +6868,8 @@
       "confirmare"
     ],
     "pairId": "p201",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "w203",
@@ -6280,7 +6884,9 @@
       "redundanță"
     ],
     "pairId": "p202",
-    "correctSentence": "Șoferul avea o alcoolemie peste limita legală."
+    "correctSentence": "Șoferul avea o alcoolemie peste limita legală.",
+    "doomWord": "peste",
+    "doomDefinition": "peste prep."
   },
   {
     "id": "w203c",
@@ -6296,7 +6902,8 @@
       "confirmare"
     ],
     "pairId": "p202",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g1",
@@ -6311,7 +6918,9 @@
       "greșeală frecventă"
     ],
     "pairId": "g3000",
-    "correctSentence": "Îmi place foarte mult să citesc."
+    "correctSentence": "Îmi place foarte mult să citesc.",
+    "doomWord": "îmi",
+    "doomDefinition": "eu2 [pron. ĭeŭ] pr., d. acc. mie, neacc. îmi, mi, mi- (Mi-a dat.), -mi (Dă-mi.), -mi- (dându-mi-se); ac. acc. mine (prep. + mine), neacc. mă, mă- (Mă-ntreabă.), -mă (Dă-mă.), -mă- (Da-mă-vei.), m- (M-a dat.), -m- (Datu-m-a.)"
   },
   {
     "id": "g1c",
@@ -6327,7 +6936,8 @@
       "confirmare"
     ],
     "pairId": "g3000",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g2",
@@ -6342,7 +6952,9 @@
       "greșeală frecventă"
     ],
     "pairId": "g3001",
-    "correctSentence": "El s-a dus la școală ieri dimineață."
+    "correctSentence": "El s-a dus la școală ieri dimineață.",
+    "doomWord": "s-a",
+    "doomDefinition": "s-a pr. + vb. aux. (S-a dus.)"
   },
   {
     "id": "g2c",
@@ -6358,7 +6970,8 @@
       "confirmare"
     ],
     "pairId": "g3001",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g3",
@@ -6373,7 +6986,8 @@
       "greșeală frecventă"
     ],
     "pairId": "g3002",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g4",
@@ -6388,7 +7002,9 @@
       "greșeală frecventă"
     ],
     "pairId": "g3003",
-    "correctSentence": "Nu am nicio idee despre ce vorbești."
+    "correctSentence": "Nu am nicio idee despre ce vorbești.",
+    "doomWord": "nicio",
+    "doomDefinition": "niciun (desp. ni-ciun/nici-un) adj. pr. m., g.-d. niciunui; f. nicio (desp. ni-cio/nici-o), g.-d. niciunei; g.-d. pl. m. și f. niciunor (în niciun caz; Nu are niciun frate.; niciunor copii)"
   },
   {
     "id": "g4c",
@@ -6404,7 +7020,8 @@
       "confirmare"
     ],
     "pairId": "g3003",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g5",
@@ -6419,7 +7036,9 @@
       "greșeală frecventă"
     ],
     "pairId": "g3004",
-    "correctSentence": "Cartea pe care am citit-o a fost fascinantă."
+    "correctSentence": "Cartea pe care am citit-o a fost fascinantă.",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "g5c",
@@ -6435,7 +7054,8 @@
       "confirmare"
     ],
     "pairId": "g3004",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g6",
@@ -6450,7 +7070,8 @@
       "greșeală frecventă"
     ],
     "pairId": "g3005",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g8",
@@ -6465,7 +7086,8 @@
       "greșeală frecventă"
     ],
     "pairId": "g3006",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g9",
@@ -6480,7 +7102,8 @@
       "greșeală frecventă"
     ],
     "pairId": "g3007",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g10",
@@ -6495,7 +7118,9 @@
       "greșeală frecventă"
     ],
     "pairId": "g3008",
-    "correctSentence": "Le-am spus tuturor despre eveniment."
+    "correctSentence": "Le-am spus tuturor despre eveniment.",
+    "doomWord": null,
+    "doomDefinition": null
   },
   {
     "id": "g10c",
@@ -6511,7 +7136,8 @@
       "confirmare"
     ],
     "pairId": "g3008",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g11",
@@ -6526,7 +7152,8 @@
       "greșeală frecventă"
     ],
     "pairId": "g3009",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g13",
@@ -6541,7 +7168,8 @@
       "greșeală frecventă"
     ],
     "pairId": "g3010",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   },
   {
     "id": "g15",
@@ -6556,6 +7184,7 @@
       "greșeală frecventă"
     ],
     "pairId": "g3011",
-    "correctSentence": null
+    "correctSentence": null,
+    "doomWord": null
   }
 ]

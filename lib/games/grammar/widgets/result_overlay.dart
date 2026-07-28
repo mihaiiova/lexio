@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../design/colors.dart';
 import '../../../design/spacing.dart';
 import '../../../design/typography.dart';
@@ -46,6 +47,13 @@ class ResultOverlay extends StatelessWidget {
                 height: 1.5,
               ),
             ),
+            if (exercise.doomUrl != null) ...[
+              const SizedBox(height: LexioSpacing.xxl),
+              if (exercise.doomDefinition != null)
+                _buildDoomDefinition()
+              else
+                _buildDoomLink(),
+            ],
           ],
         ),
       ),
@@ -149,6 +157,82 @@ class ResultOverlay extends StatelessWidget {
 
     return RichText(
       text: TextSpan(style: style, children: spans),
+    );
+  }
+
+  Widget _buildDoomLink() {
+    return GestureDetector(
+      onTap: () {
+        final url = exercise.doomUrl;
+        if (url != null) {
+          launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+        }
+      },
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.menu_book,
+            size: 18,
+            color: LexioColors.primary,
+          ),
+          const SizedBox(width: LexioSpacing.sm),
+          Text(
+            'Vezi în DOOM',
+            style: LexioTextStyles.labelMedium.copyWith(
+              color: LexioColors.primary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDoomDefinition() {
+    return GestureDetector(
+      onTap: () {
+        final url = exercise.doomUrl;
+        if (url != null) {
+          launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.all(LexioSpacing.lg),
+        decoration: BoxDecoration(
+          color: LexioColors.blueMuted,
+          borderRadius: BorderRadius.circular(LexioSpacing.md),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.menu_book,
+                  size: 14,
+                  color: LexioColors.primary,
+                ),
+                const SizedBox(width: LexioSpacing.xs),
+                Text(
+                  'DOOM',
+                  style: LexioTextStyles.labelSmall.copyWith(
+                    color: LexioColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: LexioSpacing.sm),
+            Text(
+              exercise.doomDefinition!,
+              style: LexioTextStyles.bodySmall.copyWith(
+                color: LexioColors.textSecondary,
+                height: 1.5,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
