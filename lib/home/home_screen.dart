@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../design/animations.dart';
 import '../design/colors.dart';
 import '../design/spacing.dart';
 import '../design/radius.dart';
@@ -6,7 +7,9 @@ import '../design/typography.dart';
 import '../design/shadows.dart';
 import '../design/components/lexio_card.dart';
 import '../games/grammar/grammar_screen.dart';
+import '../games/idioms/idioms_screen.dart';
 import '../games/spot/spot_screen.dart';
+import '../games/vocabulary/vocabulary_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -30,6 +33,10 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: LexioSpacing.xxxl),
               _buildTodaySection(context),
               const SizedBox(height: LexioSpacing.huge),
+              _buildVocabularySection(context),
+              const SizedBox(height: LexioSpacing.huge),
+              _buildIdiomsSection(context),
+              const SizedBox(height: LexioSpacing.huge),
               _buildSpotSection(context),
               const SizedBox(height: LexioSpacing.huge),
               _buildComingSoon(),
@@ -37,6 +44,142 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildIdiomsSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: LexioSpacing.screenHorizontal,
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: LexioSpacing.xs,
+                height: LexioSpacing.xl,
+                decoration: BoxDecoration(
+                  color: LexioColors.teal,
+                  borderRadius: BorderRadius.circular(LexioRadius.sm),
+                ),
+              ),
+              const SizedBox(width: LexioSpacing.md),
+              Text(
+                'Expresii românești',
+                style: LexioTextStyles.labelSmall.copyWith(
+                  color: LexioColors.textTertiary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: LexioSpacing.md),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: LexioSpacing.screenHorizontal,
+          ),
+          child: _IdiomsChallengeCard(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const IdiomsScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position:
+                                Tween<Offset>(
+                                  begin: const Offset(0, 0.05),
+                                  end: Offset.zero,
+                                ).animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: LexioCurves.easeOut,
+                                  ),
+                                ),
+                            child: child,
+                          ),
+                        );
+                      },
+                  transitionDuration: LexioDurations.page,
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVocabularySection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: LexioSpacing.screenHorizontal,
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: LexioSpacing.xs,
+                height: LexioSpacing.xl,
+                decoration: BoxDecoration(
+                  color: LexioColors.secondary,
+                  borderRadius: BorderRadius.circular(LexioRadius.sm),
+                ),
+              ),
+              const SizedBox(width: LexioSpacing.md),
+              Text(
+                'Descoperă cuvinte',
+                style: LexioTextStyles.labelSmall.copyWith(
+                  color: LexioColors.textTertiary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: LexioSpacing.md),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: LexioSpacing.screenHorizontal,
+          ),
+          child: _VocabularyChallengeCard(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const VocabularyScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position:
+                                Tween<Offset>(
+                                  begin: const Offset(0, 0.05),
+                                  end: Offset.zero,
+                                ).animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: LexioCurves.easeOut,
+                                  ),
+                                ),
+                            child: child,
+                          ),
+                        );
+                      },
+                  transitionDuration: LexioDurations.page,
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -99,30 +242,36 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: LexioSpacing.screenHorizontal,
           ),
-          child: _GrammarChallengeCard(onTap: () {
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const GrammarScreen(),
-                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, 0.05),
-                        end: Offset.zero,
-                      ).animate(CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeOut,
-                      )),
-                      child: child,
-                    ),
-                  );
-                },
-                transitionDuration: const Duration(milliseconds: 350),
-              ),
-            );
-          }),
+          child: _GrammarChallengeCard(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const GrammarScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position:
+                                Tween<Offset>(
+                                  begin: const Offset(0, 0.05),
+                                  end: Offset.zero,
+                                ).animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.easeOut,
+                                  ),
+                                ),
+                            child: child,
+                          ),
+                        );
+                      },
+                  transitionDuration: const Duration(milliseconds: 350),
+                ),
+              );
+            },
+          ),
         ),
       ],
     );
@@ -161,30 +310,36 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: LexioSpacing.screenHorizontal,
           ),
-          child: _SpotChallengeCard(onTap: () {
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const SpotScreen(),
-                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, 0.05),
-                        end: Offset.zero,
-                      ).animate(CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeOut,
-                      )),
-                      child: child,
-                    ),
-                  );
-                },
-                transitionDuration: const Duration(milliseconds: 350),
-              ),
-            );
-          }),
+          child: _SpotChallengeCard(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const SpotScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position:
+                                Tween<Offset>(
+                                  begin: const Offset(0, 0.05),
+                                  end: Offset.zero,
+                                ).animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.easeOut,
+                                  ),
+                                ),
+                            child: child,
+                          ),
+                        );
+                      },
+                  transitionDuration: const Duration(milliseconds: 350),
+                ),
+              );
+            },
+          ),
         ),
       ],
     );
@@ -223,9 +378,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: LexioSpacing.screenHorizontal,
           ),
-          child: LexioCard(
-            child: _buildComingSoonItems(),
-          ),
+          child: LexioCard(child: _buildComingSoonItems()),
         ),
       ],
     );
@@ -235,21 +388,9 @@ class HomeScreen extends StatelessWidget {
     return Column(
       children: [
         _ComingSoonItem(
-          icon: Icons.spellcheck,
-          title: 'Vocabular',
-          subtitle: 'Descoperă sensuri noi',
-        ),
-        const SizedBox(height: LexioSpacing.lg),
-        _ComingSoonItem(
           icon: Icons.text_fields,
           title: 'Ortografie',
           subtitle: 'Scrie corect',
-        ),
-        const SizedBox(height: LexioSpacing.lg),
-        _ComingSoonItem(
-          icon: Icons.lightbulb_outline,
-          title: 'Expresii',
-          subtitle: 'Învață idiomuri românești',
         ),
         const SizedBox(height: LexioSpacing.lg),
         _ComingSoonItem(
@@ -258,6 +399,192 @@ class HomeScreen extends StatelessWidget {
           subtitle: 'Puzzle-uri de limbaj',
         ),
       ],
+    );
+  }
+}
+
+class _IdiomsChallengeCard extends StatelessWidget {
+  const _IdiomsChallengeCard({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: LexioCard(
+        backgroundColor: LexioColors.teal,
+        padding: const EdgeInsets.all(LexioSpacing.xl),
+        shadows: LexioShadows.elevatedCombined,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: LexioSpacing.md,
+                    vertical: LexioSpacing.xs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: LexioColors.background.withValues(alpha: 0.25),
+                    borderRadius: BorderRadius.circular(LexioRadius.sm),
+                  ),
+                  child: Text(
+                    'Idiomuri',
+                    style: LexioTextStyles.labelSmall.copyWith(
+                      color: LexioColors.textPrimary,
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.arrow_forward,
+                  color: LexioColors.textPrimary,
+                  size: LexioSpacing.xl,
+                ),
+              ],
+            ),
+            const SizedBox(height: LexioSpacing.lg),
+            Text(
+              'Vorba vine',
+              style: LexioTextStyles.headingMedium.copyWith(
+                color: LexioColors.textPrimary,
+              ),
+            ),
+            const SizedBox(height: LexioSpacing.sm),
+            Text(
+              'Descoperă ce înseamnă expresiile românești folosite în contexte reale.',
+              style: LexioTextStyles.bodyMedium.copyWith(
+                color: LexioColors.textPrimary.withValues(alpha: 0.75),
+              ),
+            ),
+            const SizedBox(height: LexioSpacing.lg),
+            Row(
+              children: [
+                const Icon(
+                  Icons.quiz_outlined,
+                  size: LexioSpacing.lg,
+                  color: LexioColors.textPrimary,
+                ),
+                const SizedBox(width: LexioSpacing.xs),
+                Text(
+                  '10 expresii',
+                  style: LexioTextStyles.labelSmall.copyWith(
+                    color: LexioColors.textPrimary.withValues(alpha: 0.75),
+                  ),
+                ),
+                const SizedBox(width: LexioSpacing.lg),
+                const Icon(
+                  Icons.auto_stories,
+                  size: LexioSpacing.lg,
+                  color: LexioColors.textPrimary,
+                ),
+                const SizedBox(width: LexioSpacing.xs),
+                Text(
+                  '3 niveluri',
+                  style: LexioTextStyles.labelSmall.copyWith(
+                    color: LexioColors.textPrimary.withValues(alpha: 0.75),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _VocabularyChallengeCard extends StatelessWidget {
+  const _VocabularyChallengeCard({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: LexioCard(
+        backgroundColor: LexioColors.secondary,
+        padding: const EdgeInsets.all(LexioSpacing.xl),
+        shadows: LexioShadows.elevatedCombined,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: LexioSpacing.md,
+                    vertical: LexioSpacing.xs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: LexioColors.textOnPrimary.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(LexioRadius.sm),
+                  ),
+                  child: Text(
+                    'Vocabular',
+                    style: LexioTextStyles.labelSmall.copyWith(
+                      color: LexioColors.textOnPrimary.withValues(alpha: 0.9),
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.arrow_forward,
+                  color: LexioColors.textOnPrimary,
+                  size: LexioSpacing.xl,
+                ),
+              ],
+            ),
+            const SizedBox(height: LexioSpacing.lg),
+            Text(
+              'Ce înseamnă?',
+              style: LexioTextStyles.headingMedium.copyWith(
+                color: LexioColors.textOnPrimary,
+              ),
+            ),
+            const SizedBox(height: LexioSpacing.sm),
+            Text(
+              'Descoperă sensul cuvintelor din context și învață sinonime noi.',
+              style: LexioTextStyles.bodyMedium.copyWith(
+                color: LexioColors.textOnPrimary.withValues(alpha: 0.8),
+              ),
+            ),
+            const SizedBox(height: LexioSpacing.lg),
+            Row(
+              children: [
+                const Icon(
+                  Icons.quiz_outlined,
+                  size: LexioSpacing.lg,
+                  color: LexioColors.textOnPrimary,
+                ),
+                const SizedBox(width: LexioSpacing.xs),
+                Text(
+                  '10 întrebări',
+                  style: LexioTextStyles.labelSmall.copyWith(
+                    color: LexioColors.textOnPrimary.withValues(alpha: 0.8),
+                  ),
+                ),
+                const SizedBox(width: LexioSpacing.lg),
+                const Icon(
+                  Icons.auto_stories,
+                  size: LexioSpacing.lg,
+                  color: LexioColors.textOnPrimary,
+                ),
+                const SizedBox(width: LexioSpacing.xs),
+                Text(
+                  '3 niveluri',
+                  style: LexioTextStyles.labelSmall.copyWith(
+                    color: LexioColors.textOnPrimary.withValues(alpha: 0.8),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -387,7 +714,11 @@ class _SpotChallengeCard extends StatelessWidget {
             const SizedBox(height: LexioSpacing.lg),
             Row(
               children: [
-                const Icon(Icons.timer, size: 16, color: LexioColors.textOnPrimary),
+                const Icon(
+                  Icons.timer,
+                  size: 16,
+                  color: LexioColors.textOnPrimary,
+                ),
                 const SizedBox(width: LexioSpacing.xs),
                 Text(
                   '60 de secunde',
@@ -396,7 +727,11 @@ class _SpotChallengeCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: LexioSpacing.lg),
-                const Icon(Icons.auto_stories, size: 16, color: LexioColors.textOnPrimary),
+                const Icon(
+                  Icons.auto_stories,
+                  size: 16,
+                  color: LexioColors.textOnPrimary,
+                ),
                 const SizedBox(width: LexioSpacing.xs),
                 Text(
                   '5 texte',
@@ -472,7 +807,11 @@ class _GrammarChallengeCard extends StatelessWidget {
             const SizedBox(height: LexioSpacing.lg),
             Row(
               children: [
-                const Icon(Icons.timer_outlined, size: 16, color: LexioColors.textOnPrimary),
+                const Icon(
+                  Icons.timer_outlined,
+                  size: 16,
+                  color: LexioColors.textOnPrimary,
+                ),
                 const SizedBox(width: LexioSpacing.xs),
                 Text(
                   '15 întrebări',
@@ -481,7 +820,11 @@ class _GrammarChallengeCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: LexioSpacing.lg),
-                const Icon(Icons.auto_stories, size: 16, color: LexioColors.textOnPrimary),
+                const Icon(
+                  Icons.auto_stories,
+                  size: 16,
+                  color: LexioColors.textOnPrimary,
+                ),
                 const SizedBox(width: LexioSpacing.xs),
                 Text(
                   'Învață',

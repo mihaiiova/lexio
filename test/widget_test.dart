@@ -9,5 +9,6 @@ void main() {
     expect(find.text('Lexio'), findsOneWidget);
     expect(find.text('Jocuri cu cuvinte în limba română'), findsOneWidget);
     expect(find.text('Provocarea zilei'), findsOneWidget);
+    expect(find.text('Vorba vine'), findsOneWidget);
   });
 }
