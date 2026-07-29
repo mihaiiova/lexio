@@ -7,6 +7,7 @@ import '../../design/typography.dart';
 import '../../design/radius.dart';
 import '../../design/animations.dart';
 import '../../design/components/lexio_button.dart';
+import '../../design/components/lexio_feedback.dart';
 import 'grammar_content.dart';
 import 'grammar_game.dart';
 import 'widgets/question_card.dart';
@@ -23,6 +24,7 @@ class GrammarScreen extends StatefulWidget {
 class _GrammarScreenState extends State<GrammarScreen> {
   GrammarGameState? _state;
   bool _isLoading = true;
+  bool _hasError = false;
   bool _hasAnswered = false;
   bool _showingExplanation = false;
   bool _showCorrectFlash = false;
@@ -34,13 +36,23 @@ class _GrammarScreenState extends State<GrammarScreen> {
     _init();
   }
 
-  void _init() async {
-    await GrammarContent.load();
-    final exercises = GrammarContent.randomRound(15);
-    setState(() {
-      _state = GrammarGameState(exercises: exercises);
-      _isLoading = false;
-    });
+  Future<void> _init() async {
+    try {
+      await GrammarContent.load();
+      final exercises = GrammarContent.randomRound(15);
+      if (!mounted) return;
+      setState(() {
+        _state = GrammarGameState(exercises: exercises);
+        _isLoading = false;
+      });
+    } catch (e) {
+      debugPrint('GrammarScreen: failed to load content: $e');
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+        _hasError = true;
+      });
+    }
   }
 
   void _answer(bool playerSaysCorrect) {
@@ -75,10 +87,6 @@ class _GrammarScreenState extends State<GrammarScreen> {
       _hasAnswered = false;
       _showingExplanation = false;
       _showCorrectFlash = false;
-
-      if (updated.isFinished) {
-        _playAgain();
-      }
     });
   }
 
@@ -96,12 +104,50 @@ class _GrammarScreenState extends State<GrammarScreen> {
     });
   }
 
+  Widget _buildErrorScreen() {
+    return Scaffold(
+      backgroundColor: LexioColors.surface,
+      appBar: AppBar(
+        leading: const BackButton(),
+        backgroundColor: LexioColors.surface,
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: LexioSpacing.screenHorizontal,
+            ),
+            child: LexioFeedback(
+              type: LexioFeedbackType.error,
+              message: 'Nu s-au putut încărca exercițiile',
+              description:
+                  'Verifică conexiunea la internet și încearcă din nou.',
+              actionLabel: 'Reîncearcă',
+              action: () {
+                setState(() {
+                  _isLoading = true;
+                  _hasError = false;
+                });
+                _init();
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_isLoading || _state == null) {
+    if (_isLoading) {
       return const Scaffold(
+        backgroundColor: LexioColors.surface,
         body: Center(child: CircularProgressIndicator()),
       );
+    }
+
+    if (_hasError || _state == null) {
+      return _buildErrorScreen();
     }
 
     final state = _state!;

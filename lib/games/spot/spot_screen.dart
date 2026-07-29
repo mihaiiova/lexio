@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../../design/colors.dart';
 import '../../design/components/lexio_button.dart';
+import '../../design/components/lexio_feedback.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
 import 'spot_content.dart';
@@ -22,6 +23,7 @@ class SpotScreen extends StatefulWidget {
 class _SpotScreenState extends State<SpotScreen> {
   SpotGameState? _state;
   bool _isLoading = true;
+  bool _hasError = false;
   Timer? _timer;
 
   @override
@@ -31,13 +33,23 @@ class _SpotScreenState extends State<SpotScreen> {
   }
 
   Future<void> _init() async {
-    await SpotContent.load();
-    final texts = SpotContent.session(5);
-    setState(() {
-      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
-      _isLoading = false;
-    });
-    _startTimer();
+    try {
+      await SpotContent.load();
+      final texts = SpotContent.session(5);
+      if (!mounted) return;
+      setState(() {
+        _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+        _isLoading = false;
+      });
+      _startTimer();
+    } catch (e) {
+      debugPrint('SpotScreen: failed to load content: $e');
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+        _hasError = true;
+      });
+    }
   }
 
   void _startTimer() {
@@ -112,6 +124,43 @@ class _SpotScreenState extends State<SpotScreen> {
     Navigator.of(context).pop();
   }
 
+  Widget _buildErrorScreen() {
+    return Scaffold(
+      backgroundColor: LexioColors.background,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: LexioSpacing.screenHorizontal,
+            ),
+            child: LexioFeedback(
+              type: LexioFeedbackType.error,
+              message: 'Nu s-au putut încărca exercițiile',
+              description:
+                  'Verifică conexiunea la internet și încearcă din nou.',
+              actionLabel: 'Reîncearcă',
+              action: () {
+                setState(() {
+                  _isLoading = true;
+                  _hasError = false;
+                });
+                _init();
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -119,6 +168,10 @@ class _SpotScreenState extends State<SpotScreen> {
         backgroundColor: LexioColors.background,
         body: const Center(child: CircularProgressIndicator()),
       );
+    }
+
+    if (_hasError || _state == null) {
+      return _buildErrorScreen();
     }
 
     final state = _state!;

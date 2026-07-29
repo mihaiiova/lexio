@@ -175,16 +175,15 @@ void main() {
       expect(afterTick.remainingSeconds, 59);
     });
 
-    test('tick auto-advances when timer expires on non-last text', () {
+    test('tick finishes game when timer expires on non-last text', () {
       final state = SpotGameState(
         texts: texts,
         mode: SpotGameMode.timed,
         remainingSeconds: 1,
       );
       final afterTick = state.tick();
-      expect(afterTick.currentTextIndex, 1);
-      expect(afterTick.remainingSeconds, 60);
-      expect(afterTick.isFinished, false);
+      expect(afterTick.remainingSeconds, 0);
+      expect(afterTick.isFinished, true);
     });
 
     test('tick finishes game when timer expires on last text', () {
@@ -195,10 +194,11 @@ void main() {
         remainingSeconds: 1,
       );
       final afterTick = state.tick();
+      expect(afterTick.remainingSeconds, 0);
       expect(afterTick.isFinished, true);
     });
 
-    test('nextText resets timer', () {
+    test('nextText preserves remainingSeconds', () {
       final state = createState().tapWord(3).state.tapWord(4).state;
       expect(state.remainingSeconds, 60);
 
@@ -207,7 +207,7 @@ void main() {
 
       final next = afterTick.nextText();
       expect(next.currentTextIndex, 1);
-      expect(next.remainingSeconds, 60);
+      expect(next.remainingSeconds, 59);
     });
 
     test('score calculation', () {
