@@ -45,6 +45,10 @@ void main() {
           reason: pair.id,
         );
       }
+      expect(
+        exercises.map((exercise) => exercise.difficulty).toSet(),
+        containsAll({1, 2, 3, 4, 5}),
+      );
     },
   );
 }

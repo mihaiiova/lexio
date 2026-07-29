@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import '../../content/difficulty_calibration.dart';
 import '../../design/doom.dart';
+import '../../progress/user_progress.dart';
 
 final class SpotMistake {
   final int wordIndex;
@@ -94,7 +96,10 @@ final class SpotText {
       id: json['id'] as String,
       type: json['type'] as String,
       title: json['title'] as String,
-      difficulty: json['difficulty'] as int,
+      difficulty: DifficultyCalibration.spotText(
+        json['id'] as String,
+        json['difficulty'] as int,
+      ),
       content: json['content'] as String,
       mistakes: mistakesJson
           .map((m) => SpotMistake.fromJson(m as Map<String, dynamic>))
@@ -157,5 +162,15 @@ final class SpotContent {
     if (_cached == null || _cached!.isEmpty) return [];
     final shuffled = List<SpotText>.from(_cached!)..shuffle();
     return shuffled.take(count).toList();
+  }
+
+  static List<SpotText> adaptiveSession(int count, GameProgress progress) {
+    return AdaptiveRound.select(
+      exercises: _cached ?? const [],
+      count: count,
+      progress: progress,
+      idOf: (text) => text.id,
+      difficultyOf: (text) => text.difficulty,
+    );
   }
 }

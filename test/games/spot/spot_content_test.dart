@@ -26,6 +26,10 @@ void main() {
 
     expect(texts, hasLength(60));
     expect(ids, hasLength(texts.length));
+    expect(
+      texts.map((text) => text.difficulty).toSet(),
+      equals({1, 2, 3, 4, 5}),
+    );
 
     for (final text in texts) {
       expect(text.type, isNot('whatsapp'), reason: text.id);

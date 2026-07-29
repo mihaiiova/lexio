@@ -3,6 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../../content/difficulty_calibration.dart';
+import '../../progress/user_progress.dart';
+
 final class IdiomExercise {
   final String id;
   final String expression;
@@ -36,7 +39,7 @@ final class IdiomExercise {
       options: (json['options'] as List<dynamic>).cast<String>(),
       correctOptionIndex: (json['correctOptionIndex'] as num).toInt(),
       category: json['category'] as String,
-      difficulty: (json['difficulty'] as num).toInt(),
+      difficulty: DifficultyCalibration.idiom(json['id'] as String),
     );
   }
 }
@@ -66,7 +69,7 @@ final class IdiomsContent {
     final desiredCount = min(count, all.length);
     final generator = random ?? Random();
     final selected = <IdiomExercise>[];
-    const difficultyLevels = [1, 2, 3];
+    const difficultyLevels = [1, 2, 3, 4, 5];
 
     for (var index = 0; index < difficultyLevels.length; index++) {
       final candidates =
@@ -83,5 +86,15 @@ final class IdiomsContent {
     }
 
     return selected.toList(growable: false);
+  }
+
+  static List<IdiomExercise> adaptiveRound(int count, GameProgress progress) {
+    return AdaptiveRound.select(
+      exercises: _cached ?? const [],
+      count: count,
+      progress: progress,
+      idOf: (exercise) => exercise.id,
+      difficultyOf: (exercise) => exercise.difficulty,
+    );
   }
 }

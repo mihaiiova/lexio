@@ -482,7 +482,7 @@ class _IdiomsChallengeCard extends StatelessWidget {
                 ),
                 const SizedBox(width: LexioSpacing.xs),
                 Text(
-                  '3 niveluri',
+                  '5 niveluri',
                   style: LexioTextStyles.labelSmall.copyWith(
                     color: LexioColors.textPrimary.withValues(alpha: 0.75),
                   ),
@@ -575,7 +575,7 @@ class _VocabularyChallengeCard extends StatelessWidget {
                 ),
                 const SizedBox(width: LexioSpacing.xs),
                 Text(
-                  '3 niveluri',
+                  '5 niveluri',
                   style: LexioTextStyles.labelSmall.copyWith(
                     color: LexioColors.textOnPrimary.withValues(alpha: 0.8),
                   ),

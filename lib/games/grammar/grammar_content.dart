@@ -4,7 +4,9 @@ import 'dart:math';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../../content/hyphenation_content.dart';
+import '../../content/difficulty_calibration.dart';
 import '../../design/doom.dart';
+import '../../progress/user_progress.dart';
 
 final class GrammarExercise {
   final String id;
@@ -48,7 +50,10 @@ final class GrammarExercise {
       isCorrect: json['isCorrect'] as bool,
       explanation: json['explanation'] as String,
       correctSentence: json['correctSentence'] as String?,
-      difficulty: (json['difficulty'] as num).toInt(),
+      difficulty: DifficultyCalibration.grammar(
+        json['id'] as String,
+        (json['difficulty'] as num).toInt(),
+      ),
       tags: (json['tags'] as List<dynamic>).cast<String>(),
       pairId: json['pairId'] as String?,
       doomWord: json['doomWord'] as String?,
@@ -100,7 +105,7 @@ final class GrammarContent {
   ) sync* {
     for (final pair in pairs) {
       final hyphenatedPairId = 'hyphenated_${pair.id}';
-      final difficulty = pair.unhyphenatedIsValid ? 2 : 1;
+      final difficulty = pair.unhyphenatedIsValid ? 3 : 2;
       yield GrammarExercise(
         id: '${hyphenatedPairId}_wrong',
         sentence: pair.missingHyphenExample,
@@ -149,7 +154,7 @@ final class GrammarContent {
         isCorrect: false,
         explanation: explanation,
         correctSentence: unhyphenatedExample,
-        difficulty: 2,
+        difficulty: 3,
         tags: const ['cratimă', 'forme omofone', 'greșeală frecventă'],
         pairId: unhyphenatedPairId,
         hyphenationPairId: pair.id,
@@ -162,7 +167,7 @@ final class GrammarContent {
         isCorrect: true,
         explanation: 'Propoziția este corectă. $explanation',
         correctSentence: null,
-        difficulty: 2,
+        difficulty: 3,
         tags: const ['cratimă', 'forme omofone', 'confirmare'],
         pairId: unhyphenatedPairId,
         hyphenationPairId: pair.id,
@@ -224,5 +229,15 @@ final class GrammarContent {
 
     selected.shuffle(Random());
     return selected.take(count).toList();
+  }
+
+  static List<GrammarExercise> adaptiveRound(int count, GameProgress progress) {
+    return AdaptiveRound.select(
+      exercises: _cached ?? const [],
+      count: count,
+      progress: progress,
+      idOf: (exercise) => exercise.id,
+      difficultyOf: (exercise) => exercise.difficulty,
+    );
   }
 }

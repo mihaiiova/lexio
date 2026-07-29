@@ -31,17 +31,17 @@ void main() {
       expect(exercise.options, hasLength(3));
       expect(exercise.correctOptionIndex, inInclusiveRange(0, 2));
       expect(exercise.category, isNotEmpty);
-      expect(exercise.difficulty, inInclusiveRange(1, 3));
+      expect(exercise.difficulty, inInclusiveRange(1, 5));
     }
   });
 
-  test('contains 20 exercises at every difficulty level', () async {
+  test('contains exercises at every difficulty level', () async {
     final exercises = await IdiomsContent.load();
 
-    for (final difficulty in [1, 2, 3]) {
+    for (final difficulty in [1, 2, 3, 4, 5]) {
       expect(
         exercises.where((exercise) => exercise.difficulty == difficulty),
-        hasLength(20),
+        isNotEmpty,
       );
     }
   });
@@ -58,10 +58,10 @@ void main() {
     );
     expect(
       [
-        for (final difficulty in [1, 2, 3])
+        for (final difficulty in [1, 2, 3, 4, 5])
           round.where((exercise) => exercise.difficulty == difficulty).length,
       ],
-      [4, 3, 3],
+      [2, 2, 2, 2, 2],
     );
   });
 }

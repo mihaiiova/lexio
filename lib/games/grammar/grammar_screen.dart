@@ -8,6 +8,7 @@ import '../../design/radius.dart';
 import '../../design/animations.dart';
 import '../../design/components/lexio_button.dart';
 import '../../design/components/lexio_feedback.dart';
+import '../../progress/user_progress.dart';
 import 'grammar_content.dart';
 import 'grammar_game.dart';
 import 'widgets/question_card.dart';
@@ -29,6 +30,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
   bool _showingExplanation = false;
   bool _showCorrectFlash = false;
   Key _flashKey = UniqueKey();
+  ProgressRepository? _progress;
 
   @override
   void initState() {
@@ -39,10 +41,15 @@ class _GrammarScreenState extends State<GrammarScreen> {
   Future<void> _init() async {
     try {
       await GrammarContent.load();
-      final exercises = GrammarContent.randomRound(15);
+      final progress = await ProgressRepository.load();
+      final exercises = GrammarContent.adaptiveRound(
+        15,
+        progress.forGame('grammar'),
+      );
       if (!mounted) return;
       setState(() {
         _state = GrammarGameState(exercises: exercises);
+        _progress = progress;
         _isLoading = false;
       });
     } catch (e) {
@@ -65,6 +72,13 @@ class _GrammarScreenState extends State<GrammarScreen> {
     } else {
       HapticFeedback.heavyImpact();
     }
+    final exercise = updated.currentExercise;
+    _progress?.recordAnswer(
+      gameId: 'grammar',
+      exerciseId: exercise.id,
+      difficulty: exercise.difficulty,
+      isCorrect: isRight,
+    );
 
     setState(() {
       _state = updated;
@@ -95,8 +109,15 @@ class _GrammarScreenState extends State<GrammarScreen> {
   }
 
   void _playAgain() {
+    final progress = _progress;
+    if (progress == null) return;
     setState(() {
-      _state = GrammarGameState(exercises: GrammarContent.randomRound(15));
+      _state = GrammarGameState(
+        exercises: GrammarContent.adaptiveRound(
+          15,
+          progress.forGame('grammar'),
+        ),
+      );
       _hasAnswered = false;
       _showingExplanation = false;
       _showCorrectFlash = false;
@@ -237,9 +258,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
 
           return Expanded(
             child: Padding(
-              padding: EdgeInsets.only(
-                left: i == 0 ? 0 : LexioSpacing.xxs,
-              ),
+              padding: EdgeInsets.only(left: i == 0 ? 0 : LexioSpacing.xxs),
               child: AnimatedContainer(
                 duration: LexioDurations.fast,
                 height: isCurrent ? 4 : 3,
@@ -334,9 +353,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
               ),
             );
           },
-          child: QuestionCard(
-            sentence: state.currentExercise.sentence,
-          ),
+          child: QuestionCard(sentence: state.currentExercise.sentence),
         ),
       ),
     );
@@ -487,9 +504,9 @@ class _GrammarScreenState extends State<GrammarScreen> {
             GestureDetector(
               onTap: doomUrl != null
                   ? () => launchUrl(
-                        Uri.parse(doomUrl),
-                        mode: LaunchMode.externalApplication,
-                      )
+                      Uri.parse(doomUrl),
+                      mode: LaunchMode.externalApplication,
+                    )
                   : null,
               child: Container(
                 padding: const EdgeInsets.all(LexioSpacing.md),
@@ -552,5 +569,4 @@ class _GrammarScreenState extends State<GrammarScreen> {
       ),
     );
   }
-
 }

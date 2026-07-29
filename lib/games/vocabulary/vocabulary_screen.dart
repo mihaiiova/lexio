@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 
 import '../../design/animations.dart';
 import '../../design/colors.dart';
-import '../../design/components/lexio_button.dart';
 import '../../design/components/lexio_feedback.dart';
+import '../../design/components/lexio_incorrect_answer_card.dart';
 import '../../design/radius.dart';
 import '../../design/spacing.dart';
-import '../../design/typography.dart';
+import '../../progress/user_progress.dart';
 import 'vocabulary_content.dart';
 import 'vocabulary_game.dart';
 import 'widgets/vocabulary_answer_option.dart';
@@ -29,6 +29,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   VocabularyGameState? _state;
   bool _isLoading = true;
   bool _hasError = false;
+  ProgressRepository? _progress;
 
   @override
   void initState() {
@@ -45,10 +46,15 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   Future<void> _init() async {
     try {
       await VocabularyContent.load();
-      final exercises = VocabularyContent.randomRound(_roundSize);
+      final progress = await ProgressRepository.load();
+      final exercises = VocabularyContent.adaptiveRound(
+        _roundSize,
+        progress.forGame('vocabulary'),
+      );
       if (!mounted) return;
       setState(() {
         _state = VocabularyGameState(exercises: exercises);
+        _progress = progress;
         _isLoading = false;
       });
     } catch (error) {
@@ -66,9 +72,19 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     if (state == null || state.hasAnswered) return;
 
     final updated = state.answer(optionIndex);
+    final exercise = updated.currentExercise;
+    _progress?.recordAnswer(
+      gameId: 'vocabulary',
+      exerciseId: exercise.id,
+      difficulty: exercise.difficulty,
+      isCorrect: updated.lastAnswerCorrect ?? false,
+    );
     if (updated.lastAnswerCorrect ?? false) {
       HapticFeedback.lightImpact();
-      setState(() => _state = updated.next());
+      setState(() => _state = updated);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) setState(() => _state = updated.next());
+      });
     } else {
       HapticFeedback.heavyImpact();
       setState(() => _state = updated);
@@ -84,7 +100,11 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   void _playAgain() {
     final suppliedExercises = widget.exercises;
     final exercises =
-        suppliedExercises ?? VocabularyContent.randomRound(_roundSize);
+        suppliedExercises ??
+        VocabularyContent.adaptiveRound(
+          _roundSize,
+          _progress?.forGame('vocabulary') ?? const GameProgress(),
+        );
     setState(() => _state = VocabularyGameState(exercises: exercises));
   }
 
@@ -229,6 +249,10 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               key: ValueKey('${exercise.id}_option_$index'),
               label: exercise.options[index],
               onTap: () => _answer(index),
+              isCorrect:
+                  state.lastAnswerCorrect == true &&
+                  state.selectedOptionIndex == index,
+              isDisabled: state.hasAnswered,
             ),
           );
         }),
@@ -239,53 +263,19 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   Widget _buildIncorrectPanel(VocabularyGameState state) {
     final exercise = state.currentExercise;
 
-    return Container(
+    return Padding(
       key: ValueKey('${exercise.id}_incorrect'),
-      margin: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsets.fromLTRB(
         LexioSpacing.screenHorizontal,
         LexioSpacing.md,
         LexioSpacing.screenHorizontal,
         LexioSpacing.xl,
       ),
-      padding: const EdgeInsets.all(LexioSpacing.lg),
-      decoration: BoxDecoration(
-        color: LexioColors.errorBackground,
-        borderRadius: BorderRadius.circular(LexioRadius.xl),
-        border: Border.all(color: LexioColors.error.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.cancel_outlined, color: LexioColors.error),
-              const SizedBox(width: LexioSpacing.sm),
-              Text(
-                'Răspuns greșit',
-                style: LexioTextStyles.labelLarge.copyWith(
-                  color: LexioColors.error,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: LexioSpacing.md),
-          Text(
-            exercise.definition,
-            style: LexioTextStyles.bodyMedium.copyWith(
-              color: LexioColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: LexioSpacing.sm),
-          Text(
-            'Sinonime: ${exercise.synonyms.join(', ')}',
-            style: LexioTextStyles.bodySmall.copyWith(
-              color: LexioColors.textSecondary,
-            ),
-          ),
-          const SizedBox(height: LexioSpacing.lg),
-          LexioButton(label: 'Continuă', onPressed: _next, isExpanded: true),
-        ],
+      child: LexioIncorrectAnswerCard(
+        subject: exercise.word,
+        description: exercise.definition,
+        details: 'Sinonime: ${exercise.synonyms.join(', ')}',
+        onContinue: _next,
       ),
     );
   }

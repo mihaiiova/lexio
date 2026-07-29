@@ -3,6 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../../content/difficulty_calibration.dart';
+import '../../progress/user_progress.dart';
+
 final class VocabularyExercise {
   final String id;
   final String word;
@@ -44,7 +47,7 @@ final class VocabularyExercise {
       explanation: json['explanation'] as String,
       category: json['category'] as String,
       synonyms: (json['synonyms'] as List<dynamic>).cast<String>(),
-      difficulty: (json['difficulty'] as num).toInt(),
+      difficulty: DifficultyCalibration.vocabulary(json['id'] as String),
     );
   }
 }
@@ -76,7 +79,7 @@ final class VocabularyContent {
     final desiredCount = min(count, all.length);
     final generator = random ?? Random();
     final selected = <VocabularyExercise>[];
-    const difficultyLevels = [1, 2, 3];
+    const difficultyLevels = [1, 2, 3, 4, 5];
 
     for (var index = 0; index < difficultyLevels.length; index++) {
       final candidates =
@@ -101,5 +104,18 @@ final class VocabularyContent {
     }
 
     return selected.toList(growable: false);
+  }
+
+  static List<VocabularyExercise> adaptiveRound(
+    int count,
+    GameProgress progress,
+  ) {
+    return AdaptiveRound.select(
+      exercises: _cached ?? const [],
+      count: count,
+      progress: progress,
+      idOf: (exercise) => exercise.id,
+      difficultyOf: (exercise) => exercise.difficulty,
+    );
   }
 }

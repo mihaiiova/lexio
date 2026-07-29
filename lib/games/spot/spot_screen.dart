@@ -8,6 +8,7 @@ import '../../design/components/lexio_button.dart';
 import '../../design/components/lexio_feedback.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
+import '../../progress/user_progress.dart';
 import 'spot_content.dart';
 import 'spot_game.dart';
 import 'widgets/spot_summary.dart';
@@ -25,6 +26,8 @@ class _SpotScreenState extends State<SpotScreen> {
   bool _isLoading = true;
   bool _hasError = false;
   Timer? _timer;
+  ProgressRepository? _progress;
+  bool _hasSavedSession = false;
 
   @override
   void initState() {
@@ -35,10 +38,12 @@ class _SpotScreenState extends State<SpotScreen> {
   Future<void> _init() async {
     try {
       await SpotContent.load();
-      final texts = SpotContent.session(5);
+      final progress = await ProgressRepository.load();
+      final texts = SpotContent.adaptiveSession(5, progress.forGame('spot'));
       if (!mounted) return;
       setState(() {
         _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+        _progress = progress;
         _isLoading = false;
       });
       _startTimer();
@@ -62,6 +67,7 @@ class _SpotScreenState extends State<SpotScreen> {
         _state = _state!.tick();
         if (_state!.isFinished) {
           _timer?.cancel();
+          _saveSessionProgress(_state!);
         }
       });
     });
@@ -108,13 +114,18 @@ class _SpotScreenState extends State<SpotScreen> {
     setState(() {
       _state = _state!.nextText();
     });
+    if (_state!.isFinished) _saveSessionProgress(_state!);
   }
 
   void _handlePlayAgain() {
     _timer?.cancel();
-    final texts = SpotContent.session(5);
+    final texts = SpotContent.adaptiveSession(
+      5,
+      _progress?.forGame('spot') ?? const GameProgress(),
+    );
     setState(() {
       _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+      _hasSavedSession = false;
     });
     _startTimer();
   }
@@ -122,6 +133,21 @@ class _SpotScreenState extends State<SpotScreen> {
   void _handleBack() {
     _timer?.cancel();
     Navigator.of(context).pop();
+  }
+
+  void _saveSessionProgress(SpotGameState state) {
+    if (_hasSavedSession) return;
+    _hasSavedSession = true;
+    for (final text in state.texts) {
+      final index = state.texts.indexOf(text);
+      _progress?.recordAnswer(
+        gameId: 'spot',
+        exerciseId: text.id,
+        difficulty: text.difficulty,
+        isCorrect:
+            state.foundMistakeIndices[index].length == text.mistakes.length,
+      );
+    }
   }
 
   Widget _buildErrorScreen() {

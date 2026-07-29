@@ -31,7 +31,7 @@ void main() {
       expect(exercise.explanation, isNotEmpty);
       expect(exercise.category, isNotEmpty);
       expect(exercise.synonyms, hasLength(greaterThanOrEqualTo(2)));
-      expect(exercise.difficulty, inInclusiveRange(1, 3));
+      expect(exercise.difficulty, inInclusiveRange(1, 5));
     }
   });
 
@@ -40,7 +40,7 @@ void main() {
 
     expect(
       exercises.map((exercise) => exercise.difficulty).toSet(),
-      equals({1, 2, 3}),
+      equals({1, 2, 3, 4, 5}),
     );
   });
 
@@ -56,10 +56,10 @@ void main() {
     );
     expect(
       [
-        for (final difficulty in [1, 2, 3])
+        for (final difficulty in [1, 2, 3, 4, 5])
           round.where((exercise) => exercise.difficulty == difficulty).length,
       ],
-      [4, 3, 3],
+      [2, 2, 2, 2, 2],
     );
   });
 }
