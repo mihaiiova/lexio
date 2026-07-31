@@ -1,0 +1,362 @@
+[
+  {
+    "id": "i001",
+    "expression": "a bate apa-n piuă",
+    "meaning": "a repeta mereu același lucru fără a ajunge la un rezultat",
+    "example": "La ședință, cei doi au bătut apa-n piuă fără să propună o soluție."
+  },
+  {
+    "id": "i002",
+    "expression": "a pune paie pe foc",
+    "meaning": "a înrăutăți o ceartă sau o situație tensionată",
+    "example": "Comentariul lui a pus paie pe foc și discuția a devenit și mai aprinsă."
+  },
+  {
+    "id": "i003",
+    "expression": "a da din casă",
+    "meaning": "a dezvălui informații care trebuiau păstrate secrete",
+    "example": "Mihai a dat din casă și le-a spus tuturor ce surpriză pregăteam."
+  },
+  {
+    "id": "i004",
+    "expression": "a face din țânțar armăsar",
+    "meaning": "a exagera foarte mult importanța unei întâmplări mărunte",
+    "example": "A fost doar o mică întârziere, dar Radu a făcut din țânțar armăsar."
+  },
+  {
+    "id": "i005",
+    "expression": "a freca menta",
+    "meaning": "a pierde vremea fără să faci ceva folositor",
+    "example": "În loc să termine proiectul, a frecat menta toată după-amiaza."
+  },
+  {
+    "id": "i006",
+    "expression": "a călca pe bec",
+    "meaning": "a face o greșeală care te pune într-o situație neplăcută",
+    "example": "A călcat pe bec când a trimis mesajul confidențial persoanei greșite."
+  },
+  {
+    "id": "i007",
+    "expression": "a lua taurul de coarne",
+    "meaning": "a înfrunta direct și cu hotărâre o problemă",
+    "example": "Ioana a luat taurul de coarne și a discutat deschis despre conflict."
+  },
+  {
+    "id": "i008",
+    "expression": "a fi cu capul în nori",
+    "meaning": "a fi visător și neatent la ceea ce se întâmplă",
+    "example": "Astăzi ești cu capul în nori și nu auzi nimic din ce spun."
+  },
+  {
+    "id": "i009",
+    "expression": "a avea inimă de piatră",
+    "meaning": "a fi lipsit de milă sau de sensibilitate",
+    "example": "Numai cineva care are inimă de piatră ar ignora un asemenea necaz."
+  },
+  {
+    "id": "i010",
+    "expression": "a pune umărul",
+    "meaning": "a contribui prin muncă sau ajutor la realizarea unui lucru",
+    "example": "Toți vecinii au pus umărul la refacerea locului de joacă."
+  },
+  {
+    "id": "i011",
+    "expression": "a se da de gol",
+    "meaning": "a se trăda singur prin vorbe sau comportament",
+    "example": "S-a dat de gol când a pomenit un detaliu pe care nu trebuia să-l știe."
+  },
+  {
+    "id": "i012",
+    "expression": "a o lua la sănătoasa",
+    "meaning": "a fugi repede pentru a scăpa de ceva",
+    "example": "Când a început furtuna, excursioniștii au luat-o la sănătoasa spre cabană."
+  },
+  {
+    "id": "i013",
+    "expression": "a ține cu dinții",
+    "meaning": "a păstra sau a apăra ceva cu foarte multă hotărâre",
+    "example": "El ține cu dinții de ideea lui, deși ceilalți au propus alternative."
+  },
+  {
+    "id": "i014",
+    "expression": "a fi floare la ureche",
+    "meaning": "a fi foarte ușor de făcut",
+    "example": "După atâtea exerciții, testul a fost floare la ureche."
+  },
+  {
+    "id": "i015",
+    "expression": "a umbla cu cioara vopsită",
+    "meaning": "a încerca să înșeli prezentând un lucru drept altceva",
+    "example": "Vânzătorul umbla cu cioara vopsită și prezenta copia drept original."
+  },
+  {
+    "id": "i016",
+    "expression": "a prinde cu mâța-n sac",
+    "meaning": "a surprinde pe cineva chiar când face ceva necinstit",
+    "example": "Paznicul l-a prins cu mâța-n sac când încerca să ascundă marfa."
+  },
+  {
+    "id": "i017",
+    "expression": "a căuta nod în papură",
+    "meaning": "a căuta cu orice preț greșeli sau motive de nemulțumire",
+    "example": "Proiectul era bun, dar evaluatorul a căutat nod în papură."
+  },
+  {
+    "id": "i018",
+    "expression": "a avea ac de cojocul cuiva",
+    "meaning": "a avea mijlocul potrivit pentru a opri sau pedepsi pe cineva",
+    "example": "Credea că poate păcăli pe oricine, dar directoarea avea ac de cojocul lui."
+  },
+  {
+    "id": "i019",
+    "expression": "a pune punctul pe i",
+    "meaning": "a preciza clar aspectul esențial al unei probleme",
+    "example": "Prin ultima observație, Ana a pus punctul pe i."
+  },
+  {
+    "id": "i020",
+    "expression": "a arunca banii pe fereastră",
+    "meaning": "a cheltui banii fără rost",
+    "example": "Cumpărând lucruri inutile, și-a aruncat banii pe fereastră."
+  },
+  {
+    "id": "i021",
+    "expression": "a scoate basma curată",
+    "meaning": "a scăpa fără pedeapsă sau fără urmări neplăcute",
+    "example": "Deși încălcase regula, a reușit să scoată basma curată."
+  },
+  {
+    "id": "i022",
+    "expression": "a tăia frunză la câini",
+    "meaning": "a pierde vremea fără să muncești",
+    "example": "În timp ce ceilalți lucrau, el tăia frunză la câini."
+  },
+  {
+    "id": "i023",
+    "expression": "a se îmbăta cu apă rece",
+    "meaning": "a se amăgi cu speranțe fără temei",
+    "example": "Se îmbată cu apă rece dacă își închipuie că va reuși fără efort."
+  },
+  {
+    "id": "i024",
+    "expression": "a se face luntre și punte",
+    "meaning": "a face tot posibilul pentru a obține sau a realiza ceva",
+    "example": "Părinții s-au făcut luntre și punte ca să-i găsească tratamentul potrivit."
+  },
+  {
+    "id": "i025",
+    "expression": "a călca strâmb",
+    "meaning": "a se abate de la purtarea corectă sau de la o înțelegere",
+    "example": "Antrenorul l-a avertizat să nu calce strâmb înainte de concurs."
+  },
+  {
+    "id": "i026",
+    "expression": "a da bir cu fugiții",
+    "meaning": "a fugi sau a renunța când apar dificultăți",
+    "example": "Când a văzut cât este de lucru, a dat bir cu fugiții."
+  },
+  {
+    "id": "i027",
+    "expression": "a da cu bâta-n baltă",
+    "meaning": "a face o gafă sau o greșeală nepotrivită",
+    "example": "A dat cu bâta-n baltă când a felicitat persoana greșită."
+  },
+  {
+    "id": "i028",
+    "expression": "a avea pitici pe creier",
+    "meaning": "a avea idei ciudate sau preocupări exagerate",
+    "example": "Are pitici pe creier când vine vorba despre ordinea obiectelor de pe birou."
+  },
+  {
+    "id": "i029",
+    "expression": "a pune carul înaintea boilor",
+    "meaning": "a face lucrurile într-o ordine greșită",
+    "example": "Ai pus carul înaintea boilor: ai trimis invitațiile înainte să alegi data."
+  },
+  {
+    "id": "i030",
+    "expression": "a se culca pe o ureche",
+    "meaning": "a deveni nepăsător sau prea liniștit, crezând că totul este rezolvat",
+    "example": "Nu te culca pe o ureche după prima victorie; mai urmează două meciuri."
+  },
+  {
+    "id": "i031",
+    "expression": "a-i ajunge cuțitul la os",
+    "meaning": "a ajunge într-o situație greu de suportat",
+    "example": "I-a ajuns cuțitul la os și a hotărât să reclame nedreptatea."
+  },
+  {
+    "id": "i032",
+    "expression": "a-și lua inima în dinți",
+    "meaning": "a-și face curaj pentru a întreprinde ceva dificil",
+    "example": "Și-a luat inima în dinți și a urcat pe scenă."
+  },
+  {
+    "id": "i033",
+    "expression": "a întoarce foaia",
+    "meaning": "a-și schimba atitudinea sau felul de a acționa",
+    "example": "După avertisment, și-a întors foaia și a început să lucreze serios."
+  },
+  {
+    "id": "i034",
+    "expression": "a pune la zid",
+    "meaning": "a acuza sau a critica foarte aspru pe cineva",
+    "example": "Jurnaliștii l-au pus la zid pentru promisiunile nerespectate."
+  },
+  {
+    "id": "i035",
+    "expression": "a trage mâța de coadă",
+    "meaning": "a trăi greu, cu foarte puțini bani",
+    "example": "La începutul carierei, au tras mâța de coadă câteva luni."
+  },
+  {
+    "id": "i036",
+    "expression": "a vinde castraveți grădinarului",
+    "meaning": "a încerca să înveți sau să păcălești pe cineva care știe mai bine",
+    "example": "Nu încerca să-i explici programare expertului; vinzi castraveți grădinarului."
+  },
+  {
+    "id": "i037",
+    "expression": "a vorbi ca din carte",
+    "meaning": "a vorbi foarte corect, clar și convingător",
+    "example": "Eleva a vorbit ca din carte la prezentare."
+  },
+  {
+    "id": "i038",
+    "expression": "a se uita ca vițelul la poarta nouă",
+    "meaning": "a privi nedumerit, fără să înțelegi ce se întâmplă",
+    "example": "Când a văzut panoul de comandă, s-a uitat ca vițelul la poarta nouă."
+  },
+  {
+    "id": "i039",
+    "expression": "a face ochii cât cepele",
+    "meaning": "a deschide larg ochii din cauza surprinderii",
+    "example": "Copiii au făcut ochii cât cepele când au văzut tortul uriaș."
+  },
+  {
+    "id": "i040",
+    "expression": "a-și băga nasul unde nu-i fierbe oala",
+    "meaning": "a se amesteca în probleme care nu îl privesc",
+    "example": "Și-a băgat nasul unde nu-i fierbe oala și a complicat discuția."
+  },
+  {
+    "id": "i041",
+    "expression": "a umbla cu capul în traistă",
+    "meaning": "a fi foarte neatent la ceea ce faci",
+    "example": "A umblat cu capul în traistă și a trimis raportul incomplet."
+  },
+  {
+    "id": "i042",
+    "expression": "a-i sări muștarul",
+    "meaning": "a se înfuria brusc",
+    "example": "I-a sărit muștarul când a aflat că fusese mințit."
+  },
+  {
+    "id": "i043",
+    "expression": "a pune batista pe țambal",
+    "meaning": "a ascunde sau a opri discutarea unei situații neplăcute",
+    "example": "Conducerea a pus batista pe țambal și nu a mai vorbit despre incident."
+  },
+  {
+    "id": "i044",
+    "expression": "a trage spuza pe turta sa",
+    "meaning": "a urmări propriul avantaj într-o situație",
+    "example": "În negociere, fiecare a tras spuza pe turta sa."
+  },
+  {
+    "id": "i045",
+    "expression": "a lua la bani mărunți",
+    "meaning": "a cerceta sau a întreba pe cineva în cele mai mici detalii",
+    "example": "Inspectorul l-a luat la bani mărunți în legătură cu fiecare cheltuială."
+  },
+  {
+    "id": "i046",
+    "expression": "a bate câmpii",
+    "meaning": "a vorbi fără legătură cu subiectul sau fără sens",
+    "example": "În loc să răspundă la întrebare, a început să bată câmpii."
+  },
+  {
+    "id": "i047",
+    "expression": "a duce cu preșul",
+    "meaning": "a înșela sau a amăgi pe cineva",
+    "example": "Ne-a dus cu preșul, promițând mereu că va livra comanda mâine."
+  },
+  {
+    "id": "i048",
+    "expression": "a pune bețe în roate",
+    "meaning": "a crea intenționat piedici în realizarea unui lucru",
+    "example": "De fiecare dată când avansam, cineva ne punea bețe în roate."
+  },
+  {
+    "id": "i049",
+    "expression": "a da apă la moară",
+    "meaning": "a oferi argumente sau încurajare unei atitudini nepotrivite",
+    "example": "Prin reacția lui, le-a dat apă la moară celor care răspândeau zvonul."
+  },
+  {
+    "id": "i050",
+    "expression": "a lăsa baltă",
+    "meaning": "a abandona pe cineva sau ceva înainte de final",
+    "example": "A lăsat baltă proiectul chiar înainte de prezentare."
+  },
+  {
+    "id": "i051",
+    "expression": "a fi tobă de carte",
+    "meaning": "a fi foarte învățat și a avea multe cunoștințe",
+    "example": "Bibliotecara este tobă de carte și găsește răspuns la orice întrebare."
+  },
+  {
+    "id": "i052",
+    "expression": "a nu-i ajunge cu prăjina la nas",
+    "meaning": "a fi foarte încrezut și arogant",
+    "example": "De când a primit premiul, nu-i mai ajunge cu prăjina la nas."
+  },
+  {
+    "id": "i053",
+    "expression": "a umbla după cai verzi pe pereți",
+    "meaning": "a urmări lucruri imposibile sau lipsite de realism",
+    "example": "În loc să aleagă o soluție posibilă, umblă după cai verzi pe pereți."
+  },
+  {
+    "id": "i054",
+    "expression": "a scoate castanele din foc cu mâna altuia",
+    "meaning": "a folosi pe altcineva pentru a rezolva o situație riscantă în folosul tău",
+    "example": "A scos castanele din foc cu mâna colegului, lăsându-l pe el să anunțe vestea."
+  },
+  {
+    "id": "i055",
+    "expression": "a trece prin foc și sabie",
+    "meaning": "a distruge cu mare cruzime tot ce întâlnești",
+    "example": "În poveste, armata a trecut ținutul prin foc și sabie."
+  },
+  {
+    "id": "i056",
+    "expression": "a pune surdină",
+    "meaning": "a reduce intensitatea unei acțiuni, afirmații sau manifestări",
+    "example": "După criticile primite, și-a pus surdină declarațiilor."
+  },
+  {
+    "id": "i057",
+    "expression": "a trage ponoasele",
+    "meaning": "a suporta consecințele neplăcute ale unei fapte",
+    "example": "Toată echipa a tras ponoasele pentru greșeala unui singur coleg."
+  },
+  {
+    "id": "i058",
+    "expression": "a face haz de necaz",
+    "meaning": "a glumi pe seama unei situații neplăcute pentru a o suporta mai ușor",
+    "example": "Autobuzul întârzia, dar călătorii au făcut haz de necaz."
+  },
+  {
+    "id": "i059",
+    "expression": "a da sfoară-n țară",
+    "meaning": "a răspândi o veste către cât mai multă lume",
+    "example": "Organizatorii au dat sfoară-n țară că se caută voluntari."
+  },
+  {
+    "id": "i060",
+    "expression": "a lua în tărbacă",
+    "meaning": "a certa sau a ironiza aspru pe cineva",
+    "example": "Colegii l-au luat în tărbacă pentru laudele lui exagerate."
+  }
+]

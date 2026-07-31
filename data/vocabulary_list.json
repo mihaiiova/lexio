@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "v001",
+    "word": "curios",
+    "definition": "dornic să afle sau să descopere lucruri noi",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "interesat",
+      "iscoditor"
+    ]
+  },
+  {
+    "id": "v002",
+    "word": "atent",
+    "definition": "care urmărește cu grijă ceea ce se întâmplă",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "grijuliu",
+      "vigilent"
+    ]
+  },
+  {
+    "id": "v003",
+    "word": "generos",
+    "definition": "dispus să ofere și să împartă cu ceilalți",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "darnic",
+      "mărinimos"
+    ]
+  },
+  {
+    "id": "v004",
+    "word": "timid",
+    "definition": "lipsit de îndrăzneală în prezența altora",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "sfios",
+      "rușinos"
+    ]
+  },
+  {
+    "id": "v005",
+    "word": "isteț",
+    "definition": "care înțelege repede și găsește soluții bune",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "inteligent",
+      "ager"
+    ]
+  },
+  {
+    "id": "v006",
+    "word": "răbdător",
+    "definition": "capabil să aștepte fără să se enerveze",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "calm",
+      "îngăduitor"
+    ]
+  },
+  {
+    "id": "v007",
+    "word": "sincer",
+    "definition": "care spune ceea ce gândește și nu încearcă să înșele",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "cinstit",
+      "deschis"
+    ]
+  },
+  {
+    "id": "v008",
+    "word": "precaut",
+    "definition": "care acționează cu grijă pentru a evita un pericol",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "prudent",
+      "prevăzător"
+    ]
+  },
+  {
+    "id": "v009",
+    "word": "uimire",
+    "definition": "emoție puternică provocată de ceva neașteptat",
+    "partOfSpeech": "substantiv",
+    "synonyms": [
+      "mirare",
+      "surprindere"
+    ]
+  },
+  {
+    "id": "v010",
+    "word": "a observa",
+    "definition": "a vedea sau a remarca un lucru cu atenție",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a remarca",
+      "a sesiza"
+    ]
+  },
+  {
+    "id": "v011",
+    "word": "a ezita",
+    "definition": "a nu se hotărî imediat ce să facă",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a șovăi",
+      "a se îndoi"
+    ]
+  },
+  {
+    "id": "v012",
+    "word": "a încuraja",
+    "definition": "a da cuiva încredere sau curaj",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a susține",
+      "a îmbărbăta"
+    ]
+  },
+  {
+    "id": "v013",
+    "word": "fragil",
+    "definition": "care se poate sparge sau deteriora ușor",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "delicat",
+      "casant"
+    ]
+  },
+  {
+    "id": "v014",
+    "word": "vast",
+    "definition": "foarte întins sau cuprinzător",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "întins",
+      "imens"
+    ]
+  },
+  {
+    "id": "v015",
+    "word": "limpede",
+    "definition": "clar, ușor de văzut sau de înțeles",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "clar",
+      "deslușit"
+    ]
+  },
+  {
+    "id": "v016",
+    "word": "aglomerat",
+    "definition": "plin de oameni, vehicule sau obiecte",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "înghesuit",
+      "înțesat"
+    ]
+  },
+  {
+    "id": "v017",
+    "word": "tihnit",
+    "definition": "liniștit și lipsit de grabă sau griji",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "liniștit",
+      "pașnic"
+    ]
+  },
+  {
+    "id": "v018",
+    "word": "priceput",
+    "definition": "care știe să facă bine un anumit lucru",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "iscusit",
+      "competent"
+    ]
+  },
+  {
+    "id": "v019",
+    "word": "recunoscător",
+    "definition": "care simte și arată mulțumire pentru un bine primit",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "mulțumitor",
+      "îndatorat"
+    ]
+  },
+  {
+    "id": "v020",
+    "word": "neprielnic",
+    "definition": "care nu favorizează o acțiune sau un rezultat",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "nefavorabil",
+      "potrivnic"
+    ]
+  },
+  {
+    "id": "v021",
+    "word": "îndemânatic",
+    "definition": "care lucrează cu ușurință și pricepere, mai ales cu mâinile",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "dibaci",
+      "iscusit"
+    ]
+  },
+  {
+    "id": "v022",
+    "word": "zglobiu",
+    "definition": "vioi, vesel și pus pe joacă",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "jucăuș",
+      "sprinten"
+    ]
+  },
+  {
+    "id": "v023",
+    "word": "posomorât",
+    "definition": "trist și lipsit de voie bună",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "mohorât",
+      "abătut"
+    ]
+  },
+  {
+    "id": "v024",
+    "word": "îmbelșugat",
+    "definition": "care există din abundență, în cantitate mare",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "abundent",
+      "bogat"
+    ]
+  },
+  {
+    "id": "v025",
+    "word": "cumpătat",
+    "definition": "care evită excesele și păstrează măsura",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "moderat",
+      "chibzuit"
+    ]
+  },
+  {
+    "id": "v026",
+    "word": "sfios",
+    "definition": "lipsit de îndrăzneală, ușor rușinat",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "timid",
+      "rușinos"
+    ]
+  },
+  {
+    "id": "v027",
+    "word": "dornic",
+    "definition": "care își dorește foarte mult ceva",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "nerăbdător",
+      "doritor"
+    ]
+  },
+  {
+    "id": "v028",
+    "word": "năstrușnic",
+    "definition": "neobișnuit și amuzant prin idei sau comportament",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "poznaș",
+      "trăsnit"
+    ]
+  },
+  {
+    "id": "v029",
+    "word": "a iscodi",
+    "definition": "a pune multe întrebări pentru a afla un lucru ascuns",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a cerceta",
+      "a descoase"
+    ]
+  },
+  {
+    "id": "v030",
+    "word": "a stărui",
+    "definition": "a continua cu insistență o acțiune sau o rugăminte",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a insista",
+      "a persevera"
+    ]
+  },
+  {
+    "id": "v031",
+    "word": "a zări",
+    "definition": "a vedea ceva pentru scurt timp sau de la distanță",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a întrezări",
+      "a vedea"
+    ]
+  },
+  {
+    "id": "v032",
+    "word": "a ocroti",
+    "definition": "a apăra și a îngriji pe cineva sau ceva",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a proteja",
+      "a apăra"
+    ]
+  },
+  {
+    "id": "v033",
+    "word": "a chibzui",
+    "definition": "a gândi atent înainte de a lua o hotărâre",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a cumpăni",
+      "a reflecta"
+    ]
+  },
+  {
+    "id": "v034",
+    "word": "a tăinui",
+    "definition": "a păstra ceva secret și a nu dezvălui",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a ascunde",
+      "a secretiza"
+    ]
+  },
+  {
+    "id": "v035",
+    "word": "a cutreiera",
+    "definition": "a străbate un loc în mai multe direcții",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a străbate",
+      "a colinda"
+    ]
+  },
+  {
+    "id": "v036",
+    "word": "anevoios",
+    "definition": "care se realizează cu multă trudă și dificultate",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "dificil",
+      "obositor"
+    ]
+  },
+  {
+    "id": "v037",
+    "word": "aprig",
+    "definition": "foarte puternic, înverșunat sau aspru",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "înverșunat",
+      "aspru"
+    ]
+  },
+  {
+    "id": "v038",
+    "word": "dibaci",
+    "definition": "foarte priceput și îndemânatic",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "iscusit",
+      "îndemânatic"
+    ]
+  },
+  {
+    "id": "v039",
+    "word": "domol",
+    "definition": "liniștit, lent sau lipsit de intensitate",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "lin",
+      "potolit"
+    ]
+  },
+  {
+    "id": "v040",
+    "word": "fățiș",
+    "definition": "în mod deschis, fără ascunzișuri",
+    "partOfSpeech": "adverb",
+    "synonyms": [
+      "deschis",
+      "direct"
+    ]
+  },
+  {
+    "id": "v041",
+    "word": "laconic",
+    "definition": "exprimat în foarte puține cuvinte",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "concis",
+      "scurt"
+    ]
+  },
+  {
+    "id": "v042",
+    "word": "meticulos",
+    "definition": "foarte atent la fiecare detaliu",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "minuțios",
+      "scrupulos"
+    ]
+  },
+  {
+    "id": "v043",
+    "word": "modest",
+    "definition": "care nu se laudă și nu își exagerează meritele",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "smerit",
+      "rezervat"
+    ]
+  },
+  {
+    "id": "v044",
+    "word": "prielnic",
+    "definition": "favorabil pentru o acțiune sau dezvoltare",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "favorabil",
+      "potrivit"
+    ]
+  },
+  {
+    "id": "v045",
+    "word": "răzleț",
+    "definition": "aflat izolat sau la distanță de celelalte",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "izolat",
+      "răspândit"
+    ]
+  },
+  {
+    "id": "v046",
+    "word": "statornic",
+    "definition": "care rămâne constant și nu se schimbă ușor",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "constant",
+      "devotat"
+    ]
+  },
+  {
+    "id": "v047",
+    "word": "temeinic",
+    "definition": "făcut cu grijă, solid și bine întemeiat",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "solid",
+      "minuțios"
+    ]
+  },
+  {
+    "id": "v048",
+    "word": "vădit",
+    "definition": "care se vede sau se înțelege foarte clar",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "evident",
+      "manifest"
+    ]
+  },
+  {
+    "id": "v049",
+    "word": "ager",
+    "definition": "care înțelege sau reacționează foarte repede",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "vioi",
+      "isteț"
+    ]
+  },
+  {
+    "id": "v050",
+    "word": "blajin",
+    "definition": "bun, pașnic și îngăduitor",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "blând",
+      "pașnic"
+    ]
+  },
+  {
+    "id": "v051",
+    "word": "dârz",
+    "definition": "hotărât și neclintit în fața greutăților",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "neclintit",
+      "hotărât"
+    ]
+  },
+  {
+    "id": "v052",
+    "word": "exuberant",
+    "definition": "care își arată bucuria și energia cu multă intensitate",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "entuziast",
+      "efervescent"
+    ]
+  },
+  {
+    "id": "v053",
+    "word": "firav",
+    "definition": "slab, delicat și lipsit de putere",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "plăpând",
+      "fragil"
+    ]
+  },
+  {
+    "id": "v054",
+    "word": "impetuos",
+    "definition": "care acționează cu avânt puternic și greu de stăpânit",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "năvalnic",
+      "avântat"
+    ]
+  },
+  {
+    "id": "v055",
+    "word": "jovial",
+    "definition": "vesel, prietenos și plin de voie bună",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "vesel",
+      "voios"
+    ]
+  },
+  {
+    "id": "v056",
+    "word": "morocănos",
+    "definition": "mereu prost dispus și puțin comunicativ",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "ursuz",
+      "posac"
+    ]
+  },
+  {
+    "id": "v057",
+    "word": "năvalnic",
+    "definition": "care se manifestă cu forță și repeziciune",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "vijelios",
+      "impetuos"
+    ]
+  },
+  {
+    "id": "v058",
+    "word": "perspicace",
+    "definition": "capabil să înțeleagă repede aspecte greu de observat",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "pătrunzător",
+      "ager"
+    ]
+  },
+  {
+    "id": "v059",
+    "word": "sceptic",
+    "definition": "care se îndoiește și cere dovezi înainte să creadă",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "neîncrezător",
+      "îndoielnic"
+    ]
+  },
+  {
+    "id": "v060",
+    "word": "ursuz",
+    "definition": "nesociabil, posac și greu de abordat",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "morocănos",
+      "posac"
+    ]
+  },
+  {
+    "id": "v061",
+    "word": "a dibui",
+    "definition": "a găsi cu greu, căutând sau încercând mai multe variante",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a găsi",
+      "a descoperi"
+    ]
+  },
+  {
+    "id": "v062",
+    "word": "a făgădui",
+    "definition": "a promite că vei face sau vei oferi ceva",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a promite",
+      "a se angaja"
+    ]
+  },
+  {
+    "id": "v063",
+    "word": "a îngădui",
+    "definition": "a permite sau a accepta ca ceva să se întâmple",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a permite",
+      "a admite"
+    ]
+  },
+  {
+    "id": "v064",
+    "word": "a năzui",
+    "definition": "a dori puternic să atingi un scop înalt",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a aspira",
+      "a tinde"
+    ]
+  },
+  {
+    "id": "v065",
+    "word": "a nesocoti",
+    "definition": "a nu ține seama de o regulă, un sfat sau un drept",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a ignora",
+      "a încălca"
+    ]
+  },
+  {
+    "id": "v066",
+    "word": "a prevesti",
+    "definition": "a anunța dinainte că urmează să se întâmple ceva",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a prezice",
+      "a anticipa"
+    ]
+  },
+  {
+    "id": "v067",
+    "word": "a se bizui",
+    "definition": "a avea încredere și a se baza pe cineva sau ceva",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a se baza",
+      "a se încrede"
+    ]
+  },
+  {
+    "id": "v068",
+    "word": "a șovăi",
+    "definition": "a ezita înainte de a lua o hotărâre",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a ezita",
+      "a se codi"
+    ]
+  },
+  {
+    "id": "v069",
+    "word": "a tăgădui",
+    "definition": "a nega că un fapt este adevărat",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a nega",
+      "a contesta"
+    ]
+  },
+  {
+    "id": "v070",
+    "word": "a zădărnici",
+    "definition": "a împiedica realizarea unui plan sau a unei acțiuni",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a împiedica",
+      "a dejuca"
+    ]
+  },
+  {
+    "id": "v071",
+    "word": "abstrus",
+    "definition": "foarte greu de înțeles din cauza complexității",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "obscur",
+      "ermetic"
+    ]
+  },
+  {
+    "id": "v072",
+    "word": "ambiguu",
+    "definition": "care permite mai multe interpretări și nu este clar",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "echivoc",
+      "neclar"
+    ]
+  },
+  {
+    "id": "v073",
+    "word": "anacronic",
+    "definition": "nepotrivit cu epoca în care este plasat sau folosit",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "învechit",
+      "nepotrivit epocii"
+    ]
+  },
+  {
+    "id": "v074",
+    "word": "auster",
+    "definition": "simplu și sever, lipsit de podoabe sau confort",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "sobru",
+      "sever"
+    ]
+  },
+  {
+    "id": "v075",
+    "word": "benevolent",
+    "definition": "binevoitor și dispus să ajute",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "binevoitor",
+      "mărinimos"
+    ]
+  },
+  {
+    "id": "v076",
+    "word": "concludent",
+    "definition": "care dovedește clar ceva și permite o concluzie sigură",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "decisiv",
+      "edificator"
+    ]
+  },
+  {
+    "id": "v077",
+    "word": "derizoriu",
+    "definition": "atât de mic sau neînsemnat încât pare ridicol",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "neînsemnat",
+      "ridicol"
+    ]
+  },
+  {
+    "id": "v078",
+    "word": "efemer",
+    "definition": "care durează foarte puțin timp",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "trecător",
+      "vremelnic"
+    ]
+  },
+  {
+    "id": "v079",
+    "word": "elocvent",
+    "definition": "care exprimă convingător și clar o idee",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "expresiv",
+      "grăitor"
+    ]
+  },
+  {
+    "id": "v080",
+    "word": "echivoc",
+    "definition": "care are un sens neclar sau poate fi interpretat diferit",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "ambiguu",
+      "neclar"
+    ]
+  },
+  {
+    "id": "v081",
+    "word": "exhaustiv",
+    "definition": "care tratează complet toate aspectele unui subiect",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "complet",
+      "cuprinzător"
+    ]
+  },
+  {
+    "id": "v082",
+    "word": "fortuit",
+    "definition": "produs din întâmplare, fără să fi fost planificat",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "întâmplător",
+      "accidental"
+    ]
+  },
+  {
+    "id": "v083",
+    "word": "iminent",
+    "definition": "care este pe punctul de a se produce",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "apropiat",
+      "imediat"
+    ]
+  },
+  {
+    "id": "v084",
+    "word": "inedit",
+    "definition": "nou, original sau necunoscut până atunci",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "original",
+      "nou"
+    ]
+  },
+  {
+    "id": "v085",
+    "word": "insolit",
+    "definition": "foarte neobișnuit și surprinzător",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "neobișnuit",
+      "straniu"
+    ]
+  },
+  {
+    "id": "v086",
+    "word": "judicios",
+    "definition": "bazat pe o judecată bună și echilibrată",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "chibzuit",
+      "înțelept"
+    ]
+  },
+  {
+    "id": "v087",
+    "word": "latent",
+    "definition": "care există, dar nu se manifestă încă în mod vizibil",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "ascuns",
+      "nedezvăluit"
+    ]
+  },
+  {
+    "id": "v088",
+    "word": "lucid",
+    "definition": "capabil să gândească limpede și să înțeleagă corect situația",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "clarvăzător",
+      "rațional"
+    ]
+  },
+  {
+    "id": "v089",
+    "word": "nociv",
+    "definition": "care produce efecte dăunătoare",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "dăunător",
+      "vătămător"
+    ]
+  },
+  {
+    "id": "v090",
+    "word": "pertinent",
+    "definition": "care se potrivește exact subiectului și este bine argumentat",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "relevant",
+      "potrivit"
+    ]
+  },
+  {
+    "id": "v091",
+    "word": "plauzibil",
+    "definition": "care pare posibil și poate fi crezut",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "credibil",
+      "verosimil"
+    ]
+  },
+  {
+    "id": "v092",
+    "word": "precar",
+    "definition": "nesigur, instabil sau lipsit de condiții suficiente",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "nesigur",
+      "instabil"
+    ]
+  },
+  {
+    "id": "v093",
+    "word": "prolific",
+    "definition": "care produce multe opere, idei sau rezultate",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "productiv",
+      "rodnic"
+    ]
+  },
+  {
+    "id": "v094",
+    "word": "reticent",
+    "definition": "ezitant sau puțin dispus să vorbească ori să accepte ceva",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "rezervat",
+      "ezitant"
+    ]
+  },
+  {
+    "id": "v095",
+    "word": "tacit",
+    "definition": "înțeles sau acceptat fără a fi spus direct",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "subînțeles",
+      "neexprimat"
+    ]
+  },
+  {
+    "id": "v096",
+    "word": "tenace",
+    "definition": "care urmărește cu perseverență un scop și nu renunță",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "perseverent",
+      "stăruitor"
+    ]
+  },
+  {
+    "id": "v097",
+    "word": "trivial",
+    "definition": "obișnuit, lipsit de profunzime sau de importanță",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "banal",
+      "neînsemnat"
+    ]
+  },
+  {
+    "id": "v098",
+    "word": "verosimil",
+    "definition": "care pare adevărat sau posibil",
+    "partOfSpeech": "adjectiv",
+    "synonyms": [
+      "plauzibil",
+      "credibil"
+    ]
+  },
+  {
+    "id": "v099",
+    "word": "a eluda",
+    "definition": "a evita în mod abil o obligație, o regulă sau o dificultate",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a evita",
+      "a ocoli"
+    ]
+  },
+  {
+    "id": "v100",
+    "word": "a tergiversa",
+    "definition": "a amâna intenționat rezolvarea sau luarea unei decizii",
+    "partOfSpeech": "verb",
+    "synonyms": [
+      "a amâna",
+      "a întârzia"
+    ]
+  }
+]
