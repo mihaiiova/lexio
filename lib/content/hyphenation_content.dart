@@ -90,8 +90,7 @@ final class HyphenationContent {
     final jsonString = await rootBundle.loadString(
       'data/hyphenation_pairs.json',
     );
-    final root = json.decode(jsonString) as Map<String, dynamic>;
-    final entries = root['entries'] as List<dynamic>;
+    final entries = json.decode(jsonString) as List<dynamic>;
     _cached = entries
         .map((entry) => HyphenationPair.fromJson(entry as Map<String, dynamic>))
         .toList(growable: false);

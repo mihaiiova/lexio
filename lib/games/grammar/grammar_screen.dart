@@ -75,8 +75,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
     final exercise = updated.currentExercise;
     _progress?.recordAnswer(
       gameId: 'grammar',
-      exerciseId: exercise.id,
-      difficulty: exercise.difficulty,
+      notionId: exercise.notionId,
       isCorrect: isRight,
     );
 

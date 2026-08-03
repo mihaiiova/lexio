@@ -138,16 +138,20 @@ class _SpotScreenState extends State<SpotScreen> {
   void _saveSessionProgress(SpotGameState state) {
     if (_hasSavedSession) return;
     _hasSavedSession = true;
+    final notionResults = <String, bool>{};
     for (final text in state.texts) {
       final index = state.texts.indexOf(text);
-      _progress?.recordAnswer(
-        gameId: 'spot',
-        exerciseId: text.id,
-        difficulty: text.difficulty,
-        isCorrect:
-            state.foundMistakeIndices[index].length == text.mistakes.length,
-      );
+      final foundIndices = state.foundMistakeIndices[index];
+      for (var i = 0; i < text.mistakes.length; i++) {
+        final notionId = text.mistakes[i].notionId;
+        final wasFound = foundIndices.contains(i);
+        notionResults[notionId] = wasFound;
+      }
     }
+    _progress?.recordAnswers(
+      gameId: 'spot',
+      notionResults: notionResults,
+    );
   }
 
   Widget _buildErrorScreen() {

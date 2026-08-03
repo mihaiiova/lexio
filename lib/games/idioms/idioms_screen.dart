@@ -75,8 +75,7 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
     final exercise = updated.currentExercise;
     _progress?.recordAnswer(
       gameId: 'idioms',
-      exerciseId: exercise.id,
-      difficulty: exercise.difficulty,
+      notionId: exercise.notionId,
       isCorrect: updated.lastAnswerCorrect ?? false,
     );
     if (updated.lastAnswerCorrect ?? false) {

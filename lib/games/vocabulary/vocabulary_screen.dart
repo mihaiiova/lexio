@@ -75,8 +75,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     final exercise = updated.currentExercise;
     _progress?.recordAnswer(
       gameId: 'vocabulary',
-      exerciseId: exercise.id,
-      difficulty: exercise.difficulty,
+      notionId: exercise.notionId,
       isCorrect: updated.lastAnswerCorrect ?? false,
     );
     if (updated.lastAnswerCorrect ?? false) {

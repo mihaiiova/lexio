@@ -39,6 +39,8 @@ final class GrammarExercise {
     this.hyphenationPairId,
   });
 
+  String get notionId => pairId ?? id;
+
   String? get doomUrl => doomWord != null ? DoomUrl.forWord(doomWord!) : null;
 
   factory GrammarExercise.fromJson(Map<String, dynamic> json) {
@@ -232,12 +234,11 @@ final class GrammarContent {
   }
 
   static List<GrammarExercise> adaptiveRound(int count, GameProgress progress) {
-    return AdaptiveRound.select(
+    return RoundSelector.select(
       exercises: _cached ?? const [],
       count: count,
       progress: progress,
-      idOf: (exercise) => exercise.id,
-      difficultyOf: (exercise) => exercise.difficulty,
+      notionIdOf: (exercise) => exercise.notionId,
     );
   }
 }

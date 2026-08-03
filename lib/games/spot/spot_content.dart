@@ -32,6 +32,13 @@ final class SpotMistake {
     this.commonErrorPairIndex,
   });
 
+  String get notionId {
+    if (commonErrorPairIndex != null) {
+      return 'gp$commonErrorPairIndex';
+    }
+    return 'sp_${Uri.encodeComponent(token)}_${Uri.encodeComponent(replacement)}';
+  }
+
   bool containsWordIndex(int index) =>
       index >= wordIndex && index < wordIndex + wordCount;
 
@@ -89,6 +96,9 @@ final class SpotText {
     _words = content.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
     _paragraphRanges = _computeParagraphRanges();
   }
+
+  List<String> get mistakeNotionIds =>
+      mistakes.map((m) => m.notionId).toList(growable: false);
 
   factory SpotText.fromJson(Map<String, dynamic> json) {
     final mistakesJson = json['mistakes'] as List<dynamic>;
@@ -165,12 +175,11 @@ final class SpotContent {
   }
 
   static List<SpotText> adaptiveSession(int count, GameProgress progress) {
-    return AdaptiveRound.select(
+    return RoundSelector.selectMultiNotion(
       exercises: _cached ?? const [],
       count: count,
       progress: progress,
-      idOf: (text) => text.id,
-      difficultyOf: (text) => text.difficulty,
+      notionIdsOf: (text) => text.mistakeNotionIds,
     );
   }
 }

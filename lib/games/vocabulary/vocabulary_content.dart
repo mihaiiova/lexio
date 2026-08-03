@@ -33,6 +33,8 @@ final class VocabularyExercise {
     required this.difficulty,
   });
 
+  String get notionId => word;
+
   String get correctOption => options[correctOptionIndex];
 
   factory VocabularyExercise.fromJson(Map<String, dynamic> json) {
@@ -110,12 +112,11 @@ final class VocabularyContent {
     int count,
     GameProgress progress,
   ) {
-    return AdaptiveRound.select(
+    return RoundSelector.select(
       exercises: _cached ?? const [],
       count: count,
       progress: progress,
-      idOf: (exercise) => exercise.id,
-      difficultyOf: (exercise) => exercise.difficulty,
+      notionIdOf: (exercise) => exercise.notionId,
     );
   }
 }

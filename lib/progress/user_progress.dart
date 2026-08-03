@@ -3,89 +3,52 @@ import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-final class ExerciseProgress {
-  final int correctAnswers;
-  final int incorrectAnswers;
-  final int lastAnsweredAt;
+import 'learning_item.dart';
 
-  const ExerciseProgress({
-    this.correctAnswers = 0,
-    this.incorrectAnswers = 0,
-    this.lastAnsweredAt = 0,
-  });
-
-  int get attempts => correctAnswers + incorrectAnswers;
-  bool get needsReview => incorrectAnswers > correctAnswers;
-
-  ExerciseProgress record(bool isCorrect, int timestamp) {
-    return ExerciseProgress(
-      correctAnswers: correctAnswers + (isCorrect ? 1 : 0),
-      incorrectAnswers: incorrectAnswers + (isCorrect ? 0 : 1),
-      lastAnsweredAt: timestamp,
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-    'correctAnswers': correctAnswers,
-    'incorrectAnswers': incorrectAnswers,
-    'lastAnsweredAt': lastAnsweredAt,
-  };
-
-  factory ExerciseProgress.fromJson(Map<String, dynamic> json) {
-    return ExerciseProgress(
-      correctAnswers: json['correctAnswers'] as int? ?? 0,
-      incorrectAnswers: json['incorrectAnswers'] as int? ?? 0,
-      lastAnsweredAt: json['lastAnsweredAt'] as int? ?? 0,
-    );
-  }
+int _todayDay() {
+  final now = DateTime.now();
+  return DateTime.utc(now.year, now.month, now.day)
+          .millisecondsSinceEpoch ~/
+      Duration.millisecondsPerDay;
 }
 
 final class GameProgress {
-  final int skillScore;
-  final Map<String, ExerciseProgress> exercises;
+  final Map<String, LearningItem> items;
 
-  const GameProgress({this.skillScore = 0, this.exercises = const {}});
+  const GameProgress({this.items = const {}});
 
-  int get targetDifficulty {
-    if (skillScore >= 24) return 5;
-    if (skillScore >= 16) return 4;
-    if (skillScore >= 9) return 3;
-    if (skillScore >= 4) return 2;
-    return 1;
-  }
+  LearningItem progressFor(String notionId) =>
+      items[notionId] ?? LearningItem.newItem(notionId: notionId);
+
+  int countOverdue(int today) =>
+      items.values.where((item) => item.isOverdue(today)).length;
+
+  int countEligible(int today) =>
+      items.values.where((item) => item.isEligibleForReview(today)).length;
 
   GameProgress recordAnswer({
-    required String exerciseId,
-    required int difficulty,
+    required String notionId,
     required bool isCorrect,
-    required int timestamp,
+    required int today,
   }) {
-    final updatedExercises = Map<String, ExerciseProgress>.from(exercises);
-    final progress = exercises[exerciseId] ?? const ExerciseProgress();
-    updatedExercises[exerciseId] = progress.record(isCorrect, timestamp);
-    final scoreChange = isCorrect ? difficulty : -difficulty * 2;
-
-    return GameProgress(
-      skillScore: (skillScore + scoreChange).clamp(-12, 30),
-      exercises: updatedExercises,
-    );
+    final current = items[notionId] ?? LearningItem.newItem(notionId: notionId);
+    final updated = current.recordAnswer(isCorrect: isCorrect, today: today);
+    final updatedItems = Map<String, LearningItem>.from(items);
+    updatedItems[notionId] = updated;
+    return GameProgress(items: updatedItems);
   }
 
   Map<String, dynamic> toJson() => {
-    'skillScore': skillScore,
-    'exercises': exercises.map(
-      (id, progress) => MapEntry(id, progress.toJson()),
-    ),
+    'items': items.map((id, item) => MapEntry(id, item.toJson())),
   };
 
   factory GameProgress.fromJson(Map<String, dynamic> json) {
-    final exercisesJson = json['exercises'] as Map<String, dynamic>? ?? {};
+    final itemsJson = json['items'] as Map<String, dynamic>? ?? {};
     return GameProgress(
-      skillScore: json['skillScore'] as int? ?? 0,
-      exercises: exercisesJson.map(
-        (id, progress) => MapEntry(
+      items: itemsJson.map(
+        (id, data) => MapEntry(
           id,
-          ExerciseProgress.fromJson(progress as Map<String, dynamic>),
+          LearningItem.fromJson(data as Map<String, dynamic>),
         ),
       ),
     );
@@ -97,21 +60,20 @@ final class UserProgress {
 
   const UserProgress({this.games = const {}});
 
-  GameProgress forGame(String gameId) => games[gameId] ?? const GameProgress();
+  GameProgress forGame(String gameId) =>
+      games[gameId] ?? const GameProgress();
 
   UserProgress recordAnswer({
     required String gameId,
-    required String exerciseId,
-    required int difficulty,
+    required String notionId,
     required bool isCorrect,
-    required int timestamp,
+    required int today,
   }) {
     final updatedGames = Map<String, GameProgress>.from(games);
     updatedGames[gameId] = forGame(gameId).recordAnswer(
-      exerciseId: exerciseId,
-      difficulty: difficulty,
+      notionId: notionId,
       isCorrect: isCorrect,
-      timestamp: timestamp,
+      today: today,
     );
     return UserProgress(games: updatedGames);
   }
@@ -135,7 +97,7 @@ final class UserProgress {
 }
 
 final class ProgressRepository {
-  static const _storageKey = 'user_progress_v1';
+  static const _storageKey = 'user_progress_v2';
 
   ProgressRepository._(this._preferences, this._progress);
 
@@ -162,59 +124,229 @@ final class ProgressRepository {
 
   Future<void> recordAnswer({
     required String gameId,
-    required String exerciseId,
-    required int difficulty,
+    required String notionId,
     required bool isCorrect,
   }) async {
+    final today = _todayDay();
     _progress = _progress.recordAnswer(
       gameId: gameId,
-      exerciseId: exerciseId,
-      difficulty: difficulty,
+      notionId: notionId,
       isCorrect: isCorrect,
-      timestamp: DateTime.now().millisecondsSinceEpoch,
+      today: today,
     );
+    await _preferences?.setString(_storageKey, _progress.toJson());
+  }
+
+  Future<void> recordAnswers({
+    required String gameId,
+    required Map<String, bool> notionResults,
+  }) async {
+    final today = _todayDay();
+    var updated = _progress;
+    for (final entry in notionResults.entries) {
+      updated = updated.recordAnswer(
+        gameId: gameId,
+        notionId: entry.key,
+        isCorrect: entry.value,
+        today: today,
+      );
+    }
+    _progress = updated;
     await _preferences?.setString(_storageKey, _progress.toJson());
   }
 }
 
-final class AdaptiveRound {
-  AdaptiveRound._();
+final class RoundSelector {
+  RoundSelector._();
 
   static List<T> select<T>({
-    required Iterable<T> exercises,
+    required List<T> exercises,
     required int count,
     required GameProgress progress,
-    required String Function(T exercise) idOf,
-    required int Function(T exercise) difficultyOf,
+    required String Function(T exercise) notionIdOf,
     Random? random,
+    int? today,
   }) {
-    final all = exercises.toList();
-    if (count <= 0 || all.isEmpty) return [];
+    if (count <= 0 || exercises.isEmpty) return [];
 
     final generator = random ?? Random();
-    final unseen = all
-        .where((exercise) => !progress.exercises.containsKey(idOf(exercise)))
-        .toList();
-    final candidates = unseen.isNotEmpty ? unseen : all;
-    candidates.shuffle(generator);
-    final target = progress.targetDifficulty;
-    candidates.sort((left, right) {
-      final leftProgress = progress.exercises[idOf(left)];
-      final rightProgress = progress.exercises[idOf(right)];
-      final leftReview = leftProgress?.needsReview ?? false;
-      final rightReview = rightProgress?.needsReview ?? false;
-      if (leftReview != rightReview) return leftReview ? -1 : 1;
+    final effectiveToday = today ?? _todayDay();
+    final selected = <T>[];
+    final usedNotions = <String>{};
 
-      final difficultyComparison = (difficultyOf(left) - target)
-          .abs()
-          .compareTo((difficultyOf(right) - target).abs());
-      if (difficultyComparison != 0) return difficultyComparison;
-      return (leftProgress?.lastAnsweredAt ?? 0).compareTo(
-        rightProgress?.lastAnsweredAt ?? 0,
-      );
-    });
-    return candidates
-        .take(min(count, candidates.length))
-        .toList(growable: false);
+    final shuffled = List<T>.from(exercises)..shuffle(generator);
+
+    final overdue = <T>[];
+    final eligible = <T>[];
+    final newItems = <T>[];
+    final ineligible = <T>[];
+
+    for (final exercise in shuffled) {
+      final notionId = notionIdOf(exercise);
+      final item = progress.progressFor(notionId);
+      if (item.isOverdue(effectiveToday)) {
+        overdue.add(exercise);
+      } else if (item.state == LearningItemState.newItem) {
+        newItems.add(exercise);
+      } else if (item.isEligibleForReview(effectiveToday)) {
+        eligible.add(exercise);
+      } else {
+        ineligible.add(exercise);
+      }
+    }
+
+    _addFromBucket(overdue, selected, usedNotions, notionIdOf, count, generator);
+    _addFromBucket(
+      eligible,
+      selected,
+      usedNotions,
+      notionIdOf,
+      count,
+      generator,
+    );
+    _addFromBucket(
+      newItems,
+      selected,
+      usedNotions,
+      notionIdOf,
+      count,
+      generator,
+    );
+    _addFromBucket(
+      ineligible,
+      selected,
+      usedNotions,
+      notionIdOf,
+      count,
+      generator,
+    );
+
+    if (selected.isEmpty && exercises.isNotEmpty) {
+      return [exercises.first];
+    }
+
+    return selected.toList(growable: false);
+  }
+
+  static List<T> selectMultiNotion<T>({
+    required List<T> exercises,
+    required int count,
+    required GameProgress progress,
+    required List<String> Function(T exercise) notionIdsOf,
+    Random? random,
+    int? today,
+  }) {
+    if (count <= 0 || exercises.isEmpty) return [];
+
+    final generator = random ?? Random();
+    final effectiveToday = today ?? _todayDay();
+    final selected = <T>[];
+    final usedNotions = <String>{};
+
+    final shuffled = List<T>.from(exercises)..shuffle(generator);
+
+    final overdue = <T>[];
+    final eligible = <T>[];
+    final newItems = <T>[];
+    final ineligible = <T>[];
+
+    for (final exercise in shuffled) {
+      final notions = notionIdsOf(exercise);
+      final items = notions.map((n) => progress.progressFor(n)).toList();
+
+      final anyOverdue =
+          items.any((item) => item.isOverdue(effectiveToday));
+      final anyNew =
+          items.any((item) => item.state == LearningItemState.newItem);
+      final anyEligible =
+          items.any((item) => item.isEligibleForReview(effectiveToday));
+
+      if (anyOverdue) {
+        overdue.add(exercise);
+      } else if (anyNew) {
+        newItems.add(exercise);
+      } else if (anyEligible) {
+        eligible.add(exercise);
+      } else {
+        ineligible.add(exercise);
+      }
+    }
+
+    _addFromBucketMulti(
+      overdue,
+      selected,
+      usedNotions,
+      notionIdsOf,
+      count,
+      generator,
+    );
+    _addFromBucketMulti(
+      eligible,
+      selected,
+      usedNotions,
+      notionIdsOf,
+      count,
+      generator,
+    );
+    _addFromBucketMulti(
+      newItems,
+      selected,
+      usedNotions,
+      notionIdsOf,
+      count,
+      generator,
+    );
+    _addFromBucketMulti(
+      ineligible,
+      selected,
+      usedNotions,
+      notionIdsOf,
+      count,
+      generator,
+    );
+
+    if (selected.isEmpty && exercises.isNotEmpty) {
+      return [exercises.first];
+    }
+
+    return selected.toList(growable: false);
+  }
+
+  static void _addFromBucket<T>(
+    List<T> bucket,
+    List<T> selected,
+    Set<String> usedNotions,
+    String Function(T) notionIdOf,
+    int targetCount,
+    Random generator,
+  ) {
+    if (selected.length >= targetCount) return;
+    final shuffled = List<T>.from(bucket)..shuffle(generator);
+    for (final exercise in shuffled) {
+      if (selected.length >= targetCount) break;
+      final notionId = notionIdOf(exercise);
+      if (usedNotions.contains(notionId)) continue;
+      selected.add(exercise);
+      usedNotions.add(notionId);
+    }
+  }
+
+  static void _addFromBucketMulti<T>(
+    List<T> bucket,
+    List<T> selected,
+    Set<String> usedNotions,
+    List<String> Function(T) notionIdsOf,
+    int targetCount,
+    Random generator,
+  ) {
+    if (selected.length >= targetCount) return;
+    final shuffled = List<T>.from(bucket)..shuffle(generator);
+    for (final exercise in shuffled) {
+      if (selected.length >= targetCount) break;
+      final notions = notionIdsOf(exercise);
+      if (notions.any((n) => usedNotions.contains(n))) continue;
+      selected.add(exercise);
+      usedNotions.addAll(notions);
+    }
   }
 }

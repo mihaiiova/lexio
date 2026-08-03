@@ -29,6 +29,8 @@ final class IdiomExercise {
     required this.difficulty,
   });
 
+  String get notionId => expression;
+
   factory IdiomExercise.fromJson(Map<String, dynamic> json) {
     return IdiomExercise(
       id: json['id'] as String,
@@ -89,12 +91,11 @@ final class IdiomsContent {
   }
 
   static List<IdiomExercise> adaptiveRound(int count, GameProgress progress) {
-    return AdaptiveRound.select(
+    return RoundSelector.select(
       exercises: _cached ?? const [],
       count: count,
       progress: progress,
-      idOf: (exercise) => exercise.id,
-      difficultyOf: (exercise) => exercise.difficulty,
+      notionIdOf: (exercise) => exercise.notionId,
     );
   }
 }
