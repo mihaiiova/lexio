@@ -6,13 +6,6 @@ sealed class LexioTextStyles {
   static const _defaultLetterSpacing = -0.2;
 
   // Display
-  static TextStyle get displayHero => const TextStyle(
-    fontSize: 56,
-    fontWeight: FontWeight.w800,
-    height: 1,
-    letterSpacing: -1.5,
-  );
-
   static TextStyle get displayLarge => const TextStyle(
     fontSize: 40,
     fontWeight: FontWeight.w700,

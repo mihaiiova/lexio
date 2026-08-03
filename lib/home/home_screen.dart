@@ -18,60 +18,50 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: LexioColors.background,
       body: SafeArea(
-        bottom: false,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(
-            LexioSpacing.screenHorizontal,
-            LexioSpacing.xxl,
-            LexioSpacing.screenHorizontal,
-            LexioSpacing.huge,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const _Header(),
-              const SizedBox(height: LexioSpacing.huge),
-              _SectionLabel(
-                label: 'Provocarea zilei',
-                accentColor: LexioColors.primary,
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: LexioSpacing.screenHorizontal,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _GameEntry(
+                      number: '01',
+                      title: 'Corect sau greșit?',
+                      details: 'Scriere  ·  15 întrebări',
+                      accentColor: LexioColors.primary,
+                      onTap: () => _open(context, const GrammarScreen()),
+                    ),
+                    _GameEntry(
+                      number: '02',
+                      title: 'Ce înseamnă?',
+                      details: 'Vocabular  ·  10 întrebări',
+                      accentColor: LexioColors.secondary,
+                      onTap: () => _open(context, const VocabularyScreen()),
+                    ),
+                    _GameEntry(
+                      number: '03',
+                      title: 'Vorba vine',
+                      details: 'Idiomuri  ·  10 expresii',
+                      accentColor: LexioColors.teal,
+                      onTap: () => _open(context, const IdiomsScreen()),
+                    ),
+                    _GameEntry(
+                      number: '04',
+                      title: 'Găsește greșeala',
+                      details: 'Contra cronometru  ·  60 de secunde',
+                      accentColor: LexioColors.accent,
+                      onTap: () => _open(context, const SpotScreen()),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: LexioSpacing.lg),
-              _GameEntry(
-                number: '01',
-                title: 'Corect sau greșit?',
-                details: 'Scriere  ·  15 întrebări',
-                accentColor: LexioColors.primary,
-                isFeatured: true,
-                onTap: () => _open(context, const GrammarScreen()),
-              ),
-              const SizedBox(height: LexioSpacing.huge),
-              const _SectionLabel(label: 'Alege un joc'),
-              const SizedBox(height: LexioSpacing.lg),
-              _GameEntry(
-                number: '02',
-                title: 'Ce înseamnă?',
-                details: 'Vocabular  ·  10 întrebări',
-                accentColor: LexioColors.secondary,
-                onTap: () => _open(context, const VocabularyScreen()),
-              ),
-              _GameEntry(
-                number: '03',
-                title: 'Vorba vine',
-                details: 'Idiomuri  ·  10 expresii',
-                accentColor: LexioColors.teal,
-                onTap: () => _open(context, const IdiomsScreen()),
-              ),
-              _GameEntry(
-                number: '04',
-                title: 'Găsește greșeala',
-                details: 'Contra cronometru  ·  60 de secunde',
-                accentColor: LexioColors.accent,
-                onTap: () => _open(context, const SpotScreen()),
-              ),
-              const SizedBox(height: LexioSpacing.huge),
-              const _ComingSoon(),
-            ],
+            ),
           ),
         ),
       ),
@@ -102,61 +92,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Lexio',
-          style: LexioTextStyles.displayHero.copyWith(
-            color: LexioColors.textPrimary,
-          ),
-        ),
-        const SizedBox(height: LexioSpacing.sm),
-        Text(
-          'Jocuri cu cuvinte în limba română',
-          style: LexioTextStyles.bodyLarge.copyWith(
-            color: LexioColors.textSecondary,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.label, this.accentColor});
-
-  final String label;
-  final Color? accentColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (accentColor != null) ...[
-          Container(
-            width: LexioSpacing.xl,
-            height: LexioSpacing.xxs,
-            color: accentColor,
-          ),
-          const SizedBox(width: LexioSpacing.md),
-        ],
-        Text(
-          label,
-          style: LexioTextStyles.labelMedium.copyWith(
-            color: LexioColors.textTertiary,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _GameEntry extends StatelessWidget {
   const _GameEntry({
     required this.number,
@@ -164,7 +99,6 @@ class _GameEntry extends StatelessWidget {
     required this.details,
     required this.accentColor,
     required this.onTap,
-    this.isFeatured = false,
   });
 
   final String number;
@@ -172,7 +106,6 @@ class _GameEntry extends StatelessWidget {
   final String details;
   final Color accentColor;
   final VoidCallback onTap;
-  final bool isFeatured;
 
   @override
   Widget build(BuildContext context) {
@@ -182,9 +115,7 @@ class _GameEntry extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(LexioRadius.md),
         child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: isFeatured ? LexioSpacing.xxl : LexioSpacing.xl,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: LexioSpacing.xl),
           decoration: const BoxDecoration(
             border: Border(bottom: BorderSide(color: LexioColors.divider)),
           ),
@@ -208,11 +139,10 @@ class _GameEntry extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style:
-                          (isFeatured
-                                  ? LexioTextStyles.displayMedium
-                                  : LexioTextStyles.headingLarge)
-                              .copyWith(color: LexioColors.textPrimary),
+                      style: LexioTextStyles.bodyLarge.copyWith(
+                        color: LexioColors.textPrimary,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const SizedBox(height: LexioSpacing.sm),
                     Text(
@@ -242,34 +172,6 @@ class _GameEntry extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _ComingSoon extends StatelessWidget {
-  const _ComingSoon();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const _SectionLabel(label: 'În pregătire'),
-        const SizedBox(height: LexioSpacing.lg),
-        Text(
-          'Ortografie  /  Logică',
-          style: LexioTextStyles.headingLarge.copyWith(
-            color: LexioColors.textTertiary,
-          ),
-        ),
-        const SizedBox(height: LexioSpacing.sm),
-        Text(
-          'Două jocuri noi sosesc în curând.',
-          style: LexioTextStyles.bodySmall.copyWith(
-            color: LexioColors.textTertiary,
-          ),
-        ),
-      ],
     );
   }
 }
