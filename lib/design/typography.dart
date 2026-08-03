@@ -23,7 +23,7 @@ sealed class LexioTextStyles {
   // Sentence (game content only)
   static TextStyle get sentence => const TextStyle(
     fontSize: 34,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
     height: 1.35,
     letterSpacing: _defaultLetterSpacing,
   );

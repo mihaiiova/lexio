@@ -202,8 +202,6 @@ class _GrammarScreenState extends State<GrammarScreen> {
       top: false,
       child: Column(
         children: [
-          _buildTitle(),
-          const SizedBox(height: LexioSpacing.xl),
           Expanded(
             child: _showingExplanation
                 ? _buildResultView(state)
@@ -214,24 +212,6 @@ class _GrammarScreenState extends State<GrammarScreen> {
           else
             _buildBottomButtons(state),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTitle() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: LexioSpacing.screenHorizontal,
-        top: LexioSpacing.md,
-      ),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          'Corect sau gre\u0219it?',
-          style: LexioTextStyles.headingSmall.copyWith(
-            color: LexioColors.textSecondary,
-          ),
-        ),
       ),
     );
   }

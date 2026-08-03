@@ -29,37 +29,35 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: LexioSpacing.sectionGap),
               _buildHeader(),
               const Spacer(),
+              const Divider(color: LexioColors.divider),
               _GameEntry(
                 number: '01',
                 title: 'Corect sau greșit?',
                 accentColor: LexioColors.primary,
-                backgroundColor: LexioColors.blueMuted,
                 onTap: () => _open(context, const GrammarScreen()),
               ),
-              const SizedBox(height: LexioSpacing.screenHorizontal),
+              const Divider(color: LexioColors.divider),
               _GameEntry(
                 number: '02',
                 title: 'Ce înseamnă?',
                 accentColor: LexioColors.secondary,
-                backgroundColor: LexioColors.coralMuted,
                 onTap: () => _open(context, const VocabularyScreen()),
               ),
-              const SizedBox(height: LexioSpacing.screenHorizontal),
+              const Divider(color: LexioColors.divider),
               _GameEntry(
                 number: '03',
                 title: 'Vorba vine',
                 accentColor: LexioColors.teal,
-                backgroundColor: LexioColors.tealMuted,
                 onTap: () => _open(context, const IdiomsScreen()),
               ),
-              const SizedBox(height: LexioSpacing.screenHorizontal),
+              const Divider(color: LexioColors.divider),
               _GameEntry(
                 number: '04',
                 title: 'Găsește greșeala',
                 accentColor: LexioColors.accent,
-                backgroundColor: LexioColors.amberMuted,
                 onTap: () => _open(context, const SpotScreen()),
               ),
+              const Divider(color: LexioColors.divider),
               const Spacer(),
             ],
           ),
@@ -69,23 +67,24 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
         Text(
           'Slove',
           style: GoogleFonts.noticiaText(
-            textStyle: LexioTextStyles.displayLarge.copyWith(
+            textStyle: LexioTextStyles.bodyLarge.copyWith(
               color: LexioColors.textPrimary,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
-        const SizedBox(height: LexioSpacing.xs),
+        const Spacer(),
         Text(
           'Joacă-te cu limba română.',
-          style: LexioTextStyles.bodyLarge.copyWith(
-            color: LexioColors.textSecondary,
-            fontStyle: FontStyle.italic,
+          style: GoogleFonts.noticiaText(
+            textStyle: LexioTextStyles.bodyMedium.copyWith(
+              color: LexioColors.textSecondary,
+            ),
           ),
         ),
       ],
@@ -121,14 +120,12 @@ class _GameEntry extends StatelessWidget {
     required this.number,
     required this.title,
     required this.accentColor,
-    required this.backgroundColor,
     required this.onTap,
   });
 
   final String number;
   final String title;
   final Color accentColor;
-  final Color backgroundColor;
   final VoidCallback onTap;
 
   @override
@@ -137,58 +134,49 @@ class _GameEntry extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(LexioRadius.md),
-        child: Container(
+        child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: LexioSpacing.md,
-            vertical: LexioSpacing.xl,
+            vertical: LexioSpacing.lg,
           ),
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(LexioRadius.md),
-          ),
-          child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: LexioSpacing.xxl,
-                  child: Text(
-                    number,
-                    style: LexioTextStyles.labelSmall.copyWith(
-                      color: accentColor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                number,
+                style: LexioTextStyles.labelSmall.copyWith(
+                  color: accentColor,
+                  fontWeight: FontWeight.w700,
                 ),
-                const SizedBox(width: LexioSpacing.sm),
-                Expanded(
-                  child: Text(
-                    title,
+              ),
+              const SizedBox(height: LexioSpacing.xs),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text(
+                      title,
                     style: GoogleFonts.noticiaText(
-                      textStyle: LexioTextStyles.bodyLarge.copyWith(
+                      textStyle: LexioTextStyles.headingLarge.copyWith(
                         color: LexioColors.textPrimary,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 39,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
+                    ),
                   ),
-                ),
-                const SizedBox(width: LexioSpacing.md),
-                Container(
-                  width: LexioSpacing.xxxl,
-                  height: LexioSpacing.xxxl,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: LexioColors.divider),
-                    borderRadius: BorderRadius.circular(LexioRadius.full),
-                  ),
-                  child: const Icon(
+                  const SizedBox(width: LexioSpacing.md),
+                  const Icon(
                     Icons.arrow_forward,
                     color: LexioColors.textPrimary,
                     size: LexioSpacing.xl,
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }
