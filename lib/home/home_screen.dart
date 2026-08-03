@@ -19,50 +19,49 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: LexioColors.background,
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) => SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: LexioSpacing.screenHorizontal,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: LexioSpacing.sectionGap),
-                    _buildHeader(),
-                    SizedBox(height: LexioSpacing.sectionGap),
-                    _GameEntry(
-                      number: '01',
-                      title: 'Corect sau greșit?',
-                      accentColor: LexioColors.primary,
-                      onTap: () => _open(context, const GrammarScreen()),
-                    ),
-                    _GameEntry(
-                      number: '02',
-                      title: 'Ce înseamnă?',
-                      accentColor: LexioColors.secondary,
-                      onTap: () => _open(context, const VocabularyScreen()),
-                    ),
-                    _GameEntry(
-                      number: '03',
-                      title: 'Vorba vine',
-                      accentColor: LexioColors.teal,
-                      onTap: () => _open(context, const IdiomsScreen()),
-                    ),
-                    _GameEntry(
-                      number: '04',
-                      title: 'Găsește greșeala',
-                      accentColor: LexioColors.accent,
-                      onTap: () => _open(context, const SpotScreen()),
-                    ),
-                  ],
-                ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: LexioSpacing.screenHorizontal,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: LexioSpacing.sectionGap),
+              _buildHeader(),
+              const Spacer(),
+              _GameEntry(
+                number: '01',
+                title: 'Corect sau greșit?',
+                accentColor: LexioColors.primary,
+                backgroundColor: LexioColors.blueMuted,
+                onTap: () => _open(context, const GrammarScreen()),
               ),
-            ),
+              const SizedBox(height: LexioSpacing.screenHorizontal),
+              _GameEntry(
+                number: '02',
+                title: 'Ce înseamnă?',
+                accentColor: LexioColors.secondary,
+                backgroundColor: LexioColors.coralMuted,
+                onTap: () => _open(context, const VocabularyScreen()),
+              ),
+              const SizedBox(height: LexioSpacing.screenHorizontal),
+              _GameEntry(
+                number: '03',
+                title: 'Vorba vine',
+                accentColor: LexioColors.teal,
+                backgroundColor: LexioColors.tealMuted,
+                onTap: () => _open(context, const IdiomsScreen()),
+              ),
+              const SizedBox(height: LexioSpacing.screenHorizontal),
+              _GameEntry(
+                number: '04',
+                title: 'Găsește greșeala',
+                accentColor: LexioColors.accent,
+                backgroundColor: LexioColors.amberMuted,
+                onTap: () => _open(context, const SpotScreen()),
+              ),
+              const Spacer(),
+            ],
           ),
         ),
       ),
@@ -122,29 +121,32 @@ class _GameEntry extends StatelessWidget {
     required this.number,
     required this.title,
     required this.accentColor,
+    required this.backgroundColor,
     required this.onTap,
   });
 
   final String number;
   final String title;
   final Color accentColor;
+  final Color backgroundColor;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: LexioColors.background,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(LexioRadius.md),
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: LexioSpacing.md,
-            vertical: LexioSpacing.sm,
+            vertical: LexioSpacing.xl,
           ),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: LexioSpacing.xl),
-            child: Row(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(LexioRadius.md),
+          ),
+          child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
@@ -187,7 +189,6 @@ class _GameEntry extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
