@@ -365,18 +365,20 @@ class _GrammarScreenState extends State<GrammarScreen> {
         onTap: _next,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: LexioSpacing.lg),
+          padding: const EdgeInsets.symmetric(vertical: LexioSpacing.md),
           decoration: BoxDecoration(
             color: LexioColors.primary,
-            borderRadius: BorderRadius.circular(LexioRadius.full),
-            border: const Border(
-              bottom: BorderSide(color: Colors.black26, width: 4),
+            borderRadius: BorderRadius.circular(LexioRadius.lg),
+            border: Border.all(
+              color: LexioColors.primary,
+              width: LexioSpacing.xxs,
             ),
           ),
           child: Text(
             'Urm\u0103toarea',
-            style: LexioTextStyles.labelLarge.copyWith(
+            style: LexioTextStyles.bodyMedium.copyWith(
               color: LexioColors.textOnPrimary,
+              fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
           ),

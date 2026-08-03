@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../design/animations.dart';
 import '../../../design/colors.dart';
 import '../../../design/radius.dart';
 import '../../../design/spacing.dart';
@@ -29,29 +30,27 @@ class AnswerButton extends StatelessWidget {
     return GestureDetector(
       onTap: isDisabled ? null : onTap,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: LexioDurations.instant,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(
-          vertical: LexioSpacing.lg,
-          horizontal: LexioSpacing.xl,
+          horizontal: LexioSpacing.lg,
+          vertical: LexioSpacing.md,
         ),
         decoration: BoxDecoration(
           color: isDisabled ? LexioColors.surfaceSecondary : bgColor,
-          borderRadius: BorderRadius.circular(LexioRadius.full),
-          border: Border(
-            bottom: BorderSide(
-              color: isDisabled ? LexioColors.divider : borderColor,
-              width: 4,
-            ),
+          borderRadius: BorderRadius.circular(LexioRadius.lg),
+          border: Border.all(
+            color: isDisabled ? LexioColors.divider : borderColor,
+            width: LexioSpacing.xxs,
           ),
         ),
-        child: Center(
-          child: Text(
-            label,
-            style: LexioTextStyles.labelLarge.copyWith(
-              color: isDisabled ? LexioColors.textTertiary : textColor,
-            ),
+        child: Text(
+          label,
+          style: LexioTextStyles.bodyMedium.copyWith(
+            color: isDisabled ? LexioColors.textTertiary : textColor,
+            fontWeight: FontWeight.w500,
           ),
+          textAlign: TextAlign.center,
         ),
       ),
     );
