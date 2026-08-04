@@ -67,7 +67,8 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Slove',
@@ -78,11 +79,10 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        const Spacer(),
         Text(
           'Joacă-te cu limba română.',
           style: GoogleFonts.noticiaText(
-            textStyle: LexioTextStyles.bodyMedium.copyWith(
+            textStyle: LexioTextStyles.labelMedium.copyWith(
               color: LexioColors.textSecondary,
             ),
           ),
@@ -166,9 +166,9 @@ class _GameEntry extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: LexioSpacing.md),
-                  const Icon(
+                  Icon(
                     Icons.arrow_forward,
-                    color: LexioColors.textPrimary,
+                    color: accentColor,
                     size: LexioSpacing.xl,
                   ),
                 ],
