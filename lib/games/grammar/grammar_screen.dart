@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../design/colors.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
@@ -448,8 +447,19 @@ class _GrammarScreenState extends State<GrammarScreen> {
   }
 
   Widget _buildWrongItem(GrammarExercise exercise) {
-    final doomUrl = exercise.doomUrl;
-    final doomDef = exercise.doomDefinition;
+    if (exercise.isCorrect) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: LexioSpacing.xl),
+        child: Text(
+          exercise.sentence,
+          style: LexioTextStyles.bodyLarge.copyWith(
+            color: LexioColors.success,
+            height: 1.5,
+          ),
+        ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: LexioSpacing.xl),
       child: Column(
@@ -480,72 +490,6 @@ class _GrammarScreenState extends State<GrammarScreen> {
               height: 1.4,
             ),
           ),
-          if (doomDef != null) ...[
-            const SizedBox(height: LexioSpacing.md),
-            GestureDetector(
-              onTap: doomUrl != null
-                  ? () => launchUrl(
-                      Uri.parse(doomUrl),
-                      mode: LaunchMode.externalApplication,
-                    )
-                  : null,
-              child: Container(
-                padding: const EdgeInsets.all(LexioSpacing.md),
-                decoration: BoxDecoration(
-                  color: LexioColors.blueMuted,
-                  borderRadius: BorderRadius.circular(LexioSpacing.sm),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 2),
-                      child: Icon(
-                        Icons.menu_book,
-                        size: 14,
-                        color: LexioColors.primary,
-                      ),
-                    ),
-                    const SizedBox(width: LexioSpacing.sm),
-                    Expanded(
-                      child: Text(
-                        doomDef,
-                        style: LexioTextStyles.bodySmall.copyWith(
-                          color: LexioColors.textSecondary,
-                          height: 1.5,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ] else if (doomUrl != null) ...[
-            const SizedBox(height: LexioSpacing.md),
-            GestureDetector(
-              onTap: () => launchUrl(
-                Uri.parse(doomUrl),
-                mode: LaunchMode.externalApplication,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.menu_book,
-                    size: 16,
-                    color: LexioColors.primary,
-                  ),
-                  const SizedBox(width: LexioSpacing.xs),
-                  Text(
-                    'Vezi în DOOM',
-                    style: LexioTextStyles.labelSmall.copyWith(
-                      color: LexioColors.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ],
       ),
     );
