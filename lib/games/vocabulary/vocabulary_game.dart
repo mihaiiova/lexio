@@ -5,7 +5,7 @@ final class VocabularyGameState {
   final int currentIndex;
   final int correctCount;
   final int totalAnswered;
-  final int? selectedOptionIndex;
+  final List<int?> selectedOptionIndices;
   final List<bool?> results;
   final bool isFinished;
 
@@ -14,12 +14,16 @@ final class VocabularyGameState {
     this.currentIndex = 0,
     this.correctCount = 0,
     this.totalAnswered = 0,
-    this.selectedOptionIndex,
+    List<int?>? selectedOptionIndices,
     List<bool?>? results,
     this.isFinished = false,
-  }) : results = results ?? List<bool?>.filled(exercises.length, null);
+  }) : selectedOptionIndices =
+           selectedOptionIndices ?? List<int?>.filled(exercises.length, null),
+       results = results ?? List<bool?>.filled(exercises.length, null);
 
   VocabularyExercise get currentExercise => exercises[currentIndex];
+
+  int? get selectedOptionIndex => selectedOptionIndices[currentIndex];
 
   bool get hasAnswered => selectedOptionIndex != null;
 
@@ -39,14 +43,16 @@ final class VocabularyGameState {
 
     final isCorrect = optionIndex == currentExercise.correctOptionIndex;
     final updatedResults = List<bool?>.from(results);
+    final updatedSelections = List<int?>.from(selectedOptionIndices);
     updatedResults[currentIndex] = isCorrect;
+    updatedSelections[currentIndex] = optionIndex;
 
     return VocabularyGameState(
       exercises: exercises,
       currentIndex: currentIndex,
       correctCount: isCorrect ? correctCount + 1 : correctCount,
       totalAnswered: totalAnswered + 1,
-      selectedOptionIndex: optionIndex,
+      selectedOptionIndices: updatedSelections,
       results: updatedResults,
     );
   }
@@ -61,6 +67,7 @@ final class VocabularyGameState {
         currentIndex: currentIndex,
         correctCount: correctCount,
         totalAnswered: totalAnswered,
+        selectedOptionIndices: selectedOptionIndices,
         results: results,
         isFinished: true,
       );
@@ -71,6 +78,7 @@ final class VocabularyGameState {
       currentIndex: nextIndex,
       correctCount: correctCount,
       totalAnswered: totalAnswered,
+      selectedOptionIndices: selectedOptionIndices,
       results: results,
     );
   }

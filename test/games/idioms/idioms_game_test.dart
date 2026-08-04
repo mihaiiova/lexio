@@ -18,6 +18,7 @@ void main() {
       expect(state.currentIndex, 0);
       expect(state.correctCount, 0);
       expect(state.totalAnswered, 0);
+      expect(state.selectedOptionIndices, [null, null]);
       expect(state.hasAnswered, isFalse);
       expect(state.isFinished, isFalse);
       expect(state.progress, 0);
@@ -30,6 +31,7 @@ void main() {
       expect(state.correctCount, 1);
       expect(state.totalAnswered, 1);
       expect(state.results, [true, null]);
+      expect(state.selectedOptionIndices, [1, null]);
     });
 
     test('records an incorrect answer', () {
@@ -39,6 +41,7 @@ void main() {
       expect(state.correctCount, 0);
       expect(state.totalAnswered, 1);
       expect(state.results, [false, null]);
+      expect(state.selectedOptionIndices, [0, null]);
     });
 
     test('ignores a second answer to the same exercise', () {
@@ -62,6 +65,7 @@ void main() {
       expect(state.correctCount, 2);
       expect(state.totalAnswered, 2);
       expect(state.progress, 1);
+      expect(state.selectedOptionIndices, [1, 2]);
     });
   });
 }

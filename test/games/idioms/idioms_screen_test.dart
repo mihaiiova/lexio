@@ -105,10 +105,17 @@ void main() {
     await tester.tap(find.text('a ajuta'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Runda terminată'), findsOneWidget);
-    expect(find.text('1 din 2 corecte — 50%'), findsOneWidget);
-    expect(find.text('Expresii de repetat (1)'), findsOneWidget);
-    expect(find.text('a pune umărul'), findsOneWidget);
+    expect(find.text('RUNDĂ ÎNCHEIATĂ'), findsOneWidget);
+    expect(find.text('1 din 2'), findsOneWidget);
+    expect(find.text('DE REVĂZUT'), findsOneWidget);
+    expect(find.text('a pleca'), findsOneWidget);
+    expect(find.text('Corect: a ajuta', findRichText: true), findsOneWidget);
+    expect(
+      find.text('„a pune umărul” înseamnă a contribui prin ajutor.'),
+      findsOneWidget,
+    );
+    expect(find.text('Joacă din nou'), findsOneWidget);
+    expect(find.text('Înapoi la jocuri'), findsOneWidget);
   });
 }
 

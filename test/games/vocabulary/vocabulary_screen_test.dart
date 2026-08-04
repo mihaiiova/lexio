@@ -101,10 +101,17 @@ void main() {
     await tester.tap(find.text('dificil și obositor'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Runda terminată'), findsOneWidget);
-    expect(find.text('1 din 2 corecte — 50%'), findsOneWidget);
-    expect(find.text('Cuvinte de repetat (1)'), findsOneWidget);
-    expect(find.text('anevoios'), findsOneWidget);
+    expect(find.text('RUNDĂ ÎNCHEIATĂ'), findsOneWidget);
+    expect(find.text('1 din 2'), findsOneWidget);
+    expect(find.text('DE REVĂZUT'), findsOneWidget);
+    expect(find.text('foarte simplu'), findsOneWidget);
+    expect(
+      find.text('Corect: dificil și obositor', findRichText: true),
+      findsOneWidget,
+    );
+    expect(find.text(first.explanation), findsOneWidget);
+    expect(find.text('Joacă din nou'), findsOneWidget);
+    expect(find.text('Înapoi la jocuri'), findsOneWidget);
   });
 }
 

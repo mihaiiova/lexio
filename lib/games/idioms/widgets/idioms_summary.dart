@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../design/colors.dart';
-import '../../../design/components/lexio_button.dart';
-import '../../../design/spacing.dart';
-import '../../../design/typography.dart';
-import '../idioms_content.dart';
+import '../../../design/components/lexio_game_summary.dart';
 import '../idioms_game.dart';
 
 class IdiomsSummary extends StatelessWidget {
@@ -12,99 +9,41 @@ class IdiomsSummary extends StatelessWidget {
     super.key,
     required this.state,
     required this.onPlayAgain,
+    required this.onBack,
   });
 
   final IdiomsGameState state;
   final VoidCallback onPlayAgain;
+  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context) {
-    final missedExercises = <IdiomExercise>[
-      for (var index = 0; index < state.exercises.length; index++)
-        if (state.results[index] == false) state.exercises[index],
-    ];
-    final percentage = state.exercises.isEmpty
-        ? 0
-        : (state.correctCount / state.exercises.length * 100).round();
+    final reviewItems = <LexioReviewItem>[];
+    for (var index = 0; index < state.exercises.length; index++) {
+      if (state.results[index] != false) continue;
 
-    return SafeArea(
-      top: false,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: LexioSpacing.screenHorizontal,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: LexioSpacing.xl),
-            Text(
-              'Runda terminată',
-              style: LexioTextStyles.headingLarge.copyWith(
-                color: LexioColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: LexioSpacing.xs),
-            Text(
-              '${state.correctCount} din ${state.exercises.length} corecte — $percentage%',
-              style: LexioTextStyles.bodyLarge.copyWith(
-                color: missedExercises.isEmpty
-                    ? LexioColors.success
-                    : LexioColors.primary,
-              ),
-            ),
-            const SizedBox(height: LexioSpacing.xxxl),
-            if (missedExercises.isEmpty)
-              Text(
-                'Excelent! Ai recunoscut toate expresiile.',
-                style: LexioTextStyles.bodyLarge.copyWith(
-                  color: LexioColors.success,
-                ),
-              )
-            else ...[
-              Text(
-                'Expresii de repetat (${missedExercises.length})',
-                style: LexioTextStyles.labelSmall.copyWith(
-                  color: LexioColors.textTertiary,
-                ),
-              ),
-              const SizedBox(height: LexioSpacing.md),
-              ...missedExercises.map(_buildMissedExercise),
-            ],
-            const SizedBox(height: LexioSpacing.xxl),
-            LexioButton(
-              label: 'Joacă din nou',
-              onPressed: onPlayAgain,
-              icon: Icons.replay,
-              isExpanded: true,
-            ),
-            const SizedBox(height: LexioSpacing.xxxl),
-          ],
-        ),
-      ),
-    );
-  }
+      final exercise = state.exercises[index];
+      final selectedIndex = state.selectedOptionIndices[index];
+      if (selectedIndex == null) continue;
 
-  Widget _buildMissedExercise(IdiomExercise exercise) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: LexioSpacing.xl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            exercise.expression,
-            style: LexioTextStyles.headingSmall.copyWith(
-              color: LexioColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: LexioSpacing.xs),
-          Text(
-            exercise.meaning,
-            style: LexioTextStyles.bodyMedium.copyWith(
-              color: LexioColors.textSecondary,
-            ),
-          ),
-        ],
-      ),
+      reviewItems.add(
+        LexioReviewItem(
+          wrongAnswer: exercise.options[selectedIndex],
+          correctAnswer: exercise.options[exercise.correctOptionIndex],
+          explanation: '„${exercise.expression}” înseamnă ${exercise.meaning}.',
+        ),
+      );
+    }
+
+    return LexioGameSummary(
+      gameNumber: '03',
+      gameTitle: 'Vorba vine',
+      accentColor: LexioColors.teal,
+      correctCount: state.correctCount,
+      totalCount: state.exercises.length,
+      reviewItems: reviewItems,
+      onPlayAgain: onPlayAgain,
+      onBack: onBack,
     );
   }
 }

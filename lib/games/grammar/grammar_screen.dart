@@ -5,13 +5,13 @@ import '../../design/spacing.dart';
 import '../../design/typography.dart';
 import '../../design/radius.dart';
 import '../../design/animations.dart';
-import '../../design/components/lexio_button.dart';
+import '../../design/components/lexio_answer_button.dart';
 import '../../design/components/lexio_feedback.dart';
 import '../../progress/user_progress.dart';
 import 'grammar_content.dart';
 import 'grammar_game.dart';
+import 'widgets/grammar_summary.dart';
 import 'widgets/question_card.dart';
-import 'widgets/answer_button.dart';
 import 'widgets/result_overlay.dart';
 
 class GrammarScreen extends StatefulWidget {
@@ -174,11 +174,11 @@ class _GrammarScreenState extends State<GrammarScreen> {
     if (state.isFinished) {
       return Scaffold(
         backgroundColor: LexioColors.surface,
-        appBar: AppBar(
-          leading: const BackButton(),
-          backgroundColor: LexioColors.surface,
+        body: GrammarSummary(
+          state: state,
+          onPlayAgain: _playAgain,
+          onBack: () => Navigator.of(context).maybePop(),
         ),
-        body: _buildSummaryContent(state),
       );
     }
 
@@ -265,18 +265,22 @@ class _GrammarScreenState extends State<GrammarScreen> {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              AnswerButton(
+              LexioAnswerButton(
                 label: 'Corect',
-                isPositive: true,
-                onTap: () => _answer(true),
-                isDisabled: _hasAnswered,
+                tone: LexioAnswerButtonTone.positive,
+                onPressed: _hasAnswered ? null : () => _answer(true),
+                state: _hasAnswered
+                    ? LexioAnswerButtonState.disabled
+                    : LexioAnswerButtonState.idle,
               ),
               const SizedBox(height: LexioSpacing.md),
-              AnswerButton(
+              LexioAnswerButton(
                 label: 'Gre\u0219it',
-                isPositive: false,
-                onTap: () => _answer(false),
-                isDisabled: _hasAnswered,
+                tone: LexioAnswerButtonTone.negative,
+                onPressed: _hasAnswered ? null : () => _answer(false),
+                state: _hasAnswered
+                    ? LexioAnswerButtonState.disabled
+                    : LexioAnswerButtonState.idle,
               ),
             ],
           ),
@@ -382,115 +386,6 @@ class _GrammarScreenState extends State<GrammarScreen> {
             textAlign: TextAlign.center,
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildSummaryContent(GrammarGameState state) {
-    final wrongExercises = <GrammarExercise>[];
-    for (var i = 0; i < state.exercises.length; i++) {
-      if (state.results[i] == false) {
-        wrongExercises.add(state.exercises[i]);
-      }
-    }
-
-    final total = state.exercises.length;
-    final correct = state.correctCount;
-    final wrong = total - correct;
-    final percentage = total == 0 ? 0 : (correct / total * 100).round();
-
-    return SafeArea(
-      top: false,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: LexioSpacing.screenHorizontal,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: LexioSpacing.xl),
-            Text(
-              'Runda terminat\u0103',
-              style: LexioTextStyles.headingLarge.copyWith(
-                color: LexioColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: LexioSpacing.xs),
-            Text(
-              '$correct din $total corecte \u2014 $percentage%',
-              style: LexioTextStyles.bodyLarge.copyWith(
-                color: wrong > 0 ? LexioColors.error : LexioColors.success,
-              ),
-            ),
-            const SizedBox(height: LexioSpacing.xxxl),
-            if (wrongExercises.isNotEmpty) ...[
-              Text(
-                'Gre\u0219eli ($wrong)',
-                style: LexioTextStyles.labelSmall.copyWith(
-                  color: LexioColors.textTertiary,
-                ),
-              ),
-              const SizedBox(height: LexioSpacing.md),
-              ...wrongExercises.map(_buildWrongItem),
-              const SizedBox(height: LexioSpacing.xxl),
-            ],
-            LexioButton(
-              label: 'Joac\u0103 din nou',
-              onPressed: _playAgain,
-              icon: Icons.replay,
-            ),
-            const SizedBox(height: LexioSpacing.xxxl),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildWrongItem(GrammarExercise exercise) {
-    if (exercise.isCorrect) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: LexioSpacing.xl),
-        child: Text(
-          exercise.sentence,
-          style: LexioTextStyles.bodyLarge.copyWith(
-            color: LexioColors.success,
-            height: 1.5,
-          ),
-        ),
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: LexioSpacing.xl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            exercise.sentence,
-            style: LexioTextStyles.bodyLarge.copyWith(
-              color: LexioColors.error,
-              height: 1.5,
-            ),
-          ),
-          if (exercise.correctSentence != null) ...[
-            const SizedBox(height: LexioSpacing.xs),
-            Text(
-              exercise.correctSentence!,
-              style: LexioTextStyles.bodyLarge.copyWith(
-                color: LexioColors.success,
-                height: 1.5,
-              ),
-            ),
-          ],
-          const SizedBox(height: LexioSpacing.sm),
-          Text(
-            exercise.explanation,
-            style: LexioTextStyles.bodySmall.copyWith(
-              color: LexioColors.textSecondary,
-              height: 1.4,
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -148,10 +148,7 @@ class _SpotScreenState extends State<SpotScreen> {
         notionResults[notionId] = wasFound;
       }
     }
-    _progress?.recordAnswers(
-      gameId: 'spot',
-      notionResults: notionResults,
-    );
+    _progress?.recordAnswers(gameId: 'spot', notionResults: notionResults);
   }
 
   Widget _buildErrorScreen() {
@@ -215,12 +212,10 @@ class _SpotScreenState extends State<SpotScreen> {
   Widget _buildSummary(SpotGameState state) {
     return Scaffold(
       backgroundColor: LexioColors.background,
-      body: SafeArea(
-        child: SpotSummary(
-          state: state,
-          onPlayAgain: _handlePlayAgain,
-          onBack: _handleBack,
-        ),
+      body: SpotSummary(
+        state: state,
+        onPlayAgain: _handlePlayAgain,
+        onBack: _handleBack,
       ),
     );
   }

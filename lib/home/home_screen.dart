@@ -19,48 +19,55 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: LexioColors.background,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: LexioSpacing.screenHorizontal,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: LexioSpacing.sectionGap),
-              _buildHeader(),
-              const Spacer(),
-              const Divider(color: LexioColors.divider),
-              _GameEntry(
-                number: '01',
-                title: 'Corect sau greșit?',
-                accentColor: LexioColors.primary,
-                onTap: () => _open(context, const GrammarScreen()),
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: LexioSpacing.screenHorizontal,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: LexioSpacing.sectionGap),
+                    _buildHeader(),
+                    const Spacer(),
+                    const Divider(color: LexioColors.divider),
+                    _GameEntry(
+                      number: '01',
+                      title: 'Corect sau greșit?',
+                      accentColor: LexioColors.primary,
+                      onTap: () => _open(context, const GrammarScreen()),
+                    ),
+                    const Divider(color: LexioColors.divider),
+                    _GameEntry(
+                      number: '02',
+                      title: 'Ce înseamnă?',
+                      accentColor: LexioColors.secondary,
+                      onTap: () => _open(context, const VocabularyScreen()),
+                    ),
+                    const Divider(color: LexioColors.divider),
+                    _GameEntry(
+                      number: '03',
+                      title: 'Vorba vine',
+                      accentColor: LexioColors.teal,
+                      onTap: () => _open(context, const IdiomsScreen()),
+                    ),
+                    const Divider(color: LexioColors.divider),
+                    _GameEntry(
+                      number: '04',
+                      title: 'Găsește greșeala',
+                      accentColor: LexioColors.accent,
+                      onTap: () => _open(context, const SpotScreen()),
+                    ),
+                    const Divider(color: LexioColors.divider),
+                    const Spacer(),
+                  ],
+                ),
               ),
-              const Divider(color: LexioColors.divider),
-              _GameEntry(
-                number: '02',
-                title: 'Ce înseamnă?',
-                accentColor: LexioColors.secondary,
-                onTap: () => _open(context, const VocabularyScreen()),
-              ),
-              const Divider(color: LexioColors.divider),
-              _GameEntry(
-                number: '03',
-                title: 'Vorba vine',
-                accentColor: LexioColors.teal,
-                onTap: () => _open(context, const IdiomsScreen()),
-              ),
-              const Divider(color: LexioColors.divider),
-              _GameEntry(
-                number: '04',
-                title: 'Găsește greșeala',
-                accentColor: LexioColors.accent,
-                onTap: () => _open(context, const SpotScreen()),
-              ),
-              const Divider(color: LexioColors.divider),
-              const Spacer(),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -156,13 +163,12 @@ class _GameEntry extends StatelessWidget {
                   Expanded(
                     child: Text(
                       title,
-                    style: GoogleFonts.noticiaText(
-                      textStyle: LexioTextStyles.headingLarge.copyWith(
-                        color: LexioColors.textPrimary,
-                        fontSize: 39,
-                        fontWeight: FontWeight.w400,
+                      style: GoogleFonts.noticiaText(
+                        textStyle: LexioTextStyles.displayLarge.copyWith(
+                          color: LexioColors.textPrimary,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                    ),
                     ),
                   ),
                   const SizedBox(width: LexioSpacing.md),

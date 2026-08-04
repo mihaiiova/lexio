@@ -26,7 +26,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
     }
 
-    expect(find.text('Runda terminată'), findsOneWidget);
+    expect(find.text('RUNDĂ ÎNCHEIATĂ'), findsOneWidget);
     expect(find.text('Joacă din nou'), findsOneWidget);
+    expect(find.text('Înapoi la jocuri'), findsOneWidget);
   });
 }

@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 import '../../../design/colors.dart';
 import '../../../design/components/lexio_game_summary.dart';
-import '../vocabulary_game.dart';
+import '../grammar_game.dart';
 
-class VocabularySummary extends StatelessWidget {
-  const VocabularySummary({
+class GrammarSummary extends StatelessWidget {
+  const GrammarSummary({
     super.key,
     required this.state,
     required this.onPlayAgain,
     required this.onBack,
   });
 
-  final VocabularyGameState state;
+  final GrammarGameState state;
   final VoidCallback onPlayAgain;
   final VoidCallback onBack;
 
@@ -23,22 +23,23 @@ class VocabularySummary extends StatelessWidget {
       if (state.results[index] != false) continue;
 
       final exercise = state.exercises[index];
-      final selectedIndex = state.selectedOptionIndices[index];
-      if (selectedIndex == null) continue;
-
       reviewItems.add(
         LexioReviewItem(
-          wrongAnswer: exercise.options[selectedIndex],
-          correctAnswer: exercise.correctOption,
+          wrongAnswer: exercise.isCorrect
+              ? 'Ai ales „Greșit”: ${exercise.sentence}'
+              : exercise.sentence,
+          correctAnswer: exercise.isCorrect
+              ? 'Propoziția este corectă.'
+              : exercise.correctSentence ?? 'Propoziția conține o greșeală.',
           explanation: exercise.explanation,
         ),
       );
     }
 
     return LexioGameSummary(
-      gameNumber: '02',
-      gameTitle: 'Ce înseamnă?',
-      accentColor: LexioColors.coral,
+      gameNumber: '01',
+      gameTitle: 'Corect sau greșit?',
+      accentColor: LexioColors.blue,
       correctCount: state.correctCount,
       totalCount: state.exercises.length,
       reviewItems: reviewItems,

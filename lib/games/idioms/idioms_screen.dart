@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../design/animations.dart';
 import '../../design/colors.dart';
+import '../../design/components/lexio_answer_button.dart';
 import '../../design/components/lexio_feedback.dart';
 import '../../design/components/lexio_incorrect_answer_card.dart';
 import '../../design/radius.dart';
@@ -10,7 +11,6 @@ import '../../design/spacing.dart';
 import '../../progress/user_progress.dart';
 import 'idioms_content.dart';
 import 'idioms_game.dart';
-import 'widgets/idiom_answer_option.dart';
 import 'widgets/idiom_sentence.dart';
 import 'widgets/idioms_summary.dart';
 
@@ -124,8 +124,11 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
     if (state.isFinished) {
       return Scaffold(
         backgroundColor: LexioColors.background,
-        appBar: AppBar(leading: const BackButton()),
-        body: IdiomsSummary(state: state, onPlayAgain: _playAgain),
+        body: IdiomsSummary(
+          state: state,
+          onPlayAgain: _playAgain,
+          onBack: () => Navigator.of(context).maybePop(),
+        ),
       );
     }
 
@@ -244,19 +247,30 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
                   ? 0
                   : LexioSpacing.md,
             ),
-            child: IdiomAnswerOption(
+            child: LexioAnswerButton(
               key: ValueKey('${exercise.id}_option_$index'),
               label: exercise.options[index],
-              onTap: () => _answer(index),
-              isCorrect:
-                  state.lastAnswerCorrect == true &&
-                  state.selectedOptionIndex == index,
-              isDisabled: state.hasAnswered,
+              onPressed: state.hasAnswered ? null : () => _answer(index),
+              state: _answerButtonState(state, index),
             ),
           );
         }),
       ),
     );
+  }
+
+  LexioAnswerButtonState _answerButtonState(
+    IdiomsGameState state,
+    int optionIndex,
+  ) {
+    if (!state.hasAnswered) return LexioAnswerButtonState.idle;
+    if (optionIndex == state.currentExercise.correctOptionIndex) {
+      return LexioAnswerButtonState.correct;
+    }
+    if (optionIndex == state.selectedOptionIndex) {
+      return LexioAnswerButtonState.incorrect;
+    }
+    return LexioAnswerButtonState.disabled;
   }
 
   Widget _buildIncorrectPanel(IdiomsGameState state) {
