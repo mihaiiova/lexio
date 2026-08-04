@@ -22,6 +22,11 @@ jobs:
       - name: Run static analysis
         run: flutter analyze
 
+      - name: Bump build number
+        run: |
+          perl -i -pe 's/^version: (\d+\.\d+\.\d+)\+(\d+)/"version: $1+" . ($2+1)/e' pubspec.yaml
+          grep '^version:' pubspec.yaml
+
       - name: Build IPA
         run: flutter build ipa --export-method app-store
 
@@ -37,3 +42,11 @@ jobs:
             -t ios \
             --apiKey "$APPSTORE_KEY_ID" \
             --apiIssuer "$APPSTORE_ISSUER_ID"
+
+      - name: Push version bump
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add pubspec.yaml
+          git commit -m "Bump build number"
+          git push
