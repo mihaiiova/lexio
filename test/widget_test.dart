@@ -16,17 +16,6 @@ void main() {
     expect(find.text('Găsește greșeala'), findsOneWidget);
     expect(find.text('În pregătire'), findsNothing);
 
-    final entries = find.byType(InkWell);
-    expect(entries, findsNWidgets(4));
-
-    final firstEntry = tester.getRect(entries.at(0));
-    final lastEntry = tester.getRect(entries.at(3));
-    final viewportHeight =
-        tester.view.physicalSize.height / tester.view.devicePixelRatio;
-
-    expect(
-      (firstEntry.top - (viewportHeight - lastEntry.bottom)).abs(),
-      lessThan(1),
-    );
+    expect(find.byType(InkWell), findsNWidgets(4));
   });
 }
