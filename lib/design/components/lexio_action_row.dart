@@ -19,36 +19,45 @@ class LexioActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: LexioColors.divider)),
-        ),
-        child: InkWell(
-          onTap: onPressed,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(
               horizontal: LexioSpacing.screenHorizontal,
-              vertical: LexioSpacing.lg,
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    label,
-                    style: GoogleFonts.noticiaText(
-                      textStyle: LexioTextStyles.headingMedium.copyWith(
-                        color: LexioColors.textPrimary,
-                        fontWeight: FontWeight.w400,
+            child: Divider(height: 1, color: LexioColors.divider),
+          ),
+          InkWell(
+            onTap: onPressed,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: LexioSpacing.screenHorizontal,
+                vertical: LexioSpacing.lg,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      label,
+                      style: GoogleFonts.noticiaText(
+                        textStyle: LexioTextStyles.headingMedium.copyWith(
+                          color: LexioColors.textPrimary,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: LexioSpacing.lg),
-                const Icon(Icons.arrow_forward, color: LexioColors.textPrimary),
-              ],
+                  const SizedBox(width: LexioSpacing.lg),
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: LexioColors.textPrimary,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

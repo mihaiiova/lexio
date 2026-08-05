@@ -136,10 +136,7 @@ class LexioGameSummary extends StatelessWidget {
 
   Widget _buildActions() {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: LexioColors.surface,
-        border: Border(top: BorderSide(color: LexioColors.divider)),
-      ),
+      decoration: const BoxDecoration(color: LexioColors.surface),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
