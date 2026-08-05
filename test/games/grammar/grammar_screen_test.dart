@@ -27,7 +27,13 @@ void main() {
     }
 
     expect(find.text('RUNDĂ ÎNCHEIATĂ'), findsOneWidget);
+    expect(find.byTooltip('Închide'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.text('Joacă din nou'),
+      300,
+      scrollable: find.byType(Scrollable),
+    );
     expect(find.text('Joacă din nou'), findsOneWidget);
-    expect(find.text('Înapoi la jocuri'), findsOneWidget);
+    expect(find.text('Înapoi la jocuri'), findsNothing);
   });
 }

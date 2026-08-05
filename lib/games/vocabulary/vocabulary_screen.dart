@@ -127,7 +127,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         body: VocabularySummary(
           state: state,
           onPlayAgain: _playAgain,
-          onBack: () => Navigator.of(context).maybePop(),
+          onClose: () => Navigator.of(context).maybePop(),
         ),
       );
     }

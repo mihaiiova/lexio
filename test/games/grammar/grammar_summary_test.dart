@@ -32,7 +32,11 @@ void main() {
       MaterialApp(
         theme: LexioTheme.light,
         home: Scaffold(
-          body: GrammarSummary(state: state, onPlayAgain: () {}, onBack: () {}),
+          body: GrammarSummary(
+            state: state,
+            onPlayAgain: () {},
+            onClose: () {},
+          ),
         ),
       ),
     );

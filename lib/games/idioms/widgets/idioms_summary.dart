@@ -9,12 +9,12 @@ class IdiomsSummary extends StatelessWidget {
     super.key,
     required this.state,
     required this.onPlayAgain,
-    required this.onBack,
+    required this.onClose,
   });
 
   final IdiomsGameState state;
   final VoidCallback onPlayAgain;
-  final VoidCallback onBack;
+  final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +36,12 @@ class IdiomsSummary extends StatelessWidget {
     }
 
     return LexioGameSummary(
-      gameNumber: '03',
-      gameTitle: 'Vorba vine',
       accentColor: LexioColors.teal,
       correctCount: state.correctCount,
       totalCount: state.exercises.length,
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
-      onBack: onBack,
+      onClose: onClose,
     );
   }
 }

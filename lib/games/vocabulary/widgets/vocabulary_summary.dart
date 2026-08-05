@@ -9,12 +9,12 @@ class VocabularySummary extends StatelessWidget {
     super.key,
     required this.state,
     required this.onPlayAgain,
-    required this.onBack,
+    required this.onClose,
   });
 
   final VocabularyGameState state;
   final VoidCallback onPlayAgain;
-  final VoidCallback onBack;
+  final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +36,12 @@ class VocabularySummary extends StatelessWidget {
     }
 
     return LexioGameSummary(
-      gameNumber: '02',
-      gameTitle: 'Ce înseamnă?',
       accentColor: LexioColors.coral,
       correctCount: state.correctCount,
       totalCount: state.exercises.length,
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
-      onBack: onBack,
+      onClose: onClose,
     );
   }
 }

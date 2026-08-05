@@ -7,9 +7,13 @@ import '../../../lib/design/colors.dart';
 import '../../../lib/design/components/lexio_game_summary.dart';
 // ignore: avoid_relative_lib_imports
 import '../../../lib/design/theme.dart';
+// ignore: avoid_relative_lib_imports
+import '../../../lib/design/typography.dart';
 
 void main() {
-  testWidgets('keeps actions fixed while review items scroll', (tester) async {
+  testWidgets('scrolls the full summary and exposes a close action', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -31,14 +35,12 @@ void main() {
         theme: LexioTheme.light,
         home: Scaffold(
           body: LexioGameSummary(
-            gameNumber: '02',
-            gameTitle: 'Ce înseamnă?',
             accentColor: LexioColors.coral,
             correctCount: 8,
             totalCount: 10,
             reviewItems: items,
             onPlayAgain: () => replayCount++,
-            onBack: () => backCount++,
+            onClose: () => backCount++,
           ),
         ),
       ),
@@ -47,17 +49,33 @@ void main() {
     expect(find.text('8 din 10'), findsOneWidget);
     expect(find.text('DE REVĂZUT'), findsOneWidget);
     expect(find.text('Foarte bine.'), findsNothing);
-    final replayTop = tester.getTopLeft(find.text('Joacă din nou')).dy;
+    expect(find.text('Slove'), findsNothing);
+    expect(find.text('Ce înseamnă?'), findsNothing);
+    expect(find.text('Înapoi la jocuri'), findsNothing);
+    expect(find.byTooltip('Închide'), findsOneWidget);
 
+    final result = tester.widget<Text>(find.text('8 din 10'));
+    expect(result.style?.fontSize, LexioTextStyles.displayLarge.fontSize);
+
+    await tester.drag(
+      find.byKey(const ValueKey('summary_scroll_view')),
+      const Offset(0, -300),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byTooltip('Închide'), findsNothing);
     await tester.scrollUntilVisible(
-      find.text('Greșeală 8'),
+      find.text('Joacă din nou'),
       300,
       scrollable: find.byType(Scrollable),
     );
-
-    expect(tester.getTopLeft(find.text('Joacă din nou')).dy, replayTop);
     await tester.tap(find.text('Joacă din nou'));
-    await tester.tap(find.text('Înapoi la jocuri'));
+    await tester.scrollUntilVisible(
+      find.byTooltip('Închide'),
+      -300,
+      scrollable: find.byType(Scrollable),
+    );
+    await tester.tap(find.byTooltip('Închide'));
     expect(replayCount, 1);
     expect(backCount, 1);
   });
@@ -70,14 +88,12 @@ void main() {
         theme: LexioTheme.light,
         home: Scaffold(
           body: LexioGameSummary(
-            gameNumber: '03',
-            gameTitle: 'Vorba vine',
             accentColor: LexioColors.teal,
             correctCount: 10,
             totalCount: 10,
             reviewItems: const [],
             onPlayAgain: () {},
-            onBack: () {},
+            onClose: () {},
           ),
         ),
       ),
@@ -86,6 +102,6 @@ void main() {
     expect(find.text('10 din 10'), findsOneWidget);
     expect(find.text('DE REVĂZUT'), findsNothing);
     expect(find.text('Joacă din nou'), findsOneWidget);
-    expect(find.text('Înapoi la jocuri'), findsOneWidget);
+    expect(find.byTooltip('Închide'), findsOneWidget);
   });
 }

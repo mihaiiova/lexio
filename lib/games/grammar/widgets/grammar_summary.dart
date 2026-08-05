@@ -9,12 +9,12 @@ class GrammarSummary extends StatelessWidget {
     super.key,
     required this.state,
     required this.onPlayAgain,
-    required this.onBack,
+    required this.onClose,
   });
 
   final GrammarGameState state;
   final VoidCallback onPlayAgain;
-  final VoidCallback onBack;
+  final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +37,12 @@ class GrammarSummary extends StatelessWidget {
     }
 
     return LexioGameSummary(
-      gameNumber: '01',
-      gameTitle: 'Corect sau greșit?',
       accentColor: LexioColors.blue,
       correctCount: state.correctCount,
       totalCount: state.exercises.length,
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
-      onBack: onBack,
+      onClose: onClose,
     );
   }
 }

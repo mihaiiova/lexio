@@ -9,12 +9,12 @@ class SpotSummary extends StatelessWidget {
     super.key,
     required this.state,
     required this.onPlayAgain,
-    required this.onBack,
+    required this.onClose,
   });
 
   final SpotGameState state;
   final VoidCallback onPlayAgain;
-  final VoidCallback onBack;
+  final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +56,12 @@ class SpotSummary extends StatelessWidget {
     }
 
     return LexioGameSummary(
-      gameNumber: '04',
-      gameTitle: 'Găsește greșeala',
       accentColor: LexioColors.amber,
       correctCount: state.totalCorrectTaps,
       totalCount: totalMistakes,
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
-      onBack: onBack,
+      onClose: onClose,
     );
   }
 }

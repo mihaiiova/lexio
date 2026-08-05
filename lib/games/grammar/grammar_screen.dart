@@ -177,7 +177,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
         body: GrammarSummary(
           state: state,
           onPlayAgain: _playAgain,
-          onBack: () => Navigator.of(context).maybePop(),
+          onClose: () => Navigator.of(context).maybePop(),
         ),
       );
     }

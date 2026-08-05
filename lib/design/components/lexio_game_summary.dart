@@ -21,30 +21,26 @@ final class LexioReviewItem {
 class LexioGameSummary extends StatelessWidget {
   const LexioGameSummary({
     super.key,
-    required this.gameNumber,
-    required this.gameTitle,
     required this.accentColor,
     required this.correctCount,
     required this.totalCount,
     required this.reviewItems,
     required this.onPlayAgain,
-    required this.onBack,
+    required this.onClose,
   });
 
-  final String gameNumber;
-  final String gameTitle;
   final Color accentColor;
   final int correctCount;
   final int totalCount;
   final List<LexioReviewItem> reviewItems;
   final VoidCallback onPlayAgain;
-  final VoidCallback onBack;
+  final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        key: const ValueKey('summary_scroll_view'),
         children: [
           _buildHeader(),
           _buildResult(),
@@ -63,9 +59,9 @@ class LexioGameSummary extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(child: _buildReviewList()),
+            ..._buildReviewItems(),
           ] else
-            const Spacer(),
+            const SizedBox(height: LexioSpacing.xxl),
           _buildActions(),
         ],
       ),
@@ -74,42 +70,21 @@ class LexioGameSummary extends StatelessWidget {
 
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        LexioSpacing.screenHorizontal,
-        LexioSpacing.xl,
-        LexioSpacing.screenHorizontal,
-        LexioSpacing.lg,
+      padding: const EdgeInsets.only(
+        top: LexioSpacing.sm,
+        right: LexioSpacing.sm,
       ),
-      child: Row(
-        children: [
-          Text(
-            'Slove',
-            style: GoogleFonts.noticiaText(
-              textStyle: LexioTextStyles.headingSmall.copyWith(
-                color: LexioColors.textPrimary,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: IconButton(
+          onPressed: onClose,
+          tooltip: 'Închide',
+          icon: const Icon(
+            Icons.close,
+            color: LexioColors.textPrimary,
+            size: LexioSpacing.xl,
           ),
-          const Spacer(),
-          Text(
-            gameNumber,
-            style: LexioTextStyles.labelLarge.copyWith(color: accentColor),
-          ),
-          const SizedBox(width: LexioSpacing.md),
-          Flexible(
-            child: Text(
-              gameTitle,
-              style: GoogleFonts.noticiaText(
-                textStyle: LexioTextStyles.bodyMedium.copyWith(
-                  color: LexioColors.textPrimary,
-                ),
-              ),
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.end,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -131,7 +106,7 @@ class LexioGameSummary extends StatelessWidget {
           Text(
             '$correctCount din $totalCount',
             style: GoogleFonts.noticiaText(
-              textStyle: LexioTextStyles.displayMedium.copyWith(
+              textStyle: LexioTextStyles.displayLarge.copyWith(
                 color: LexioColors.textPrimary,
                 fontWeight: FontWeight.w400,
               ),
@@ -142,23 +117,34 @@ class LexioGameSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildReviewList() {
-    return ListView.separated(
-      key: const ValueKey('summary_review_list'),
-      padding: const EdgeInsets.fromLTRB(
-        LexioSpacing.screenHorizontal,
-        0,
-        LexioSpacing.screenHorizontal,
-        LexioSpacing.lg,
+  List<Widget> _buildReviewItems() {
+    final children = <Widget>[];
+    for (var index = 0; index < reviewItems.length; index++) {
+      if (index > 0) {
+        children.add(
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: LexioSpacing.xl),
+            child: Divider(height: 1),
+          ),
+        );
+      }
+      children.add(_ReviewItem(index: index, item: reviewItems[index]));
+    }
+
+    return [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(
+          LexioSpacing.screenHorizontal,
+          0,
+          LexioSpacing.screenHorizontal,
+          LexioSpacing.xxl,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children,
+        ),
       ),
-      itemCount: reviewItems.length,
-      separatorBuilder: (context, index) => const Padding(
-        padding: EdgeInsets.symmetric(vertical: LexioSpacing.xl),
-        child: Divider(height: 1),
-      ),
-      itemBuilder: (context, index) =>
-          _ReviewItem(index: index, item: reviewItems[index]),
-    );
+    ];
   }
 
   Widget _buildActions() {
@@ -167,13 +153,7 @@ class LexioGameSummary extends StatelessWidget {
         color: LexioColors.surface,
         border: Border(top: BorderSide(color: LexioColors.divider)),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          LexioActionRow(label: 'Joacă din nou', onPressed: onPlayAgain),
-          LexioActionRow(label: 'Înapoi la jocuri', onPressed: onBack),
-        ],
-      ),
+      child: LexioActionRow(label: 'Joacă din nou', onPressed: onPlayAgain),
     );
   }
 }

@@ -41,7 +41,7 @@ void main() {
       MaterialApp(
         theme: LexioTheme.light,
         home: Scaffold(
-          body: SpotSummary(state: state, onPlayAgain: () {}, onBack: () {}),
+          body: SpotSummary(state: state, onPlayAgain: () {}, onClose: () {}),
         ),
       ),
     );
