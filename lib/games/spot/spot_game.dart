@@ -172,6 +172,7 @@ final class SpotGameState {
     return _copyWith(
       currentTextIndex: currentTextIndex + 1,
       isChecking: false,
+      remainingSeconds: _timerDuration,
     );
   }
 
@@ -179,7 +180,13 @@ final class SpotGameState {
     if (isFinished) return this;
     final newRemaining = remainingSeconds - 1;
     if (newRemaining <= 0) {
-      return _copyWith(remainingSeconds: 0, isFinished: true);
+      if (isLastText) {
+        return _copyWith(remainingSeconds: 0, isFinished: true);
+      }
+      return _copyWith(
+        currentTextIndex: currentTextIndex + 1,
+        remainingSeconds: _timerDuration,
+      );
     }
     return _copyWith(remainingSeconds: newRemaining);
   }
