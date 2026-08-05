@@ -7,10 +7,7 @@ import '../../../design/animations.dart';
 import '../grammar_content.dart';
 
 class ResultOverlay extends StatelessWidget {
-  const ResultOverlay({
-    super.key,
-    required this.exercise,
-  });
+  const ResultOverlay({super.key, required this.exercise});
 
   final GrammarExercise exercise;
 
@@ -41,12 +38,33 @@ class ResultOverlay extends StatelessWidget {
   }
 
   Widget _buildCorrectRejected() {
-    return Text(
-      exercise.sentence,
-      style: LexioTextStyles.headingMedium.copyWith(
-        color: LexioColors.success,
-        height: 1.5,
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Textul este corect.',
+          style: LexioTextStyles.headingSmall.copyWith(
+            color: LexioColors.success,
+          ),
+        ),
+        const SizedBox(height: LexioSpacing.md),
+        Text(
+          exercise.sentence,
+          style: LexioTextStyles.headingMedium.copyWith(
+            color: LexioColors.success,
+            height: 1.5,
+          ),
+        ),
+        const SizedBox(height: LexioSpacing.xxl),
+        Text(
+          exercise.explanation,
+          style: LexioTextStyles.bodyMedium.copyWith(
+            color: LexioColors.textSecondary,
+            height: 1.5,
+          ),
+        ),
+      ],
     );
   }
 
@@ -136,25 +154,18 @@ class ResultOverlay extends StatelessWidget {
     }
 
     if (wrongDiff.isNotEmpty) {
-      spans.add(TextSpan(
-        text: wrongDiff.join(' '),
-        style: strikeStyle,
-      ));
+      spans.add(TextSpan(text: wrongDiff.join(' '), style: strikeStyle));
     }
 
     if (correctDiff.isNotEmpty) {
       if (wrongDiff.isNotEmpty) {
         spans.add(const TextSpan(text: ' '));
       }
-      spans.add(TextSpan(
-        text: correctDiff.join(' '),
-        style: correctStyle,
-      ));
+      spans.add(TextSpan(text: correctDiff.join(' '), style: correctStyle));
     }
 
     if (suffixText.isNotEmpty) {
-      final needsSpace =
-          wrongDiff.isNotEmpty || correctDiff.isNotEmpty;
+      final needsSpace = wrongDiff.isNotEmpty || correctDiff.isNotEmpty;
       if (needsSpace) {
         spans.add(const TextSpan(text: ' '));
       }
