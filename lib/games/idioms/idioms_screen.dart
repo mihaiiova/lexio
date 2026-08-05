@@ -127,7 +127,7 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
         body: IdiomsSummary(
           state: state,
           onPlayAgain: _playAgain,
-          onClose: () => Navigator.of(context).maybePop(),
+          onBack: () => Navigator.of(context).maybePop(),
         ),
       );
     }

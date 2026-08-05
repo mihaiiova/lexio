@@ -215,7 +215,7 @@ class _SpotScreenState extends State<SpotScreen> {
       body: SpotSummary(
         state: state,
         onPlayAgain: _handlePlayAgain,
-        onClose: _handleBack,
+        onBack: _handleBack,
       ),
     );
   }

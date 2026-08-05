@@ -26,7 +26,7 @@ class LexioGameSummary extends StatelessWidget {
     required this.totalCount,
     required this.reviewItems,
     required this.onPlayAgain,
-    required this.onClose,
+    required this.onBack,
   });
 
   final Color accentColor;
@@ -34,57 +34,41 @@ class LexioGameSummary extends StatelessWidget {
   final int totalCount;
   final List<LexioReviewItem> reviewItems;
   final VoidCallback onPlayAgain;
-  final VoidCallback onClose;
+  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ListView(
-        key: const ValueKey('summary_scroll_view'),
+      child: Column(
         children: [
-          _buildHeader(),
-          _buildResult(),
-          if (reviewItems.isNotEmpty) ...[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                LexioSpacing.screenHorizontal,
-                LexioSpacing.xxl,
-                LexioSpacing.screenHorizontal,
-                LexioSpacing.lg,
-              ),
-              child: Text(
-                'DE REVĂZUT',
-                style: LexioTextStyles.labelSmall.copyWith(
-                  color: LexioColors.textSecondary,
-                ),
-              ),
+          Expanded(
+            child: ListView(
+              key: const ValueKey('summary_scroll_view'),
+              children: [
+                _buildResult(),
+                if (reviewItems.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      LexioSpacing.screenHorizontal,
+                      LexioSpacing.xxl,
+                      LexioSpacing.screenHorizontal,
+                      LexioSpacing.lg,
+                    ),
+                    child: Text(
+                      'DE REVĂZUT',
+                      style: LexioTextStyles.labelSmall.copyWith(
+                        color: LexioColors.textSecondary,
+                      ),
+                    ),
+                  ),
+                  ..._buildReviewItems(),
+                ] else
+                  const SizedBox(height: LexioSpacing.xxl),
+              ],
             ),
-            ..._buildReviewItems(),
-          ] else
-            const SizedBox(height: LexioSpacing.xxl),
+          ),
           _buildActions(),
         ],
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: LexioSpacing.sm,
-        right: LexioSpacing.sm,
-      ),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: IconButton(
-          onPressed: onClose,
-          tooltip: 'Închide',
-          icon: const Icon(
-            Icons.close,
-            color: LexioColors.textPrimary,
-            size: LexioSpacing.xl,
-          ),
-        ),
       ),
     );
   }
@@ -103,12 +87,15 @@ class LexioGameSummary extends StatelessWidget {
             style: LexioTextStyles.labelSmall.copyWith(color: accentColor),
           ),
           const SizedBox(height: LexioSpacing.md),
-          Text(
-            '$correctCount din $totalCount',
-            style: GoogleFonts.noticiaText(
-              textStyle: LexioTextStyles.displayLarge.copyWith(
-                color: LexioColors.textPrimary,
-                fontWeight: FontWeight.w400,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '$correctCount din $totalCount',
+              style: GoogleFonts.noticiaText(
+                textStyle: LexioTextStyles.displayHero.copyWith(
+                  color: LexioColors.textPrimary,
+                ),
               ),
             ),
           ),
@@ -153,7 +140,13 @@ class LexioGameSummary extends StatelessWidget {
         color: LexioColors.surface,
         border: Border(top: BorderSide(color: LexioColors.divider)),
       ),
-      child: LexioActionRow(label: 'Joacă din nou', onPressed: onPlayAgain),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          LexioActionRow(label: 'Joacă din nou', onPressed: onPlayAgain),
+          LexioActionRow(label: 'Înapoi la jocuri', onPressed: onBack),
+        ],
+      ),
     );
   }
 }
@@ -173,7 +166,9 @@ class _ReviewItem extends StatelessWidget {
       children: [
         Text(
           itemNumber,
-          style: LexioTextStyles.labelMedium.copyWith(color: LexioColors.error),
+          style: LexioTextStyles.labelMedium.copyWith(
+            color: LexioColors.textPrimary,
+          ),
         ),
         const SizedBox(height: LexioSpacing.md),
         Text(

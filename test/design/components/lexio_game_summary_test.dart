@@ -11,7 +11,7 @@ import '../../../lib/design/theme.dart';
 import '../../../lib/design/typography.dart';
 
 void main() {
-  testWidgets('scrolls the full summary and exposes a close action', (
+  testWidgets('keeps actions fixed while summary content scrolls', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(390, 844);
@@ -40,7 +40,7 @@ void main() {
             totalCount: 10,
             reviewItems: items,
             onPlayAgain: () => replayCount++,
-            onClose: () => backCount++,
+            onBack: () => backCount++,
           ),
         ),
       ),
@@ -51,11 +51,16 @@ void main() {
     expect(find.text('Foarte bine.'), findsNothing);
     expect(find.text('Slove'), findsNothing);
     expect(find.text('Ce înseamnă?'), findsNothing);
-    expect(find.text('Înapoi la jocuri'), findsNothing);
-    expect(find.byTooltip('Închide'), findsOneWidget);
+    expect(find.text('Înapoi la jocuri'), findsOneWidget);
+    expect(find.byTooltip('Închide'), findsNothing);
 
     final result = tester.widget<Text>(find.text('8 din 10'));
-    expect(result.style?.fontSize, LexioTextStyles.displayLarge.fontSize);
+    expect(result.style?.fontSize, LexioTextStyles.displayHero.fontSize);
+    final firstItemNumber = tester.widget<Text>(find.text('01'));
+    expect(firstItemNumber.style?.color, LexioColors.textPrimary);
+
+    final replayTop = tester.getTopLeft(find.text('Joacă din nou')).dy;
+    final backTop = tester.getTopLeft(find.text('Înapoi la jocuri')).dy;
 
     await tester.drag(
       find.byKey(const ValueKey('summary_scroll_view')),
@@ -63,19 +68,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byTooltip('Închide'), findsNothing);
-    await tester.scrollUntilVisible(
-      find.text('Joacă din nou'),
-      300,
-      scrollable: find.byType(Scrollable),
-    );
+    expect(tester.getTopLeft(find.text('Joacă din nou')).dy, replayTop);
+    expect(tester.getTopLeft(find.text('Înapoi la jocuri')).dy, backTop);
     await tester.tap(find.text('Joacă din nou'));
-    await tester.scrollUntilVisible(
-      find.byTooltip('Închide'),
-      -300,
-      scrollable: find.byType(Scrollable),
-    );
-    await tester.tap(find.byTooltip('Închide'));
+    await tester.tap(find.text('Înapoi la jocuri'));
     expect(replayCount, 1);
     expect(backCount, 1);
   });
@@ -93,7 +89,7 @@ void main() {
             totalCount: 10,
             reviewItems: const [],
             onPlayAgain: () {},
-            onClose: () {},
+            onBack: () {},
           ),
         ),
       ),
@@ -102,6 +98,6 @@ void main() {
     expect(find.text('10 din 10'), findsOneWidget);
     expect(find.text('DE REVĂZUT'), findsNothing);
     expect(find.text('Joacă din nou'), findsOneWidget);
-    expect(find.byTooltip('Închide'), findsOneWidget);
+    expect(find.text('Înapoi la jocuri'), findsOneWidget);
   });
 }

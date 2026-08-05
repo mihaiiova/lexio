@@ -9,12 +9,12 @@ class SpotSummary extends StatelessWidget {
     super.key,
     required this.state,
     required this.onPlayAgain,
-    required this.onClose,
+    required this.onBack,
   });
 
   final SpotGameState state;
   final VoidCallback onPlayAgain;
-  final VoidCallback onClose;
+  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class SpotSummary extends StatelessWidget {
       totalCount: totalMistakes,
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
-      onClose: onClose,
+      onBack: onBack,
     );
   }
 }
