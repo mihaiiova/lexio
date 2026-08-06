@@ -21,7 +21,7 @@ class SpotScreen extends StatefulWidget {
   State<SpotScreen> createState() => _SpotScreenState();
 }
 
-class _SpotScreenState extends State<SpotScreen> {
+class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   SpotGameState? _state;
   bool _isLoading = true;
   bool _hasError = false;
@@ -32,7 +32,36 @@ class _SpotScreenState extends State<SpotScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _init();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _onResume();
+    }
+  }
+
+  void _onResume() {
+    if (_state == null || _state!.isFinished) return;
+    setState(() {
+      final updated = _state!.checkTimerExpiry();
+      if (updated != _state) {
+        _state = updated;
+        if (_state!.isFinished) {
+          _timer?.cancel();
+          _saveSessionProgress(_state!);
+        }
+      }
+    });
   }
 
   Future<void> _init() async {
@@ -60,23 +89,21 @@ class _SpotScreenState extends State<SpotScreen> {
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (_state == null || _state!.isFinished || _state!.isChecking) {
+      if (_state == null || _state!.isFinished) {
+        _timer?.cancel();
         return;
       }
       setState(() {
-        _state = _state!.tick();
-        if (_state!.isFinished) {
-          _timer?.cancel();
-          _saveSessionProgress(_state!);
+        final updated = _state!.checkTimerExpiry();
+        if (updated != _state) {
+          _state = updated;
+          if (_state!.isFinished) {
+            _timer?.cancel();
+            _saveSessionProgress(_state!);
+          }
         }
       });
     });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
   }
 
   void _handleTapWord(int wordIndex) {
@@ -256,18 +283,26 @@ class _SpotScreenState extends State<SpotScreen> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
-        child: _buildProgressSegments(state),
+        child: Semantics(
+          label:
+              'Progres: ${state.textsCompleted} din ${state.texts.length} texte',
+          child: _buildProgressSegments(state),
+        ),
       ),
       titleSpacing: 0,
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
-          child: Text(
-            _formatTime(state.remainingSeconds),
-            style: LexioTextStyles.labelLarge.copyWith(
-              color: state.remainingSeconds <= 10
-                  ? LexioColors.error
-                  : LexioColors.textSecondary,
+          child: Semantics(
+            label: 'Timp rămas: ${_formatTime(state.remainingSeconds)}',
+            liveRegion: true,
+            child: Text(
+              _formatTime(state.remainingSeconds),
+              style: LexioTextStyles.labelLarge.copyWith(
+                color: state.remainingSeconds <= 10
+                    ? LexioColors.error
+                    : LexioColors.textSecondary,
+              ),
             ),
           ),
         ),
@@ -411,8 +446,8 @@ class _SpotScreenState extends State<SpotScreen> {
         child: state.isChecking
             ? _buildNextButton(state)
             : state.allMistakesFoundInCurrentText
-            ? _buildNextButton(state)
-            : _buildPlayActions(state),
+                ? _buildNextButton(state)
+                : _buildPlayActions(state),
       ),
     );
   }
@@ -420,6 +455,9 @@ class _SpotScreenState extends State<SpotScreen> {
   Widget _buildNextButton(SpotGameState state) {
     return LexioButton(
       label: state.isLastText ? 'Vezi rezumatul' : 'Continuă',
+      semanticLabel: state.isLastText
+          ? 'Vezi rezumatul jocului'
+          : 'Continuă la textul următor',
       variant: LexioButtonVariant.primary,
       icon: state.isLastText ? Icons.emoji_events : Icons.arrow_forward,
       isExpanded: true,

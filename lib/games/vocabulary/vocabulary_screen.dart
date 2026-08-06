@@ -135,7 +135,10 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     return Scaffold(
       backgroundColor: LexioColors.background,
       appBar: AppBar(
-        leading: const BackButton(),
+        leading: Semantics(
+          label: 'Înapoi la jocuri',
+          child: BackButton(),
+        ),
         title: _buildProgressBar(state),
         titleSpacing: 0,
       ),
@@ -184,7 +187,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   Widget _buildProgressBar(VocabularyGameState state) {
     return Padding(
       padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
-      child: Row(
+      child: Semantics(
+        label: 'Progres: ${state.totalAnswered} din ${state.exercises.length}',
+        child: Row(
         children: List.generate(state.exercises.length, (index) {
           final result = state.results[index];
           final isCurrent = index == state.currentIndex && result == null;
@@ -209,6 +214,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
             ),
           );
         }),
+      ),
       ),
     );
   }

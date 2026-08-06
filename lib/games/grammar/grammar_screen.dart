@@ -218,7 +218,9 @@ class _GrammarScreenState extends State<GrammarScreen> {
   Widget _buildProgressBar(GrammarGameState state) {
     return Padding(
       padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
-      child: Row(
+      child: Semantics(
+        label: 'Progres: ${state.totalAnswered} din ${state.exercises.length}',
+        child: Row(
         children: List.generate(state.exercises.length, (i) {
           final result = state.results[i];
           final isCurrent = i == state.currentIndex && result == null;
@@ -248,6 +250,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
             ),
           );
         }),
+      ),
       ),
     );
   }
@@ -364,7 +367,10 @@ class _GrammarScreenState extends State<GrammarScreen> {
         LexioSpacing.screenHorizontal,
         LexioSpacing.xl,
       ),
-      child: GestureDetector(
+      child: Semantics(
+        button: true,
+        label: 'Următoarea întrebare',
+        child: GestureDetector(
         onTap: _next,
         child: Container(
           width: double.infinity,
@@ -386,6 +392,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
             textAlign: TextAlign.center,
           ),
         ),
+      ),
       ),
     );
   }

@@ -33,6 +33,7 @@ class LexioAnswerButton extends StatelessWidget {
     return Semantics(
       button: true,
       enabled: isEnabled,
+      label: label,
       child: AnimatedContainer(
         duration: LexioDurations.instant,
         width: double.infinity,

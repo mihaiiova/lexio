@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 import 'typography.dart';
@@ -11,10 +10,9 @@ final class LexioTheme {
   LexioTheme._();
 
   static TextStyle sentenceTextStyle([Color? color]) {
-    return GoogleFonts.noticiaText(
-      textStyle: LexioTextStyles.sentence.copyWith(
-        color: color ?? LexioColors.textPrimary,
-      ),
+    return LexioTextStyles.sentence.copyWith(
+      color: color ?? LexioColors.textPrimary,
+      fontFamily: 'NoticiaText',
     );
   }
 

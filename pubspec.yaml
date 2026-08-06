@@ -9,8 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.8
-  google_fonts: ^6.2.1
   shared_preferences: ^2.5.4
   url_launcher: ^6.3.1
 
@@ -21,6 +22,20 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: NoticiaText
+      fonts:
+        - asset: assets/fonts/NoticiaText-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/NoticiaText-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/NoticiaText-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NoticiaText-BoldItalic.ttf
+          weight: 700
+          style: italic
 
   assets:
     - lib/content/

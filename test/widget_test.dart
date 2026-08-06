@@ -7,7 +7,7 @@ void main() {
   testWidgets('App renders home screen', (WidgetTester tester) async {
     await tester.pumpWidget(const LexioApp());
 
-    expect(find.text('Lexio'), findsNothing);
+    expect(find.text('Slove'), findsOneWidget);
     expect(find.text('Provocarea zilei'), findsNothing);
     expect(find.text('Alege un joc'), findsNothing);
     expect(find.text('Corect sau greșit?'), findsOneWidget);
@@ -16,6 +16,6 @@ void main() {
     expect(find.text('Găsește greșeala'), findsOneWidget);
     expect(find.text('În pregătire'), findsNothing);
 
-    expect(find.byType(InkWell), findsNWidgets(4));
+    expect(find.byType(InkWell), findsNWidgets(6));
   });
 }

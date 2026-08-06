@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../colors.dart';
 import '../spacing.dart';
@@ -92,11 +91,10 @@ class LexioGameSummary extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '$correctCount din $totalCount',
-              style: GoogleFonts.noticiaText(
-                textStyle: LexioTextStyles.displayHero.copyWith(
+              style: LexioTextStyles.displayHero.copyWith(
                   color: LexioColors.textPrimary,
+                  fontFamily: 'NoticiaText',
                 ),
-              ),
             ),
           ),
         ],
@@ -170,11 +168,10 @@ class _ReviewItem extends StatelessWidget {
         const SizedBox(height: LexioSpacing.md),
         Text(
           item.wrongAnswer,
-          style: GoogleFonts.noticiaText(
-            textStyle: LexioTextStyles.bodyLarge.copyWith(
+          style: LexioTextStyles.bodyLarge.copyWith(
               color: LexioColors.error,
+              fontFamily: 'NoticiaText',
             ),
-          ),
         ),
         const SizedBox(height: LexioSpacing.sm),
         Text.rich(
@@ -187,11 +184,10 @@ class _ReviewItem extends StatelessWidget {
               TextSpan(text: item.correctAnswer),
             ],
           ),
-          style: GoogleFonts.noticiaText(
-            textStyle: LexioTextStyles.bodyMedium.copyWith(
+          style: LexioTextStyles.bodyMedium.copyWith(
               color: LexioColors.textPrimary,
+              fontFamily: 'NoticiaText',
             ),
-          ),
         ),
         const SizedBox(height: LexioSpacing.sm),
         Text(

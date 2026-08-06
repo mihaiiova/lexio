@@ -1,70 +1,67 @@
 # ROADMAP.md — Slove Development Roadmap
 
-## v1.0 — Foundation (Current)
+## v1.0 — Foundation ✅ Complete
 
 - [x] Project structure and conventions
 - [x] Design system (typography, colors, spacing, components)
 - [x] Game architecture with `LexioGame` interface
-- [x] Home screen with daily challenge and coming-soon placeholders
-- [x] Grammar game: "Corect sau incorect?" (15 exercises)
+- [x] Home screen with four playable games
+- [x] Grammar game: "Corect sau greșit?" (423 exercises)
+- [x] Vocabulary game: "Ce înseamnă?" (100 exercises)
+- [x] Idioms game: "Vorba vine" (60 exercises)
+- [x] Spot game: "Găsește greșeala" (60 texts, 60s timed)
 - [x] Local JSON content layer
+- [x] Spaced repetition progress tracking (SharedPreferences)
 - [x] Subtle animations (page transitions, answer feedback, progress)
-- [ ] Unit tests for game logic and content parsing
-- [ ] Widget tests for screens and components
-- [ ] Polish pass (spacing review, animation tuning, edge cases)
+- [x] Unit tests for game logic and content parsing
+- [x] Widget tests for screens and components
+- [x] Deadline-based Spot timer (wall-clock vs callback counting)
+- [x] Lifecycle-safe timer (WidgetsBindingObserver)
+- [x] Error handling with Romanian error screens and retry
+- [x] Privacy and support pages (lexio.app)
+- [x] App Store and Google Play store listing content
+- [x] Branded icons and launch screens
+- [x] CI/CD: analysis, tests, web and Android builds
+- [x] Romanian locale and language metadata
 
-## v1.1 — More Content
+## v1.1 — Launch Polish (Current)
 
-- [ ] Expand grammar exercises to 100+
-- [ ] Add difficulty levels (beginner, intermediate, advanced)
-- [ ] Content categorization by grammar rule
+- [x] Editorial review infrastructure (validation script, checklist)
+- [x] Replace default Flutter launcher icons with branded "S"
+- [x] Pin Flutter SDK version and verify release builds
+- [x] Spot full-flow integration test coverage
+- [x] Refresh project documentation (README, ROADMAP, release report)
+- [x] Web PWA metadata (manifest, OG tags, robots.txt)
+- [ ] Final cross-platform release smoke test
+- [ ] Qualified editorial review of all Romanian content (human review needed)
 
-## v2.0 — Vocabulary Game
+## v2.0 — Content Expansion
 
-- [ ] "Cuvântul zilei" — word definition game
-- [ ] Synonym/antonym challenges
-- [ ] True/false definitions
-- [ ] Romanian dictionary integration (local)
+- [ ] Expand vocabulary to 200+ exercises
+- [ ] Expand idioms to 100+ expressions
+- [ ] Add Spot texts with new error categories
+- [ ] Grammar difficulty calibration based on user data
 
-## v2.1 — Spelling Game
+## v3.0 — Social & Persistence
 
-- [ ] "Scrie corect" — dictation-style spelling
-- [ ] Common Romanian spelling pitfalls
-- [ ] Diacritics challenges (ă, â, î, ș, ț)
-
-## v3.0 — Idioms & Expressions
-
-- [ ] "Expresii românești" — match idiom to meaning
-- [ ] Regional expressions
-- [ ] Historical/cultural context for each expression
-
-## v3.1 — Logic Puzzles
-
-- [ ] "Jocuri logice" — language-based puzzles
-- [ ] Crosswords
-- [ ] Word chains
-- [ ] Anagram challenges
-
-## v4.0 — Social & Persistence (if needed)
-
-- [ ] Daily streak tracking (local storage)
+- [ ] Daily streak tracking
 - [ ] Share results as images
-- [ ] Daily leaderboard (requires backend — evaluate carefully)
+- [ ] Cross-device progress sync (evaluate carefully)
 
 ## Future Ideas
 
-- "Roade cuvinte" — word building game
-- "Puzzle lingvistic" — linguistic puzzles
 - Audio pronunciation challenges
 - Regional dialect mini-games
 - Seasonal/holiday content packs
+- Crossword puzzles
+- Word chains / anagram challenges
 
 ## Non-Goals
 
 These are explicitly out of scope:
 
 - Accounts / authentication
-- Cloud sync / backend
+- Cloud sync / backend (beyond simple progress export)
 - Monetization / payments
 - Analytics / tracking
 - Social features (beyond simple sharing)

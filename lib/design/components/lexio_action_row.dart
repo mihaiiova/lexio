@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../colors.dart';
 import '../spacing.dart';
@@ -40,12 +39,11 @@ class LexioActionRow extends StatelessWidget {
                   Expanded(
                     child: Text(
                       label,
-                      style: GoogleFonts.noticiaText(
-                        textStyle: LexioTextStyles.headingMedium.copyWith(
+                      style: LexioTextStyles.headingMedium.copyWith(
                           color: LexioColors.textPrimary,
                           fontWeight: FontWeight.w400,
+                          fontFamily: 'NoticiaText',
                         ),
-                      ),
                     ),
                   ),
                   const SizedBox(width: LexioSpacing.lg),

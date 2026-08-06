@@ -23,10 +23,10 @@ final class SpotGameState {
   final List<Set<int>> incorrectTapWordIndices;
   final SpotGameMode mode;
   final DateTime startTime;
-  final int remainingSeconds;
   final bool isFinished;
   final bool isChecking;
   final int? shakingWordIndex;
+  final int? _frozenRemainingSeconds;
 
   static const _timerDuration = 60;
 
@@ -37,10 +37,10 @@ final class SpotGameState {
     List<Set<int>>? incorrectTapWordIndices,
     this.mode = SpotGameMode.normal,
     DateTime? startTime,
-    this.remainingSeconds = _timerDuration,
     this.isFinished = false,
     this.isChecking = false,
     this.shakingWordIndex,
+    this._frozenRemainingSeconds,
   }) : foundMistakeIndices =
            foundMistakeIndices ?? List.generate(texts.length, (_) => <int>{}),
        incorrectTapWordIndices =
@@ -87,10 +87,25 @@ final class SpotGameState {
 
   Duration get elapsed => DateTime.now().difference(startTime);
 
+  Duration elapsedAt(DateTime point) => point.difference(startTime);
+
+  int get remainingSeconds {
+    final secs = _timerDuration - elapsed.inSeconds;
+    return secs < 0 ? 0 : secs;
+  }
+
+  int remainingSecondsAt(DateTime point) {
+    final secs = _timerDuration - point.difference(startTime).inSeconds;
+    return secs < 0 ? 0 : secs;
+  }
+
+  bool get isTimerExpired => remainingSeconds <= 0;
+
   int get score {
     final base = totalCorrectTaps * 100;
     final penalty = totalIncorrectTaps * 25;
-    final timeBonus = mode == SpotGameMode.normal ? 0 : remainingSeconds * 5;
+    final bonusSeconds = _frozenRemainingSeconds ?? remainingSeconds;
+    final timeBonus = mode == SpotGameMode.normal ? 0 : bonusSeconds * 5;
     return (base - penalty + timeBonus).clamp(0, 999999);
   }
 
@@ -167,28 +182,31 @@ final class SpotGameState {
 
   SpotGameState nextText() {
     if (isLastText) {
-      return _copyWith(isFinished: true, isChecking: false);
+      return _copyWith(
+        isFinished: true,
+        isChecking: false,
+        frozenRemainingSeconds: remainingSeconds,
+      );
     }
     return _copyWith(
       currentTextIndex: currentTextIndex + 1,
       isChecking: false,
-      remainingSeconds: _timerDuration,
+      startTime: DateTime.now(),
     );
   }
 
-  SpotGameState tick() {
-    if (isFinished) return this;
-    final newRemaining = remainingSeconds - 1;
-    if (newRemaining <= 0) {
-      if (isLastText) {
-        return _copyWith(remainingSeconds: 0, isFinished: true);
-      }
+  SpotGameState checkTimerExpiry() {
+    if (isFinished || !isTimerExpired) return this;
+    if (isLastText) {
       return _copyWith(
-        currentTextIndex: currentTextIndex + 1,
-        remainingSeconds: _timerDuration,
+        isFinished: true,
+        frozenRemainingSeconds: 0,
       );
     }
-    return _copyWith(remainingSeconds: newRemaining);
+    return _copyWith(
+      currentTextIndex: currentTextIndex + 1,
+      startTime: DateTime.now(),
+    );
   }
 
   SpotGameState checkAnswers() => _copyWith(isChecking: true);
@@ -199,9 +217,10 @@ final class SpotGameState {
     int? currentTextIndex,
     bool? isFinished,
     bool? isChecking,
-    int? remainingSeconds,
+    DateTime? startTime,
     int? shakingWordIndex,
     bool clearShaker = false,
+    int? frozenRemainingSeconds,
   }) {
     return SpotGameState(
       texts: texts,
@@ -210,13 +229,14 @@ final class SpotGameState {
       incorrectTapWordIndices:
           incorrectTapWordIndices ?? this.incorrectTapWordIndices,
       mode: mode,
-      startTime: startTime,
-      remainingSeconds: remainingSeconds ?? this.remainingSeconds,
+      startTime: startTime ?? this.startTime,
       isFinished: isFinished ?? this.isFinished,
       isChecking: isChecking ?? this.isChecking,
       shakingWordIndex: clearShaker
           ? null
           : (shakingWordIndex ?? this.shakingWordIndex),
+      frozenRemainingSeconds:
+          frozenRemainingSeconds ?? _frozenRemainingSeconds,
     );
   }
 

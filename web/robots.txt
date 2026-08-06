@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /flutter_service_worker.js
+Disallow: /assets/AssetManifest.json
+Disallow: /assets/FontManifest.json
+Disallow: /assets/NOTICES
+
+Sitemap: https://lexio.app/sitemap.xml

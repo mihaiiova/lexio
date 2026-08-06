@@ -11,7 +11,8 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: '3.44.5'
+          channel: 'stable'
 
       - name: Install dependencies
         run: flutter pub get
@@ -34,7 +35,7 @@ jobs:
           security unlock-keychain -p "" "$KEYCHAIN_PATH"
           security default-keychain -s "$KEYCHAIN_PATH"
           security list-keychains -d user -s "$KEYCHAIN_PATH" login.keychain-db
-          
+
           echo "$DIST_CERT_BASE64" | base64 -d > "$RUNNER_TEMP/cert.p12"
           security import "$RUNNER_TEMP/cert.p12" \
             -k "$KEYCHAIN_PATH" \
@@ -43,16 +44,12 @@ jobs:
             -T /usr/bin/security
           security set-key-partition-list -S apple-tool:,apple: \
             -s -k "" "$KEYCHAIN_PATH"
-          
-          echo "Certificates in keychain:"
-          security find-identity -v -p codesigning "$KEYCHAIN_PATH"
 
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           PROFILE_PATH="$RUNNER_TEMP/profile.mobileprovision"
           echo "$PROVISION_PROFILE_BASE64" | base64 -d > "$PROFILE_PATH"
           PROFILE_UUID=$(security cms -D -i "$PROFILE_PATH" | plutil -extract UUID raw -)
           cp "$PROFILE_PATH" ~/Library/MobileDevice/Provisioning\ Profiles/"$PROFILE_UUID".mobileprovision
-          echo "Installed profile: $PROFILE_UUID"
 
       - name: Bump build number
         run: |

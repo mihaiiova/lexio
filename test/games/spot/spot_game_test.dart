@@ -49,7 +49,8 @@ void main() {
       ),
     ];
 
-    SpotGameState createState() => SpotGameState(texts: texts);
+    SpotGameState createState({DateTime? startTime}) =>
+        SpotGameState(texts: texts, startTime: startTime);
 
     test('initial state has correct defaults', () {
       final state = createState();
@@ -146,7 +147,7 @@ void main() {
       expect(state2.allMistakesFoundInCurrentText, true);
     });
 
-    test('nextText advances to next text', () {
+    test('nextText advances to next text and resets startTime', () {
       final state = createState();
       final allFound = state.tapWord(3).state.tapWord(4).state;
       final next = allFound.nextText();
@@ -167,47 +168,79 @@ void main() {
       expect(finished.textsCompleted, 2);
     });
 
-    test('tick decrements remainingSeconds', () {
-      final state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
-      expect(state.remainingSeconds, 60);
+    group('deadline-based timer', () {
+      test('remainingSeconds computed from startTime', () {
+        final now = DateTime(2025, 1, 1, 12, 0, 0);
+        final state = SpotGameState(texts: texts, startTime: now);
 
-      final afterTick = state.tick();
-      expect(afterTick.remainingSeconds, 59);
+        final atStart = state.remainingSecondsAt(now);
+        expect(atStart, 60);
+
+        final after30 = state.remainingSecondsAt(
+          now.add(const Duration(seconds: 30)),
+        );
+        expect(after30, 30);
+
+        final after61 = state.remainingSecondsAt(
+          now.add(const Duration(seconds: 61)),
+        );
+        expect(after61, 0);
+      });
+
+      test('isTimerExpired true when deadline passed', () {
+        final now = DateTime(2025, 1, 1, 12, 0, 0);
+        final state = SpotGameState(texts: texts, startTime: now);
+
+        final expired = state.elapsedAt(
+          now.add(const Duration(seconds: 61)),
+        ).inSeconds >= 60;
+        expect(expired, true);
+      });
+
+      test('remainingSeconds floors at zero', () {
+        final now = DateTime(2025, 1, 1, 12, 0, 0);
+        final state = SpotGameState(texts: texts, startTime: now);
+
+        final after120 = state.remainingSecondsAt(
+          now.add(const Duration(seconds: 120)),
+        );
+        expect(after120, 0);
+      });
     });
 
-    test('tick finishes game when timer expires on non-last text', () {
+    test('checkTimerExpiry advances on non-last text when expired', () {
+      final now = DateTime(2025, 1, 1, 12, 0, 0);
       final state = SpotGameState(
         texts: texts,
-        mode: SpotGameMode.timed,
-        remainingSeconds: 1,
+        startTime: now.subtract(const Duration(seconds: 61)),
       );
-      final afterTick = state.tick();
-      expect(afterTick.remainingSeconds, 0);
-      expect(afterTick.isFinished, true);
+
+      expect(state.isTimerExpired, isTrue);
+      final advanced = state.checkTimerExpiry();
+      expect(advanced.currentTextIndex, 1);
     });
 
-    test('tick finishes game when timer expires on last text', () {
+    test('checkTimerExpiry finishes game on last text when expired', () {
+      final now = DateTime(2025, 1, 1, 12, 0, 0);
       final state = SpotGameState(
         texts: texts,
-        mode: SpotGameMode.timed,
         currentTextIndex: 1,
-        remainingSeconds: 1,
+        startTime: now.subtract(const Duration(seconds: 61)),
       );
-      final afterTick = state.tick();
-      expect(afterTick.remainingSeconds, 0);
-      expect(afterTick.isFinished, true);
+
+      expect(state.isTimerExpired, isTrue);
+      final finished = state.checkTimerExpiry();
+      expect(finished.isFinished, true);
     });
 
-    test('nextText preserves remainingSeconds', () {
-      final state = createState().tapWord(3).state.tapWord(4).state;
-      expect(state.remainingSeconds, 60);
+    test('checkTimerExpiry does nothing when not expired', () {
+      final state = SpotGameState(
+        texts: texts,
+        startTime: DateTime.now(),
+      );
 
-      final afterTick = state.tick();
-      expect(afterTick.remainingSeconds, 59);
-
-      final next = afterTick.nextText();
-      expect(next.currentTextIndex, 1);
-      expect(next.remainingSeconds, 59);
+      final result = state.checkTimerExpiry();
+      expect(result.currentTextIndex, state.currentTextIndex);
     });
 
     test('score calculation', () {

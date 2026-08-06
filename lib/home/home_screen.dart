@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../design/animations.dart';
 import '../design/colors.dart';
@@ -63,6 +63,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const Divider(color: LexioColors.divider),
                     const Spacer(),
+                    _buildLegalFooter(),
                   ],
                 ),
               ),
@@ -79,19 +80,17 @@ class HomeScreen extends StatelessWidget {
       children: [
         Text(
           'Slove',
-          style: GoogleFonts.noticiaText(
-            textStyle: LexioTextStyles.bodyLarge.copyWith(
-              color: LexioColors.textPrimary,
-              fontWeight: FontWeight.w600,
-            ),
+          style: LexioTextStyles.bodyLarge.copyWith(
+            color: LexioColors.textPrimary,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'NoticiaText',
           ),
         ),
         Text(
           'Joacă-te cu limba română.',
-          style: GoogleFonts.noticiaText(
-            textStyle: LexioTextStyles.labelMedium.copyWith(
-              color: LexioColors.textSecondary,
-            ),
+          style: LexioTextStyles.labelMedium.copyWith(
+            color: LexioColors.textSecondary,
+            fontFamily: 'NoticiaText',
           ),
         ),
       ],
@@ -120,6 +119,51 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildLegalFooter() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: LexioSpacing.md,
+        bottom: LexioSpacing.xl,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Semantics(
+            link: true,
+            child: TextButton(
+              onPressed: () => launchUrl(
+                Uri.parse('https://lexio.app/confidentialitate'),
+                mode: LaunchMode.externalApplication,
+              ),
+              child: Text(
+                'Confidențialitate',
+                style: LexioTextStyles.labelSmall.copyWith(
+                  color: LexioColors.textTertiary,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: LexioSpacing.sm),
+          Semantics(
+            link: true,
+            child: TextButton(
+              onPressed: () => launchUrl(
+                Uri.parse('https://lexio.app/asistenta'),
+                mode: LaunchMode.externalApplication,
+              ),
+              child: Text(
+                'Asistență',
+                style: LexioTextStyles.labelSmall.copyWith(
+                  color: LexioColors.textTertiary,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _GameEntry extends StatelessWidget {
@@ -137,8 +181,11 @@ class _GameEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: InkWell(
+    return Semantics(
+      button: true,
+      label: 'Joc $number: $title',
+      child: Material(
+        child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(LexioRadius.md),
         child: Padding(
@@ -163,12 +210,11 @@ class _GameEntry extends StatelessWidget {
                   Expanded(
                     child: Text(
                       title,
-                      style: GoogleFonts.noticiaText(
-                        textStyle: LexioTextStyles.displayLarge.copyWith(
+                      style: LexioTextStyles.displayLarge.copyWith(
                           color: LexioColors.textPrimary,
                           fontWeight: FontWeight.w400,
+                          fontFamily: 'NoticiaText',
                         ),
-                      ),
                     ),
                   ),
                   const SizedBox(width: LexioSpacing.md),
@@ -182,6 +228,7 @@ class _GameEntry extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

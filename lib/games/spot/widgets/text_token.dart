@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../design/colors.dart';
 import '../../../design/typography.dart';
 
 TextStyle _wordStyle(Color color) {
-  return GoogleFonts.noticiaText(
-    textStyle: LexioTextStyles.bodyLarge.copyWith(
-      fontSize: 20,
-      height: 1.35,
-      color: color,
-    ),
+  return LexioTextStyles.bodyLarge.copyWith(
+    fontSize: 20,
+    height: 1.35,
+    color: color,
+    fontFamily: 'NoticiaText',
   );
 }
 
@@ -32,12 +29,19 @@ class TextToken extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isTappable = state != TextTokenState.found && onTap != null;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 3),
-      child: GestureDetector(
-        onTap: state == TextTokenState.found ? null : onTap,
-        behavior: HitTestBehavior.opaque,
-        child: _buildContent(),
+      child: MergeSemantics(
+        child: Semantics(
+          button: isTappable,
+          label: originalText,
+          child: GestureDetector(
+            onTap: isTappable ? onTap : null,
+            behavior: HitTestBehavior.opaque,
+            child: _buildContent(),
+          ),
+        ),
       ),
     );
   }

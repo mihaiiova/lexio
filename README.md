@@ -4,7 +4,7 @@ Beautiful Romanian word games. Calm, minimalist, typography-first.
 
 ## Overview
 
-Slove is a collection of premium word games for the Romanian language — the "NYT Games for Romanian". The first game is a grammar challenge; more games (vocabulary, spelling, idioms, logic) are planned.
+Slove is a collection of premium word games for the Romanian language — the "NYT Games for Romanian". Four interactive games: grammar correction, vocabulary definitions, Romanian idioms, and find-the-mistake texts.
 
 **Platforms**: iOS, Android, Web
 
@@ -14,6 +14,15 @@ Slove is a collection of premium word games for the Romanian language — the "N
 flutter pub get
 flutter run
 ```
+
+## Games
+
+| Game | Romanian Title | Type | Exercises |
+|---|---|---|---|
+| Grammar | Corect sau greșit? | True/false grammar challenge | 423 |
+| Vocabulary | Ce înseamnă? | Multiple-choice definitions | 100 |
+| Idioms | Vorba vine | Expression meaning | 60 |
+| Spot | Găsește greșeala | Timed error-finding (60s) | 60 texts |
 
 ## Project Structure
 
@@ -29,12 +38,16 @@ lib/
     radius.dart                # Border radius tokens
     shadows.dart               # Shadow tokens
     animations.dart            # Animation durations & curves
-    components/                # Reusable UI components
+    components/                # Reusable UI components (LexioButton, LexioCard, LexioFeedback)
   games/                       # All games
     game_interface.dart        # Contract for each game
-    grammar/                   # Grammar game
+    grammar/                   # Grammar game — Corect sau greșit?
+    vocabulary/                # Vocabulary game — Ce înseamnă?
+    idioms/                    # Idioms game — Vorba vine
+    spot/                      # Spot game — Găsește greșeala
   home/                        # Home screen
   content/                     # Local exercise data (JSON)
+  progress/                    # Local progress persistence (SharedPreferences, spaced repetition)
 ```
 
 ## Design Principles
@@ -50,18 +63,55 @@ lib/
 - Each game is an isolated module behind a common interface (`LexioGame`)
 - Design tokens are centralized — changing fonts/colors needs edits in one place
 - Content is stored as local JSON for easy addition of thousands of exercises
-- No backend, no auth, no persistence — pure local experience
+- **Local persistence**: Progress tracked via `SharedPreferences` with spaced repetition
+- **No backend, no auth, no analytics** — pure local experience
+- **Deadline-based timer**: Spot game uses wall-clock deadlines, not callback counting
+- **Lifecycle-safe**: App respects background/foreground transitions (WidgetsBindingObserver)
+- **Brand**: Primary blue `#4588E0`, NoticiaText font family, white surfaces
 
-## Adding a New Game
+## Testing
 
-1. Create a directory under `lib/games/yourgame/`
-2. Implement the `LexioGame` interface from `lib/games/game_interface.dart`
-3. Add content JSON to `lib/content/`
-4. Register on the home screen
+```bash
+flutter analyze   # Static analysis — zero warnings
+flutter test      # Unit + widget + integration tests
+```
 
-See `lib/games/grammar/` for the reference implementation.
+Test structure:
+```
+test/
+  design/          # Design component tests
+  games/
+    grammar/       # Grammar game tests
+    spot/          # Spot game tests (logic + integration + content)
+    vocabulary/    # Vocabulary game tests
+  progress/        # Spaced repetition logic
+  accessibility/   # Semantics tests
+```
+
+Content validation:
+```bash
+python3 scripts/validate_content.py
+```
 
 ## Dependencies
 
-- **google_fonts**: Premium typography (Playfair Display + DM Sans)
-- **cupertino_icons**: iOS-style icons
+- **flutter**: UI framework
+- **shared_preferences**: Local progress storage
+- **url_launcher**: External DOOM dictionary links
+- **flutter_localizations**: Romanian locale support
+
+## CI/CD
+
+- **CI** (`.github/workflows/ci.yml`): Analyze → Test → Build Web → Build Android (AAB)
+- **Release** (`.github/workflows/release.yml`): Tag-triggered builds for all platforms
+- **TestFlight** (`.github/workflows/deploy.yml`): Manual iOS deploy to TestFlight
+
+## URLs
+
+- Privacy policy: `https://lexio.app/confidentialitate`
+- Support: `https://lexio.app/asistenta`
+- Website: `https://lexio.app`
+
+## License
+
+All rights reserved. © 2026 Slove.

@@ -18,6 +18,7 @@ class LexioButton extends StatelessWidget {
     this.icon,
     this.isExpanded = false,
     this.isLoading = false,
+    this.semanticLabel,
   });
 
   final String label;
@@ -27,6 +28,7 @@ class LexioButton extends StatelessWidget {
   final IconData? icon;
   final bool isExpanded;
   final bool isLoading;
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +131,11 @@ class LexioButton extends StatelessWidget {
           padding: padding,
           foregroundColor: foregroundColor,
         ),
-        child: child,
+        child: Semantics(
+          label: semanticLabel ?? label,
+          button: true,
+          child: child,
+        ),
       );
     }
 
@@ -142,7 +148,11 @@ class LexioButton extends StatelessWidget {
             padding: padding,
             foregroundColor: foregroundColor,
           ),
-          child: child,
+          child: Semantics(
+            label: semanticLabel ?? label,
+            button: true,
+            child: child,
+          ),
         ),
       );
     }
@@ -154,7 +164,11 @@ class LexioButton extends StatelessWidget {
         foregroundColor: foregroundColor,
         padding: padding,
       ),
-      child: child,
+      child: Semantics(
+        label: semanticLabel ?? label,
+        button: true,
+        child: child,
+      ),
     );
   }
 }
