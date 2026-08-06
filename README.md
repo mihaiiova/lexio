@@ -1,10 +1,10 @@
-# Lexio
+# Slove
 
 Beautiful Romanian word games. Calm, minimalist, typography-first.
 
 ## Overview
 
-Lexio is a collection of premium word games for the Romanian language — the "NYT Games for Romanian". The first game is a grammar challenge; more games (vocabulary, spelling, idioms, logic) are planned.
+Slove is a collection of premium word games for the Romanian language — the "NYT Games for Romanian". The first game is a grammar challenge; more games (vocabulary, spelling, idioms, logic) are planned.
 
 **Platforms**: iOS, Android, Web
 

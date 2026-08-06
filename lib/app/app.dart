@@ -8,7 +8,7 @@ class LexioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Lexio',
+      title: 'Slove',
       debugShowCheckedModeBanner: false,
       theme: LexioTheme.light,
       home: const HomeScreen(),

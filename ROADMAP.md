@@ -1,4 +1,4 @@
-# ROADMAP.md — Lexio Development Roadmap
+# ROADMAP.md — Slove Development Roadmap
 
 ## v1.0 — Foundation (Current)
 

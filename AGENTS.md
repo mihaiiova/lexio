@@ -1,4 +1,4 @@
-# AGENTS.md — Lexio Agent Development Guide
+# AGENTS.md — Slove Agent Development Guide
 
 This file is the single source of truth for any coding agent working on this project. Follow these rules precisely.
 

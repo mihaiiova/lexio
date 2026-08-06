@@ -1,4 +1,4 @@
-# ARCHITECTURE.md — Lexio Architecture
+# ARCHITECTURE.md — Slove Architecture
 
 ## Layers
 

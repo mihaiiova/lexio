@@ -1,9 +1,9 @@
-# Lexio Release Readiness Report
+# Slove Release Readiness Report
 
 **Assessment date:** 2026-07-29  
 **Recommendation:** Do not submit to public app stores yet.
 
-Lexio has a coherent v1 product foundation: two playable Romanian-language games with working completion flows, local content, a polished visual system, and a successful web production build. Store submission is blocked by Android signing, educational content corrections, and missing platform/distribution assets.
+Slove has a coherent v1 product foundation: two playable Romanian-language games with working completion flows, local content, a polished visual system, and a successful web production build. Store submission is blocked by Android signing, educational content corrections, and missing platform/distribution assets.
 
 ## Release Distance
 

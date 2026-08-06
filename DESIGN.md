@@ -1,8 +1,8 @@
-# DESIGN.md — Lexio Design System
+# DESIGN.md — Slove Design System
 
 ## Philosophy
 
-Lexio's design draws from premium vocabulary apps: large typography, generous whitespace, subtle animations, clean cards, minimal chrome. The interface should feel like turning pages in a beautiful book.
+Slove's design draws from premium vocabulary apps: large typography, generous whitespace, subtle animations, clean cards, minimal chrome. The interface should feel like turning pages in a beautiful book.
 
 ## Typography
 
