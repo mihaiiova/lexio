@@ -63,7 +63,7 @@ These are explicitly out of scope:
 - Accounts / authentication
 - Cloud sync / backend (beyond simple progress export)
 - Monetization / payments
-- Analytics / tracking
+- Advertising and cross-app tracking
 - Social features (beyond simple sharing)
 - AI-generated content
 - Localization (the app IS Romanian)

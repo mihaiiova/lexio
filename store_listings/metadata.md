@@ -19,8 +19,7 @@
 | Field | URL |
 |---|---|
 | Website | `https://lexio.app` |
-| Privacy policy | `https://lexio.app/confidentialitate` |
-| Support | `https://lexio.app/asistenta` |
+| Privacy policy | Available in the app; public store URL still required |
 
 ## Categories
 
@@ -38,7 +37,7 @@
 | In-app purchases | Nu |
 | Advertising | Nu |
 | Account required | Nu |
-| Data collection | Nu (complet offline) |
+| Data collection | Da — interacțiuni cu aplicația și identificator al instalării pentru analiză |
 | Unrestricted web access | Nu (doar linkuri DOOM) |
 | Gambling / simulated gambling | Nu |
 | Alcohol / tobacco / drug references | Nu |
@@ -48,27 +47,27 @@
 | Mature / suggestive themes | Nu |
 | Health / fitness data | Nu |
 | Location data | Nu |
-| User data transmitted | Nimic |
-| Encryption | N/A (no data transmitted) |
+| User data transmitted | Eveniment `game_opened`, identificatorul jocului și date tehnice Firebase |
+| Encryption | Da, în tranzit către Firebase |
 | Children under 13 | Nu este destinat copiilor sub 13 ani |
 
 ## App Privacy (App Store)
 
-- **Data Linked to You**: No data collected
+- **Data Linked to You**: No data linked to an account or known identity
 - **Data Used to Track You**: No data collected
-- **Data Not Linked to You**: No data collected
+- **Data Not Linked to You**: Product interaction, device identifier, diagnostics and technical app/device data
 
 ## Data Safety (Google Play)
 
-- **Data collected**: No data collected or shared
-- **Data shared**: No data shared with third parties
-- **Data encrypted in transit**: N/A (no network communication)
+- **Data collected**: App activity, device or other identifiers, diagnostics and technical app/device data
+- **Data shared**: Processed by Google Firebase Analytics for app analytics
+- **Data encrypted in transit**: Yes
 - **Data can be deleted**: N/A (no user accounts or data collected)
 - **Data safety label**: App does not collect or share any user data
 
 ## Export Compliance
 
-- Encryption: Nu se folosește criptare. Toate datele sunt locale. Linkurile DOOM folosesc HTTPS standard.
+- Encryption: Se folosește HTTPS pentru Firebase Analytics și linkurile DOOM.
 - ITAR / EAR: Nu se aplică — aplicație educațională fără tehnologie de export-controlat.
 
 ## Contact
@@ -76,16 +75,17 @@
 | Field | Value |
 |---|---|
 | Developer name | Creator independent |
-| Support email | Contact prin formularul de pe lexio.app/asistenta |
+| Support email | Must be supplied directly in each store listing |
 | Marketing URL | `https://lexio.app` |
 
 ## App Review Notes (pentru Apple)
 
-Slove este o aplicație educațională offline cu patru jocuri de limbă română.
-Nu necesită cont, autentificare sau conexiune la internet. Nu colectează și nu
-transmite date.
+Slove este o aplicație educațională cu patru jocuri de limbă română.
+Nu necesită cont sau autentificare. Jocurile funcționează offline.
 
-Toate exercițiile și progresul sunt stocate local pe dispozitiv.
+Toate exercițiile și progresul sunt stocate local pe dispozitiv. Firebase
+Analytics primește evenimentul `game_opened`, identificatorul jocului și datele
+tehnice descrise în politica de confidențialitate.
 
 Linkurile externe se deschid doar în browserul sistemului și trimit către
 Dicționarul Ortografic, Ortoepic și Morfologic al Limbii Române (DOOM) —

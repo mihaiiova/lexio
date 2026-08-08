@@ -27,7 +27,7 @@ Un test contra cronometru: ai un text și 60 de secunde să identifici greșelil
 ### Caracteristici
 
 - Design tipografic curat: textul în prim-plan, fonturi premium, spațiere generoasă
-- 100% offline: toate exercițiile și fonturile incluse, nu ai nevoie de internet
+- Jocuri offline: toate exercițiile și fonturile sunt incluse
 - Fără conturi, fără rețele sociale: progresul rămâne pe dispozitivul tău
 - Fără reclame, fără microtranzacții: o experiență completă și gratuită
 - Conținut verificat editorial, cu referințe către DOOM
@@ -54,17 +54,17 @@ Nu conține reclame
 12+
 
 ## Politica de confidențialitate
-https://lexio.app/confidentialitate
+Politica este disponibilă în aplicație. Pentru publicarea în Google Play trebuie furnizat și un URL public.
 
 ## Secțiunea Data Safety
 
 | Întrebare | Răspuns |
 |---|---|
-| Partajează date cu terți? | Nu |
-| Colectează date? | Nu |
-| Criptează datele în tranzit? | N/A (fără comunicație de rețea) |
+| Partajează date cu terți? | Datele sunt procesate de Google Firebase Analytics pentru analiză |
+| Colectează date? | Da — activitatea în aplicație, identificator al instalării și date tehnice |
+| Criptează datele în tranzit? | Da |
 | Utilizatorul poate șterge datele? | Datele se șterg automat la dezinstalare |
-| Colectează date de localizare? | Nu |
+| Colectează date de localizare? | Regiune aproximativă derivată de Firebase |
 | Colectează date personale? | Nu |
 | Colectează date financiare? | Nu |
 | Colectează date de sănătate? | Nu |
@@ -74,8 +74,8 @@ https://lexio.app/confidentialitate
 | Colectează istoric de navigare? | Nu |
 | Colectează contacte? | Nu |
 | Colectează date de activitate fizică? | Nu |
-| Colectează date de identificare a dispozitivului? | Nu |
-| Colectează date de performanță a aplicației? | Nu |
+| Colectează date de identificare a dispozitivului? | Da — identificator al instalării, fără identificator publicitar |
+| Colectează date de performanță a aplicației? | Da — date tehnice furnizate de Firebase Analytics |
 
 ## Clasificare conținut
 
@@ -101,7 +101,7 @@ https://lexio.app/confidentialitate
 
 | Câmp | Detalii |
 |---|---|
-| Email dezvoltator | Prin formularul de pe lexio.app/asistenta |
+| Email dezvoltator | De completat direct în Google Play Console |
 | Adresă website | https://lexio.app |
 | Adresă fizică | — (creator independent, nu e necesară publicarea) |
 
@@ -123,8 +123,8 @@ https://lexio.app/confidentialitate
 
 ## Note pentru review (Google Play)
 
-Slove este o aplicație educațională offline cu patru jocuri de limbă română.
-Nu conține reclame, nu necesită autentificare și nu colectează date.
+Slove este o aplicație educațională cu patru jocuri de limbă română.
+Nu conține reclame și nu necesită autentificare. Jocurile funcționează offline.
 
 Aplicația folosește SharedPreferences pentru stocarea locală a progresului
 (standard Android, fără permisiuni speciale). Fonturile NoticiaText sunt
@@ -133,7 +133,8 @@ incluse în APK/AAB.
 Linkurile externe se deschid în browserul sistemului (către dexonline.ro
 pentru referințe DOOM). Nu există WebView-uri în aplicație.
 
-Toate datele sunt locale; aplicația funcționează complet fără permisiunea
-de internet.
+Progresul de învățare este local. Firebase Analytics înregistrează deschiderea
+unui joc, identificatorul fix al jocului și date tehnice despre instalare,
+aplicație și dispozitiv.
 
 Nu sunt declarate permisiuni speciale. Linkurile externe (DOOM) se deschid în browserul sistemului fără permisiuni suplimentare.

@@ -22,8 +22,7 @@
 - [ ] Check Spot timer: open browser DevTools, verify it keeps counting during gameplay
 - [ ] Navigate back from each game to home screen
 - [ ] Refresh page — app reloads to home screen
-- [ ] Privacy link opens in new tab
-- [ ] Support link opens in new tab
+- [ ] Privacy page opens inside the app
 
 ### Safari
 - [ ] Same checks as Chrome (basic smoke: loading, one game)
@@ -51,8 +50,7 @@
 - [ ] **Background test**: Background the app for 30 seconds during any game, return — game should resume correctly
 - [ ] Navigation: back button from each game returns to home
 - [ ] Offline test: enable airplane mode, launch app, play any game — should work fully
-- [ ] Privacy link opens external browser
-- [ ] Support link opens external browser
+- [ ] Privacy page opens inside the app
 - [ ] Enlarged text: increase system font size, verify text scales without overflow
 - [ ] Screen reader (VoiceOver): basic navigation works through home and one game
 

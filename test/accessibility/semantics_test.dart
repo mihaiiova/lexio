@@ -12,10 +12,20 @@ void main() {
     expect(find.text('Găsește greșeala'), findsOneWidget);
   });
 
-  testWidgets('Home screen has legal footer links', (tester) async {
+  testWidgets('Home screen opens the in-app privacy policy', (tester) async {
     await tester.pumpWidget(const LexioApp());
+
     expect(find.text('Confidențialitate'), findsOneWidget);
-    expect(find.text('Asistență'), findsOneWidget);
+    expect(find.text('Asistență'), findsNothing);
+
+    await tester.ensureVisible(find.text('Confidențialitate'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Confidențialitate'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Politica de confidențialitate'), findsOneWidget);
+    expect(find.text('Ce date colectăm'), findsOneWidget);
+    expect(find.textContaining('Firebase Analytics'), findsWidgets);
   });
 
   testWidgets('App title text is present', (tester) async {

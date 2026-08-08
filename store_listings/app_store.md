@@ -26,7 +26,7 @@ Cele patru jocuri te provoacă în moduri diferite:
 ### Ce face Slove special
 
 - **Design tipografic.** Interfața pune textul în prim-plan, cu fonturi atent alese și spațiere generoasă. Fără aglomerație vizuală, fără distrageri.
-- **100% offline.** Toate exercițiile și fonturile sunt incluse în aplicație. Nu ai nevoie de internet ca să te joci.
+- **Jocuri offline.** Toate exercițiile și fonturile sunt incluse în aplicație. Poți juca fără conexiune la internet.
 - **Fără conturi, fără rețele sociale.** Niciun fel de autentificare. Progresul tău rămâne pe dispozitivul tău.
 - **Fără reclame, fără achiziții în aplicație.** O experiență completă, fără microtranzacții sau conținut blocat.
 - **Conținut verificat.** Exercițiile sunt revizuite editorial, cu referințe către DOOM și surse normative actuale.
@@ -55,17 +55,14 @@ Română (intreaga aplicație este în limba română)
 - Fără cont sau autentificare necesară
 
 ## Confidențialitate
-Politica de confidențialitate: https://lexio.app/confidentialitate
+Politica de confidențialitate este disponibilă în aplicație. Pentru publicarea în App Store trebuie furnizat și un URL public.
 
-Slove nu colectează și nu transmite niciun fel de date cu caracter personal. Progresul în jocuri este stocat exclusiv pe dispozitiv și este șters automat la dezinstalare.
+Slove folosește Firebase Analytics pentru a înregistra ce joc este deschis, fără nume sau cont. Firebase poate procesa un identificator al instalării și date tehnice despre aplicație și dispozitiv. Răspunsurile, scorul și progresul rămân exclusiv pe dispozitiv.
 
 ### Etichetele App Privacy
-- **Date asociate cu tine:** Niciuna
+- **Date asociate cu tine:** Niciuna — aplicația nu are conturi
 - **Date utilizate pentru urmărirea ta:** Niciuna
-- **Date neasociate cu tine:** Niciuna
-
-## Asistență
-https://lexio.app/asistenta
+- **Date neasociate cu tine:** Interacțiuni cu produsul, identificator al dispozitivului/instalării și date tehnice de diagnostic
 
 ## Website
 https://lexio.app

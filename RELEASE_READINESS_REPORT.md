@@ -24,7 +24,7 @@ The remaining work is a final smoke test across real devices, qualified editoria
 - **Store listings**: Draft App Store and Google Play text content (Romanian)
 - **Web PWA**: Updated manifest, OG tags, robots.txt, and branded web assets ready for deployment
 - **Brand assets**: Generated icon set and updated launch-screen sources require final platform visual verification
-- **Privacy/support**: Static pages are ready for deployment at `https://lexio.app/confidentialitate` and `https://lexio.app/asistenta`
+- **Privacy**: The policy is available inside the app and discloses anonymous Firebase usage analytics
 - **Tests**: 36+ tests covering game logic, content validation, integration flows
 
 ## What Was Fixed Since Last Report

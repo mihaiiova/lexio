@@ -16,6 +16,6 @@ void main() {
     expect(find.text('Găsește greșeala'), findsOneWidget);
     expect(find.text('În pregătire'), findsNothing);
 
-    expect(find.byType(InkWell), findsNWidgets(6));
+    expect(find.byType(InkWell), findsNWidgets(5));
   });
 }

@@ -56,7 +56,7 @@ lib/
 - **Minimalist**: Only essential UI chrome
 - **Calm**: Gentle colors, subtle animations
 - **Premium**: Clean cards, consistent spacing, refined details
-- **Fast**: Minimal dependencies, local data, no network calls
+- **Fast**: Local content and progress with lightweight usage analytics
 
 ## Architecture Decisions
 
@@ -64,7 +64,8 @@ lib/
 - Design tokens are centralized — changing fonts/colors needs edits in one place
 - Content is stored as local JSON for easy addition of thousands of exercises
 - **Local persistence**: Progress tracked via `SharedPreferences` with spaced repetition
-- **No backend, no auth, no analytics** — pure local experience
+- **No backend or auth** — learning content and progress remain local
+- **Privacy-conscious analytics**: Firebase records only game-open events; ad storage, ad personalization, and ad user data are disabled
 - **Deadline-based timer**: Spot game uses wall-clock deadlines, not callback counting
 - **Lifecycle-safe**: App respects background/foreground transitions (WidgetsBindingObserver)
 - **Brand**: Primary blue `#4588E0`, NoticiaText font family, white surfaces
@@ -99,6 +100,7 @@ python3 scripts/validate_content.py
 - **shared_preferences**: Local progress storage
 - **url_launcher**: External DOOM dictionary links
 - **flutter_localizations**: Romanian locale support
+- **firebase_core / firebase_analytics**: Anonymous game usage statistics
 
 ## CI/CD
 
@@ -106,11 +108,11 @@ python3 scripts/validate_content.py
 - **Release** (`.github/workflows/release.yml`): Tag-triggered builds for all platforms
 - **TestFlight** (`.github/workflows/deploy.yml`): Manual iOS deploy to TestFlight
 
-## URLs
+## Privacy
 
-- Privacy policy: `https://lexio.app/confidentialitate`
-- Support: `https://lexio.app/asistenta`
-- Website: `https://lexio.app`
+- The Romanian privacy policy is available from the home-screen footer.
+- The canonical policy text is stored in `store_listings/privacy_policy.md`.
+- Firebase platform configuration must be added before analytics events can be delivered.
 
 ## License
 

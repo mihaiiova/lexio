@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+
+import '../analytics/analytics_service.dart';
 import '../design/animations.dart';
 import '../design/colors.dart';
 import '../design/radius.dart';
@@ -10,6 +12,7 @@ import '../games/grammar/grammar_screen.dart';
 import '../games/idioms/idioms_screen.dart';
 import '../games/spot/spot_screen.dart';
 import '../games/vocabulary/vocabulary_screen.dart';
+import '../privacy/privacy_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,32 +41,39 @@ class HomeScreen extends StatelessWidget {
                       number: '01',
                       title: 'Corect sau greșit?',
                       accentColor: LexioColors.primary,
-                      onTap: () => _open(context, const GrammarScreen()),
+                      onTap: () =>
+                          _openGame(context, 'grammar', const GrammarScreen()),
                     ),
                     const Divider(color: LexioColors.divider),
                     _GameEntry(
                       number: '02',
                       title: 'Ce înseamnă?',
                       accentColor: LexioColors.secondary,
-                      onTap: () => _open(context, const VocabularyScreen()),
+                      onTap: () => _openGame(
+                        context,
+                        'vocabulary',
+                        const VocabularyScreen(),
+                      ),
                     ),
                     const Divider(color: LexioColors.divider),
                     _GameEntry(
                       number: '03',
                       title: 'Vorba vine',
                       accentColor: LexioColors.teal,
-                      onTap: () => _open(context, const IdiomsScreen()),
+                      onTap: () =>
+                          _openGame(context, 'idioms', const IdiomsScreen()),
                     ),
                     const Divider(color: LexioColors.divider),
                     _GameEntry(
                       number: '04',
                       title: 'Găsește greșeala',
                       accentColor: LexioColors.accent,
-                      onTap: () => _open(context, const SpotScreen()),
+                      onTap: () =>
+                          _openGame(context, 'spot', const SpotScreen()),
                     ),
                     const Divider(color: LexioColors.divider),
                     const Spacer(),
-                    _buildLegalFooter(),
+                    _buildLegalFooter(context),
                   ],
                 ),
               ),
@@ -97,6 +107,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  void _openGame(BuildContext context, String gameId, Widget screen) {
+    unawaited(AnalyticsService.logGameOpened(gameId));
+    _open(context, screen);
+  }
+
   void _open(BuildContext context, Widget screen) {
     Navigator.of(context).push(
       PageRouteBuilder<void>(
@@ -120,47 +135,22 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLegalFooter() {
+  Widget _buildLegalFooter(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
         top: LexioSpacing.md,
         bottom: LexioSpacing.xl,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Semantics(
-            link: true,
-            child: TextButton(
-              onPressed: () => launchUrl(
-                Uri.parse('https://lexio.app/confidentialitate'),
-                mode: LaunchMode.externalApplication,
-              ),
-              child: Text(
-                'Confidențialitate',
-                style: LexioTextStyles.labelSmall.copyWith(
-                  color: LexioColors.textTertiary,
-                ),
-              ),
+      child: Center(
+        child: TextButton(
+          onPressed: () => _open(context, const PrivacyScreen()),
+          child: Text(
+            'Confidențialitate',
+            style: LexioTextStyles.labelSmall.copyWith(
+              color: LexioColors.textTertiary,
             ),
           ),
-          const SizedBox(width: LexioSpacing.sm),
-          Semantics(
-            link: true,
-            child: TextButton(
-              onPressed: () => launchUrl(
-                Uri.parse('https://lexio.app/asistenta'),
-                mode: LaunchMode.externalApplication,
-              ),
-              child: Text(
-                'Asistență',
-                style: LexioTextStyles.labelSmall.copyWith(
-                  color: LexioColors.textTertiary,
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -186,49 +176,49 @@ class _GameEntry extends StatelessWidget {
       label: 'Joc $number: $title',
       child: Material(
         child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(LexioRadius.md),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: LexioSpacing.md,
-            vertical: LexioSpacing.lg,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                number,
-                style: LexioTextStyles.labelSmall.copyWith(
-                  color: accentColor,
-                  fontWeight: FontWeight.w700,
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(LexioRadius.md),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: LexioSpacing.md,
+              vertical: LexioSpacing.lg,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  number,
+                  style: LexioTextStyles.labelSmall.copyWith(
+                    color: accentColor,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: LexioSpacing.xs),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Text(
-                      title,
-                      style: LexioTextStyles.displayLarge.copyWith(
+                const SizedBox(height: LexioSpacing.xs),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: LexioTextStyles.displayLarge.copyWith(
                           color: LexioColors.textPrimary,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'NoticiaText',
                         ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: LexioSpacing.md),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: accentColor,
-                    size: LexioSpacing.xl,
-                  ),
-                ],
-              ),
-            ],
+                    const SizedBox(width: LexioSpacing.md),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: accentColor,
+                      size: LexioSpacing.xl,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
