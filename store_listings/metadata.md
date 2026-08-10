@@ -6,8 +6,8 @@
 |---|---|
 | Product name | Slove |
 | Tagline | Joacă-te cu limba română. |
-| Bundle ID (Android) | `com.lexio.lexio` |
-| Bundle ID (iOS) | `com.lexio.lexio` |
+| Bundle ID (Android) | `com.mihaiiova.lexio` |
+| Bundle ID (iOS) | `com.mihaiiova.lexio` |
 | Version | 1.0.0 |
 | Languages | Română (limba principală) |
 | Primary locale | ro-RO |

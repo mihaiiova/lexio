@@ -1,4 +1,4 @@
-package com.lexio.lexio
+package com.mihaiiova.lexio
 
 import io.flutter.embedding.android.FlutterActivity
 

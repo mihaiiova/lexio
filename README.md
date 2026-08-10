@@ -112,7 +112,8 @@ python3 scripts/validate_content.py
 
 - The Romanian privacy policy is available from the home-screen footer.
 - The canonical policy text is stored in `store_listings/privacy_policy.md`.
-- Firebase platform configuration must be added before analytics events can be delivered.
+- Android and iOS Firebase configuration is checked in. Web and macOS analytics
+  are not configured.
 
 ## License
 

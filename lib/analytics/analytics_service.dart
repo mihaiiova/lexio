@@ -2,6 +2,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
+import '../firebase_options.dart';
+
 sealed class AnalyticsService {
   AnalyticsService._();
 
@@ -9,7 +11,9 @@ sealed class AnalyticsService {
 
   static Future<void> initialize() async {
     try {
-      await Firebase.initializeApp();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
       final analytics = FirebaseAnalytics.instance;
       await analytics.setConsent(
         adStorageConsentGranted: false,

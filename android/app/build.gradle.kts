@@ -17,7 +17,7 @@ val _signingProperties = run {
 }
 
 android {
-    namespace = "com.lexio.lexio"
+    namespace = "com.mihaiiova.lexio"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -27,7 +27,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.lexio.lexio"
+        applicationId = "com.mihaiiova.lexio"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
