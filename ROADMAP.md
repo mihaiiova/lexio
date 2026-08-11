@@ -32,8 +32,15 @@
 - [x] Spot full-flow integration test coverage
 - [x] Refresh project documentation (README, ROADMAP, release report)
 - [x] Web PWA metadata (manifest, OG tags, robots.txt)
-- [ ] Final cross-platform release smoke test
-- [ ] Qualified editorial review of all Romanian content (human review needed)
+- [ ] Check Firebase Analytics events in Google Analytics after a fresh iOS and Android install
+- [ ] Review and correct the "Confidențialitate" footer and privacy-screen wording
+- [ ] Complete the release smoke-test checklist on iPhone, iPad, Android phone, Android tablet, and web
+- [ ] Test the signed iOS TestFlight build and Android internal-testing build on target devices
+- [ ] Complete qualified editorial review of all Romanian content (human review needed)
+- [ ] Prepare and upload App Store and Google Play screenshots, feature graphics, and store metadata
+- [ ] Publish the privacy-policy URL and add it to both store listings
+- [ ] Verify the release CI workflows produce signed, version-matched artifacts
+- [ ] Submit builds to TestFlight and the Google Play internal-testing track, then resolve review feedback
 
 ## v2.0 — Content Expansion
 
