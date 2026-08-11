@@ -52,10 +52,13 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
+          # Escape backslashes for Java Properties format
+          STORE_PASS=$(printf '%s' "$ANDROID_KEYSTORE_PASSWORD" | sed 's/\\/\\\\/g')
+          KEY_PASS=$(printf '%s' "$ANDROID_KEY_PASSWORD" | sed 's/\\/\\\\/g')
           echo "storeFile=upload-keystore.jks" > android/key.properties
-          echo "storePassword=$ANDROID_KEYSTORE_PASSWORD" >> android/key.properties
+          echo "storePassword=$STORE_PASS" >> android/key.properties
           echo "keyAlias=$ANDROID_KEY_ALIAS" >> android/key.properties
-          echo "keyPassword=$ANDROID_KEY_PASSWORD" >> android/key.properties
+          echo "keyPassword=$KEY_PASS" >> android/key.properties
 
       - run: flutter pub get
       - run: flutter build appbundle --release

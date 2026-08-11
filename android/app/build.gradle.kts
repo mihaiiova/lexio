@@ -8,12 +8,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-val _signingProperties = run {
-    val keyPropertiesFile = rootProject.file("key.properties")
-    if (!keyPropertiesFile.exists()) return@run null
-    val props = Properties()
-    keyPropertiesFile.inputStream().use { props.load(it) }
-    props
+val keystoreProperties = run {
+    val file = rootProject.file("key.properties")
+    if (!file.exists()) return@run null
+    Properties().apply { file.inputStream().use { load(it) } }
 }
 
 android {
@@ -36,8 +34,7 @@ android {
 
     signingConfigs {
         create("release") {
-            val props = _signingProperties
-            if (props != null) {
+            keystoreProperties?.let { props ->
                 storeFile = file(props.getProperty("storeFile"))
                 storePassword = props.getProperty("storePassword")
                 keyAlias = props.getProperty("keyAlias")
@@ -48,7 +45,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = if (_signingProperties != null) {
+            signingConfig = if (keystoreProperties != null) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
