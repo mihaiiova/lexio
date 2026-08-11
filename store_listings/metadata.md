@@ -18,8 +18,8 @@
 
 | Field | URL |
 |---|---|
-| Website | `https://lexio.app` |
-| Privacy policy | Available in the app; public store URL still required |
+| Website | Public Slove URL to be configured before store submission |
+| Privacy policy | Public Slove privacy-policy URL required before store submission |
 
 ## Categories
 
@@ -62,8 +62,8 @@
 - **Data collected**: App activity, device or other identifiers, diagnostics and technical app/device data
 - **Data shared**: Processed by Google Firebase Analytics for app analytics
 - **Data encrypted in transit**: Yes
-- **Data can be deleted**: N/A (no user accounts or data collected)
-- **Data safety label**: App does not collect or share any user data
+- **Data can be deleted**: N/A (no user accounts)
+- **Data safety label**: App activity, device or other identifiers, diagnostics, and technical app/device data are collected for analytics
 
 ## Export Compliance
 
@@ -76,7 +76,7 @@
 |---|---|
 | Developer name | Creator independent |
 | Support email | Must be supplied directly in each store listing |
-| Marketing URL | `https://lexio.app` |
+| Marketing URL | Public Slove URL to be configured before store submission |
 
 ## App Review Notes (pentru Apple)
 

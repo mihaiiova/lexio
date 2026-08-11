@@ -3956,40 +3956,6 @@
     "doomWord": null
   },
   {
-    "id": "w116",
-    "sentence": "Am cumpărat o foarfece nouă pentru grădină.",
-    "isCorrect": false,
-    "explanation": "„Foarfece” este substantiv neutru și cere articolul nehotărât „un”, nu „o”.",
-    "category": "ortografie",
-    "topic": "formă corectă",
-    "difficulty": 1,
-    "tags": [
-      "ortografie",
-      "greșeală frecventă"
-    ],
-    "pairId": "p116",
-    "correctSentence": "Am cumpărat un foarfece nou pentru grădină.",
-    "doomWord": "un",
-    "doomDefinition": "un1 adj. pr. m., g.-d. unui, pl. unii; f. o, g.-d. unei, pl. unele, g.-d. m. și f. unor (Un elev/O elevă întreabă, altul/alta răspunde.)"
-  },
-  {
-    "id": "w116c",
-    "sentence": "Am cumpărat un foarfece nou pentru grădină.",
-    "isCorrect": true,
-    "explanation": "Propoziția este corectă. Forma corectă este „foarfece”, nu „foarfeci”.",
-    "category": "ortografie",
-    "topic": "formă corectă",
-    "difficulty": 1,
-    "tags": [
-      "ortografie",
-      "greșeală frecventă",
-      "confirmare"
-    ],
-    "pairId": "p116",
-    "correctSentence": null,
-    "doomWord": null
-  },
-  {
     "id": "w117",
     "sentence": "Copiii au înălțat zmee pe câmp.",
     "isCorrect": false,

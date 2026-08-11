@@ -1,212 +1,826 @@
 [
-  {"corect": "bare", "incorect": "bări"},
-  {"corect": "genuflexiuni", "incorect": "genoflexiuni"},
-  {"corect": "co\u0219maruri", "incorect": "co\u0219mare"},
-  {"corect": "creeaz\u0103", "incorect": "creaz\u0103"},
-  {"corect": "a cur\u0103\u021ba", "incorect": "a cur\u0103\u021bi"},
-  {"corect": "va sc\u0103dea", "incorect": "va scade"},
-  {"corect": "t\u0103cem", "incorect": "tacem"},
-  {"corect": "taburet", "incorect": "taburel / tamburel"},
-  {"corect": "funeraliile", "incorect": "funerariile"},
-  {"corect": "trotuar", "incorect": "trotoar"},
-  {"corect": "uit\u0103-te", "incorect": "uite-te"},
-  {"corect": "patinoar", "incorect": "patinuar"},
-  {"corect": "nurorii", "incorect": "norei"},
-  {"corect": "mingile", "incorect": "mingiile"},
-  {"corect": "serviciu", "incorect": "servici"},
-  {"corect": "protocoale", "incorect": "protocoluri"},
-  {"corect": "mostr\u0103", "incorect": "monstr\u0103"},
-  {"corect": "mingi", "incorect": "mingii"},
-  {"corect": "minciunii", "incorect": "minciunei"},
-  {"corect": "ordinii", "incorect": "ordinei"},
-  {"corect": "ou\u0103lor", "incorect": "ou\u0103lelor"},
-  {"corect": "n\u0103voade", "incorect": "n\u0103voduri"},
-  {"corect": "moschee", "incorect": "moscheie"},
-  {"corect": "s\u0103 miroas\u0103", "incorect": "s\u0103 miroase"},
-  {"corect": "mingii", "incorect": "mingei"},
-  {"corect": "merit\u0103", "incorect": "se merit\u0103"},
-  {"corect": "mediteraneean", "incorect": "mediteranean"},
-  {"corect": "m\u0103slin\u0103", "incorect": "m\u0103zlin\u0103"},
-  {"corect": "maro", "incorect": "maron"},
-  {"corect": "m\u0103tu\u0219ii", "incorect": "m\u0103tu\u0219ei"},
-  {"corect": "p\u0103ianjeni", "incorect": "p\u0103ianj\u0103ni / p\u0103ienjeni"},
-  {"corect": "m\u0103nu\u0219i", "incorect": "m\u00e2nu\u0219i"},
-  {"corect": "n\u0103prasnic", "incorect": "n\u0103praznic"},
-  {"corect": "licean", "incorect": "liceean"},
-  {"corect": "victimele", "incorect": "victimile"},
-  {"corect": "sloganuri", "incorect": "slogane"},
-  {"corect": "sor\u021bii", "incorect": "soartei"},
-  {"corect": "ca (f\u0103r\u0103 \"ca \u0219i\" c\u00e2nd nu e compara\u021bie)", "incorect": "ca \u0219i (\u00een calitate de)"},
-  {"corect": "a absorbi", "incorect": "a absoarbe"},
-  {"corect": "alimentare (magazine)", "incorect": "aliment\u0103ri"},
-  {"corect": "\u00eengenuncheaz\u0103", "incorect": "\u00eengenunchiaz\u0103"},
-  {"corect": "tr\u0103snet", "incorect": "tr\u0103znet"},
-  {"corect": "vistierie", "incorect": "visterie"},
-  {"corect": "nu duce", "incorect": "nu du"},
-  {"corect": "ultimele", "incorect": "ultimile"},
-  {"corect": "escroc", "incorect": "excroc"},
-  {"corect": "d\u00e2rji", "incorect": "d\u00e2rzi"},
-  {"corect": "lini\u0219tii", "incorect": "lini\u0219tei"},
-  {"corect": "limbii", "incorect": "limbei"},
-  {"corect": "no\u0219tri", "incorect": "no\u0219trii"},
-  {"corect": "maiou", "incorect": "maieu"},
-  {"corect": "lop\u0103\u021bic\u0103", "incorect": "lope\u021bic\u0103"},
-  {"corect": "licee", "incorect": "liceuri"},
-  {"corect": "de soare (nu \"de c\u0103tre\" cu inanimate)", "incorect": "de c\u0103tre soare"},
-  {"corect": "alba\u0219tri", "incorect": "alba\u0219trii (c\u00e2nd nu e articulat)"},
-  {"corect": "monede", "incorect": "monezi"},
-  {"corect": "al zecelea", "incorect": "al zecilea"},
-  {"corect": "manichiur\u0103", "incorect": "manechiur\u0103"},
-  {"corect": "l\u0103ca\u0219uri", "incorect": "l\u0103ca\u0219e"},
-  {"corect": "\u00eent\u00e2ile", "incorect": "\u00eent\u00e2iele"},
-  {"corect": "fetelor acestora", "incorect": "fetelor acestea"},
-  {"corect": "\u00eense\u0219i (pt. feminin)", "incorect": "\u00eens\u0103\u0219i prietenei tale"},
-  {"corect": "excursie", "incorect": "escursie"},
-  {"corect": "sughi\u021b\u0103", "incorect": "sughi\u021be"},
-  {"corect": "propriii (articulat)", "incorect": "proprii (articulat)"},
-  {"corect": "va succeda", "incorect": "va succede"},
-  {"corect": "a \u00eentrevedea", "incorect": "a \u00eentrevede"},
-  {"corect": "\u00eentr-adev\u0103r", "incorect": "\u00eentradev\u0103r"},
-  {"corect": "sendvi\u0219 / sandvici", "incorect": "sanvi\u0219"},
-  {"corect": "ridichi", "incorect": "ridichii"},
-  {"corect": "grij\u0103", "incorect": "grije"},
-  {"corect": "caietul colegei (genitiv)", "incorect": "caietul la o coleg\u0103"},
-  {"corect": "s\u0103 fii", "incorect": "s\u0103 fi"},
-  {"corect": "dou\u0103sprezece mii", "incorect": "doisprezece mii"},
-  {"corect": "japonezi", "incorect": "japoneji"},
-  {"corect": "jamboane", "incorect": "jambonuri"},
-  {"corect": "cizme", "incorect": "cisme"},
-  {"corect": "hele\u0219teie", "incorect": "hele\u0219teuri"},
-  {"corect": "fr\u00e2nghie (accent pe i)", "incorect": "fr\u00e2nghie (accent pe \u00e2)"},
-  {"corect": "\u0219tec\u0103r", "incorect": "\u0219techer"},
-  {"corect": "furtuni", "incorect": "furtune"},
-  {"corect": "jante", "incorect": "jen\u021bi"},
-  {"corect": "l\u0103mpii", "incorect": "lampei"},
-  {"corect": "jaloane", "incorect": "jalonuri"},
-  {"corect": "\u00eentreprindere", "incorect": "intreprindere"},
-  {"corect": "lunii", "incorect": "lunei"},
-  {"corect": "dragile", "incorect": "dragele"},
-  {"corect": "butelie (accent pe a doua silab\u0103)", "incorect": "butelie (accent pe ultima silab\u0103)"},
-  {"corect": "\u00een\u0103bu\u0219i", "incorect": "\u00eenn\u0103bu\u0219i"},
-  {"corect": "butuci", "incorect": "butucuri"},
-  {"corect": "ie\u0219ean\u0103", "incorect": "ie\u0219an\u0103"},
-  {"corect": "harta lumii", "incorect": "harta mapamondului"},
-  {"corect": "gre\u0219eal\u0103", "incorect": "gre\u0219al\u0103"},
-  {"corect": "caramea", "incorect": "caramel\u0103"},
-  {"corect": "Istanbul", "incorect": "Istambul"},
-  {"corect": "\u00eenmuiem", "incorect": "\u00eenmui\u0103m"},
-  {"corect": "\u00eennopta", "incorect": "\u00eenopta"},
-  {"corect": "itinerar", "incorect": "itinerariu"},
-  {"corect": "cotidiene", "incorect": "cotidiane"},
-  {"corect": "de asemenea", "incorect": "deasemenea"},
-  {"corect": "nu zice", "incorect": "nu zi"},
-  {"corect": "teni\u0219i", "incorect": "tene\u0219i"},
-  {"corect": "eseuri", "incorect": "esee"},
-  {"corect": "s\u0103 se ca\u021b\u0103re", "incorect": "s\u0103 se ca\u021bere"},
-  {"corect": "fiii (articulat) / fii (nearticulat)", "incorect": "fii (\u00een loc de fiii)"},
-  {"corect": "agheasm\u0103", "incorect": "aghiasm\u0103"},
-  {"corect": "curcubeie", "incorect": "curcubee"},
-  {"corect": "voiam", "incorect": "vroiam"},
-  {"corect": "vulpii", "incorect": "vulpei"},
-  {"corect": "afi\u0219e", "incorect": "afi\u0219uri"},
-  {"corect": "c\u0103ciuli", "incorect": "c\u0103ciule"},
-  {"corect": "fire\u0219te sau normal (nu ambele)", "incorect": "fire\u0219te \u0219i normal"},
-  {"corect": "girofaruri", "incorect": "girofare"},
-  {"corect": "gogo\u0219\u0103rie", "incorect": "gogo\u0219erie"},
-  {"corect": "g\u0103lbenu\u0219uri", "incorect": "g\u0103lbenu\u0219e"},
-  {"corect": "grizonant", "incorect": "grizonat"},
-  {"corect": "hoteluri", "incorect": "hotele"},
-  {"corect": "Ia\u0219iul", "incorect": "Ia\u0219ul"},
-  {"corect": "asimptomatic\u0103", "incorect": "asimtomatic\u0103"},
-  {"corect": "autovehicul", "incorect": "autovehicol"},
-  {"corect": "succese", "incorect": "succesuri"},
-  {"corect": "foarfeci", "incorect": "foarfece"},
-  {"corect": "zmeie", "incorect": "zmee"},
-  {"corect": "ciocolate", "incorect": "ciocol\u0103\u021bi"},
-  {"corect": "crenvurst", "incorect": "crenvur\u0219t"},
-  {"corect": "cazinou", "incorect": "cazino"},
-  {"corect": "confort", "incorect": "comfort"},
-  {"corect": "ce\u021bii", "incorect": "ce\u021bei"},
-  {"corect": "chibrituri", "incorect": "chibrite"},
-  {"corect": "s\u0103 fulguiasc\u0103", "incorect": "s\u0103 fulguie"},
-  {"corect": "aleatoriu", "incorect": "aleator"},
-  {"corect": "a\u0219 vrea", "incorect": "a\u0219i vrea / a-\u0219i vrea"},
-  {"corect": "dumneavoastr\u0103 \u00een\u0219iv\u0103", "incorect": "\u00eensu\u021bi dumneavoastr\u0103"},
-  {"corect": "a se \u00eencovoia", "incorect": "a se \u00eenconvoia"},
-  {"corect": "a\u021bi citit", "incorect": "a-\u021bi citit"},
-  {"corect": "asterisc", "incorect": "asterix"},
-  {"corect": "inopinat\u0103", "incorect": "inopinant\u0103"},
-  {"corect": "impacturi", "incorect": "impacte"},
-  {"corect": "ar fi", "incorect": "ar fii"},
-  {"corect": "ghea\u021b\u0103", "incorect": "ghia\u021b\u0103"},
-  {"corect": "gheare", "incorect": "ghiare"},
-  {"corect": "s\u0103 copiezi", "incorect": "s\u0103 copii"},
-  {"corect": "abia", "incorect": "abea"},
-  {"corect": "b\u0103nuie\u0219te", "incorect": "b\u0103nuie"},
-  {"corect": "de fapt", "incorect": "defapt"},
-  {"corect": "fuzelaj", "incorect": "fuselaj"},
-  {"corect": "furtunuri", "incorect": "furtune"},
-  {"corect": "funebru", "incorect": "funegru"},
-  {"corect": "fiecare a ales", "incorect": "fiecare au ales"},
-  {"corect": "nu fi (imperativ negativ)", "incorect": "nu fii"},
-  {"corect": "fii atent (imperativ afirmativ)", "incorect": "fi atent"},
-  {"corect": "o s\u0103 fii", "incorect": "o s\u0103 fi"},
-  {"corect": "face\u021bi / nu face", "incorect": "f\u0103ce\u021bi / nu f\u0103"},
-  {"corect": "embargou", "incorect": "embargo"},
-  {"corect": "ar disp\u0103rea", "incorect": "ar dispare"},
-  {"corect": "desz\u0103pezire", "incorect": "dez\u0103pezire"},
-  {"corect": "dezumflat", "incorect": "desumflat"},
-  {"corect": "destul de mul\u021bi", "incorect": "destui de mul\u021bi"},
-  {"corect": "delincvent", "incorect": "delicvent"},
-  {"corect": "co\u0219ciug", "incorect": "cosciug"},
-  {"corect": "contor", "incorect": "contoar"},
-  {"corect": "a (se) compl\u0103cea", "incorect": "a (se) complace"},
-  {"corect": "combate\u021bi-m\u0103", "incorect": "comb\u0103te\u021bi-m\u0103"},
-  {"corect": "s\u0103 coas\u0103", "incorect": "s\u0103 coase"},
-  {"corect": "celofan", "incorect": "ciolofan"},
-  {"corect": "cioc\u0103nitorile", "incorect": "cioc\u0103nitoarele"},
-  {"corect": "cincisprezece", "incorect": "cinsprezece"},
-  {"corect": "al cincilea", "incorect": "al cincelea"},
-  {"corect": "cenu\u0219ii", "incorect": "cenu\u0219ei"},
-  {"corect": "cel mai pu\u021bin apreciat\u0103", "incorect": "cea mai pu\u021bin apreciat\u0103"},
-  {"corect": "c\u00e2teva zeci", "incorect": "c\u00e2\u021biva zeci"},
-  {"corect": "carnavaluri", "incorect": "carnavale"},
-  {"corect": "pe care", "incorect": "care (f\u0103r\u0103 prepozi\u021bia \"pe\")"},
-  {"corect": "bun\u0103-cuviin\u021b\u0103", "incorect": "bun\u0103cuviin\u021b\u0103"},
-  {"corect": "bricege", "incorect": "briceaguri"},
-  {"corect": "bleumarin", "incorect": "bleumaren"},
-  {"corect": "blestem\u0103", "incorect": "blesteam\u0103"},
-  {"corect": "biscuit", "incorect": "biscuite"},
-  {"corect": "batem", "incorect": "b\u0103tem"},
-  {"corect": "berzei", "incorect": "barzei / berzii"},
-  {"corect": "bareme", "incorect": "baremuri"},
-  {"corect": "balustrade", "incorect": "balustr\u0103zi"},
-  {"corect": "atribuie", "incorect": "atribuie\u0219te"},
-  {"corect": "atlase", "incorect": "atlasuri"},
-  {"corect": "amiezii", "incorect": "amiezei"},
-  {"corect": "am\u00e2ndurora", "incorect": "am\u00e2ndorura"},
-  {"corect": "alineate", "incorect": "aliniate"},
-  {"corect": "aleatorii", "incorect": "aleatoare"},
-  {"corect": "albume", "incorect": "albumuri"},
-  {"corect": "s\u0103 aib\u0103", "incorect": "s\u0103 aibe / s\u0103 aiv\u0103"},
-  {"corect": "aceea\u0219i (feminin singular)", "incorect": "aceia\u0219i (pentru feminin)"},
-  {"corect": "confort", "incorect": "comfort"},
-  {"corect": "de obicei", "incorect": "deobicei"},
-  {"corect": "dragile mele", "incorect": "dragele mele"},
-  {"corect": "e\u0219ecuri", "incorect": "e\u0219ece"},
-  {"corect": "copilului celui interesat", "incorect": "copilului cel interesat"},
-  {"corect": "soluție novatoare / persoană inovatoare", "incorect": "soluție inovatoare"},
-  {"corect": "de pe (spațial) / după (succesiune)", "incorect": "după (în loc de de pe)"},
-  {"corect": "căruia / căreia / cărora (genitiv-dativ)", "incorect": "care (în loc de genitiv-dativ)"},
-  {"corect": "alegeri (fără \"electorale\")", "incorect": "alegeri electorale"},
-  {"corect": "averse (fără \"de ploaie\")", "incorect": "averse de ploaie"},
-  {"corect": "benefic (fără \"foarte\")", "incorect": "foarte benefic"},
-  {"corect": "doar (afirmativ) / decât (negativ)", "incorect": "decât (în enunț afirmativ)"},
-  {"corect": "contrabandă (fără \"ilegală\")", "incorect": "contrabandă ilegală"},
-  {"corect": "colaborăm (fără \"împreună\")", "incorect": "colaborăm împreună"},
-  {"corect": "a cărui / al cărei (acord corect)", "incorect": "al cărei (pt. masculin)"},
-  {"corect": "datorită (pozitiv) / din cauza (negativ)", "incorect": "din cauza (în context pozitiv)"},
-  {"corect": "să (fără \"ca\")", "incorect": "ca să (în subordonate necircumstanțiale)"},
-  {"corect": "la un moment dat (fără \"anumit\")", "incorect": "la un anumit moment dat"},
-  {"corect": "alcoolemie (fără \"în sânge\")", "incorect": "alcoolemie în sânge"}
+  {
+    "corect": "bare",
+    "incorect": "bări"
+  },
+  {
+    "corect": "genuflexiuni",
+    "incorect": "genoflexiuni"
+  },
+  {
+    "corect": "coșmaruri",
+    "incorect": "coșmare"
+  },
+  {
+    "corect": "creează",
+    "incorect": "crează"
+  },
+  {
+    "corect": "a curăța",
+    "incorect": "a curăți"
+  },
+  {
+    "corect": "va scădea",
+    "incorect": "va scade"
+  },
+  {
+    "corect": "tăcem",
+    "incorect": "tacem"
+  },
+  {
+    "corect": "taburet",
+    "incorect": "taburel / tamburel"
+  },
+  {
+    "corect": "funeraliile",
+    "incorect": "funerariile"
+  },
+  {
+    "corect": "trotuar",
+    "incorect": "trotoar"
+  },
+  {
+    "corect": "uită-te",
+    "incorect": "uite-te"
+  },
+  {
+    "corect": "patinoar",
+    "incorect": "patinuar"
+  },
+  {
+    "corect": "nurorii",
+    "incorect": "norei"
+  },
+  {
+    "corect": "mingile",
+    "incorect": "mingiile"
+  },
+  {
+    "corect": "serviciu",
+    "incorect": "servici"
+  },
+  {
+    "corect": "protocoale",
+    "incorect": "protocoluri"
+  },
+  {
+    "corect": "mostră",
+    "incorect": "monstră"
+  },
+  {
+    "corect": "mingi",
+    "incorect": "mingii"
+  },
+  {
+    "corect": "minciunii",
+    "incorect": "minciunei"
+  },
+  {
+    "corect": "ordinii",
+    "incorect": "ordinei"
+  },
+  {
+    "corect": "ouălor",
+    "incorect": "ouălelor"
+  },
+  {
+    "corect": "năvoade",
+    "incorect": "năvoduri"
+  },
+  {
+    "corect": "moschee",
+    "incorect": "moscheie"
+  },
+  {
+    "corect": "să miroasă",
+    "incorect": "să miroase"
+  },
+  {
+    "corect": "mingii",
+    "incorect": "mingei"
+  },
+  {
+    "corect": "merită",
+    "incorect": "se merită"
+  },
+  {
+    "corect": "mediteraneean",
+    "incorect": "mediteranean"
+  },
+  {
+    "corect": "măslină",
+    "incorect": "măzlină"
+  },
+  {
+    "corect": "maro",
+    "incorect": "maron"
+  },
+  {
+    "corect": "mătușii",
+    "incorect": "mătușei"
+  },
+  {
+    "corect": "păianjeni",
+    "incorect": "păianjăni / păienjeni"
+  },
+  {
+    "corect": "mănuși",
+    "incorect": "mânuși"
+  },
+  {
+    "corect": "năprasnic",
+    "incorect": "năpraznic"
+  },
+  {
+    "corect": "licean",
+    "incorect": "liceean"
+  },
+  {
+    "corect": "victimele",
+    "incorect": "victimile"
+  },
+  {
+    "corect": "sloganuri",
+    "incorect": "slogane"
+  },
+  {
+    "corect": "sorții",
+    "incorect": "soartei"
+  },
+  {
+    "corect": "ca (fără \"ca și\" când nu e comparație)",
+    "incorect": "ca și (în calitate de)"
+  },
+  {
+    "corect": "a absorbi",
+    "incorect": "a absoarbe"
+  },
+  {
+    "corect": "alimentare (magazine)",
+    "incorect": "alimentări"
+  },
+  {
+    "corect": "îngenunchează",
+    "incorect": "îngenunchiază"
+  },
+  {
+    "corect": "trăsnet",
+    "incorect": "trăznet"
+  },
+  {
+    "corect": "vistierie",
+    "incorect": "visterie"
+  },
+  {
+    "corect": "nu duce",
+    "incorect": "nu du"
+  },
+  {
+    "corect": "ultimele",
+    "incorect": "ultimile"
+  },
+  {
+    "corect": "escroc",
+    "incorect": "excroc"
+  },
+  {
+    "corect": "dârji",
+    "incorect": "dârzi"
+  },
+  {
+    "corect": "liniștii",
+    "incorect": "liniștei"
+  },
+  {
+    "corect": "limbii",
+    "incorect": "limbei"
+  },
+  {
+    "corect": "noștri",
+    "incorect": "noștrii"
+  },
+  {
+    "corect": "maiou",
+    "incorect": "maieu"
+  },
+  {
+    "corect": "lopățică",
+    "incorect": "lopețică"
+  },
+  {
+    "corect": "licee",
+    "incorect": "liceuri"
+  },
+  {
+    "corect": "de soare (nu \"de către\" cu inanimate)",
+    "incorect": "de către soare"
+  },
+  {
+    "corect": "albaștri",
+    "incorect": "albaștrii (când nu e articulat)"
+  },
+  {
+    "corect": "monede",
+    "incorect": "monezi"
+  },
+  {
+    "corect": "al zecelea",
+    "incorect": "al zecilea"
+  },
+  {
+    "corect": "manichiură",
+    "incorect": "manechiură"
+  },
+  {
+    "corect": "lăcașuri",
+    "incorect": "lăcașe"
+  },
+  {
+    "corect": "întâile",
+    "incorect": "întâiele"
+  },
+  {
+    "corect": "fetelor acestora",
+    "incorect": "fetelor acestea"
+  },
+  {
+    "corect": "înseși (pt. feminin)",
+    "incorect": "însăși prietenei tale"
+  },
+  {
+    "corect": "excursie",
+    "incorect": "escursie"
+  },
+  {
+    "corect": "sughiță",
+    "incorect": "sughițe"
+  },
+  {
+    "corect": "propriii (articulat)",
+    "incorect": "proprii (articulat)"
+  },
+  {
+    "corect": "va succeda",
+    "incorect": "va succede"
+  },
+  {
+    "corect": "a întrevedea",
+    "incorect": "a întrevede"
+  },
+  {
+    "corect": "într-adevăr",
+    "incorect": "întradevăr"
+  },
+  {
+    "corect": "sendviș / sandvici",
+    "incorect": "sanviș"
+  },
+  {
+    "corect": "ridichi",
+    "incorect": "ridichii"
+  },
+  {
+    "corect": "grijă",
+    "incorect": "grije"
+  },
+  {
+    "corect": "caietul colegei (genitiv)",
+    "incorect": "caietul la o colegă"
+  },
+  {
+    "corect": "să fii",
+    "incorect": "să fi"
+  },
+  {
+    "corect": "douăsprezece mii",
+    "incorect": "doisprezece mii"
+  },
+  {
+    "corect": "japonezi",
+    "incorect": "japoneji"
+  },
+  {
+    "corect": "jamboane",
+    "incorect": "jambonuri"
+  },
+  {
+    "corect": "cizme",
+    "incorect": "cisme"
+  },
+  {
+    "corect": "heleșteie",
+    "incorect": "heleșteuri"
+  },
+  {
+    "corect": "frânghie (accent pe i)",
+    "incorect": "frânghie (accent pe â)"
+  },
+  {
+    "corect": "ștecăr",
+    "incorect": "ștecher"
+  },
+  {
+    "corect": "furtuni",
+    "incorect": "furtune"
+  },
+  {
+    "corect": "jante",
+    "incorect": "jenți"
+  },
+  {
+    "corect": "lămpii",
+    "incorect": "lampei"
+  },
+  {
+    "corect": "jaloane",
+    "incorect": "jalonuri"
+  },
+  {
+    "corect": "întreprindere",
+    "incorect": "intreprindere"
+  },
+  {
+    "corect": "lunii",
+    "incorect": "lunei"
+  },
+  {
+    "corect": "dragile",
+    "incorect": "dragele"
+  },
+  {
+    "corect": "butelie (accent pe a doua silabă)",
+    "incorect": "butelie (accent pe ultima silabă)"
+  },
+  {
+    "corect": "înăbuși",
+    "incorect": "înnăbuși"
+  },
+  {
+    "corect": "butuci",
+    "incorect": "butucuri"
+  },
+  {
+    "corect": "ieșeană",
+    "incorect": "ieșană"
+  },
+  {
+    "corect": "harta lumii",
+    "incorect": "harta mapamondului"
+  },
+  {
+    "corect": "greșeală",
+    "incorect": "greșală"
+  },
+  {
+    "corect": "caramea",
+    "incorect": "caramelă"
+  },
+  {
+    "corect": "Istanbul",
+    "incorect": "Istambul"
+  },
+  {
+    "corect": "înmuiem",
+    "incorect": "înmuiăm"
+  },
+  {
+    "corect": "înnopta",
+    "incorect": "înopta"
+  },
+  {
+    "corect": "itinerar",
+    "incorect": "itinerariu"
+  },
+  {
+    "corect": "cotidiene",
+    "incorect": "cotidiane"
+  },
+  {
+    "corect": "de asemenea",
+    "incorect": "deasemenea"
+  },
+  {
+    "corect": "nu zice",
+    "incorect": "nu zi"
+  },
+  {
+    "corect": "teniși",
+    "incorect": "teneși"
+  },
+  {
+    "corect": "eseuri",
+    "incorect": "esee"
+  },
+  {
+    "corect": "să se cațăre",
+    "incorect": "să se cațere"
+  },
+  {
+    "corect": "fiii (articulat) / fii (nearticulat)",
+    "incorect": "fii (în loc de fiii)"
+  },
+  {
+    "corect": "agheasmă",
+    "incorect": "aghiasmă"
+  },
+  {
+    "corect": "curcubeie",
+    "incorect": "curcubee"
+  },
+  {
+    "corect": "voiam",
+    "incorect": "vroiam"
+  },
+  {
+    "corect": "vulpii",
+    "incorect": "vulpei"
+  },
+  {
+    "corect": "afișe",
+    "incorect": "afișuri"
+  },
+  {
+    "corect": "căciuli",
+    "incorect": "căciule"
+  },
+  {
+    "corect": "firește sau normal (nu ambele)",
+    "incorect": "firește și normal"
+  },
+  {
+    "corect": "girofaruri",
+    "incorect": "girofare"
+  },
+  {
+    "corect": "gogoșărie",
+    "incorect": "gogoșerie"
+  },
+  {
+    "corect": "gălbenușuri",
+    "incorect": "gălbenușe"
+  },
+  {
+    "corect": "grizonant",
+    "incorect": "grizonat"
+  },
+  {
+    "corect": "hoteluri",
+    "incorect": "hotele"
+  },
+  {
+    "corect": "Iașiul",
+    "incorect": "Iașul"
+  },
+  {
+    "corect": "asimptomatică",
+    "incorect": "asimtomatică"
+  },
+  {
+    "corect": "autovehicul",
+    "incorect": "autovehicol"
+  },
+  {
+    "corect": "succese",
+    "incorect": "succesuri"
+  },
+  {
+    "corect": "cazinou",
+    "incorect": "cazino"
+  },
+  {
+    "corect": "confort",
+    "incorect": "comfort"
+  },
+  {
+    "corect": "ceții",
+    "incorect": "ceței"
+  },
+  {
+    "corect": "chibrituri",
+    "incorect": "chibrite"
+  },
+  {
+    "corect": "să fulguiască",
+    "incorect": "să fulguie"
+  },
+  {
+    "corect": "aleatoriu",
+    "incorect": "aleator"
+  },
+  {
+    "corect": "aș vrea",
+    "incorect": "ași vrea / a-și vrea"
+  },
+  {
+    "corect": "dumneavoastră înșivă",
+    "incorect": "însuți dumneavoastră"
+  },
+  {
+    "corect": "a se încovoia",
+    "incorect": "a se înconvoia"
+  },
+  {
+    "corect": "ați citit",
+    "incorect": "a-ți citit"
+  },
+  {
+    "corect": "asterisc",
+    "incorect": "asterix"
+  },
+  {
+    "corect": "inopinată",
+    "incorect": "inopinantă"
+  },
+  {
+    "corect": "impacturi",
+    "incorect": "impacte"
+  },
+  {
+    "corect": "ar fi",
+    "incorect": "ar fii"
+  },
+  {
+    "corect": "gheață",
+    "incorect": "ghiață"
+  },
+  {
+    "corect": "gheare",
+    "incorect": "ghiare"
+  },
+  {
+    "corect": "să copiezi",
+    "incorect": "să copii"
+  },
+  {
+    "corect": "abia",
+    "incorect": "abea"
+  },
+  {
+    "corect": "bănuiește",
+    "incorect": "bănuie"
+  },
+  {
+    "corect": "de fapt",
+    "incorect": "defapt"
+  },
+  {
+    "corect": "fuzelaj",
+    "incorect": "fuselaj"
+  },
+  {
+    "corect": "furtunuri",
+    "incorect": "furtune"
+  },
+  {
+    "corect": "funebru",
+    "incorect": "funegru"
+  },
+  {
+    "corect": "fiecare a ales",
+    "incorect": "fiecare au ales"
+  },
+  {
+    "corect": "nu fi (imperativ negativ)",
+    "incorect": "nu fii"
+  },
+  {
+    "corect": "fii atent (imperativ afirmativ)",
+    "incorect": "fi atent"
+  },
+  {
+    "corect": "o să fii",
+    "incorect": "o să fi"
+  },
+  {
+    "corect": "faceți / nu face",
+    "incorect": "făceți / nu fă"
+  },
+  {
+    "corect": "embargou",
+    "incorect": "embargo"
+  },
+  {
+    "corect": "ar dispărea",
+    "incorect": "ar dispare"
+  },
+  {
+    "corect": "deszăpezire",
+    "incorect": "dezăpezire"
+  },
+  {
+    "corect": "dezumflat",
+    "incorect": "desumflat"
+  },
+  {
+    "corect": "destul de mulți",
+    "incorect": "destui de mulți"
+  },
+  {
+    "corect": "delincvent",
+    "incorect": "delicvent"
+  },
+  {
+    "corect": "coșciug",
+    "incorect": "cosciug"
+  },
+  {
+    "corect": "contor",
+    "incorect": "contoar"
+  },
+  {
+    "corect": "a (se) complăcea",
+    "incorect": "a (se) complace"
+  },
+  {
+    "corect": "combateți-mă",
+    "incorect": "combăteți-mă"
+  },
+  {
+    "corect": "să coasă",
+    "incorect": "să coase"
+  },
+  {
+    "corect": "celofan",
+    "incorect": "ciolofan"
+  },
+  {
+    "corect": "ciocănitorile",
+    "incorect": "ciocănitoarele"
+  },
+  {
+    "corect": "cincisprezece",
+    "incorect": "cinsprezece"
+  },
+  {
+    "corect": "al cincilea",
+    "incorect": "al cincelea"
+  },
+  {
+    "corect": "cenușii",
+    "incorect": "cenușei"
+  },
+  {
+    "corect": "cel mai puțin apreciată",
+    "incorect": "cea mai puțin apreciată"
+  },
+  {
+    "corect": "câteva zeci",
+    "incorect": "câțiva zeci"
+  },
+  {
+    "corect": "carnavaluri",
+    "incorect": "carnavale"
+  },
+  {
+    "corect": "pe care",
+    "incorect": "care (fără prepoziția \"pe\")"
+  },
+  {
+    "corect": "bună-cuviință",
+    "incorect": "bunăcuviință"
+  },
+  {
+    "corect": "bricege",
+    "incorect": "briceaguri"
+  },
+  {
+    "corect": "bleumarin",
+    "incorect": "bleumaren"
+  },
+  {
+    "corect": "blestemă",
+    "incorect": "blesteamă"
+  },
+  {
+    "corect": "biscuit",
+    "incorect": "biscuite"
+  },
+  {
+    "corect": "batem",
+    "incorect": "bătem"
+  },
+  {
+    "corect": "berzei",
+    "incorect": "barzei / berzii"
+  },
+  {
+    "corect": "bareme",
+    "incorect": "baremuri"
+  },
+  {
+    "corect": "balustrade",
+    "incorect": "balustrăzi"
+  },
+  {
+    "corect": "atribuie",
+    "incorect": "atribuiește"
+  },
+  {
+    "corect": "atlase",
+    "incorect": "atlasuri"
+  },
+  {
+    "corect": "amiezii",
+    "incorect": "amiezei"
+  },
+  {
+    "corect": "amândurora",
+    "incorect": "amândorura"
+  },
+  {
+    "corect": "alineate",
+    "incorect": "aliniate"
+  },
+  {
+    "corect": "aleatorii",
+    "incorect": "aleatoare"
+  },
+  {
+    "corect": "albume",
+    "incorect": "albumuri"
+  },
+  {
+    "corect": "să aibă",
+    "incorect": "să aibe / să aivă"
+  },
+  {
+    "corect": "aceeași (feminin singular)",
+    "incorect": "aceiași (pentru feminin)"
+  },
+  {
+    "corect": "confort",
+    "incorect": "comfort"
+  },
+  {
+    "corect": "de obicei",
+    "incorect": "deobicei"
+  },
+  {
+    "corect": "dragile mele",
+    "incorect": "dragele mele"
+  },
+  {
+    "corect": "eșecuri",
+    "incorect": "eșece"
+  },
+  {
+    "corect": "copilului celui interesat",
+    "incorect": "copilului cel interesat"
+  },
+  {
+    "corect": "soluție novatoare / persoană inovatoare",
+    "incorect": "soluție inovatoare"
+  },
+  {
+    "corect": "de pe (spațial) / după (succesiune)",
+    "incorect": "după (în loc de de pe)"
+  },
+  {
+    "corect": "căruia / căreia / cărora (genitiv-dativ)",
+    "incorect": "care (în loc de genitiv-dativ)"
+  },
+  {
+    "corect": "alegeri (fără \"electorale\")",
+    "incorect": "alegeri electorale"
+  },
+  {
+    "corect": "averse (fără \"de ploaie\")",
+    "incorect": "averse de ploaie"
+  },
+  {
+    "corect": "benefic (fără \"foarte\")",
+    "incorect": "foarte benefic"
+  },
+  {
+    "corect": "doar (afirmativ) / decât (negativ)",
+    "incorect": "decât (în enunț afirmativ)"
+  },
+  {
+    "corect": "contrabandă (fără \"ilegală\")",
+    "incorect": "contrabandă ilegală"
+  },
+  {
+    "corect": "colaborăm (fără \"împreună\")",
+    "incorect": "colaborăm împreună"
+  },
+  {
+    "corect": "a cărui / al cărei (acord corect)",
+    "incorect": "al cărei (pt. masculin)"
+  },
+  {
+    "corect": "datorită (pozitiv) / din cauza (negativ)",
+    "incorect": "din cauza (în context pozitiv)"
+  },
+  {
+    "corect": "să (fără \"ca\")",
+    "incorect": "ca să (în subordonate necircumstanțiale)"
+  },
+  {
+    "corect": "la un moment dat (fără \"anumit\")",
+    "incorect": "la un anumit moment dat"
+  },
+  {
+    "corect": "alcoolemie (fără \"în sânge\")",
+    "incorect": "alcoolemie în sânge"
+  }
 ]

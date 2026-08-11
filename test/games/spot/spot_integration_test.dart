@@ -159,8 +159,8 @@ void main() {
   });
 
   group('SpotContent integration', () {
-    test('spot corpus has 60 texts', () {
-      expect(spotTexts, hasLength(60));
+    test('spot corpus has 59 texts', () {
+      expect(spotTexts, hasLength(59));
     });
 
     test('every text has between 3 and 4 mistakes', () {

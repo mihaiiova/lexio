@@ -1,5 +1,7 @@
 # Editorial Review Checklist
 
+> **Tracking:** Progress is tracked in [#26](https://github.com/mihaiiova/lexio/issues/26). Specific bugs have their own issues: [#27](https://github.com/mihaiiova/lexio/issues/27) (text_023 gap).
+
 ## Normative Sources
 - **DOOM3** — Dicționarul Ortografic, Ortoepic și Morfologic al Limbii Române, ediția a III-a (2024)
 - **dexonline.ro** — sursă publică de referință pentru definiții și forme flexionare
@@ -29,9 +31,9 @@
 | `tags` sunt coerente cu `category` | ⏳ |
 | `pairId` corespunde unui index valid din `common_error_pairs.json` | ⏳ |
 | `doomWord` și `doomDefinition` se potrivesc | ⏳ |
-| **Bug fixat:** w116 — explicația se referea la „foarfece/foarfeci” în loc de articolul de gen | ✅ |
+| ~~Bug fixat: w116 — explicația se referea la „foarfece/foarfeci”~~ (exercițiile w116/w116c au fost eliminate) | ✅ |
 
-**Progres:** 1/423 ✅ | 0/423 ⚠️ | 0/423 ❌ | 422/423 ⏳
+**Progres:** 0/421 ✅ | 0/421 ⚠️ | 0/421 ❌ | 421/421 ⏳
 
 ### vocabulary_exercises.json (100 exerciții)
 
@@ -101,10 +103,9 @@
 
 | # | File | Item | Issue | Severity |
 |---|---|---|---|---|
-| 1 | grammar_exercises.json | w116 | Explicația a fost reparată (de la „foarfece/foarfeci” la articol de gen) | ✅ Fixed |
-| 2 | spot_texts.json | text_023 | Lipsește din secvență — numbering gap, fără impact funcțional | Low |
-| 3 | common_error_pairs.json | p121 | `foarfeci`/`foarfece` — de verificat care e forma corectă conform DOOM3 | Medium |
-| 4 | all files | — | Review-ul editorial complet necesită un vorbitor nativ calificat | High |
+| 1 | spot_texts.json | text_023 | Lipsește din secvență — numbering gap, fără impact funcțional | Low |
+| 2 | all files | — | Review-ul editorial complet necesită un vorbitor nativ calificat | High |
+
 
 ## Validation Script
 

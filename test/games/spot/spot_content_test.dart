@@ -24,7 +24,7 @@ void main() {
     final usedHyphenationPairIds = <String>{};
     final visiblePairCounts = <String, int>{};
 
-    expect(texts, hasLength(60));
+    expect(texts, hasLength(59));
     expect(ids, hasLength(texts.length));
     expect(
       texts.map((text) => text.difficulty).toSet(),

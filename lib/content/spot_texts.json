@@ -1830,67 +1830,6 @@
     ]
   },
   {
-    "id": "text_035",
-    "type": "child_composition",
-    "title": "Târgul de primăvară",
-    "difficulty": 1,
-    "content": "La atelier am folosit două foarfece pentru a tăia hârtia colorată. Prietenii mei au construit zmee și le-au decorat cu panglici. La standul culinar am gustat mai multe ciocolăți artizanale. Tata mi-a cumpărat și un crenvurșt cald înainte să plecăm.",
-    "mistakes": [
-      {
-        "wordIndex": 5,
-        "wordCount": 1,
-        "token": "foarfece",
-        "replacement": "foarfeci",
-        "explanation": "În acest context, forma corectă este „foarfeci”.",
-        "category": "gramatică și ortografie",
-        "topic": "forme corecte",
-        "doomWord": null,
-        "doomDefinition": null,
-        "commonErrorPairIndex": 121,
-        "hyphenationPairId": null
-      },
-      {
-        "wordIndex": 15,
-        "wordCount": 1,
-        "token": "zmee",
-        "replacement": "zmeie",
-        "explanation": "În acest context, forma corectă este „zmeie”.",
-        "category": "gramatică și ortografie",
-        "topic": "forme corecte",
-        "doomWord": "zmeie",
-        "doomDefinition": "zmeu2 (jucărie) s. n., art. zmeul (desp. zme-ul); pl. zmeie",
-        "commonErrorPairIndex": 122,
-        "hyphenationPairId": null
-      },
-      {
-        "wordIndex": 28,
-        "wordCount": 1,
-        "token": "ciocolăți",
-        "replacement": "ciocolate",
-        "explanation": "În acest context, forma corectă este „ciocolate”.",
-        "category": "gramatică și ortografie",
-        "topic": "forme corecte",
-        "doomWord": "ciocolate",
-        "doomDefinition": "ciocolată s. f., g.-d. art. ciocolatei; pl. ciocolate",
-        "commonErrorPairIndex": 123,
-        "hyphenationPairId": null
-      },
-      {
-        "wordIndex": 35,
-        "wordCount": 1,
-        "token": "crenvurșt",
-        "replacement": "crenvurst",
-        "explanation": "În acest context, forma corectă este „crenvurst”.",
-        "category": "gramatică și ortografie",
-        "topic": "forme corecte",
-        "doomWord": "crenvurst",
-        "doomDefinition": "crenvurst s. m., (mai frecv.) pl. crenvurști",
-        "commonErrorPairIndex": 124,
-        "hyphenationPairId": null
-      }
-    ]
-  },
-  {
     "id": "text_036",
     "type": "story",
     "title": "Seara la cazinou",
@@ -1907,7 +1846,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 125,
+        "commonErrorPairIndex": 121,
         "hyphenationPairId": null
       },
       {
@@ -1920,7 +1859,7 @@
         "topic": "forme corecte",
         "doomWord": "confort",
         "doomDefinition": "confort s. n.",
-        "commonErrorPairIndex": 126,
+        "commonErrorPairIndex": 122,
         "hyphenationPairId": null
       },
       {
@@ -1933,7 +1872,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 127,
+        "commonErrorPairIndex": 123,
         "hyphenationPairId": null
       },
       {
@@ -1946,7 +1885,7 @@
         "topic": "forme corecte",
         "doomWord": "chibrituri",
         "doomDefinition": "chibrit (desp. chi-brit) s. n., pl. chibrituri",
-        "commonErrorPairIndex": 128,
+        "commonErrorPairIndex": 124,
         "hyphenationPairId": null
       }
     ]
@@ -1968,7 +1907,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 129,
+        "commonErrorPairIndex": 125,
         "hyphenationPairId": null
       },
       {
@@ -1981,7 +1920,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 130,
+        "commonErrorPairIndex": 126,
         "hyphenationPairId": null
       },
       {
@@ -1994,7 +1933,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 131,
+        "commonErrorPairIndex": 127,
         "hyphenationPairId": null
       },
       {
@@ -2007,7 +1946,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 132,
+        "commonErrorPairIndex": 128,
         "hyphenationPairId": null
       }
     ]
@@ -2029,7 +1968,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 133,
+        "commonErrorPairIndex": 129,
         "hyphenationPairId": null
       },
       {
@@ -2042,7 +1981,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 134,
+        "commonErrorPairIndex": 130,
         "hyphenationPairId": null
       },
       {
@@ -2055,7 +1994,7 @@
         "topic": "forme corecte",
         "doomWord": "asterisc",
         "doomDefinition": "asterisc s. n., pl. asteriscuri; (semn grafic) *",
-        "commonErrorPairIndex": 135,
+        "commonErrorPairIndex": 131,
         "hyphenationPairId": null
       },
       {
@@ -2068,7 +2007,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 136,
+        "commonErrorPairIndex": 132,
         "hyphenationPairId": null
       }
     ]
@@ -2090,7 +2029,7 @@
         "topic": "forme corecte",
         "doomWord": "impacturi",
         "doomDefinition": "impact s. n., pl. impacturi",
-        "commonErrorPairIndex": 137,
+        "commonErrorPairIndex": 133,
         "hyphenationPairId": null
       },
       {
@@ -2103,7 +2042,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 138,
+        "commonErrorPairIndex": 134,
         "hyphenationPairId": null
       },
       {
@@ -2116,7 +2055,7 @@
         "topic": "forme corecte",
         "doomWord": "gheață",
         "doomDefinition": "gheață s. f., g.-d. art. gheții; (ghețari, întinderi de gheață) pl. ghețuri",
-        "commonErrorPairIndex": 139,
+        "commonErrorPairIndex": 135,
         "hyphenationPairId": null
       },
       {
@@ -2129,7 +2068,7 @@
         "topic": "forme corecte",
         "doomWord": "gheară",
         "doomDefinition": "gheară s. f., g.-d. art. ghearei; pl. gheare",
-        "commonErrorPairIndex": 140,
+        "commonErrorPairIndex": 136,
         "hyphenationPairId": null
       }
     ]
@@ -2151,7 +2090,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 141,
+        "commonErrorPairIndex": 137,
         "hyphenationPairId": null
       },
       {
@@ -2164,7 +2103,7 @@
         "topic": "forme corecte",
         "doomWord": "abia",
         "doomDefinition": "abia (desp. -bia) adv.",
-        "commonErrorPairIndex": 142,
+        "commonErrorPairIndex": 138,
         "hyphenationPairId": null
       },
       {
@@ -2177,7 +2116,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 143,
+        "commonErrorPairIndex": 139,
         "hyphenationPairId": null
       },
       {
@@ -2190,7 +2129,7 @@
         "topic": "forme corecte",
         "doomWord": "de fapt",
         "doomDefinition": "fapt (de ~) loc. adv.",
-        "commonErrorPairIndex": 144,
+        "commonErrorPairIndex": 140,
         "hyphenationPairId": null
       }
     ]
@@ -2212,7 +2151,7 @@
         "topic": "forme corecte",
         "doomWord": "fuzelaj",
         "doomDefinition": "fuzelaj s. n., pl. fuzelaje",
-        "commonErrorPairIndex": 145,
+        "commonErrorPairIndex": 141,
         "hyphenationPairId": null
       },
       {
@@ -2225,7 +2164,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 146,
+        "commonErrorPairIndex": 142,
         "hyphenationPairId": null
       },
       {
@@ -2238,7 +2177,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 147,
+        "commonErrorPairIndex": 143,
         "hyphenationPairId": null
       },
       {
@@ -2251,7 +2190,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 148,
+        "commonErrorPairIndex": 144,
         "hyphenationPairId": null
       }
     ]
@@ -2273,7 +2212,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 149,
+        "commonErrorPairIndex": 145,
         "hyphenationPairId": null
       },
       {
@@ -2286,7 +2225,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 150,
+        "commonErrorPairIndex": 146,
         "hyphenationPairId": null
       },
       {
@@ -2299,7 +2238,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 151,
+        "commonErrorPairIndex": 147,
         "hyphenationPairId": null
       },
       {
@@ -2312,7 +2251,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 152,
+        "commonErrorPairIndex": 148,
         "hyphenationPairId": null
       }
     ]
@@ -2334,7 +2273,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 153,
+        "commonErrorPairIndex": 149,
         "hyphenationPairId": null
       },
       {
@@ -2347,7 +2286,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 154,
+        "commonErrorPairIndex": 150,
         "hyphenationPairId": null
       },
       {
@@ -2360,7 +2299,7 @@
         "topic": "forme corecte",
         "doomWord": "deszăpezire",
         "doomDefinition": "deszăpezire s. f., g.-d. art. deszăpezirii; pl. deszăpeziri",
-        "commonErrorPairIndex": 155,
+        "commonErrorPairIndex": 151,
         "hyphenationPairId": null
       },
       {
@@ -2373,7 +2312,7 @@
         "topic": "forme corecte",
         "doomWord": "dezumflat",
         "doomDefinition": "dezumflat (desp. de-zum-/dez-um-) s. n.",
-        "commonErrorPairIndex": 156,
+        "commonErrorPairIndex": 152,
         "hyphenationPairId": null
       }
     ]
@@ -2395,7 +2334,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 157,
+        "commonErrorPairIndex": 153,
         "hyphenationPairId": null
       },
       {
@@ -2408,7 +2347,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 158,
+        "commonErrorPairIndex": 154,
         "hyphenationPairId": null
       },
       {
@@ -2421,7 +2360,7 @@
         "topic": "forme corecte",
         "doomWord": "coșciug",
         "doomDefinition": "coșciug s. n., pl. coșciuge",
-        "commonErrorPairIndex": 159,
+        "commonErrorPairIndex": 155,
         "hyphenationPairId": null
       },
       {
@@ -2434,7 +2373,7 @@
         "topic": "forme corecte",
         "doomWord": "contor",
         "doomDefinition": "contor (aparat de măsură) s. n., pl. contoare",
-        "commonErrorPairIndex": 160,
+        "commonErrorPairIndex": 156,
         "hyphenationPairId": null
       }
     ]
@@ -2456,7 +2395,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 161,
+        "commonErrorPairIndex": 157,
         "hyphenationPairId": null
       },
       {
@@ -2469,7 +2408,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 162,
+        "commonErrorPairIndex": 158,
         "hyphenationPairId": null
       },
       {
@@ -2482,7 +2421,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 163,
+        "commonErrorPairIndex": 159,
         "hyphenationPairId": null
       },
       {
@@ -2495,7 +2434,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 164,
+        "commonErrorPairIndex": 160,
         "hyphenationPairId": null
       }
     ]
@@ -2517,7 +2456,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 165,
+        "commonErrorPairIndex": 161,
         "hyphenationPairId": null
       },
       {
@@ -2530,7 +2469,7 @@
         "topic": "forme corecte",
         "doomWord": "cincisprezece",
         "doomDefinition": "cincisprezece [(în tempo rapid) cinci pron. čin] (desp. cinci-spre-) num. invar.; 15, XV",
-        "commonErrorPairIndex": 166,
+        "commonErrorPairIndex": 162,
         "hyphenationPairId": null
       },
       {
@@ -2543,7 +2482,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 167,
+        "commonErrorPairIndex": 163,
         "hyphenationPairId": null
       },
       {
@@ -2556,7 +2495,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 168,
+        "commonErrorPairIndex": 164,
         "hyphenationPairId": null
       }
     ]
@@ -2578,7 +2517,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 169,
+        "commonErrorPairIndex": 165,
         "hyphenationPairId": null
       },
       {
@@ -2591,7 +2530,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 170,
+        "commonErrorPairIndex": 166,
         "hyphenationPairId": null
       },
       {
@@ -2604,7 +2543,7 @@
         "topic": "forme corecte",
         "doomWord": "carnavaluri",
         "doomDefinition": "carnaval s. n., pl. carnavaluri (și: D-ale carnavalului)",
-        "commonErrorPairIndex": 171,
+        "commonErrorPairIndex": 167,
         "hyphenationPairId": null
       },
       {
@@ -2617,7 +2556,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 172,
+        "commonErrorPairIndex": 168,
         "hyphenationPairId": null
       }
     ]
@@ -2639,7 +2578,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 173,
+        "commonErrorPairIndex": 169,
         "hyphenationPairId": null
       },
       {
@@ -2652,7 +2591,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 174,
+        "commonErrorPairIndex": 170,
         "hyphenationPairId": null
       },
       {
@@ -2665,7 +2604,7 @@
         "topic": "forme corecte",
         "doomWord": "bleumarin",
         "doomDefinition": "bleumarin1 [eu pron. fr. ö] (desp. bleu-) adj. invar. (pantaloni ~)",
-        "commonErrorPairIndex": 175,
+        "commonErrorPairIndex": 171,
         "hyphenationPairId": null
       },
       {
@@ -2678,7 +2617,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 176,
+        "commonErrorPairIndex": 172,
         "hyphenationPairId": null
       }
     ]
@@ -2700,7 +2639,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 177,
+        "commonErrorPairIndex": 173,
         "hyphenationPairId": null
       },
       {
@@ -2713,7 +2652,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 178,
+        "commonErrorPairIndex": 174,
         "hyphenationPairId": null
       },
       {
@@ -2726,7 +2665,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 179,
+        "commonErrorPairIndex": 175,
         "hyphenationPairId": null
       },
       {
@@ -2739,7 +2678,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 180,
+        "commonErrorPairIndex": 176,
         "hyphenationPairId": null
       }
     ]
@@ -2761,7 +2700,7 @@
         "topic": "forme corecte",
         "doomWord": "balustrade",
         "doomDefinition": "balustradă s. f., g.-d. art. balustradei; pl. balustrade",
-        "commonErrorPairIndex": 181,
+        "commonErrorPairIndex": 177,
         "hyphenationPairId": null
       },
       {
@@ -2774,7 +2713,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 182,
+        "commonErrorPairIndex": 178,
         "hyphenationPairId": null
       },
       {
@@ -2787,7 +2726,7 @@
         "topic": "forme corecte",
         "doomWord": "atlas",
         "doomDefinition": "atlas (vertebră; colecție de hărți) (desp. a-tlas) s. n., pl. atlase",
-        "commonErrorPairIndex": 183,
+        "commonErrorPairIndex": 179,
         "hyphenationPairId": null
       },
       {
@@ -2800,7 +2739,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 184,
+        "commonErrorPairIndex": 180,
         "hyphenationPairId": null
       }
     ]
@@ -2822,7 +2761,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 185,
+        "commonErrorPairIndex": 181,
         "hyphenationPairId": null
       },
       {
@@ -2835,7 +2774,7 @@
         "topic": "forme corecte",
         "doomWord": "alineat",
         "doomDefinition": "alineat (desp. -ne-at) s. n., pl. alineate; abr. al./alin.",
-        "commonErrorPairIndex": 186,
+        "commonErrorPairIndex": 182,
         "hyphenationPairId": null
       },
       {
@@ -2848,7 +2787,7 @@
         "topic": "forme corecte",
         "doomWord": "aleatorii",
         "doomDefinition": "aleatoriu [riu pron. rĭu] (desp. -le-a-) adj. m., f. aleatorie (desp. -ri-e); pl. m. și f. aleatorii",
-        "commonErrorPairIndex": 187,
+        "commonErrorPairIndex": 183,
         "hyphenationPairId": null
       },
       {
@@ -2861,7 +2800,7 @@
         "topic": "forme corecte",
         "doomWord": "albume",
         "doomDefinition": "album s. n., pl. albume",
-        "commonErrorPairIndex": 188,
+        "commonErrorPairIndex": 184,
         "hyphenationPairId": null
       }
     ]
@@ -2883,7 +2822,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 189,
+        "commonErrorPairIndex": 185,
         "hyphenationPairId": null
       },
       {
@@ -2896,7 +2835,7 @@
         "topic": "forme corecte",
         "doomWord": "aceeași",
         "doomDefinition": "același pr. m., adj. pr. m., g.-d. aceluiași, pl. aceiași; f. aceeași, g.-d. aceleiași, pl. aceleași (desp. -leași); g.-d. pl. m. și f. acelorași (dar și: unui același)",
-        "commonErrorPairIndex": 190,
+        "commonErrorPairIndex": 186,
         "hyphenationPairId": null
       },
       {
@@ -2909,7 +2848,7 @@
         "topic": "forme corecte",
         "doomWord": "confort",
         "doomDefinition": "confort s. n.",
-        "commonErrorPairIndex": 191,
+        "commonErrorPairIndex": 187,
         "hyphenationPairId": null
       },
       {
@@ -2922,7 +2861,7 @@
         "topic": "forme corecte",
         "doomWord": "de obicei",
         "doomDefinition": "obicei (de ~)/(în tempo rapid) de-obicei loc. adv.",
-        "commonErrorPairIndex": 192,
+        "commonErrorPairIndex": 188,
         "hyphenationPairId": null
       }
     ]
@@ -2944,7 +2883,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 193,
+        "commonErrorPairIndex": 189,
         "hyphenationPairId": null
       },
       {
@@ -2957,7 +2896,7 @@
         "topic": "forme corecte",
         "doomWord": "eșecuri",
         "doomDefinition": "eșec s. n., pl. eșecuri",
-        "commonErrorPairIndex": 194,
+        "commonErrorPairIndex": 190,
         "hyphenationPairId": null
       },
       {
@@ -2970,7 +2909,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 195,
+        "commonErrorPairIndex": 191,
         "hyphenationPairId": null
       },
       {
@@ -2983,7 +2922,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 196,
+        "commonErrorPairIndex": 192,
         "hyphenationPairId": null
       }
     ]
@@ -3005,7 +2944,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 197,
+        "commonErrorPairIndex": 193,
         "hyphenationPairId": null
       },
       {
@@ -3018,7 +2957,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 198,
+        "commonErrorPairIndex": 194,
         "hyphenationPairId": null
       },
       {
@@ -3031,7 +2970,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 199,
+        "commonErrorPairIndex": 195,
         "hyphenationPairId": null
       },
       {
@@ -3044,7 +2983,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 200,
+        "commonErrorPairIndex": 196,
         "hyphenationPairId": null
       }
     ]
@@ -3066,7 +3005,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 201,
+        "commonErrorPairIndex": 197,
         "hyphenationPairId": null
       },
       {
@@ -3079,7 +3018,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 202,
+        "commonErrorPairIndex": 198,
         "hyphenationPairId": null
       },
       {
@@ -3092,7 +3031,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 203,
+        "commonErrorPairIndex": 199,
         "hyphenationPairId": null
       },
       {
@@ -3105,7 +3044,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 204,
+        "commonErrorPairIndex": 200,
         "hyphenationPairId": null
       }
     ]
@@ -3127,7 +3066,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 205,
+        "commonErrorPairIndex": 201,
         "hyphenationPairId": null
       },
       {
@@ -3140,7 +3079,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 206,
+        "commonErrorPairIndex": 202,
         "hyphenationPairId": null
       },
       {
@@ -3153,7 +3092,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 207,
+        "commonErrorPairIndex": 203,
         "hyphenationPairId": null
       },
       {
@@ -3166,7 +3105,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 208,
+        "commonErrorPairIndex": 204,
         "hyphenationPairId": null
       }
     ]
@@ -3188,7 +3127,7 @@
         "topic": "forme corecte",
         "doomWord": null,
         "doomDefinition": null,
-        "commonErrorPairIndex": 209,
+        "commonErrorPairIndex": 205,
         "hyphenationPairId": null
       },
       {
@@ -3654,7 +3593,7 @@
         "topic": "forme corecte",
         "doomWord": "de fapt",
         "doomDefinition": "fapt (de ~) loc. adv.",
-        "commonErrorPairIndex": 144,
+        "commonErrorPairIndex": 140,
         "hyphenationPairId": null
       }
     ]

@@ -30,7 +30,7 @@ Un test contra cronometru: ai un text și 60 de secunde să identifici greșelil
 - Jocuri offline: toate exercițiile și fonturile sunt incluse
 - Fără conturi, fără rețele sociale: progresul rămâne pe dispozitivul tău
 - Fără reclame, fără microtranzacții: o experiență completă și gratuită
-- Conținut verificat editorial, cu referințe către DOOM
+- Exerciții cu explicații și referințe către DOOM
 - Peste 640 de exerciții în total, actualizate periodic
 
 ---
@@ -63,7 +63,7 @@ Politica este disponibilă în aplicație. Pentru publicarea în Google Play tre
 | Partajează date cu terți? | Datele sunt procesate de Google Firebase Analytics pentru analiză |
 | Colectează date? | Da — activitatea în aplicație, identificator al instalării și date tehnice |
 | Criptează datele în tranzit? | Da |
-| Utilizatorul poate șterge datele? | Datele se șterg automat la dezinstalare |
+| Utilizatorul poate șterge datele? | Nu se aplică — aplicația nu are conturi sau date de profil |
 | Colectează date de localizare? | Regiune aproximativă derivată de Firebase |
 | Colectează date personale? | Nu |
 | Colectează date financiare? | Nu |
@@ -102,7 +102,7 @@ Politica este disponibilă în aplicație. Pentru publicarea în Google Play tre
 | Câmp | Detalii |
 |---|---|
 | Email dezvoltator | De completat direct în Google Play Console |
-| Adresă website | https://lexio.app |
+| Adresă website | De publicat la un URL dedicat Slove înainte de trimiterea în Google Play |
 | Adresă fizică | — (creator independent, nu e necesară publicarea) |
 
 ## Assets grafice necesare

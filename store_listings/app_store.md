@@ -29,7 +29,7 @@ Cele patru jocuri te provoacă în moduri diferite:
 - **Jocuri offline.** Toate exercițiile și fonturile sunt incluse în aplicație. Poți juca fără conexiune la internet.
 - **Fără conturi, fără rețele sociale.** Niciun fel de autentificare. Progresul tău rămâne pe dispozitivul tău.
 - **Fără reclame, fără achiziții în aplicație.** O experiență completă, fără microtranzacții sau conținut blocat.
-- **Conținut verificat.** Exercițiile sunt revizuite editorial, cu referințe către DOOM și surse normative actuale.
+- **Conținut atent alcătuit.** Exercițiile includ explicații și referințe către DOOM și surse normative actuale.
 
 Slove este companionul perfect pentru pauza de cafea, navetă sau momentele în care vrei să-ți exersezi mintea fără zgomotul aplicațiilor obișnuite.
 
@@ -65,12 +65,11 @@ Slove folosește Firebase Analytics pentru a înregistra ce joc este deschis, f�
 - **Date neasociate cu tine:** Interacțiuni cu produsul, identificator al dispozitivului/instalării și date tehnice de diagnostic
 
 ## Website
-https://lexio.app
+De publicat la un URL dedicat Slove înainte de trimiterea în App Store.
 
 ## Compatibilitate
-- iPhone: necesită iOS 13.0 sau o versiune ulterioară
-- iPad: necesită iPadOS 13.0 sau o versiune ulterioară
-- Mac: necesită macOS 11.0 sau o versiune ulterioară și un Mac cu procesor Apple M1 sau o versiune ulterioară
+- iPhone: necesită iOS 15.6 sau o versiune ulterioară
+- iPad: necesită iPadOS 15.6 sau o versiune ulterioară
 
 ## Copyright
 © 2026 Slove. Toate drepturile rezervate.

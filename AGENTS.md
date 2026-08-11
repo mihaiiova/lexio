@@ -111,6 +111,18 @@ games/<name>/
 - Test: game state logic, content parsing
 - Widget tests: game screens, design components
 
+## Project Organization
+
+Task tracking and release planning live in **GitHub Issues**, not in markdown docs. When working on a feature or bugfix, reference the issue number in commits and PRs.
+
+- **Release tracking:** `RELEASE_READINESS_REPORT.md` — summary + links to issues
+- **Roadmap:** `ROADMAP.md` — long-term vision with links to active issues
+- **Store checklists:** `store_listings/` — reference docs for smoke tests and editorial review; actual progress is in issues
+
+Do NOT update status/progress directly in markdown docs — close the GitHub Issue instead.
+
+After each feature or development round, run `/skill:review` to score the conversation and implement improvements to how we work.
+
 ## Commands
 ```bash
 flutter pub get          # Install dependencies

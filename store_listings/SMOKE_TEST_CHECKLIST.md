@@ -1,5 +1,7 @@
 # Release Smoke Test Checklist
 
+> **Tracking:** Progress is tracked in [#25](https://github.com/mihaiiova/lexio/issues/25). Use this document when running through the tests.
+
 **Version:** 1.0.0+1
 **Date:** ____ / ____ / 2026
 **Tester:** ______________
@@ -13,7 +15,7 @@
 ## Web (Desktop Browser)
 
 ### Chrome
-- [ ] `https://lexio.app` loads without errors
+- [ ] Public Slove website loads without errors
 - [ ] Home screen shows 4 games with correct Romanian text
 - [ ] Complete a Grammar round (15 questions) — correct/wrong answers, summary, replay
 - [ ] Complete a Vocabulary round (10 questions) — options, correct highlighting, explanation

@@ -18,7 +18,7 @@
 - [x] Deadline-based Spot timer (wall-clock vs callback counting)
 - [x] Lifecycle-safe timer (WidgetsBindingObserver)
 - [x] Error handling with Romanian error screens and retry
-- [x] Privacy and support pages (lexio.app)
+- [x] In-app privacy policy
 - [x] App Store and Google Play store listing content
 - [x] Branded icons and launch screens
 - [x] CI/CD: analysis, tests, web and Android builds
@@ -32,15 +32,15 @@
 - [x] Spot full-flow integration test coverage
 - [x] Refresh project documentation (README, ROADMAP, release report)
 - [x] Web PWA metadata (manifest, OG tags, robots.txt)
-- [ ] Check Firebase Analytics events in Google Analytics after a fresh iOS and Android install
-- [ ] Review and correct the "Confidențialitate" footer and privacy-screen wording
-- [ ] Complete the release smoke-test checklist on iPhone, iPad, Android phone, Android tablet, and web
-- [ ] Test the signed iOS TestFlight build and Android internal-testing build on target devices
-- [ ] Complete qualified editorial review of all Romanian content (human review needed)
-- [ ] Prepare and upload App Store and Google Play screenshots, feature graphics, and store metadata
-- [ ] Publish the privacy-policy URL and add it to both store listings
-- [ ] Verify the release CI workflows produce signed, version-matched artifacts
-- [ ] Submit builds to TestFlight and the Google Play internal-testing track, then resolve review feedback
+- [ ] Check Firebase Analytics events — [#33](https://github.com/mihaiiova/lexio/issues/33)
+- [ ] Review "Confidențialitate" footer wording — [#32](https://github.com/mihaiiova/lexio/issues/32)
+- [ ] Smoke-test on real devices — [#25](https://github.com/mihaiiova/lexio/issues/25)
+- [ ] Test signed TestFlight and Play Store builds — [#29](https://github.com/mihaiiova/lexio/issues/29)
+- [ ] Editorial review of all Romanian content — [#26](https://github.com/mihaiiova/lexio/issues/26)
+- [ ] Prepare store screenshots and feature graphics — [#30](https://github.com/mihaiiova/lexio/issues/30)
+- [ ] Publish privacy-policy URL — [#31](https://github.com/mihaiiova/lexio/issues/31)
+- [ ] Verify CI produces signed, version-matched artifacts — [#29](https://github.com/mihaiiova/lexio/issues/29)
+- [ ] Submit to TestFlight and Google Play — [#35](https://github.com/mihaiiova/lexio/issues/35)
 
 ## v2.0 — Content Expansion
 
