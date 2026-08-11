@@ -1159,7 +1159,7 @@
     ]
   },
   {
-    "id": "text_024",
+    "id": "text_023",
     "type": "story",
     "title": "Iarna la heleșteu",
     "difficulty": 2,
@@ -1220,7 +1220,7 @@
     ]
   },
   {
-    "id": "text_025",
+    "id": "text_024",
     "type": "news",
     "title": "Drum închis de vreme rea",
     "difficulty": 2,
@@ -1281,7 +1281,7 @@
     ]
   },
   {
-    "id": "text_026",
+    "id": "text_025",
     "type": "professional",
     "title": "Inventarul de iarnă",
     "difficulty": 3,
@@ -1342,7 +1342,7 @@
     ]
   },
   {
-    "id": "text_027",
+    "id": "text_026",
     "type": "story",
     "title": "Seara lângă foc",
     "difficulty": 2,
@@ -1403,7 +1403,7 @@
     ]
   },
   {
-    "id": "text_028",
+    "id": "text_027",
     "type": "social_media",
     "title": "Atelier culinar la Istanbul",
     "difficulty": 2,
@@ -1464,7 +1464,7 @@
     ]
   },
   {
-    "id": "text_029",
+    "id": "text_028",
     "type": "blog",
     "title": "Jurnal de călătorie",
     "difficulty": 2,
@@ -1525,7 +1525,7 @@
     ]
   },
   {
-    "id": "text_030",
+    "id": "text_029",
     "type": "child_composition",
     "title": "Reguli pentru excursie",
     "difficulty": 2,
@@ -1586,7 +1586,7 @@
     ]
   },
   {
-    "id": "text_031",
+    "id": "text_030",
     "type": "story",
     "title": "Familia de acrobați",
     "difficulty": 3,
@@ -1647,7 +1647,7 @@
     ]
   },
   {
-    "id": "text_032",
+    "id": "text_031",
     "type": "news",
     "title": "Expoziție despre pădure",
     "difficulty": 2,
@@ -1708,7 +1708,7 @@
     ]
   },
   {
-    "id": "text_033",
+    "id": "text_032",
     "type": "blog",
     "title": "Weekend la munte",
     "difficulty": 1,
@@ -1769,7 +1769,7 @@
     ]
   },
   {
-    "id": "text_034",
+    "id": "text_033",
     "type": "news",
     "title": "Campanie medicală la Iași",
     "difficulty": 2,
@@ -1830,7 +1830,7 @@
     ]
   },
   {
-    "id": "text_036",
+    "id": "text_035",
     "type": "story",
     "title": "Seara la cazinou",
     "difficulty": 2,
@@ -1891,7 +1891,7 @@
     ]
   },
   {
-    "id": "text_037",
+    "id": "text_036",
     "type": "email",
     "title": "Planuri pentru vacanță",
     "difficulty": 3,
@@ -1952,7 +1952,7 @@
     ]
   },
   {
-    "id": "text_038",
+    "id": "text_037",
     "type": "professional",
     "title": "Evaluarea documentației",
     "difficulty": 3,
@@ -2013,7 +2013,7 @@
     ]
   },
   {
-    "id": "text_039",
+    "id": "text_038",
     "type": "news",
     "title": "Efectele valului de frig",
     "difficulty": 2,
@@ -2074,7 +2074,7 @@
     ]
   },
   {
-    "id": "text_040",
+    "id": "text_039",
     "type": "child_composition",
     "title": "Tema de desen",
     "difficulty": 1,
@@ -2135,7 +2135,7 @@
     ]
   },
   {
-    "id": "text_041",
+    "id": "text_040",
     "type": "news",
     "title": "Incident la aeroport",
     "difficulty": 3,
@@ -2196,7 +2196,7 @@
     ]
   },
   {
-    "id": "text_042",
+    "id": "text_041",
     "type": "social_media",
     "title": "Încurajare înainte de examen",
     "difficulty": 2,
@@ -2257,7 +2257,7 @@
     ]
   },
   {
-    "id": "text_043",
+    "id": "text_042",
     "type": "professional",
     "title": "Măsuri comerciale",
     "difficulty": 3,
@@ -2318,7 +2318,7 @@
     ]
   },
   {
-    "id": "text_044",
+    "id": "text_043",
     "type": "news",
     "title": "Control pe șantier",
     "difficulty": 3,
@@ -2379,7 +2379,7 @@
     ]
   },
   {
-    "id": "text_045",
+    "id": "text_044",
     "type": "email",
     "title": "Atelierul de croitorie",
     "difficulty": 3,
@@ -2440,7 +2440,7 @@
     ]
   },
   {
-    "id": "text_046",
+    "id": "text_045",
     "type": "blog",
     "title": "Observații în parc",
     "difficulty": 2,
@@ -2501,7 +2501,7 @@
     ]
   },
   {
-    "id": "text_047",
+    "id": "text_046",
     "type": "professional",
     "title": "Selecția proiectelor culturale",
     "difficulty": 3,
@@ -2562,7 +2562,7 @@
     ]
   },
   {
-    "id": "text_048",
+    "id": "text_047",
     "type": "story",
     "title": "Darurile bunicului",
     "difficulty": 2,
@@ -2623,7 +2623,7 @@
     ]
   },
   {
-    "id": "text_049",
+    "id": "text_048",
     "type": "child_composition",
     "title": "Vizita la brutărie",
     "difficulty": 1,
@@ -2684,7 +2684,7 @@
     ]
   },
   {
-    "id": "text_050",
+    "id": "text_049",
     "type": "professional",
     "title": "Amenajarea muzeului",
     "difficulty": 3,
@@ -2745,7 +2745,7 @@
     ]
   },
   {
-    "id": "text_051",
+    "id": "text_050",
     "type": "news",
     "title": "Rezultatele cercetării",
     "difficulty": 3,
@@ -2806,7 +2806,7 @@
     ]
   },
   {
-    "id": "text_052",
+    "id": "text_051",
     "type": "email",
     "title": "Detalii pentru conferință",
     "difficulty": 2,
@@ -2867,7 +2867,7 @@
     ]
   },
   {
-    "id": "text_053",
+    "id": "text_052",
     "type": "blog",
     "title": "Recomandări de lectură",
     "difficulty": 3,
@@ -2928,7 +2928,7 @@
     ]
   },
   {
-    "id": "text_054",
+    "id": "text_053",
     "type": "news",
     "title": "Buletin electoral și meteo",
     "difficulty": 3,
@@ -2989,7 +2989,7 @@
     ]
   },
   {
-    "id": "text_055",
+    "id": "text_054",
     "type": "professional",
     "title": "Raport despre cooperare",
     "difficulty": 3,
@@ -3050,7 +3050,7 @@
     ]
   },
   {
-    "id": "text_056",
+    "id": "text_055",
     "type": "email",
     "title": "Confirmarea programului",
     "difficulty": 3,
@@ -3111,7 +3111,7 @@
     ]
   },
   {
-    "id": "text_057",
+    "id": "text_056",
     "type": "news",
     "title": "Control preventiv în trafic",
     "difficulty": 3,
@@ -3172,7 +3172,7 @@
     ]
   },
   {
-    "id": "text_058",
+    "id": "text_057",
     "type": "story",
     "title": "Întoarcerea din tabără",
     "difficulty": 2,
@@ -3233,7 +3233,7 @@
     ]
   },
   {
-    "id": "text_059",
+    "id": "text_058",
     "type": "social_media",
     "title": "Mulțumiri după concert",
     "difficulty": 2,
@@ -3294,7 +3294,7 @@
     ]
   },
   {
-    "id": "text_060",
+    "id": "text_059",
     "type": "email",
     "title": "Vizita la bibliotecă",
     "difficulty": 2,
@@ -3355,7 +3355,7 @@
     ]
   },
   {
-    "id": "text_061",
+    "id": "text_060",
     "type": "professional",
     "title": "Feedback pentru colegi",
     "difficulty": 3,
@@ -3416,7 +3416,7 @@
     ]
   },
   {
-    "id": "text_062",
+    "id": "text_061",
     "type": "blog",
     "title": "Plimbare pe malul râului",
     "difficulty": 2,
@@ -3477,7 +3477,7 @@
     ]
   },
   {
-    "id": "text_063",
+    "id": "text_062",
     "type": "child_composition",
     "title": "Lumina din pod",
     "difficulty": 1,
@@ -3538,7 +3538,7 @@
     ]
   },
   {
-    "id": "text_064",
+    "id": "text_063",
     "type": "email",
     "title": "Revizuirea calendarului",
     "difficulty": 2,
