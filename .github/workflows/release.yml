@@ -63,6 +63,35 @@ jobs:
       - run: flutter pub get
       - run: flutter build appbundle --release
 
+      - name: Verify Android signing
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          AAB=$(echo build/app/outputs/bundle/release/*.aab)
+          echo "AAB: $AAB"
+          echo ""
+          echo "=== Expected version ==="
+          grep '^version:' pubspec.yaml
+          echo ""
+          echo "=== Signature verification ==="
+          jarsigner -verify -verbose "$AAB" 2>&1 | tail -5
+          JAR_EXIT=$?
+          echo "jarsigner exit code: $JAR_EXIT"
+          if [ $JAR_EXIT -ne 0 ]; then
+            echo "ERROR: jarsigner verification failed"
+            exit 1
+          fi
+          echo ""
+          echo "=== Keystore contents ==="
+          keytool -list -keystore android/app/upload-keystore.jks \
+            -storepass "$ANDROID_KEYSTORE_PASSWORD" 2>&1
+          echo ""
+          echo "=== Checking for key alias: $ANDROID_KEY_ALIAS ==="
+          keytool -list -keystore android/app/upload-keystore.jks \
+            -storepass "$ANDROID_KEYSTORE_PASSWORD" 2>&1 | grep -q "$ANDROID_KEY_ALIAS"
+          echo "Key alias '$ANDROID_KEY_ALIAS' found: $?"
+
       - uses: actions/upload-artifact@v4
         with:
           name: lexio-android-release
@@ -87,20 +116,29 @@ jobs:
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PROFILE_PATH
 
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security default-keychain -s "$KEYCHAIN_PATH"
+          security list-keychains -d user -s "$KEYCHAIN_PATH" login.keychain-db
+
+          security import "$CERTIFICATE_PATH" \
+            -k "$KEYCHAIN_PATH" \
+            -P "$P12_PASSWORD" \
+            -T /usr/bin/codesign \
+            -T /usr/bin/security
+          security set-key-partition-list -S apple-tool:,apple: \
+            -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
 
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
+          PROFILE_UUID=$(security cms -D -i "$PROFILE_PATH" | plutil -extract UUID raw -)
+          cp "$PROFILE_PATH" ~/Library/MobileDevice/Provisioning\ Profiles/"$PROFILE_UUID".mobileprovision
 
       - name: Export options
         env:
@@ -125,6 +163,34 @@ jobs:
 
       - name: Build IPA
         run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+
+      - name: Verify iOS signing and version
+        run: |
+          IPA=$(echo build/ios/ipa/*.ipa)
+          echo "IPA: $IPA"
+          echo ""
+          echo "=== Version check ==="
+          EXPECTED=$(grep '^version:' pubspec.yaml | sed 's/version: //')
+          echo "Expected version from pubspec.yaml: $EXPECTED"
+          # Extract and inspect the .app
+          mkdir -p /tmp/ipa-inspect
+          unzip -qo "$IPA" -d /tmp/ipa-inspect
+          APP=$(find /tmp/ipa-inspect/Payload -name '*.app' -type d | head -1)
+          if [ -n "$APP" ]; then
+            echo ""
+            echo "=== Code signing verification ==="
+            codesign -dvv "$APP" 2>&1 | head -15
+            echo ""
+            echo "=== Bundle version ==="
+            /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$APP/Info.plist" 2>/dev/null || true
+            /usr/libexec/PlistBuddy -c "Print CFBundleVersion" "$APP/Info.plist" 2>/dev/null || true
+            echo ""
+            echo "=== Provisioning profile ==="
+            if [ -f "$APP/embedded.mobileprovision" ]; then
+              security cms -D -i "$APP/embedded.mobileprovision" 2>/dev/null | plutil -p - | grep -E 'Name|TeamName|UUID|ExpirationDate|application-identifier' | head -10
+            fi
+          fi
+          rm -rf /tmp/ipa-inspect
 
       - name: Store IPA
         uses: actions/upload-artifact@v4
