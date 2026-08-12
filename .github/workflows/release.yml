@@ -39,6 +39,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.44.5'
@@ -119,8 +124,21 @@ jobs:
           PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PROFILE_PATH
+          # Decode secrets — macOS base64 wants -D for decode, no newline in base64
+          echo "$BUILD_CERTIFICATE_BASE64" | base64 -D -o "$CERTIFICATE_PATH"
+          echo "$BUILD_PROVISION_PROFILE_BASE64" | base64 -D -o "$PROFILE_PATH"
+
+          # Verify decoded files are non-empty
+          if [ ! -s "$CERTIFICATE_PATH" ]; then
+            echo "ERROR: Certificate file is empty after decode"
+            exit 1
+          fi
+          if [ ! -s "$PROFILE_PATH" ]; then
+            echo "ERROR: Provisioning profile is empty after decode"
+            exit 1
+          fi
+          echo "Certificate size: $(wc -c < "$CERTIFICATE_PATH") bytes"
+          echo "Profile size: $(wc -c < "$PROFILE_PATH") bytes"
 
           security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
@@ -139,6 +157,7 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           PROFILE_UUID=$(security cms -D -i "$PROFILE_PATH" | plutil -extract UUID raw -)
           cp "$PROFILE_PATH" ~/Library/MobileDevice/Provisioning\ Profiles/"$PROFILE_UUID".mobileprovision
+          echo "Provisioning profile installed: $PROFILE_UUID"
 
       - name: Export options
         env:
