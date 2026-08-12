@@ -39,8 +39,6 @@ android {
                 storePassword = props.getProperty("storePassword")
                 keyAlias = props.getProperty("keyAlias")
                 keyPassword = props.getProperty("keyPassword")
-                // Modern keytool generates PKCS12 by default even with .jks extension
-                storeType = props.getProperty("storeType", "PKCS12")
             }
         }
     }

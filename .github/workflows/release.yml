@@ -57,6 +57,15 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
+          # Verify decode integrity
+          KS_SIZE=$(wc -c < android/app/upload-keystore.jks)
+          echo "Keystore size: $KS_SIZE bytes"
+          MAGIC=$(xxd -l 4 -p android/app/upload-keystore.jks)
+          echo "Keystore magic: $MAGIC"
+          if [ "$MAGIC" != "feedfeed" ]; then
+            echo "ERROR: Keystore is not valid JKS format (expected feedfeed, got $MAGIC)"
+            exit 1
+          fi
           # Escape backslashes for Java Properties format
           STORE_PASS=$(printf '%s' "$ANDROID_KEYSTORE_PASSWORD" | sed 's/\\/\\\\/g')
           KEY_PASS=$(printf '%s' "$ANDROID_KEY_PASSWORD" | sed 's/\\/\\\\/g')
@@ -64,7 +73,6 @@ jobs:
           echo "storePassword=$STORE_PASS" >> android/key.properties
           echo "keyAlias=$ANDROID_KEY_ALIAS" >> android/key.properties
           echo "keyPassword=$KEY_PASS" >> android/key.properties
-          echo "storeType=PKCS12" >> android/key.properties
 
       - run: flutter pub get
       - run: flutter build appbundle --release
