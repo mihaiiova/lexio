@@ -121,7 +121,14 @@ void main() {
         state = state.tapWord(m.wordIndex).state;
       }
 
-      state = state.tapWord(0).state;
+      // Tap a word index that is guaranteed to hold no mistake.
+      final mistakeWords = mistakes.map((m) => m.wordIndex).toSet();
+      final safeIndex = List.generate(
+        state.currentText.wordCount,
+        (i) => i,
+      ).firstWhere((i) => !mistakeWords.contains(i));
+
+      state = state.tapWord(safeIndex).state;
 
       expect(state.totalIncorrectTaps, 1);
       expect(state.totalCorrectTaps, mistakes.length);
