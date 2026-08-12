@@ -64,6 +64,7 @@ jobs:
           echo "storePassword=$STORE_PASS" >> android/key.properties
           echo "keyAlias=$ANDROID_KEY_ALIAS" >> android/key.properties
           echo "keyPassword=$KEY_PASS" >> android/key.properties
+          echo "storeType=PKCS12" >> android/key.properties
 
       - run: flutter pub get
       - run: flutter build appbundle --release
