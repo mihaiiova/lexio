@@ -47,7 +47,7 @@
 | Mature / suggestive themes | Nu |
 | Health / fitness data | Nu |
 | Location data | Nu |
-| User data transmitted | Eveniment `game_opened`, identificatorul jocului și date tehnice Firebase |
+| User data transmitted | Evenimente `game_opened`, `game_completed` (scor, durată) și `game_abandoned`, identificatorul jocului și date tehnice Firebase |
 | Encryption | Da, în tranzit către Firebase |
 | Children under 13 | Nu este destinat copiilor sub 13 ani |
 
@@ -84,8 +84,9 @@ Slove este o aplicație educațională cu patru jocuri de limbă română.
 Nu necesită cont sau autentificare. Jocurile funcționează offline.
 
 Toate exercițiile și progresul sunt stocate local pe dispozitiv. Firebase
-Analytics primește evenimentul `game_opened`, identificatorul jocului și datele
-tehnice descrise în politica de confidențialitate.
+Analytics primește evenimentele `game_opened`, `game_completed` (scor și durată)
+și `game_abandoned`, identificatorul jocului și datele tehnice descrise în
+politica de confidențialitate.
 
 Linkurile externe se deschid doar în browserul sistemului și trimit către
 Dicționarul Ortografic, Ortoepic și Morfologic al Limbii Române (DOOM) —

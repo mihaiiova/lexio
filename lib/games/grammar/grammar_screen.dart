@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../analytics/game_session_analytics.dart';
 import '../../design/colors.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
@@ -30,11 +31,18 @@ class _GrammarScreenState extends State<GrammarScreen> {
   bool _showCorrectFlash = false;
   Key _flashKey = UniqueKey();
   ProgressRepository? _progress;
+  final GameSessionAnalytics _session = GameSessionAnalytics('grammar');
 
   @override
   void initState() {
     super.initState();
     _init();
+  }
+
+  @override
+  void dispose() {
+    _session.dispose();
+    super.dispose();
   }
 
   Future<void> _init() async {
@@ -51,6 +59,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
         _progress = progress;
         _isLoading = false;
       });
+      _session.start();
     } catch (e) {
       debugPrint('GrammarScreen: failed to load content: $e');
       if (!mounted) return;
@@ -100,6 +109,9 @@ class _GrammarScreenState extends State<GrammarScreen> {
       _showingExplanation = false;
       _showCorrectFlash = false;
     });
+    if (updated.isFinished) {
+      _session.complete(updated.correctCount);
+    }
   }
 
   void _next() {
@@ -121,6 +133,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
       _showCorrectFlash = false;
       _flashKey = UniqueKey();
     });
+    _session.start();
   }
 
   Widget _buildErrorScreen() {

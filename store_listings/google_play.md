@@ -134,7 +134,8 @@ Linkurile externe se deschid în browserul sistemului (către dexonline.ro
 pentru referințe DOOM). Nu există WebView-uri în aplicație.
 
 Progresul de învățare este local. Firebase Analytics înregistrează deschiderea
-unui joc, identificatorul fix al jocului și date tehnice despre instalare,
-aplicație și dispozitiv.
+unui joc, finalizarea lui (scor și durată) și abandonarea, împreună cu
+identificatorul fix al jocului și date tehnice despre instalare, aplicație și
+dispozitiv. Nu se colectează răspunsuri, texte introduse sau date personale.
 
 Nu sunt declarate permisiuni speciale. Linkurile externe (DOOM) se deschid în browserul sistemului fără permisiuni suplimentare.

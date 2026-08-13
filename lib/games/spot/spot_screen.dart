@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../analytics/game_session_analytics.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_button.dart';
 import '../../design/components/lexio_feedback.dart';
@@ -28,6 +29,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   Timer? _timer;
   ProgressRepository? _progress;
   bool _hasSavedSession = false;
+  final GameSessionAnalytics _session = GameSessionAnalytics('spot');
 
   @override
   void initState() {
@@ -40,6 +42,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
+    _session.dispose();
     super.dispose();
   }
 
@@ -58,7 +61,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         _state = updated;
         if (_state!.isFinished) {
           _timer?.cancel();
-          _saveSessionProgress(_state!);
+          _finish(_state!);
         }
       }
     });
@@ -75,6 +78,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         _progress = progress;
         _isLoading = false;
       });
+      _session.start();
       _startTimer();
     } catch (e) {
       debugPrint('SpotScreen: failed to load content: $e');
@@ -99,7 +103,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
           _state = updated;
           if (_state!.isFinished) {
             _timer?.cancel();
-            _saveSessionProgress(_state!);
+            _finish(_state!);
           }
         }
       });
@@ -141,7 +145,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     setState(() {
       _state = _state!.nextText();
     });
-    if (_state!.isFinished) _saveSessionProgress(_state!);
+    if (_state!.isFinished) _finish(_state!);
   }
 
   void _handlePlayAgain() {
@@ -154,12 +158,18 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
       _hasSavedSession = false;
     });
+    _session.start();
     _startTimer();
   }
 
   void _handleBack() {
     _timer?.cancel();
     Navigator.of(context).pop();
+  }
+
+  void _finish(SpotGameState state) {
+    _saveSessionProgress(state);
+    _session.complete(state.score);
   }
 
   void _saveSessionProgress(SpotGameState state) {

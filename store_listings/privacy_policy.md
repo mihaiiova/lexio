@@ -6,7 +6,7 @@ Slove este dezvoltată de un creator independent. Această politică explică ce
 
 ## Ce date colectăm
 
-Slove colectează un set minimal de date anonime pentru a garanta funcționarea corectă a jocurilor. Folosim Firebase Analytics fără nume sau cont: înregistrăm deschiderea unui joc și identificatorul jocului ales. Nu trimitem răspunsurile, scorul, progresul de învățare, numele, adresa de email sau textele introduse de utilizator.
+Slove colectează un set minimal de date anonime pentru a înțelege cum sunt folosite jocurile. Folosim Firebase Analytics fără nume sau cont și înregistrăm doar: deschiderea unui joc, finalizarea lui (cu scorul și durata în secunde) și abandonarea unui joc înainte de final. Nu trimitem răspunsurile, textele introduse, progresul de învățare, numele, adresa de email sau orice altă dată personală.
 
 Firebase Analytics poate colecta automat informații tehnice precum un identificator al instalării, modelul dispozitivului, sistemul de operare, versiunea aplicației, limba și regiunea aproximativă.
 

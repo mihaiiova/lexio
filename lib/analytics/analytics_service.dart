@@ -38,4 +38,34 @@ sealed class AnalyticsService {
       debugPrint('AnalyticsService: failed to log game_opened: $error');
     }
   }
+
+  static Future<void> logGameCompleted(
+    String gameId, {
+    required int score,
+    required int durationSeconds,
+  }) async {
+    try {
+      await _analytics?.logEvent(
+        name: 'game_completed',
+        parameters: {
+          'game_id': gameId,
+          'score': score,
+          'duration_seconds': durationSeconds,
+        },
+      );
+    } catch (error) {
+      debugPrint('AnalyticsService: failed to log game_completed: $error');
+    }
+  }
+
+  static Future<void> logGameAbandoned(String gameId) async {
+    try {
+      await _analytics?.logEvent(
+        name: 'game_abandoned',
+        parameters: {'game_id': gameId},
+      );
+    } catch (error) {
+      debugPrint('AnalyticsService: failed to log game_abandoned: $error');
+    }
+  }
 }

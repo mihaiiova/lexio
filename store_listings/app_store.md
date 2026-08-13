@@ -57,7 +57,7 @@ Română (intreaga aplicație este în limba română)
 ## Confidențialitate
 Politica de confidențialitate este disponibilă în aplicație. Pentru publicarea în App Store trebuie furnizat și un URL public.
 
-Slove folosește Firebase Analytics pentru a înregistra ce joc este deschis, fără nume sau cont. Firebase poate procesa un identificator al instalării și date tehnice despre aplicație și dispozitiv. Răspunsurile, scorul și progresul rămân exclusiv pe dispozitiv.
+Slove folosește Firebase Analytics, fără nume sau cont, pentru a înregistra ce joc este deschis, finalizat (scor și durată) sau abandonat. Firebase poate procesa un identificator al instalării și date tehnice despre aplicație și dispozitiv. Răspunsurile, textele introduse și progresul de învățare rămân exclusiv pe dispozitiv.
 
 ### Etichetele App Privacy
 - **Date asociate cu tine:** Niciuna — aplicația nu are conturi

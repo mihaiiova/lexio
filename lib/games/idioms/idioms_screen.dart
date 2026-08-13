@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../analytics/game_session_analytics.dart';
 import '../../design/animations.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_answer_button.dart';
@@ -30,6 +31,7 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
   bool _isLoading = true;
   bool _hasError = false;
   ProgressRepository? _progress;
+  final GameSessionAnalytics _session = GameSessionAnalytics('idioms');
 
   @override
   void initState() {
@@ -38,9 +40,16 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
     if (exercises != null) {
       _state = IdiomsGameState(exercises: exercises);
       _isLoading = false;
+      _session.start();
     } else {
       _init();
     }
+  }
+
+  @override
+  void dispose() {
+    _session.dispose();
+    super.dispose();
   }
 
   Future<void> _init() async {
@@ -57,6 +66,7 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
         _progress = progress;
         _isLoading = false;
       });
+      _session.start();
     } catch (error) {
       debugPrint('IdiomsScreen: failed to load content: $error');
       if (!mounted) return;
@@ -82,7 +92,10 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
       HapticFeedback.lightImpact();
       setState(() => _state = updated);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) setState(() => _state = updated.next());
+        if (!mounted) return;
+        final next = updated.next();
+        setState(() => _state = next);
+        if (next.isFinished) _session.complete(next.correctCount);
       });
     } else {
       HapticFeedback.heavyImpact();
@@ -93,7 +106,9 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
   void _next() {
     final state = _state;
     if (state == null) return;
-    setState(() => _state = state.next());
+    final next = state.next();
+    setState(() => _state = next);
+    if (next.isFinished) _session.complete(next.correctCount);
   }
 
   void _playAgain() {
@@ -105,6 +120,7 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
           _progress?.forGame('idioms') ?? const GameProgress(),
         );
     setState(() => _state = IdiomsGameState(exercises: exercises));
+    _session.start();
   }
 
   @override
