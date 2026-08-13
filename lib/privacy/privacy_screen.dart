@@ -71,9 +71,7 @@ class PrivacyScreen extends StatelessWidget {
             ),
             _PolicySection(
               title: 'Copii',
-              body:
-                  'Slove nu este destinată copiilor sub 13 ani și nu colectează '
-                  'cu bună știință date de la aceștia.',
+              body: 'Slove este o aplicație educațională potrivită pentru copii.',
             ),
             _PolicySection(
               title: 'Modificări și contact',

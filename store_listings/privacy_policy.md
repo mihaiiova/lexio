@@ -24,7 +24,7 @@ Unele explicații pot deschide în browser pagini ale Dicționarului Ortografic,
 
 ## Copii
 
-Slove nu este destinată copiilor sub 13 ani și nu colectează cu bună știință date de la aceștia.
+Slove este o aplicație educațională potrivită pentru copii.
 
 ## Modificări și contact
 
