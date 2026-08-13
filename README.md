@@ -104,9 +104,9 @@ python3 scripts/validate_content.py
 
 ## CI/CD
 
-- **CI** (`.github/workflows/ci.yml`): Analyze → Test → Build Web → Build Android (AAB)
-- **Release** (`.github/workflows/release.yml`): Tag-triggered builds for all platforms
-- **TestFlight** (`.github/workflows/deploy.yml`): Manual iOS deploy to TestFlight
+- **CI** (`.github/workflows/ci.yml`): Analyze → Test → Build Web → Build Android (AAB) — runs on PRs and feature-branch pushes
+- **Staging** (`.github/workflows/deploy-staging.yml`): push to `staging` → TestFlight + Play internal testing
+- **Production** (`.github/workflows/deploy-prod.yml`): push to `master` → App Store Connect + Play production
 
 See [`docs/releasing.md`](docs/releasing.md) for how to version, test, and ship updates.
 

@@ -41,8 +41,30 @@ base64 < /secure/path/upload-keystore.jks | pbcopy
 
 Use the same macOS command shown for Android to base64-encode each binary file before adding it as a secret.
 
+## Android Play upload
+
+Android builds are uploaded to Google Play automatically by the
+`r0adkll/upload-google-play` action. This requires a Google Play service account.
+
+1. In **Google Cloud Console**, create a project (or reuse one), enable the
+   **Google Play Android Developer API**, then create a **Service Account**.
+2. Create a JSON key for the service account and download it.
+3. In **Google Play Console** → Users and permissions, invite the service
+   account email with **Release manager** (or App access) permission.
+4. In GitHub, open **Settings > Secrets and variables > Actions > Environments
+   > Prod** and add:
+
+| Secret | Value |
+|---|---|
+| `ANDROID_PLAY_SERVICE_ACCOUNT_JSON` | The full raw JSON contents of the service-account key |
+
+Paste the raw JSON (including braces) as the secret value. The workflow reads it
+via `serviceAccountJsonPlainText`.
+
 ## Verification
 
-1. Run the **Release** workflow from a version tag to produce signed Android and iOS artifacts.
-2. Run **Deploy to TestFlight** and verify the build appears in App Store Connect.
-3. Upload the Android AAB to the Google Play internal-testing track and install the exact artifact on a test device or emulator.
+1. Push to `staging` — the **Deploy staging to test** workflow should upload a
+   signed Android AAB to the Play internal-testing track and a signed IPA to
+   TestFlight.
+2. Push to `master` — the **Deploy to production** workflow should upload to the
+   Play production track and to App Store Connect.

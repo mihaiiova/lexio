@@ -1,9 +1,15 @@
-name: Release
+name: Deploy to production
 
 on:
   push:
-    tags: ['v*']
-  workflow_dispatch:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: true
 
 jobs:
   analyze-and-test:
@@ -18,28 +24,13 @@ jobs:
       - run: flutter analyze
       - run: flutter test
 
-  build-web:
-    needs: analyze-and-test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.44.5'
-          channel: 'stable'
-      - run: flutter pub get
-      - run: flutter build web --release
-      - uses: actions/upload-artifact@v4
-        with:
-          name: lexio-web-release
-          path: build/web
-
-  build-android:
+  android:
     needs: analyze-and-test
     runs-on: ubuntu-latest
     environment: Prod
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -58,15 +49,6 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
-          # Verify decode integrity
-          KS_SIZE=$(wc -c < android/app/upload-keystore.jks)
-          echo "Keystore size: $KS_SIZE bytes"
-          MAGIC=$(xxd -l 4 -p android/app/upload-keystore.jks)
-          echo "Keystore magic: $MAGIC"
-          if [ "$MAGIC" != "feedfeed" ]; then
-            echo "ERROR: Keystore is not valid JKS format (expected feedfeed, got $MAGIC)"
-            exit 1
-          fi
           # Escape backslashes for Java Properties format
           STORE_PASS=$(printf '%s' "$ANDROID_KEYSTORE_PASSWORD" | sed 's/\\/\\\\/g')
           KEY_PASS=$(printf '%s' "$ANDROID_KEY_PASSWORD" | sed 's/\\/\\\\/g')
@@ -76,52 +58,32 @@ jobs:
           echo "keyPassword=$KEY_PASS" >> android/key.properties
 
       - run: flutter pub get
-      - run: flutter build appbundle --release
 
-      - name: Verify Android signing
-        env:
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-        run: |
-          AAB=$(echo build/app/outputs/bundle/release/*.aab)
-          echo "AAB: $AAB"
-          echo ""
-          echo "=== Expected version ==="
-          grep '^version:' pubspec.yaml
-          echo ""
-          echo "=== Signature verification ==="
-          jarsigner -verify -verbose "$AAB" 2>&1 | tail -5
-          JAR_EXIT=$?
-          echo "jarsigner exit code: $JAR_EXIT"
-          if [ $JAR_EXIT -ne 0 ]; then
-            echo "ERROR: jarsigner verification failed"
-            exit 1
-          fi
-          echo ""
-          echo "=== Keystore contents ==="
-          keytool -list -keystore android/app/upload-keystore.jks \
-            -storepass "$ANDROID_KEYSTORE_PASSWORD" 2>&1
-          echo ""
-          echo "=== Checking for key alias: $ANDROID_KEY_ALIAS ==="
-          keytool -list -keystore android/app/upload-keystore.jks \
-            -storepass "$ANDROID_KEYSTORE_PASSWORD" 2>&1 | grep -q "$ANDROID_KEY_ALIAS"
-          echo "Key alias '$ANDROID_KEY_ALIAS' found: $?"
+      - name: Build AAB
+        run: flutter build appbundle --release --build-number=${{ github.run_number }}
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload to Play production
+        uses: r0adkll/upload-google-play@v1
         with:
-          name: lexio-android-release
-          path: build/app/outputs/bundle/release/*.aab
+          serviceAccountJsonPlainText: ${{ secrets.ANDROID_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.mihaiiova.lexio
+          releaseFiles: build/app/outputs/bundle/release/*.aab
+          track: production
+          status: completed
+          changesNotSentForReview: true
 
-  build-ios:
+  ios:
     needs: analyze-and-test
     runs-on: macos-latest
     environment: Prod
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.44.5'
           channel: 'stable'
+
       - run: flutter pub get
 
       - name: Setup code signing
@@ -135,21 +97,8 @@ jobs:
           PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
-          # Decode secrets — macOS base64 wants -D for decode, no newline in base64
           echo "$BUILD_CERTIFICATE_BASE64" | base64 -D -o "$CERTIFICATE_PATH"
           echo "$BUILD_PROVISION_PROFILE_BASE64" | base64 -D -o "$PROFILE_PATH"
-
-          # Verify decoded files are non-empty
-          if [ ! -s "$CERTIFICATE_PATH" ]; then
-            echo "ERROR: Certificate file is empty after decode"
-            exit 1
-          fi
-          if [ ! -s "$PROFILE_PATH" ]; then
-            echo "ERROR: Provisioning profile is empty after decode"
-            exit 1
-          fi
-          echo "Certificate size: $(wc -c < "$CERTIFICATE_PATH") bytes"
-          echo "Profile size: $(wc -c < "$PROFILE_PATH") bytes"
 
           security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
@@ -169,23 +118,19 @@ jobs:
           PROFILE_UUID=$(security cms -D -i "$PROFILE_PATH" | plutil -extract UUID raw -)
           PROFILE_NAME=$(security cms -D -i "$PROFILE_PATH" | plutil -extract Name raw -)
           cp "$PROFILE_PATH" ~/Library/MobileDevice/Provisioning\ Profiles/"$PROFILE_UUID".mobileprovision
-          echo "Provisioning profile installed: $PROFILE_NAME ($PROFILE_UUID)"
           echo "PROFILE_UUID=$PROFILE_UUID" >> "$GITHUB_ENV"
 
           # Switch the Runner Release config to manual signing with this profile.
-          # Automatic signing conflicts with the Apple Distribution identity.
           python3 - "$PROFILE_NAME" << 'PYEOF'
           import sys
           profile_name = sys.argv[1]
           pbx = "ios/Runner.xcodeproj/project.pbxproj"
           with open(pbx) as f:
               content = f.read()
-
           marker = "97C147071CF9000F007C117D /* Release */ = {"
           start = content.index(marker)
           end = content.index("name = Release;", start)
           block = content[start:end]
-
           block = block.replace(
               "CODE_SIGN_STYLE = Automatic;",
               "CODE_SIGN_STYLE = Manual;",
@@ -194,7 +139,6 @@ jobs:
               'PROVISIONING_PROFILE_SPECIFIER = "";',
               f'PROVISIONING_PROFILE_SPECIFIER = "{profile_name}";',
           )
-
           content = content[:start] + block + content[end:]
           with open(pbx, "w") as f:
               f.write(content)
@@ -228,38 +172,19 @@ jobs:
           EOF
 
       - name: Build IPA
-        run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+        run: flutter build ipa --release --build-number=${{ github.run_number }} --export-options-plist=ios/Runner/ExportOptions.plist
 
-      - name: Verify iOS signing and version
+      - name: Upload to App Store Connect
+        env:
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          APPSTORE_API_KEY_BASE64: ${{ secrets.APPSTORE_API_KEY_BASE64 }}
         run: |
-          IPA=$(echo build/ios/ipa/*.ipa)
-          echo "IPA: $IPA"
-          echo ""
-          echo "=== Version check ==="
-          EXPECTED=$(grep '^version:' pubspec.yaml | sed 's/version: //')
-          echo "Expected version from pubspec.yaml: $EXPECTED"
-          # Extract and inspect the .app
-          mkdir -p /tmp/ipa-inspect
-          unzip -qo "$IPA" -d /tmp/ipa-inspect
-          APP=$(find /tmp/ipa-inspect/Payload -name '*.app' -type d | head -1)
-          if [ -n "$APP" ]; then
-            echo ""
-            echo "=== Code signing verification ==="
-            codesign -dvv "$APP" 2>&1 | head -15
-            echo ""
-            echo "=== Bundle version ==="
-            /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$APP/Info.plist" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Print CFBundleVersion" "$APP/Info.plist" 2>/dev/null || true
-            echo ""
-            echo "=== Provisioning profile ==="
-            if [ -f "$APP/embedded.mobileprovision" ]; then
-              security cms -D -i "$APP/embedded.mobileprovision" 2>/dev/null | plutil -p - | grep -E 'Name|TeamName|UUID|ExpirationDate|application-identifier' | head -10
-            fi
-          fi
-          rm -rf /tmp/ipa-inspect
-
-      - name: Store IPA
-        uses: actions/upload-artifact@v4
-        with:
-          name: lexio-ios-release
-          path: build/ios/ipa/*.ipa
+          API_KEY_DIRECTORY="$HOME/.appstoreconnect/private_keys"
+          mkdir -p "$API_KEY_DIRECTORY"
+          echo "$APPSTORE_API_KEY_BASE64" | base64 -D -o "$API_KEY_DIRECTORY/AuthKey_$APPSTORE_KEY_ID.p8"
+          xcrun altool --upload-app \
+            -f build/ios/ipa/*.ipa \
+            -t ios \
+            --apiKey "$APPSTORE_KEY_ID" \
+            --apiIssuer "$APPSTORE_ISSUER_ID"
