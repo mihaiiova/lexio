@@ -167,8 +167,38 @@ jobs:
 
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           PROFILE_UUID=$(security cms -D -i "$PROFILE_PATH" | plutil -extract UUID raw -)
+          PROFILE_NAME=$(security cms -D -i "$PROFILE_PATH" | plutil -extract Name raw -)
           cp "$PROFILE_PATH" ~/Library/MobileDevice/Provisioning\ Profiles/"$PROFILE_UUID".mobileprovision
-          echo "Provisioning profile installed: $PROFILE_UUID"
+          echo "Provisioning profile installed: $PROFILE_NAME ($PROFILE_UUID)"
+
+          # Switch the Runner Release config to manual signing with this profile.
+          # Automatic signing conflicts with the Apple Distribution identity.
+          python3 - "$PROFILE_NAME" << 'PYEOF'
+          import sys
+          profile_name = sys.argv[1]
+          pbx = "ios/Runner.xcodeproj/project.pbxproj"
+          with open(pbx) as f:
+              content = f.read()
+
+          marker = "97C147071CF9000F007C117D /* Release */ = {"
+          start = content.index(marker)
+          end = content.index("name = Release;", start)
+          block = content[start:end]
+
+          block = block.replace(
+              "CODE_SIGN_STYLE = Automatic;",
+              "CODE_SIGN_STYLE = Manual;",
+          )
+          block = block.replace(
+              'PROVISIONING_PROFILE_SPECIFIER = "";',
+              f'PROVISIONING_PROFILE_SPECIFIER = "{profile_name}";',
+          )
+
+          content = content[:start] + block + content[end:]
+          with open(pbx, "w") as f:
+              f.write(content)
+          print(f"pbxproj: Release -> Manual signing with profile '{profile_name}'")
+          PYEOF
 
       - name: Export options
         env:
