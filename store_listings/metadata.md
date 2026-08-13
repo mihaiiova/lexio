@@ -49,7 +49,7 @@
 | Location data | Nu |
 | User data transmitted | Eveniment `game_opened`, identificatorul jocului și date tehnice Firebase |
 | Encryption | Da, în tranzit către Firebase |
-| Children under 13 | Potrivită pentru copii — conținut educațional |
+| Children under 13 | Nu este destinat copiilor sub 13 ani |
 
 ## App Privacy (App Store)
 

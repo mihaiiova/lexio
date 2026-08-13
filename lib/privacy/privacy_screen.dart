@@ -34,9 +34,7 @@ class PrivacyScreen extends StatelessWidget {
                   'Analytics fără nume sau cont: înregistrăm deschiderea unui '
                   'joc și identificatorul jocului ales. Nu trimitem răspunsurile '
                   'tale, scorul, progresul, numele, adresa de email sau textele '
-                  'introduse de tine. Statisticile sunt activate doar după '
-                  'acordul tău explicit, iar aplicația funcționează complet și '
-                  'fără ele.',
+                  'introduse de tine.',
             ),
             _PolicySection(
               title: 'Date tehnice',
@@ -74,7 +72,9 @@ class PrivacyScreen extends StatelessWidget {
             ),
             _PolicySection(
               title: 'Copii',
-              body: 'Slove este o aplicație educațională potrivită pentru copii.',
+              body:
+                  'Slove nu este destinată copiilor sub 13 ani și nu colectează '
+                  'cu bună știință date de la aceștia.',
             ),
             _PolicySection(
               title: 'Modificări și contact',
