@@ -31,7 +31,6 @@
 - [x] Pin Flutter SDK version and verify release builds
 - [x] Spot full-flow integration test coverage
 - [x] Refresh project documentation (README, ROADMAP, release report)
-- [x] Web PWA metadata (manifest, OG tags, robots.txt)
 - [ ] Check Firebase Analytics events — [#33](https://github.com/mihaiiova/lexio/issues/33)
 - [ ] Review "Confidențialitate" footer wording — [#32](https://github.com/mihaiiova/lexio/issues/32)
 - [ ] Smoke-test on real devices — [#25](https://github.com/mihaiiova/lexio/issues/25)
@@ -74,3 +73,4 @@ These are explicitly out of scope:
 - Social features (beyond simple sharing)
 - AI-generated content
 - Localization (the app IS Romanian)
+- Web release (the web build remains a CI/dev convenience only)

@@ -6,7 +6,7 @@ Beautiful Romanian word games. Calm, minimalist, typography-first.
 
 Slove is a collection of premium word games for the Romanian language — the "NYT Games for Romanian". Four interactive games: grammar correction, vocabulary definitions, Romanian idioms, and find-the-mistake texts.
 
-**Platforms**: iOS, Android, Web
+**Platforms**: iOS, Android
 
 ## Quick Start
 
