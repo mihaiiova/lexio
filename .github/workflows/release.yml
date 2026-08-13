@@ -170,6 +170,7 @@ jobs:
           PROFILE_NAME=$(security cms -D -i "$PROFILE_PATH" | plutil -extract Name raw -)
           cp "$PROFILE_PATH" ~/Library/MobileDevice/Provisioning\ Profiles/"$PROFILE_UUID".mobileprovision
           echo "Provisioning profile installed: $PROFILE_NAME ($PROFILE_UUID)"
+          echo "PROFILE_UUID=$PROFILE_UUID" >> "$GITHUB_ENV"
 
           # Switch the Runner Release config to manual signing with this profile.
           # Automatic signing conflicts with the Apple Distribution identity.
@@ -217,6 +218,11 @@ jobs:
             <true/>
             <key>manageAppVersionAndBuildNumber</key>
             <false/>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.mihaiiova.lexio</key>
+              <string>${PROFILE_UUID}</string>
+            </dict>
           </dict>
           </plist>
           EOF
