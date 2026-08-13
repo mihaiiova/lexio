@@ -1,10 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:lexio/analytics/analytics_service.dart';
 import 'package:lexio/app/app.dart';
 
+Future<void> _pumpPastConsent(WidgetTester tester) async {
+  await tester.pumpWidget(const LexioApp());
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('Fără statistici'));
+  await tester.pumpAndSettle();
+}
+
 void main() {
+  setUp(() {
+    AnalyticsService.resetForTesting();
+  });
+
   testWidgets('Home screen renders all game titles', (tester) async {
-    await tester.pumpWidget(const LexioApp());
+    await _pumpPastConsent(tester);
 
     expect(find.text('Corect sau greșit?'), findsOneWidget);
     expect(find.text('Ce înseamnă?'), findsOneWidget);
@@ -13,7 +25,7 @@ void main() {
   });
 
   testWidgets('Home screen opens the in-app privacy policy', (tester) async {
-    await tester.pumpWidget(const LexioApp());
+    await _pumpPastConsent(tester);
 
     expect(find.text('Confidențialitate'), findsOneWidget);
     expect(find.text('Asistență'), findsNothing);
@@ -29,7 +41,7 @@ void main() {
   });
 
   testWidgets('App title text is present', (tester) async {
-    await tester.pumpWidget(const LexioApp());
+    await _pumpPastConsent(tester);
     expect(find.text('Slove'), findsOneWidget);
   });
 }

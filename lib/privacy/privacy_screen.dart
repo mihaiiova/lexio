@@ -29,11 +29,14 @@ class PrivacyScreen extends StatelessWidget {
             _PolicySection(
               title: 'Ce date colectăm',
               body:
-                  'Slove folosește Firebase Analytics pentru statistici de '
-                  'utilizare fără nume sau cont. Înregistrăm deschiderea '
-                  'unui joc și identificatorul fix al jocului ales. Nu trimitem '
-                  'răspunsurile tale, scorul, progresul, numele, adresa de email '
-                  'sau texte introduse de tine.',
+                  'Slove colectează un set minimal de date anonime pentru a '
+                  'garanta funcționarea corectă a jocurilor. Folosim Firebase '
+                  'Analytics fără nume sau cont: înregistrăm deschiderea unui '
+                  'joc și identificatorul jocului ales. Nu trimitem răspunsurile '
+                  'tale, scorul, progresul, numele, adresa de email sau textele '
+                  'introduse de tine. Statisticile sunt activate doar după '
+                  'acordul tău explicit, iar aplicația funcționează complet și '
+                  'fără ele.',
             ),
             _PolicySection(
               title: 'Date tehnice',

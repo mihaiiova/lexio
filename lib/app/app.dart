@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import '../analytics/analytics_consent_gate.dart';
 import '../design/theme.dart';
-import '../home/home_screen.dart';
 
 class LexioApp extends StatelessWidget {
   const LexioApp({super.key});
@@ -19,7 +19,7 @@ class LexioApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const HomeScreen(),
+      home: const AnalyticsConsentGate(),
     );
   }
 }
