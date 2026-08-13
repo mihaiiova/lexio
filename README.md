@@ -108,6 +108,8 @@ python3 scripts/validate_content.py
 - **Release** (`.github/workflows/release.yml`): Tag-triggered builds for all platforms
 - **TestFlight** (`.github/workflows/deploy.yml`): Manual iOS deploy to TestFlight
 
+See [`docs/releasing.md`](docs/releasing.md) for how to version, test, and ship updates.
+
 ## Privacy
 
 - The Romanian privacy policy is available from the home-screen footer.
