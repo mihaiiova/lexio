@@ -9,6 +9,7 @@ permissions:
 jobs:
   deploy:
     runs-on: macos-latest
+    environment: Prod
     steps:
       - uses: actions/checkout@v4
 
