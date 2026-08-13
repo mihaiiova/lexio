@@ -19,7 +19,7 @@
 | Field | URL |
 |---|---|
 | Website | Public Slove URL to be configured before store submission |
-| Privacy policy | Public Slove privacy-policy URL required before store submission |
+| Privacy policy | https://mihaiiova.github.io/lexio/ |
 
 ## Categories
 
