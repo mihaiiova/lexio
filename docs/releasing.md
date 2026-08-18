@@ -29,8 +29,9 @@ version: 1.0.0+1
 | Breaking / major redesign | major — `2.0.0+1` |
 
 The build number (`+N`) is **managed automatically in CI** from
-`GITHUB_RUN_NUMBER` — a per-repository counter that is always increasing, so it
-is unique and monotonic across both the test and production tracks. You only
+`GITHUB_RUN_ID` — a unique, always-increasing number per workflow run, shared
+across both the staging and production workflows, so it is monotonic and never
+collides between the two tracks. You only
 ever edit the `X.Y.Z` part; leave `+N` alone.
 
 ## Branch-driven workflow
