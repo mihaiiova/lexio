@@ -63,11 +63,23 @@ feature/xxx ──PR──▶ staging ──push──▶ test builds go out aut
 
 | Workflow | Trigger | Result |
 |---|---|---|
-| `ci.yml` | push to feature branches, and all PRs | analyze + test + unsigned builds (sanity gate) |
+| `ci.yml` | push to feature branches, and all PRs | analyze + unit/widget tests + unsigned builds (sanity gate) |
 | `deploy-staging.yml` | push to `staging` | signed Android AAB → Play internal testing; signed IPA → TestFlight |
 | `deploy-prod.yml` | push to `master` | signed Android AAB → Play production; signed IPA → App Store Connect |
 
 Signing secrets are configured per `RELEASE_SIGNING.md`; never commit them.
+
+### Screenshot integration workflow
+
+`integration_test/screenshot_test.dart` captures store-review screenshots on a
+connected device or emulator. It is not run by `flutter test` or by CI because
+it depends on device screenshots and is an editorial asset workflow, not a
+release gate. Run it explicitly with:
+
+```bash
+flutter drive --driver test_driver/integration_test.dart \
+  --target integration_test/screenshot_test.dart
+```
 
 ## Getting changes to testers
 

@@ -6,8 +6,10 @@ import '../../design/spacing.dart';
 import '../../design/typography.dart';
 import '../../design/radius.dart';
 import '../../design/animations.dart';
+import '../../design/sizes.dart';
 import '../../design/components/lexio_answer_button.dart';
 import '../../design/components/lexio_feedback.dart';
+import '../../design/components/lexio_feedback_screen.dart';
 import '../../progress/user_progress.dart';
 import 'grammar_content.dart';
 import 'grammar_game.dart';
@@ -16,7 +18,9 @@ import 'widgets/question_card.dart';
 import 'widgets/result_overlay.dart';
 
 class GrammarScreen extends StatefulWidget {
-  const GrammarScreen({super.key});
+  const GrammarScreen({super.key, this.exercises});
+
+  final List<GrammarExercise>? exercises;
 
   @override
   State<GrammarScreen> createState() => _GrammarScreenState();
@@ -36,7 +40,14 @@ class _GrammarScreenState extends State<GrammarScreen> {
   @override
   void initState() {
     super.initState();
-    _init();
+    final exercises = widget.exercises;
+    if (exercises != null) {
+      _state = GrammarGameState(exercises: exercises);
+      _isLoading = false;
+      if (exercises.isNotEmpty) _session.start();
+    } else {
+      _init();
+    }
   }
 
   @override
@@ -136,36 +147,38 @@ class _GrammarScreenState extends State<GrammarScreen> {
     _session.start();
   }
 
-  Widget _buildErrorScreen() {
-    return Scaffold(
+  Widget _buildEmptyScreen() {
+    return LexioFeedbackScreen(
       backgroundColor: LexioColors.surface,
       appBar: AppBar(
         leading: const BackButton(),
         backgroundColor: LexioColors.surface,
       ),
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: LexioSpacing.screenHorizontal,
-            ),
-            child: LexioFeedback(
-              type: LexioFeedbackType.error,
-              message: 'Nu s-au putut încărca exercițiile',
-              description:
-                  'Verifică conexiunea la internet și încearcă din nou.',
-              actionLabel: 'Reîncearcă',
-              action: () {
-                setState(() {
-                  _isLoading = true;
-                  _hasError = false;
-                });
-                _init();
-              },
-            ),
-          ),
-        ),
+      type: LexioFeedbackType.error,
+      message: 'Nu există exerciții disponibile',
+      description:
+          'Conținutul local nu conține exerciții pentru această rundă.',
+    );
+  }
+
+  Widget _buildErrorScreen() {
+    return LexioFeedbackScreen(
+      backgroundColor: LexioColors.surface,
+      appBar: AppBar(
+        leading: const BackButton(),
+        backgroundColor: LexioColors.surface,
       ),
+      type: LexioFeedbackType.error,
+      message: 'Nu s-au putut încărca exercițiile',
+      description: 'Verifică conexiunea la internet și încearcă din nou.',
+      actionLabel: 'Reîncearcă',
+      action: () {
+        setState(() {
+          _isLoading = true;
+          _hasError = false;
+        });
+        _init();
+      },
     );
   }
 
@@ -183,6 +196,10 @@ class _GrammarScreenState extends State<GrammarScreen> {
     }
 
     final state = _state!;
+
+    if (state.exercises.isEmpty) {
+      return _buildEmptyScreen();
+    }
 
     if (state.isFinished) {
       return Scaffold(
@@ -234,36 +251,38 @@ class _GrammarScreenState extends State<GrammarScreen> {
       child: Semantics(
         label: 'Progres: ${state.totalAnswered} din ${state.exercises.length}',
         child: Row(
-        children: List.generate(state.exercises.length, (i) {
-          final result = state.results[i];
-          final isCurrent = i == state.currentIndex && result == null;
+          children: List.generate(state.exercises.length, (i) {
+            final result = state.results[i];
+            final isCurrent = i == state.currentIndex && result == null;
 
-          Color color;
-          if (result == true) {
-            color = LexioColors.success;
-          } else if (result == false) {
-            color = LexioColors.error;
-          } else if (isCurrent) {
-            color = LexioColors.primary;
-          } else {
-            color = LexioColors.surfaceTertiary;
-          }
+            Color color;
+            if (result == true) {
+              color = LexioColors.success;
+            } else if (result == false) {
+              color = LexioColors.error;
+            } else if (isCurrent) {
+              color = LexioColors.primary;
+            } else {
+              color = LexioColors.surfaceTertiary;
+            }
 
-          return Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: i == 0 ? 0 : LexioSpacing.xxs),
-              child: AnimatedContainer(
-                duration: LexioDurations.fast,
-                height: isCurrent ? 4 : 3,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(LexioRadius.sm),
+            return Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: i == 0 ? 0 : LexioSpacing.xxs),
+                child: AnimatedContainer(
+                  duration: LexioDurations.fast,
+                  height: isCurrent
+                      ? LexioSizes.progressBarActive
+                      : LexioSizes.progressBarIdle,
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(LexioRadius.sm),
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
-      ),
+            );
+          }),
+        ),
       ),
     );
   }
@@ -304,7 +323,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
             TweenAnimationBuilder<double>(
               key: _flashKey,
               tween: Tween(begin: 0.0, end: 1.0),
-              duration: const Duration(milliseconds: 350),
+              duration: LexioDurations.page,
               curve: LexioCurves.bouncy,
               onEnd: () {
                 if (mounted) _advance();
@@ -317,7 +336,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
                       opacity: (1 - value).clamp(0.0, 1.0),
                       child: const Icon(
                         Icons.check,
-                        size: 80,
+                        size: LexioSizes.iconCheckmark,
                         color: LexioColors.success,
                       ),
                     ),
@@ -346,7 +365,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
             return Opacity(
               opacity: value,
               child: Transform.translate(
-                offset: Offset(0, 12 * (1 - value)),
+                offset: Offset(0, LexioSizes.slideOffset * (1 - value)),
                 child: child,
               ),
             );
@@ -384,28 +403,28 @@ class _GrammarScreenState extends State<GrammarScreen> {
         button: true,
         label: 'Următoarea întrebare',
         child: GestureDetector(
-        onTap: _next,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: LexioSpacing.md),
-          decoration: BoxDecoration(
-            color: LexioColors.primary,
-            borderRadius: BorderRadius.circular(LexioRadius.lg),
-            border: Border.all(
+          onTap: _next,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: LexioSpacing.md),
+            decoration: BoxDecoration(
               color: LexioColors.primary,
-              width: LexioSpacing.xxs,
+              borderRadius: BorderRadius.circular(LexioRadius.lg),
+              border: Border.all(
+                color: LexioColors.primary,
+                width: LexioSpacing.xxs,
+              ),
             ),
-          ),
-          child: Text(
-            'Urm\u0103toarea',
-            style: LexioTextStyles.bodyMedium.copyWith(
-              color: LexioColors.textOnPrimary,
-              fontWeight: FontWeight.w500,
+            child: Text(
+              'Urm\u0103toarea',
+              style: LexioTextStyles.bodyMedium.copyWith(
+                color: LexioColors.textOnPrimary,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ),
-      ),
       ),
     );
   }

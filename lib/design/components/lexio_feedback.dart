@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../colors.dart';
 import '../radius.dart';
+import '../shadows.dart';
+import '../sizes.dart';
 import '../spacing.dart';
 import '../typography.dart';
-import '../shadows.dart';
 
 class LexioFeedback extends StatelessWidget {
   const LexioFeedback({
@@ -38,7 +39,11 @@ class LexioFeedback extends StatelessWidget {
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.center,
         children: [
-          Icon(_iconForType(type), color: colors.icon, size: 20),
+          Icon(
+            _iconForType(type),
+            color: colors.icon,
+            size: LexioSizes.iconFeedback,
+          ),
           const SizedBox(width: LexioSpacing.md),
           Expanded(
             child: Column(
@@ -98,33 +103,33 @@ class LexioFeedback extends StatelessWidget {
   static _FeedbackColors _colorsForType(LexioFeedbackType type) {
     return switch (type) {
       LexioFeedbackType.success => _FeedbackColors(
-            background: LexioColors.successBackground,
-            border: LexioColors.success.withValues(alpha: 0.3),
-            icon: LexioColors.success,
-            text: LexioColors.success,
-            description: LexioColors.textSecondary,
-          ),
+        background: LexioColors.successBackground,
+        border: LexioColors.success.withValues(alpha: 0.3),
+        icon: LexioColors.success,
+        text: LexioColors.success,
+        description: LexioColors.textSecondary,
+      ),
       LexioFeedbackType.error => _FeedbackColors(
-            background: LexioColors.errorBackground,
-            border: LexioColors.error.withValues(alpha: 0.3),
-            icon: LexioColors.error,
-            text: LexioColors.error,
-            description: LexioColors.textSecondary,
-          ),
+        background: LexioColors.errorBackground,
+        border: LexioColors.error.withValues(alpha: 0.3),
+        icon: LexioColors.error,
+        text: LexioColors.error,
+        description: LexioColors.textSecondary,
+      ),
       LexioFeedbackType.warning => _FeedbackColors(
-            background: LexioColors.warningBackground,
-            border: LexioColors.warning.withValues(alpha: 0.3),
-            icon: LexioColors.warning,
-            text: LexioColors.warning,
-            description: LexioColors.textSecondary,
-          ),
+        background: LexioColors.warningBackground,
+        border: LexioColors.warning.withValues(alpha: 0.3),
+        icon: LexioColors.warning,
+        text: LexioColors.warning,
+        description: LexioColors.textSecondary,
+      ),
       LexioFeedbackType.info => _FeedbackColors(
-            background: LexioColors.infoBackground,
-            border: LexioColors.info.withValues(alpha: 0.3),
-            icon: LexioColors.info,
-            text: LexioColors.info,
-            description: LexioColors.textSecondary,
-          ),
+        background: LexioColors.infoBackground,
+        border: LexioColors.info.withValues(alpha: 0.3),
+        icon: LexioColors.info,
+        text: LexioColors.info,
+        description: LexioColors.textSecondary,
+      ),
     };
   }
 }

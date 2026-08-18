@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../animations.dart';
 import '../colors.dart';
 import '../spacing.dart';
 import '../radius.dart';
@@ -29,15 +31,13 @@ class LexioCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final card = AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: LexioDurations.fast,
       padding: padding ?? const EdgeInsets.all(LexioSpacing.cardPadding),
       margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
         color: backgroundColor ?? LexioColors.surface,
         borderRadius: borderRadius ?? BorderRadius.circular(LexioRadius.xl),
-        border: borderColor != null
-            ? Border.all(color: borderColor!)
-            : null,
+        border: borderColor != null ? Border.all(color: borderColor!) : null,
         boxShadow: shadows ?? LexioShadows.cardCombined,
       ),
       child: child,
@@ -47,10 +47,7 @@ class LexioCard extends StatelessWidget {
       return MergeSemantics(
         child: Semantics(
           button: true,
-          child: GestureDetector(
-            onTap: onTap,
-            child: card,
-          ),
+          child: GestureDetector(onTap: onTap, child: card),
         ),
       );
     }

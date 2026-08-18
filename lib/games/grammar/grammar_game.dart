@@ -27,6 +27,10 @@ final class GrammarGameState {
   int get remaining => exercises.length - totalAnswered;
 
   GrammarGameState answer(bool playerSaysCorrect) {
+    if (exercises.isEmpty || isFinished || results[currentIndex] != null) {
+      return this;
+    }
+
     final actualCorrect = currentExercise.isCorrect;
     final isRight = playerSaysCorrect == actualCorrect;
 
@@ -45,6 +49,10 @@ final class GrammarGameState {
   }
 
   GrammarGameState next() {
+    if (exercises.isEmpty || isFinished || results[currentIndex] == null) {
+      return this;
+    }
+
     final nextIndex = currentIndex + 1;
     if (nextIndex >= exercises.length) {
       return GrammarGameState(

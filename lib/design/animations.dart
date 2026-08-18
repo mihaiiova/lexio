@@ -9,6 +9,8 @@ abstract class LexioDurations {
   static const Duration slow = Duration(milliseconds: 500);
   static const Duration reveal = Duration(milliseconds: 600);
   static const Duration page = Duration(milliseconds: 350);
+  static const Duration shake = Duration(milliseconds: 400);
+  static const Duration feedback = Duration(milliseconds: 450);
 }
 
 abstract class LexioCurves {

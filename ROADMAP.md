@@ -4,12 +4,12 @@
 
 - [x] Project structure and conventions
 - [x] Design system (typography, colors, spacing, components)
-- [x] Game architecture with `LexioGame` interface
+- [x] Isolated game modules with immutable local state
 - [x] Home screen with four playable games
-- [x] Grammar game: "Corect sau greșit?" (423 exercises)
+- [x] Grammar game: "Corect sau greșit?" (511 generated exercises)
 - [x] Vocabulary game: "Ce înseamnă?" (100 exercises)
 - [x] Idioms game: "Vorba vine" (60 exercises)
-- [x] Spot game: "Găsește greșeala" (60 texts, 60s timed)
+- [x] Spot game: "Găsește greșeala" (59 texts, 60s timed)
 - [x] Local JSON content layer
 - [x] Spaced repetition progress tracking (SharedPreferences)
 - [x] Subtle animations (page transitions, answer feedback, progress)

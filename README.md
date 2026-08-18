@@ -19,10 +19,10 @@ flutter run
 
 | Game | Romanian Title | Type | Exercises |
 |---|---|---|---|
-| Grammar | Corect sau greșit? | True/false grammar challenge | 423 |
+| Grammar | Corect sau greșit? | True/false grammar challenge | 511 generated exercises |
 | Vocabulary | Ce înseamnă? | Multiple-choice definitions | 100 |
 | Idioms | Vorba vine | Expression meaning | 60 |
-| Spot | Găsește greșeala | Timed error-finding (60s) | 60 texts |
+| Spot | Găsește greșeala | Timed error-finding (60s) | 59 texts |
 
 ## Project Structure
 
@@ -40,7 +40,6 @@ lib/
     animations.dart            # Animation durations & curves
     components/                # Reusable UI components (LexioButton, LexioCard, LexioFeedback)
   games/                       # All games
-    game_interface.dart        # Contract for each game
     grammar/                   # Grammar game — Corect sau greșit?
     vocabulary/                # Vocabulary game — Ce înseamnă?
     idioms/                    # Idioms game — Vorba vine
@@ -60,8 +59,8 @@ lib/
 
 ## Architecture Decisions
 
-- Each game is an isolated module behind a common interface (`LexioGame`)
-- Design tokens are centralized — changing fonts/colors needs edits in one place
+- Each game is an isolated module; the home catalogue owns its navigation metadata
+- Design tokens are centralized — changing fonts, colors, spacing, radii, or animation timing needs edits in one place
 - Content is stored as local JSON for easy addition of thousands of exercises
 - **Local persistence**: Progress tracked via `SharedPreferences` with spaced repetition
 - **No backend or auth** — learning content and progress remain local
@@ -74,7 +73,8 @@ lib/
 
 ```bash
 flutter analyze   # Static analysis — zero warnings
-flutter test      # Unit + widget + integration tests
+flutter test      # Unit and widget tests under test/
+flutter drive --driver test_driver/integration_test.dart --target integration_test/screenshot_test.dart  # Device screenshot workflow
 ```
 
 Test structure:
@@ -87,6 +87,8 @@ test/
     vocabulary/    # Vocabulary game tests
   progress/        # Spaced repetition logic
   accessibility/   # Semantics tests
+integration_test/
+  screenshot_test.dart  # Device-only screenshot capture workflow
 ```
 
 Content validation:
@@ -104,7 +106,8 @@ python3 scripts/validate_content.py
 
 ## CI/CD
 
-- **CI** (`.github/workflows/ci.yml`): Analyze → Test → Build Web → Build Android (AAB) — runs on PRs and feature-branch pushes
+- **CI** (`.github/workflows/ci.yml`): Analyze → unit/widget tests → Build Web → Build Android (AAB) — runs on PRs and feature-branch pushes
+- **Screenshot integration test**: run manually on a connected device or emulator; it captures store-review assets and is not a CI release gate
 - **Staging** (`.github/workflows/deploy-staging.yml`): push to `staging` → TestFlight + Play internal testing
 - **Production** (`.github/workflows/deploy-prod.yml`): push to `master` → App Store Connect + Play production
 

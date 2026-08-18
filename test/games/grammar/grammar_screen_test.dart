@@ -3,6 +3,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lexio/games/grammar/grammar_screen.dart';
 
 void main() {
+  testWidgets('shows a safe empty state when no exercises are supplied', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: GrammarScreen(exercises: [])),
+    );
+
+    expect(find.text('Nu există exerciții disponibile'), findsOneWidget);
+  });
+
   testWidgets('round shows summary after completing all exercises', (
     tester,
   ) async {

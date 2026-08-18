@@ -67,6 +67,17 @@ void main() {
       expect(state.mode, SpotGameMode.normal);
     });
 
+    test('empty state ignores actions without accessing a text', () {
+      final state = SpotGameState(texts: const []);
+
+      expect(state.mistakesFound, 0);
+      expect(state.totalMistakesInCurrentText, 0);
+      expect(state.tapWord(0).state, same(state));
+      expect(state.nextText(), same(state));
+      expect(state.checkTimerExpiry(), same(state));
+      expect(state.checkAnswers(), same(state));
+    });
+
     test('tapWord finds a mistake', () {
       final state = createState();
       final outcome = state.tapWord(3);
@@ -191,9 +202,9 @@ void main() {
         final now = DateTime(2025, 1, 1, 12, 0, 0);
         final state = SpotGameState(texts: texts, startTime: now);
 
-        final expired = state.elapsedAt(
-          now.add(const Duration(seconds: 61)),
-        ).inSeconds >= 60;
+        final expired =
+            state.elapsedAt(now.add(const Duration(seconds: 61))).inSeconds >=
+            60;
         expect(expired, true);
       });
 
@@ -234,10 +245,7 @@ void main() {
     });
 
     test('checkTimerExpiry does nothing when not expired', () {
-      final state = SpotGameState(
-        texts: texts,
-        startTime: DateTime.now(),
-      );
+      final state = SpotGameState(texts: texts, startTime: DateTime.now());
 
       final result = state.checkTimerExpiry();
       expect(result.currentTextIndex, state.currentTextIndex);

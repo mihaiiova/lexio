@@ -21,9 +21,10 @@ This file is the single source of truth for any coding agent working on this pro
 - Prefer `final` over `var` by default
 
 ### Imports
-- Always use relative imports within the project (`import '../design/colors.dart'`)
+- Always use relative imports within `lib/` (`import '../design/colors.dart'`)
+- Test files may import the package by name (`package:lexio/...`) — the `avoid_relative_lib_imports` lint prefers this
 - Group imports: dart SDK first, then packages, then project files
-- Never use `package:lexio/` imports for internal files
+- Never use `package:lexio/` imports within `lib/`
 
 ### Widget structure
 - Extract reusable UI into `lib/design/components/`
@@ -47,6 +48,7 @@ This file is the single source of truth for any coding agent working on this pro
 | `lib/design/radius.dart` | `LexioRadius` | `LexioRadius.xl` |
 | `lib/design/shadows.dart` | `LexioShadows` | `LexioShadows.cardCombined` |
 | `lib/design/animations.dart` | `LexioDurations`, `LexioCurves` | `LexioDurations.normal` |
+| `lib/design/sizes.dart` | `LexioSizes` | `LexioSizes.progressBarActive` |
 
 ### NEVER hardcode
 - Colors
@@ -61,19 +63,6 @@ This file is the single source of truth for any coding agent working on this pro
 - `LexioFeedback` — success/error/warning/info message
 
 ## Game Architecture
-
-### Game interface (`lib/games/game_interface.dart`)
-Every game must implement:
-```dart
-abstract class LexioGame {
-  String get id;
-  String get title;
-  String get description;
-  String get emoji;
-  Color? get accentColor;
-  Widget buildScreen(BuildContext context);
-}
-```
 
 ### Game module structure
 ```
@@ -121,7 +110,7 @@ Task tracking and release planning live in **GitHub Issues**, not in markdown do
 
 Do NOT update status/progress directly in markdown docs — close the GitHub Issue instead.
 
-After each feature or development round, run `/skill:review` to score the conversation and implement improvements to how we work.
+After each feature or development round, run `/skill:review-session` to score the conversation, check recent revision logs for recurring problems, and implement improvements to how we work.
 
 ## Commands
 ```bash

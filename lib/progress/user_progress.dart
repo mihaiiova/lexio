@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'learning_item.dart';
 
 int _todayDay() {
   final now = DateTime.now();
-  return DateTime.utc(now.year, now.month, now.day)
-          .millisecondsSinceEpoch ~/
+  return DateTime.utc(now.year, now.month, now.day).millisecondsSinceEpoch ~/
       Duration.millisecondsPerDay;
 }
 
@@ -46,10 +46,8 @@ final class GameProgress {
     final itemsJson = json['items'] as Map<String, dynamic>? ?? {};
     return GameProgress(
       items: itemsJson.map(
-        (id, data) => MapEntry(
-          id,
-          LearningItem.fromJson(data as Map<String, dynamic>),
-        ),
+        (id, data) =>
+            MapEntry(id, LearningItem.fromJson(data as Map<String, dynamic>)),
       ),
     );
   }
@@ -60,8 +58,7 @@ final class UserProgress {
 
   const UserProgress({this.games = const {}});
 
-  GameProgress forGame(String gameId) =>
-      games[gameId] ?? const GameProgress();
+  GameProgress forGame(String gameId) => games[gameId] ?? const GameProgress();
 
   UserProgress recordAnswer({
     required String gameId,
@@ -70,11 +67,9 @@ final class UserProgress {
     required int today,
   }) {
     final updatedGames = Map<String, GameProgress>.from(games);
-    updatedGames[gameId] = forGame(gameId).recordAnswer(
-      notionId: notionId,
-      isCorrect: isCorrect,
-      today: today,
-    );
+    updatedGames[gameId] = forGame(
+      gameId,
+    ).recordAnswer(notionId: notionId, isCorrect: isCorrect, today: today);
     return UserProgress(games: updatedGames);
   }
 
@@ -96,28 +91,51 @@ final class UserProgress {
   }
 }
 
+abstract interface class ProgressStorage {
+  Future<String?> read(String key);
+
+  Future<void> write(String key, String value);
+}
+
+final class SharedPreferencesProgressStorage implements ProgressStorage {
+  final SharedPreferencesAsync _preferences;
+
+  SharedPreferencesProgressStorage(this._preferences);
+
+  @override
+  Future<String?> read(String key) => _preferences.getString(key);
+
+  @override
+  Future<void> write(String key, String value) =>
+      _preferences.setString(key, value);
+}
+
 final class ProgressRepository {
   static const _storageKey = 'user_progress_v2';
 
-  ProgressRepository._(this._preferences, this._progress);
+  ProgressRepository({
+    ProgressStorage? storage,
+    UserProgress progress = const UserProgress(),
+  }) : this._(storage: storage, progress: progress);
 
-  final SharedPreferencesAsync? _preferences;
+  ProgressRepository._({this._storage, required this._progress});
+
+  final ProgressStorage? _storage;
   UserProgress _progress;
+  Future<void> _pendingWrite = Future<void>.value();
 
-  static Future<ProgressRepository> load() async {
-    SharedPreferencesAsync? preferences;
-    UserProgress progress;
+  static Future<ProgressRepository> load({ProgressStorage? storage}) async {
     try {
-      preferences = SharedPreferencesAsync();
-      final source = await preferences.getString(_storageKey);
-      progress = source == null
+      final effectiveStorage =
+          storage ?? SharedPreferencesProgressStorage(SharedPreferencesAsync());
+      final source = await effectiveStorage.read(_storageKey);
+      final progress = source == null
           ? const UserProgress()
           : UserProgress.fromJson(source);
+      return ProgressRepository(storage: effectiveStorage, progress: progress);
     } catch (_) {
-      preferences = null;
-      progress = const UserProgress();
+      return ProgressRepository();
     }
-    return ProgressRepository._(preferences, progress);
   }
 
   GameProgress forGame(String gameId) => _progress.forGame(gameId);
@@ -126,7 +144,7 @@ final class ProgressRepository {
     required String gameId,
     required String notionId,
     required bool isCorrect,
-  }) async {
+  }) {
     final today = _todayDay();
     _progress = _progress.recordAnswer(
       gameId: gameId,
@@ -134,13 +152,13 @@ final class ProgressRepository {
       isCorrect: isCorrect,
       today: today,
     );
-    await _preferences?.setString(_storageKey, _progress.toJson());
+    return _enqueueWrite();
   }
 
   Future<void> recordAnswers({
     required String gameId,
     required Map<String, bool> notionResults,
-  }) async {
+  }) {
     final today = _todayDay();
     var updated = _progress;
     for (final entry in notionResults.entries) {
@@ -152,7 +170,21 @@ final class ProgressRepository {
       );
     }
     _progress = updated;
-    await _preferences?.setString(_storageKey, _progress.toJson());
+    return _enqueueWrite();
+  }
+
+  Future<void> _enqueueWrite() {
+    final snapshot = _progress.toJson();
+    _pendingWrite = _pendingWrite.then((_) => _writeSnapshot(snapshot));
+    return _pendingWrite;
+  }
+
+  Future<void> _writeSnapshot(String snapshot) async {
+    try {
+      await _storage?.write(_storageKey, snapshot);
+    } catch (error) {
+      debugPrint('ProgressRepository: failed to persist progress: $error');
+    }
   }
 }
 
@@ -195,7 +227,14 @@ final class RoundSelector {
       }
     }
 
-    _addFromBucket(overdue, selected, usedNotions, notionIdOf, count, generator);
+    _addFromBucket(
+      overdue,
+      selected,
+      usedNotions,
+      notionIdOf,
+      count,
+      generator,
+    );
     _addFromBucket(
       eligible,
       selected,
@@ -254,12 +293,13 @@ final class RoundSelector {
       final notions = notionIdsOf(exercise);
       final items = notions.map((n) => progress.progressFor(n)).toList();
 
-      final anyOverdue =
-          items.any((item) => item.isOverdue(effectiveToday));
-      final anyNew =
-          items.any((item) => item.state == LearningItemState.newItem);
-      final anyEligible =
-          items.any((item) => item.isEligibleForReview(effectiveToday));
+      final anyOverdue = items.any((item) => item.isOverdue(effectiveToday));
+      final anyNew = items.any(
+        (item) => item.state == LearningItemState.newItem,
+      );
+      final anyEligible = items.any(
+        (item) => item.isEligibleForReview(effectiveToday),
+      );
 
       if (anyOverdue) {
         overdue.add(exercise);
