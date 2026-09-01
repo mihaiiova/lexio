@@ -6319,7 +6319,7 @@
     "tags": [
       "vocativ"
     ],
-    "pairId": "p186",
+    "pairId": "p188",
     "correctSentence": "Dragile mele, vă mulțumesc pentru cadou.",
     "doomWord": "dragile",
     "doomDefinition": "drag1 adj. m., voc. drag (prieten ~)/dragă (~ prietene, frate ~), pl. dragi, art. dragii; f. dragă, g.-d. art. dragii (~ mele fiice), voc. dragă (prietenă ~, ~ prietenă), pl. dragi, art. dragile (~ mele fiice) (și: drag nouă)"
@@ -6336,7 +6336,7 @@
       "vocativ",
       "confirmare"
     ],
-    "pairId": "p186",
+    "pairId": "p188",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6352,7 +6352,7 @@
       "plural",
       "greșeală frecventă"
     ],
-    "pairId": "p186",
+    "pairId": "p189",
     "correctSentence": "Am avut câteva eșecuri în afaceri.",
     "doomWord": "eșecuri",
     "doomDefinition": "eșec s. n., pl. eșecuri"
@@ -6370,7 +6370,7 @@
       "greșeală frecventă",
       "confirmare"
     ],
-    "pairId": "p186",
+    "pairId": "p189",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6386,7 +6386,7 @@
       "greșeală frecventă",
       "genitiv"
     ],
-    "pairId": "p187",
+    "pairId": "p190",
     "correctSentence": "I-am scris copilului celui interesat de înscriere.",
     "doomWord": "celui",
     "doomDefinition": "cel2 art. m. (elevul ~ bun, elevul ~ mai bun​), g.-d. celui (omului ~ bun, dar: lui Ioan Vodă cel Cumplit), pl. cei ((Toți) ~ trei copii sunt olimpici.); f. cea, g.-d. celei, pl. cele; g.-d. pl. m. și f. celor"
@@ -6404,7 +6404,7 @@
       "genitiv",
       "confirmare"
     ],
-    "pairId": "p187",
+    "pairId": "p190",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6419,7 +6419,7 @@
     "tags": [
       "greșeală frecventă"
     ],
-    "pairId": "p188",
+    "pairId": "p191",
     "correctSentence": "Compania a prezentat o soluție novatoare pentru reducerea costurilor.",
     "doomWord": "novator",
     "doomDefinition": "novator adj. m., s. m., pl. novatori; adj. f., s. f. sg. și pl. novatoare"
@@ -6436,7 +6436,7 @@
       "greșeală frecventă",
       "confirmare"
     ],
-    "pairId": "p188",
+    "pairId": "p191",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6452,7 +6452,7 @@
       "prepoziție",
       "greșeală frecventă"
     ],
-    "pairId": "p189",
+    "pairId": "p192",
     "correctSentence": "Am luat cartea de pe masă și am pus-o în geantă.",
     "doomWord": null,
     "doomDefinition": null
@@ -6470,7 +6470,7 @@
       "greșeală frecventă",
       "confirmare"
     ],
-    "pairId": "p189",
+    "pairId": "p192",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6486,7 +6486,7 @@
       "greșeală frecventă",
       "dativ"
     ],
-    "pairId": "p190",
+    "pairId": "p193",
     "correctSentence": "Elevii cărora le-am dat teme au lipsit astăzi.",
     "doomWord": "cărora",
     "doomDefinition": "care2 pr. int. m. și f. sg. și pl.; g. sg. m. căruia/cărui, f. căreia/cărei, pl. cărora/căror; d. sg. m. căruia, f. căreia, pl. m. și f. cărora (independent/postpus: A căruia dintre ei este casa? În casa căruia ai intrat? A căreia dintre ele este casa? În casa căreia ai intrat?; antepus: + al, a, ai, ale: În a cărui casă ai intrat? În ale cărui case ai intrat? În a cărei casă ai intrat? În ale cărei case ai intrat?; independent/postpus: În casa cărora ai intrat?; antepus: + al, a, ai, ale: În a căror casă ai intrat?; Căruia dintre ei i-ai dat? Căreia dintre ele i-ai dat? Cărora dintre ei/dintre ele le-ai dat?)"
@@ -6504,7 +6504,7 @@
       "dativ",
       "confirmare"
     ],
-    "pairId": "p190",
+    "pairId": "p193",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6520,7 +6520,7 @@
       "pleonasm",
       "redundanță"
     ],
-    "pairId": "p191",
+    "pairId": "p194",
     "correctSentence": "Săptămâna viitoare au loc alegeri în toată țara.",
     "doomWord": "în",
     "doomDefinition": "în prep."
@@ -6538,7 +6538,7 @@
       "redundanță",
       "confirmare"
     ],
-    "pairId": "p191",
+    "pairId": "p194",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6554,7 +6554,7 @@
       "pleonasm",
       "redundanță"
     ],
-    "pairId": "p192",
+    "pairId": "p195",
     "correctSentence": "Meteorologii au anunțat averse pentru după-amiază.",
     "doomWord": "pentru",
     "doomDefinition": "pentru prep., adv. (a vota ~ moțiune, a vota ~)"
@@ -6572,7 +6572,7 @@
       "redundanță",
       "confirmare"
     ],
-    "pairId": "p192",
+    "pairId": "p195",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6587,7 +6587,7 @@
     "tags": [
       "greșeală frecventă"
     ],
-    "pairId": "p193",
+    "pairId": "p196",
     "correctSentence": "Sportul este benefic pentru sănătate.",
     "doomWord": "benefic",
     "doomDefinition": "benefic adj. m., pl. benefici; f. benefică, pl. benefice"
@@ -6604,7 +6604,7 @@
       "greșeală frecventă",
       "confirmare"
     ],
-    "pairId": "p193",
+    "pairId": "p196",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6619,7 +6619,7 @@
     "tags": [
       "greșeală frecventă"
     ],
-    "pairId": "p194",
+    "pairId": "p197",
     "correctSentence": "Am cumpărat doar pâine de la magazin.",
     "doomWord": "doar",
     "doomDefinition": "doar (numai) (în construcții pozitive și negative) adv. ((Nu) are ~ douăzeci de ani.)"
@@ -6636,7 +6636,7 @@
       "greșeală frecventă",
       "confirmare"
     ],
-    "pairId": "p194",
+    "pairId": "p197",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6652,7 +6652,7 @@
       "pleonasm",
       "redundanță"
     ],
-    "pairId": "p195",
+    "pairId": "p198",
     "correctSentence": "Poliția a descoperit o rețea de contrabandă cu țigări.",
     "doomWord": "cu",
     "doomDefinition": "cu prep. (Zboară ~ elicopterul. Zboară ~ frică.)"
@@ -6670,7 +6670,7 @@
       "redundanță",
       "confirmare"
     ],
-    "pairId": "p195",
+    "pairId": "p198",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6686,7 +6686,7 @@
       "pleonasm",
       "redundanță"
     ],
-    "pairId": "p196",
+    "pairId": "p199",
     "correctSentence": "Echipa noastră colaborează cu partenerii externi.",
     "doomWord": "cu",
     "doomDefinition": "cu prep. (Zboară ~ elicopterul. Zboară ~ frică.)"
@@ -6704,7 +6704,7 @@
       "redundanță",
       "confirmare"
     ],
-    "pairId": "p196",
+    "pairId": "p199",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6719,7 +6719,7 @@
     "tags": [
       "greșeală frecventă"
     ],
-    "pairId": "p197",
+    "pairId": "p200",
     "correctSentence": "Profesorul a cărui carte a fost publicată e foarte mândru.",
     "doomWord": null
   },
@@ -6735,7 +6735,7 @@
       "greșeală frecventă",
       "confirmare"
     ],
-    "pairId": "p197",
+    "pairId": "p200",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6750,7 +6750,7 @@
     "tags": [
       "greșeală frecventă"
     ],
-    "pairId": "p198",
+    "pairId": "p201",
     "correctSentence": "Am reușit la examen datorită efortului depus.",
     "doomWord": "datorită",
     "doomDefinition": "datorită (grație, mulțumită) prep. (~ lui)"
@@ -6767,7 +6767,7 @@
       "greșeală frecventă",
       "confirmare"
     ],
-    "pairId": "p198",
+    "pairId": "p201",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6782,7 +6782,7 @@
     "tags": [
       "greșeală frecventă"
     ],
-    "pairId": "p199",
+    "pairId": "p202",
     "correctSentence": "Este important să fii punctual la întâlnire.",
     "doomWord": null,
     "doomDefinition": null
@@ -6799,7 +6799,7 @@
       "greșeală frecventă",
       "confirmare"
     ],
-    "pairId": "p199",
+    "pairId": "p202",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6815,7 +6815,7 @@
       "pleonasm",
       "redundanță"
     ],
-    "pairId": "p200",
+    "pairId": "p203",
     "correctSentence": "La un moment dat, ne-am dat seama că am greșit drumul.",
     "doomWord": "moment",
     "doomDefinition": "moment s. n., pl. momente"
@@ -6833,7 +6833,7 @@
       "redundanță",
       "confirmare"
     ],
-    "pairId": "p200",
+    "pairId": "p203",
     "correctSentence": null,
     "doomWord": null
   },
@@ -6849,7 +6849,7 @@
       "pleonasm",
       "redundanță"
     ],
-    "pairId": "p201",
+    "pairId": "p204",
     "correctSentence": "Șoferul avea o alcoolemie peste limita legală.",
     "doomWord": "peste",
     "doomDefinition": "peste prep."
@@ -6867,7 +6867,7 @@
       "redundanță",
       "confirmare"
     ],
-    "pairId": "p201",
+    "pairId": "p204",
     "correctSentence": null,
     "doomWord": null
   },
