@@ -24,6 +24,16 @@ flutter run
 | Idioms | Vorba vine | Expression meaning | 60 |
 | Spot | Găsește greșeala | Timed error-finding (60s) | 59 texts |
 
+## Public content
+
+The full Romanian content (words, idioms, grammar pairs, and spot texts) is
+published in [`content_public/`](content_public/README.md) for editorial review.
+Regenerate after content changes:
+
+```bash
+python3 scripts/generate_public_pages.py
+```
+
 ## Project Structure
 
 ```
