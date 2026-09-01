@@ -60,7 +60,7 @@ jobs:
       - run: flutter pub get
 
       - name: Build AAB
-        run: flutter build appbundle --release --build-number=${{ github.run_id }}
+        run: flutter build appbundle --release --build-number=$(date +%s)
 
       - name: Upload to Play internal testing
         uses: r0adkll/upload-google-play@v1
