@@ -64,6 +64,9 @@ final class IdiomsContent {
     return _cached!;
   }
 
+  static Set<String> distinctNotionIds() =>
+      (_cached ?? const []).map((e) => e.notionId).toSet();
+
   static List<IdiomExercise> randomRound(int count, {Random? random}) {
     final all = _cached;
     if (all == null || all.isEmpty || count <= 0) return [];

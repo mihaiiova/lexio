@@ -177,6 +177,9 @@ final class GrammarContent {
     }
   }
 
+  static Set<String> distinctNotionIds() =>
+      (_cached ?? const []).map((e) => e.notionId).toSet();
+
   static List<GrammarExercise> randomRound(int count) {
     final all = _cached;
     if (all == null || all.isEmpty) return [];

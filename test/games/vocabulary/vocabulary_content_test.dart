@@ -44,6 +44,15 @@ void main() {
     );
   });
 
+  test('exposes 100 distinct notion IDs for discovery progress', () async {
+    final exercises = await VocabularyContent.load();
+
+    final notions = VocabularyContent.distinctNotionIds();
+
+    expect(notions, hasLength(100));
+    expect(notions, equals(exercises.map((e) => e.notionId).toSet()));
+  });
+
   test('creates a round with distinct exercises', () async {
     await VocabularyContent.load();
 

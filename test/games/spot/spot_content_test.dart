@@ -11,6 +11,19 @@ import '../../../lib/games/spot/spot_content.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  test('exposes 231 distinct mistake notion IDs for discovery progress',
+      () async {
+    final texts = await SpotContent.load();
+
+    final notions = SpotContent.distinctNotionIds();
+
+    expect(notions, hasLength(231));
+    expect(
+      notions,
+      equals(texts.expand((t) => t.mistakeNotionIds).toSet()),
+    );
+  });
+
   test('spot corpus satisfies content constraints', () async {
     final texts = await SpotContent.load();
     final hyphenationPairs = await HyphenationContent.load();

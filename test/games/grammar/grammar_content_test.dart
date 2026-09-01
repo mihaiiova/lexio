@@ -8,6 +8,15 @@ import '../../../lib/games/grammar/grammar_content.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  test('exposes 258 distinct notion IDs for discovery progress', () async {
+    final exercises = await GrammarContent.load();
+
+    final notions = GrammarContent.distinctNotionIds();
+
+    expect(notions, hasLength(258));
+    expect(notions, equals(exercises.map((e) => e.notionId).toSet()));
+  });
+
   test(
     'grammar content generates exercises from every hyphenation pair',
     () async {

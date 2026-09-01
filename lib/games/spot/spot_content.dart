@@ -168,6 +168,9 @@ final class SpotContent {
     return _cached!;
   }
 
+  static Set<String> distinctNotionIds() =>
+      (_cached ?? const []).expand((t) => t.mistakeNotionIds).toSet();
+
   static List<SpotText> session(int count) {
     if (_cached == null || _cached!.isEmpty) return [];
     final shuffled = List<SpotText>.from(_cached!)..shuffle();
