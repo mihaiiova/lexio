@@ -728,6 +728,26 @@ void main() {
 
       expect(result.map((e) => e.label).toList(), ['easy', 'mid', 'hard']);
     });
+
+    test('orders by difficulty while avoiding overlapping notions', () {
+      const progress = GameProgress();
+      final exercises = [
+        const _MultiNotionEx('easy', ['n_shared', 'n_easy'], difficulty: 1),
+        const _MultiNotionEx('hard_overlap', ['n_shared', 'n_hard'], difficulty: 5),
+        const _MultiNotionEx('mid', ['n_mid'], difficulty: 3),
+      ];
+
+      final result = RoundSelector.selectMultiNotion(
+        exercises: exercises,
+        count: 3,
+        progress: progress,
+        notionIdsOf: (e) => e.notionIds,
+        difficultyOf: (e) => e.difficulty,
+        today: 100,
+      );
+
+      expect(result.map((e) => e.label).toList(), ['easy', 'mid']);
+    });
   });
 }
 
