@@ -32,7 +32,6 @@ class VocabularySummary extends StatelessWidget {
 
       reviewItems.add(
         LexioReviewItem(
-          subject: exercise.word,
           wrongAnswer: exercise.options[selectedIndex],
           correctAnswer: exercise.correctOption,
           explanation: exercise.explanation,
