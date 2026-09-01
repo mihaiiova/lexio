@@ -48,3 +48,10 @@ app.*.map.json
 
 **/swiftpm/
 /android-signing/
+
+# Agent runtime artifacts
+.pi/subagents/
+.pi/extensions/
+
+# Generated screenshots
+screenshots/

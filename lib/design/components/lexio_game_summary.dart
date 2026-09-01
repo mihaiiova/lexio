@@ -11,8 +11,10 @@ final class LexioReviewItem {
     required this.wrongAnswer,
     required this.correctAnswer,
     required this.explanation,
+    this.subject,
   });
 
+  final String? subject;
   final String wrongAnswer;
   final String correctAnswer;
   final String explanation;
@@ -181,6 +183,16 @@ class _ReviewItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: LexioSpacing.md),
+        if (item.subject != null) ...[
+          Text(
+            item.subject!,
+            style: LexioTextStyles.headingSmall.copyWith(
+              color: LexioColors.textPrimary,
+              fontFamily: 'NoticiaText',
+            ),
+          ),
+          const SizedBox(height: LexioSpacing.sm),
+        ],
         Text(
           item.wrongAnswer,
           style: LexioTextStyles.bodyLarge.copyWith(

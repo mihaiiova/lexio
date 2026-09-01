@@ -38,6 +38,7 @@ void main() {
     );
 
     expect(find.text('0 din 1'), findsOneWidget);
+    expect(find.text(exercise.topic), findsOneWidget);
     expect(find.text(exercise.sentence), findsOneWidget);
     expect(
       find.text('Corect: ${exercise.correctSentence}', findRichText: true),
