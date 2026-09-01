@@ -10,35 +10,35 @@ import '../typography.dart';
 /// A game entry rendered as a card whose background doubles as a progress bar.
 ///
 /// The card has a white base; a full-height fill in [mutedColor] grows
-/// left-to-right to the [progress] fraction, covering the whole card. The
-/// number and chevron use [accentColor] while the title stays dark.
+/// left-to-right to the [discovered]/[total] fraction, covering the whole
+/// card. A compact progress label and the chevron use [accentColor] while the
+/// title stays dark.
 class LexioGameCard extends StatelessWidget {
   const LexioGameCard({
     super.key,
-    required this.number,
     required this.title,
     required this.accentColor,
     required this.mutedColor,
-    required this.progress,
+    required this.discovered,
+    required this.total,
     required this.onTap,
   });
 
-  final String number;
   final String title;
   final Color accentColor;
   final Color mutedColor;
-  final double progress;
+  final int discovered;
+  final int total;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final fraction = progress.clamp(0.0, 1.0);
-    final percent = (fraction * 100).round();
+    final fraction = total <= 0 ? 0.0 : (discovered / total).clamp(0.0, 1.0);
 
     return Semantics(
       container: true,
       button: true,
-      label: 'Joc $number: $title, progres $percent%',
+      label: 'Joc $title, progres $discovered din $total',
       onTap: onTap,
       excludeSemantics: true,
       child: Container(
@@ -78,7 +78,7 @@ class LexioGameCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        number,
+                        '$discovered/$total',
                         style: LexioTextStyles.labelSmall.copyWith(
                           color: accentColor,
                           fontWeight: FontWeight.w700,
@@ -91,7 +91,7 @@ class LexioGameCard extends StatelessWidget {
                           Expanded(
                             child: Text(
                               title,
-                              style: LexioTextStyles.displayLarge.copyWith(
+                              style: LexioTextStyles.displayMedium.copyWith(
                                 color: LexioColors.textPrimary,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'NoticiaText',

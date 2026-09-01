@@ -73,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildHeader(),
               const SizedBox(height: LexioSpacing.sectionGap),
               _buildGameCard(
-                number: '01',
                 title: 'Corect sau greșit?',
                 accentColor: LexioColors.primary,
                 mutedColor: LexioColors.primaryMuted,
@@ -82,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
-                number: '02',
                 title: 'Ce înseamnă?',
                 accentColor: LexioColors.secondary,
                 mutedColor: LexioColors.secondaryMuted,
@@ -91,7 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
-                number: '03',
                 title: 'Vorba vine',
                 accentColor: LexioColors.teal,
                 mutedColor: LexioColors.tealMuted,
@@ -100,7 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
-                number: '04',
                 title: 'Găsește greșeala',
                 accentColor: LexioColors.accent,
                 mutedColor: LexioColors.accentMuted,
@@ -117,25 +113,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildGameCard({
-    required String number,
     required String title,
     required Color accentColor,
     required Color mutedColor,
     required String gameId,
     required Widget screen,
   }) {
-    final discovered = _discoveredFor(gameId);
-    final total = _totalFor(gameId);
-    final progress = (discovered != null && total != null && total > 0)
-        ? (discovered / total).clamp(0.0, 1.0)
-        : 0.0;
+    final discovered = _discoveredFor(gameId) ?? 0;
+    final total = _totalFor(gameId) ?? 0;
 
     return LexioGameCard(
-      number: number,
       title: title,
       accentColor: accentColor,
       mutedColor: mutedColor,
-      progress: progress,
+      discovered: discovered,
+      total: total,
       onTap: () => _openGame(context, gameId, screen),
     );
   }

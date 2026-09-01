@@ -7,9 +7,11 @@ import '../../../lib/design/colors.dart';
 import '../../../lib/design/components/lexio_game_card.dart';
 // ignore: avoid_relative_lib_imports
 import '../../../lib/design/theme.dart';
+// ignore: avoid_relative_lib_imports
+import '../../../lib/design/typography.dart';
 
 void main() {
-  testWidgets('renders number, title, and chevron and handles tap', (
+  testWidgets('renders progress label, title, and chevron and handles tap', (
     tester,
   ) async {
     var tapped = false;
@@ -19,20 +21,23 @@ void main() {
         theme: LexioTheme.light,
         home: Scaffold(
           body: LexioGameCard(
-            number: '01',
             title: 'Corect sau greșit?',
             accentColor: LexioColors.primary,
             mutedColor: LexioColors.blueMuted,
-            progress: 0.6,
+            discovered: 12,
+            total: 234,
             onTap: () => tapped = true,
           ),
         ),
       ),
     );
 
-    expect(find.text('01'), findsOneWidget);
+    expect(find.text('12/234'), findsOneWidget);
     expect(find.text('Corect sau greșit?'), findsOneWidget);
     expect(find.byIcon(Icons.arrow_forward), findsOneWidget);
+
+    final titleText = tester.widget<Text>(find.text('Corect sau greșit?'));
+    expect(titleText.style?.fontSize, LexioTextStyles.displayMedium.fontSize);
 
     await tester.tap(find.text('Corect sau greșit?'));
     expect(tapped, isTrue);
@@ -44,11 +49,11 @@ void main() {
         theme: LexioTheme.light,
         home: Scaffold(
           body: LexioGameCard(
-            number: '01',
             title: 'Corect sau greșit?',
             accentColor: LexioColors.primary,
             mutedColor: LexioColors.blueMuted,
-            progress: 0.6,
+            discovered: 60,
+            total: 100,
             onTap: () {},
           ),
         ),
@@ -68,11 +73,11 @@ void main() {
         theme: LexioTheme.light,
         home: Scaffold(
           body: LexioGameCard(
-            number: '01',
             title: 'Corect sau greșit?',
             accentColor: LexioColors.primary,
             mutedColor: LexioColors.blueMuted,
-            progress: -1,
+            discovered: 0,
+            total: 100,
             onTap: () {},
           ),
         ),
@@ -90,11 +95,11 @@ void main() {
         theme: LexioTheme.light,
         home: Scaffold(
           body: LexioGameCard(
-            number: '01',
             title: 'Corect sau greșit?',
             accentColor: LexioColors.primary,
             mutedColor: LexioColors.blueMuted,
-            progress: 2,
+            discovered: 150,
+            total: 100,
             onTap: () {},
           ),
         ),
@@ -116,11 +121,11 @@ void main() {
         theme: LexioTheme.light,
         home: Scaffold(
           body: LexioGameCard(
-            number: '01',
             title: 'Corect sau greșit?',
             accentColor: LexioColors.primary,
             mutedColor: LexioColors.blueMuted,
-            progress: 0.6,
+            discovered: 12,
+            total: 234,
             onTap: () {},
           ),
         ),
@@ -129,7 +134,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.bySemanticsLabel('Joc 01: Corect sau greșit?, progres 60%'),
+      find.bySemanticsLabel('Joc Corect sau greșit?, progres 12 din 234'),
       findsOneWidget,
     );
     handle.dispose();

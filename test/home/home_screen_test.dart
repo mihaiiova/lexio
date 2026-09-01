@@ -63,29 +63,31 @@ void main() {
         .toList();
     expect(cards, hasLength(4));
 
-    expect(cards[0].number, '01');
     expect(cards[0].title, 'Corect sau greșit?');
     expect(cards[0].accentColor, LexioColors.primary);
     expect(cards[0].mutedColor, LexioColors.primaryMuted);
-    expect(cards[0].progress, 0.0);
+    expect(cards[0].discovered, 0);
+    expect(cards[0].total, greaterThan(0));
 
-    expect(cards[1].number, '02');
     expect(cards[1].title, 'Ce înseamnă?');
     expect(cards[1].accentColor, LexioColors.secondary);
     expect(cards[1].mutedColor, LexioColors.secondaryMuted);
-    expect(cards[1].progress, closeTo(0.02, 0.0001));
+    expect(cards[1].discovered, 2);
+    expect(cards[1].total, 100);
 
-    expect(cards[2].number, '03');
     expect(cards[2].title, 'Vorba vine');
     expect(cards[2].accentColor, LexioColors.teal);
     expect(cards[2].mutedColor, LexioColors.tealMuted);
-    expect(cards[2].progress, 0.0);
+    expect(cards[2].discovered, 0);
+    expect(cards[2].total, greaterThan(0));
 
-    expect(cards[3].number, '04');
     expect(cards[3].title, 'Găsește greșeala');
     expect(cards[3].accentColor, LexioColors.accent);
     expect(cards[3].mutedColor, LexioColors.accentMuted);
-    expect(cards[3].progress, 0.0);
+    expect(cards[3].discovered, 0);
+    expect(cards[3].total, greaterThan(0));
+
+    expect(find.text('2/100'), findsOneWidget);
   });
 }
 
