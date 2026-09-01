@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../analytics/analytics_service.dart';
 import '../design/animations.dart';
 import '../design/colors.dart';
+import '../design/components/lexio_discovery_progress.dart';
 import '../design/radius.dart';
 import '../design/spacing.dart';
 import '../design/typography.dart';
@@ -13,9 +14,49 @@ import '../games/idioms/idioms_screen.dart';
 import '../games/spot/spot_screen.dart';
 import '../games/vocabulary/vocabulary_screen.dart';
 import '../privacy/privacy_screen.dart';
+import '../progress/user_progress.dart';
+import 'discovery_catalog.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key, this.progressStorage});
+
+  final ProgressStorage? progressStorage;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  ProgressRepository? _progress;
+  Map<String, int>? _totals;
+
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  Future<void> _init() async {
+    try {
+      final totals = await DiscoveryCatalog.totalNotionsByGame();
+      final progress = await ProgressRepository.load(
+        storage: widget.progressStorage,
+      );
+      if (!mounted) return;
+      setState(() {
+        _totals = totals;
+        _progress = progress;
+      });
+    } catch (error) {
+      debugPrint('HomeScreen: failed to load discovery progress: $error');
+    }
+  }
+
+  int? _discoveredFor(String gameId) => _totals == null
+      ? null
+      : (_progress?.forGame(gameId).countMastered() ?? 0);
+
+  int? _totalFor(String gameId) => _totals?[gameId];
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +82,8 @@ class HomeScreen extends StatelessWidget {
                       number: '01',
                       title: 'Corect sau greșit?',
                       accentColor: LexioColors.primary,
+                      discovered: _discoveredFor('grammar'),
+                      total: _totalFor('grammar'),
                       onTap: () =>
                           _openGame(context, 'grammar', const GrammarScreen()),
                     ),
@@ -49,6 +92,8 @@ class HomeScreen extends StatelessWidget {
                       number: '02',
                       title: 'Ce înseamnă?',
                       accentColor: LexioColors.secondary,
+                      discovered: _discoveredFor('vocabulary'),
+                      total: _totalFor('vocabulary'),
                       onTap: () => _openGame(
                         context,
                         'vocabulary',
@@ -60,6 +105,8 @@ class HomeScreen extends StatelessWidget {
                       number: '03',
                       title: 'Vorba vine',
                       accentColor: LexioColors.teal,
+                      discovered: _discoveredFor('idioms'),
+                      total: _totalFor('idioms'),
                       onTap: () =>
                           _openGame(context, 'idioms', const IdiomsScreen()),
                     ),
@@ -68,6 +115,8 @@ class HomeScreen extends StatelessWidget {
                       number: '04',
                       title: 'Găsește greșeala',
                       accentColor: LexioColors.accent,
+                      discovered: _discoveredFor('spot'),
+                      total: _totalFor('spot'),
                       onTap: () =>
                           _openGame(context, 'spot', const SpotScreen()),
                     ),
@@ -162,12 +211,16 @@ class _GameEntry extends StatelessWidget {
     required this.title,
     required this.accentColor,
     required this.onTap,
+    this.discovered,
+    this.total,
   });
 
   final String number;
   final String title;
   final Color accentColor;
   final VoidCallback onTap;
+  final int? discovered;
+  final int? total;
 
   @override
   Widget build(BuildContext context) {
@@ -215,6 +268,14 @@ class _GameEntry extends StatelessWidget {
                     ),
                   ],
                 ),
+                if (discovered != null && total != null && total! > 0) ...[
+                  const SizedBox(height: LexioSpacing.md),
+                  LexioDiscoveryProgress(
+                    discovered: discovered!,
+                    total: total!,
+                    accentColor: accentColor,
+                  ),
+                ],
               ],
             ),
           ),

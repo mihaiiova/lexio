@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 // ignore: avoid_relative_lib_imports
 import '../../../lib/design/colors.dart';
 // ignore: avoid_relative_lib_imports
+import '../../../lib/design/components/lexio_discovery_progress.dart';
+// ignore: avoid_relative_lib_imports
 import '../../../lib/design/components/lexio_game_summary.dart';
 // ignore: avoid_relative_lib_imports
 import '../../../lib/design/theme.dart';
@@ -99,5 +101,52 @@ void main() {
     expect(find.text('DE REVĂZUT'), findsNothing);
     expect(find.text('Joacă din nou'), findsOneWidget);
     expect(find.text('Înapoi la jocuri'), findsOneWidget);
+  });
+
+  testWidgets('renders discovery progress when counts are provided', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: LexioTheme.light,
+        home: Scaffold(
+          body: LexioGameSummary(
+            accentColor: LexioColors.primary,
+            correctCount: 8,
+            totalCount: 10,
+            discoveredCount: 30,
+            discoveredTotal: 100,
+            reviewItems: const [],
+            onPlayAgain: () {},
+            onBack: () {},
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('30 din 100'), findsOneWidget);
+    expect(find.byType(LexioDiscoveryProgress), findsOneWidget);
+  });
+
+  testWidgets('hides discovery progress when counts are absent', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: LexioTheme.light,
+        home: Scaffold(
+          body: LexioGameSummary(
+            accentColor: LexioColors.teal,
+            correctCount: 10,
+            totalCount: 10,
+            reviewItems: const [],
+            onPlayAgain: () {},
+            onBack: () {},
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(LexioDiscoveryProgress), findsNothing);
   });
 }

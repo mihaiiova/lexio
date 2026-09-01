@@ -4,6 +4,7 @@ import '../colors.dart';
 import '../spacing.dart';
 import '../typography.dart';
 import 'lexio_action_row.dart';
+import 'lexio_discovery_progress.dart';
 
 final class LexioReviewItem {
   const LexioReviewItem({
@@ -26,6 +27,8 @@ class LexioGameSummary extends StatelessWidget {
     required this.reviewItems,
     required this.onPlayAgain,
     required this.onBack,
+    this.discoveredCount,
+    this.discoveredTotal,
   });
 
   final Color accentColor;
@@ -34,6 +37,8 @@ class LexioGameSummary extends StatelessWidget {
   final List<LexioReviewItem> reviewItems;
   final VoidCallback onPlayAgain;
   final VoidCallback onBack;
+  final int? discoveredCount;
+  final int? discoveredTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +102,16 @@ class LexioGameSummary extends StatelessWidget {
                 ),
             ),
           ),
+          if (discoveredCount != null &&
+              discoveredTotal != null &&
+              discoveredTotal! > 0) ...[
+            const SizedBox(height: LexioSpacing.md),
+            LexioDiscoveryProgress(
+              discovered: discoveredCount!,
+              total: discoveredTotal!,
+              accentColor: accentColor,
+            ),
+          ],
         ],
       ),
     );

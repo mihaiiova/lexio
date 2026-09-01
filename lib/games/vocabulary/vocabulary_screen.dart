@@ -142,6 +142,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         backgroundColor: LexioColors.background,
         body: VocabularySummary(
           state: state,
+          discoveredCount:
+              _progress?.forGame('vocabulary').countMastered() ?? 0,
+          discoveredTotal: VocabularyContent.distinctNotionIds().length,
           onPlayAgain: _playAgain,
           onBack: () => Navigator.of(context).maybePop(),
         ),

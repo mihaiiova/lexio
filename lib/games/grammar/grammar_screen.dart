@@ -206,6 +206,8 @@ class _GrammarScreenState extends State<GrammarScreen> {
         backgroundColor: LexioColors.surface,
         body: GrammarSummary(
           state: state,
+          discoveredCount: _progress?.forGame('grammar').countMastered() ?? 0,
+          discoveredTotal: GrammarContent.distinctNotionIds().length,
           onPlayAgain: _playAgain,
           onBack: () => Navigator.of(context).maybePop(),
         ),

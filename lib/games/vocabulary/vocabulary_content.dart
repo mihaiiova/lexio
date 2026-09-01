@@ -74,6 +74,9 @@ final class VocabularyContent {
     return _cached!;
   }
 
+  static Set<String> distinctNotionIds() =>
+      (_cached ?? const []).map((e) => e.notionId).toSet();
+
   static List<VocabularyExercise> randomRound(int count, {Random? random}) {
     final all = _cached;
     if (all == null || all.isEmpty || count <= 0) return [];

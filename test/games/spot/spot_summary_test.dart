@@ -51,4 +51,44 @@ void main() {
     expect(find.text('Corect: gheare', findRichText: true), findsOneWidget);
     expect(find.text('Ai selectat „Pisica”.'), findsOneWidget);
   });
+
+  testWidgets('forwards discovery counts to the shared summary', (
+    tester,
+  ) async {
+    final text = SpotText(
+      id: 'one',
+      type: 'story',
+      title: 'Test',
+      difficulty: 1,
+      content: 'Pisica are ghiare.',
+      mistakes: const [
+        SpotMistake(
+          wordIndex: 2,
+          token: 'ghiare',
+          replacement: 'gheare',
+          explanation: 'Forma corectă este „gheare”.',
+          category: 'ortografie',
+          topic: 'scriere',
+        ),
+      ],
+    );
+    final state = SpotGameState(texts: [text], isFinished: true);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: LexioTheme.light,
+        home: Scaffold(
+          body: SpotSummary(
+            state: state,
+            discoveredCount: 30,
+            discoveredTotal: 100,
+            onPlayAgain: () {},
+            onBack: () {},
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('30 din 100'), findsOneWidget);
+  });
 }

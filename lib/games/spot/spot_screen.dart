@@ -276,6 +276,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       backgroundColor: LexioColors.background,
       body: SpotSummary(
         state: state,
+        discoveredCount: _progress?.forGame('spot').countMastered() ?? 0,
+        discoveredTotal: SpotContent.distinctNotionIds().length,
         onPlayAgain: _handlePlayAgain,
         onBack: _handleBack,
       ),
