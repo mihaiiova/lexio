@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: avoid_relative_lib_imports
+import '../../lib/design/colors.dart';
+// ignore: avoid_relative_lib_imports
+import '../../lib/design/components/lexio_game_card.dart';
+// ignore: avoid_relative_lib_imports
 import '../../lib/home/home_screen.dart';
 // ignore: avoid_relative_lib_imports
 import '../../lib/progress/learning_item.dart';
@@ -11,7 +15,7 @@ import '../../lib/progress/user_progress.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('shows a progress bar per game without a count label', (
+  testWidgets('renders one progress card per game on a light-gray background', (
     tester,
   ) async {
     final progress = UserProgress(
@@ -49,18 +53,39 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final indicators = tester
-        .widgetList<LinearProgressIndicator>(
-          find.byType(LinearProgressIndicator),
-        )
-        .toList();
+    final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
+    expect(scaffold.backgroundColor, LexioColors.backgroundSubtle);
 
-    expect(indicators, hasLength(4));
-    expect(indicators[0].value, 0);
-    expect(indicators[1].value, closeTo(0.02, 0.0001));
-    expect(indicators[2].value, 0);
-    expect(indicators[3].value, 0);
-    expect(find.textContaining('din'), findsNothing);
+    expect(find.byType(Divider), findsNothing);
+
+    final cards = tester
+        .widgetList<LexioGameCard>(find.byType(LexioGameCard))
+        .toList();
+    expect(cards, hasLength(4));
+
+    expect(cards[0].number, '01');
+    expect(cards[0].title, 'Corect sau greșit?');
+    expect(cards[0].accentColor, LexioColors.primary);
+    expect(cards[0].mutedColor, LexioColors.primaryMuted);
+    expect(cards[0].progress, 0.0);
+
+    expect(cards[1].number, '02');
+    expect(cards[1].title, 'Ce înseamnă?');
+    expect(cards[1].accentColor, LexioColors.secondary);
+    expect(cards[1].mutedColor, LexioColors.secondaryMuted);
+    expect(cards[1].progress, closeTo(0.02, 0.0001));
+
+    expect(cards[2].number, '03');
+    expect(cards[2].title, 'Vorba vine');
+    expect(cards[2].accentColor, LexioColors.teal);
+    expect(cards[2].mutedColor, LexioColors.tealMuted);
+    expect(cards[2].progress, 0.0);
+
+    expect(cards[3].number, '04');
+    expect(cards[3].title, 'Găsește greșeala');
+    expect(cards[3].accentColor, LexioColors.accent);
+    expect(cards[3].mutedColor, LexioColors.accentMuted);
+    expect(cards[3].progress, 0.0);
   });
 }
 

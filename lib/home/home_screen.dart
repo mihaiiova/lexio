@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import '../analytics/analytics_service.dart';
 import '../design/animations.dart';
 import '../design/colors.dart';
-import '../design/components/lexio_discovery_progress.dart';
-import '../design/radius.dart';
+import '../design/components/lexio_game_card.dart';
 import '../design/spacing.dart';
 import '../design/typography.dart';
 import '../games/grammar/grammar_screen.dart';
@@ -61,75 +60,83 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LexioColors.background,
+      backgroundColor: LexioColors.backgroundSubtle,
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: LexioSpacing.screenHorizontal,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: LexioSpacing.sectionGap),
-                    _buildHeader(),
-                    const Spacer(),
-                    const Divider(color: LexioColors.divider),
-                    _GameEntry(
-                      number: '01',
-                      title: 'Corect sau greșit?',
-                      accentColor: LexioColors.primary,
-                      discovered: _discoveredFor('grammar'),
-                      total: _totalFor('grammar'),
-                      onTap: () =>
-                          _openGame(context, 'grammar', const GrammarScreen()),
-                    ),
-                    const Divider(color: LexioColors.divider),
-                    _GameEntry(
-                      number: '02',
-                      title: 'Ce înseamnă?',
-                      accentColor: LexioColors.secondary,
-                      discovered: _discoveredFor('vocabulary'),
-                      total: _totalFor('vocabulary'),
-                      onTap: () => _openGame(
-                        context,
-                        'vocabulary',
-                        const VocabularyScreen(),
-                      ),
-                    ),
-                    const Divider(color: LexioColors.divider),
-                    _GameEntry(
-                      number: '03',
-                      title: 'Vorba vine',
-                      accentColor: LexioColors.teal,
-                      discovered: _discoveredFor('idioms'),
-                      total: _totalFor('idioms'),
-                      onTap: () =>
-                          _openGame(context, 'idioms', const IdiomsScreen()),
-                    ),
-                    const Divider(color: LexioColors.divider),
-                    _GameEntry(
-                      number: '04',
-                      title: 'Găsește greșeala',
-                      accentColor: LexioColors.accent,
-                      discovered: _discoveredFor('spot'),
-                      total: _totalFor('spot'),
-                      onTap: () =>
-                          _openGame(context, 'spot', const SpotScreen()),
-                    ),
-                    const Divider(color: LexioColors.divider),
-                    const Spacer(),
-                    _buildLegalFooter(context),
-                  ],
-                ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(
+            horizontal: LexioSpacing.screenHorizontal,
+            vertical: LexioSpacing.sectionGap,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildHeader(),
+              const SizedBox(height: LexioSpacing.sectionGap),
+              _buildGameCard(
+                number: '01',
+                title: 'Corect sau greșit?',
+                accentColor: LexioColors.primary,
+                mutedColor: LexioColors.primaryMuted,
+                gameId: 'grammar',
+                screen: const GrammarScreen(),
               ),
-            ),
-          ],
+              const SizedBox(height: LexioSpacing.itemGap),
+              _buildGameCard(
+                number: '02',
+                title: 'Ce înseamnă?',
+                accentColor: LexioColors.secondary,
+                mutedColor: LexioColors.secondaryMuted,
+                gameId: 'vocabulary',
+                screen: const VocabularyScreen(),
+              ),
+              const SizedBox(height: LexioSpacing.itemGap),
+              _buildGameCard(
+                number: '03',
+                title: 'Vorba vine',
+                accentColor: LexioColors.teal,
+                mutedColor: LexioColors.tealMuted,
+                gameId: 'idioms',
+                screen: const IdiomsScreen(),
+              ),
+              const SizedBox(height: LexioSpacing.itemGap),
+              _buildGameCard(
+                number: '04',
+                title: 'Găsește greșeala',
+                accentColor: LexioColors.accent,
+                mutedColor: LexioColors.accentMuted,
+                gameId: 'spot',
+                screen: const SpotScreen(),
+              ),
+              const SizedBox(height: LexioSpacing.xxl),
+              _buildLegalFooter(context),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildGameCard({
+    required String number,
+    required String title,
+    required Color accentColor,
+    required Color mutedColor,
+    required String gameId,
+    required Widget screen,
+  }) {
+    final discovered = _discoveredFor(gameId);
+    final total = _totalFor(gameId);
+    final progress = (discovered != null && total != null && total > 0)
+        ? (discovered / total).clamp(0.0, 1.0)
+        : 0.0;
+
+    return LexioGameCard(
+      number: number,
+      title: title,
+      accentColor: accentColor,
+      mutedColor: mutedColor,
+      progress: progress,
+      onTap: () => _openGame(context, gameId, screen),
     );
   }
 
@@ -230,83 +237,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class _GameEntry extends StatelessWidget {
-  const _GameEntry({
-    required this.number,
-    required this.title,
-    required this.accentColor,
-    required this.onTap,
-    this.discovered,
-    this.total,
-  });
-
-  final String number;
-  final String title;
-  final Color accentColor;
-  final VoidCallback onTap;
-  final int? discovered;
-  final int? total;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: 'Joc $number: $title',
-      child: Material(
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(LexioRadius.md),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: LexioSpacing.md,
-              vertical: LexioSpacing.lg,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  number,
-                  style: LexioTextStyles.labelSmall.copyWith(
-                    color: accentColor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: LexioSpacing.xs),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: LexioTextStyles.displayLarge.copyWith(
-                          color: LexioColors.textPrimary,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'NoticiaText',
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: LexioSpacing.md),
-                    Icon(
-                      Icons.arrow_forward,
-                      color: accentColor,
-                      size: LexioSpacing.xl,
-                    ),
-                  ],
-                ),
-                if (discovered != null && total != null && total! > 0) ...[
-                  const SizedBox(height: LexioSpacing.md),
-                  LexioDiscoveryProgress(
-                    discovered: discovered!,
-                    total: total!,
-                    accentColor: accentColor,
-                    showLabel: false,
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

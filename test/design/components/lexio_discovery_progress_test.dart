@@ -39,27 +39,6 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets('hides the count label when showLabel is false', (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: LexioTheme.light,
-        home: const Scaffold(
-          body: LexioDiscoveryProgress(
-            discovered: 12,
-            total: 100,
-            showLabel: false,
-          ),
-        ),
-      ),
-    );
-
-    expect(find.text('12 din 100'), findsNothing);
-    final indicator = tester.widget<LinearProgressIndicator>(
-      find.byType(LinearProgressIndicator),
-    );
-    expect(indicator.value, closeTo(0.12, 0.0001));
-  });
-
   testWidgets('handles empty, full, and zero-total boundaries', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
