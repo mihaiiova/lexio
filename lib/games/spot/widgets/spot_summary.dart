@@ -40,6 +40,7 @@ class SpotSummary extends StatelessWidget {
         final mistake = text.mistakes[mistakeIndex];
         reviewItems.add(
           LexioReviewItem(
+            subject: text.title,
             wrongAnswer: mistake.token,
             correctAnswer: mistake.replacement,
             explanation: mistake.explanation,
@@ -51,6 +52,7 @@ class SpotSummary extends StatelessWidget {
         final selectedWord = text.words[wordIndex];
         reviewItems.add(
           LexioReviewItem(
+            subject: text.title,
             wrongAnswer: 'Ai selectat „$selectedWord”.',
             correctAnswer: 'Cuvântul este corect în acest context.',
             explanation: 'Selecția nu corespunde unei greșeli din text.',

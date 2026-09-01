@@ -47,6 +47,7 @@ void main() {
     );
 
     expect(find.text('0 din 1'), findsOneWidget);
+    expect(find.text('Test'), findsNWidgets(2));
     expect(find.text('ghiare'), findsOneWidget);
     expect(find.text('Corect: gheare', findRichText: true), findsOneWidget);
     expect(find.text('Ai selectat „Pisica”.'), findsOneWidget);

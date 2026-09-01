@@ -29,6 +29,7 @@ class GrammarSummary extends StatelessWidget {
       final exercise = state.exercises[index];
       reviewItems.add(
         LexioReviewItem(
+          subject: exercise.topic,
           wrongAnswer: exercise.isCorrect
               ? 'Ai ales „Greșit”: ${exercise.sentence}'
               : exercise.sentence,

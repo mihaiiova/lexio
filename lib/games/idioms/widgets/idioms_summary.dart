@@ -32,9 +32,10 @@ class IdiomsSummary extends StatelessWidget {
 
       reviewItems.add(
         LexioReviewItem(
+          subject: '„${exercise.expression}”',
           wrongAnswer: exercise.options[selectedIndex],
           correctAnswer: exercise.options[exercise.correctOptionIndex],
-          explanation: '„${exercise.expression}” înseamnă ${exercise.meaning}.',
+          explanation: 'Înseamnă ${exercise.meaning}.',
         ),
       );
     }
