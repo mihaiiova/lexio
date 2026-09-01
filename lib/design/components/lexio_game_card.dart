@@ -47,16 +47,13 @@ class LexioGameCard extends StatelessWidget {
           boxShadow: LexioShadows.cardCombined,
         ),
         child: Material(
-          color: Colors.transparent,
+          color: LexioColors.surface,
           borderRadius: BorderRadius.circular(LexioRadius.xl),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: onTap,
             child: Stack(
               children: [
-                const Positioned.fill(
-                  child: ColoredBox(color: LexioColors.surface),
-                ),
                 Positioned.fill(
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -76,7 +73,7 @@ class LexioGameCard extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(LexioSpacing.lg),
+                  padding: const EdgeInsets.all(LexioSpacing.cardPadding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
