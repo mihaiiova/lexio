@@ -374,6 +374,40 @@ void main() {
       expect(progress.countEligible(105), 1);
       expect(progress.countEligible(99), 0);
     });
+
+    test('counts only mastered items', () {
+      final progress = GameProgress(
+        items: const {
+          'mastered_a': LearningItem(
+            notionId: 'mastered_a',
+            state: LearningItemState.mastered,
+            step: LearningItem.mastered60d,
+            nextReviewDay: 200,
+            lastAnsweredDay: 140,
+          ),
+          'learning_b': LearningItem(
+            notionId: 'learning_b',
+            state: LearningItemState.learning,
+            step: LearningItem.initialStep,
+            nextReviewDay: 101,
+            lastAnsweredDay: 100,
+          ),
+          'consolidating_c': LearningItem(
+            notionId: 'consolidating_c',
+            state: LearningItemState.consolidating,
+            step: LearningItem.consolidating3d,
+            nextReviewDay: 103,
+            lastAnsweredDay: 100,
+          ),
+        },
+      );
+
+      expect(progress.countMastered(), 1);
+    });
+
+    test('countMastered returns 0 for empty progress', () {
+      expect(const GameProgress().countMastered(), 0);
+    });
   });
 
   group('UserProgress', () {
