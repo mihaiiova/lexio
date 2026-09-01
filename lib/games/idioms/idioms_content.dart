@@ -99,6 +99,7 @@ final class IdiomsContent {
       count: count,
       progress: progress,
       notionIdOf: (exercise) => exercise.notionId,
+      difficultyOf: (exercise) => exercise.difficulty,
     );
   }
 }
