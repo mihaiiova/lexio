@@ -13,13 +13,13 @@ import '../../../lib/progress/user_progress.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('exposes 231 distinct mistake notion IDs for discovery progress',
+  test('exposes 230 distinct mistake notion IDs for discovery progress',
       () async {
     final texts = await SpotContent.load();
 
     final notions = SpotContent.distinctNotionIds();
 
-    expect(notions, hasLength(231));
+    expect(notions, hasLength(230));
     expect(
       notions,
       equals(texts.expand((t) => t.mistakeNotionIds).toSet()),
