@@ -45,4 +45,39 @@ void main() {
     );
     expect(find.text(exercise.explanation), findsOneWidget);
   });
+
+  testWidgets('forwards discovery counts to the shared summary', (
+    tester,
+  ) async {
+    final exercise = GrammarExercise(
+      id: 'one',
+      sentence: 'Mi-ar place să citesc.',
+      category: 'verb',
+      topic: 'condițional',
+      isCorrect: false,
+      explanation: 'Forma corectă este „mi-ar plăcea”.',
+      correctSentence: 'Mi-ar plăcea să citesc.',
+      difficulty: 1,
+      tags: const [],
+      pairId: null,
+    );
+    final state = GrammarGameState(exercises: [exercise]);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: LexioTheme.light,
+        home: Scaffold(
+          body: GrammarSummary(
+            state: state,
+            discoveredCount: 30,
+            discoveredTotal: 100,
+            onPlayAgain: () {},
+            onBack: () {},
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('30 din 100'), findsOneWidget);
+  });
 }

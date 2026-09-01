@@ -142,6 +142,8 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
         backgroundColor: LexioColors.background,
         body: IdiomsSummary(
           state: state,
+          discoveredCount: _progress?.forGame('idioms').countMastered() ?? 0,
+          discoveredTotal: IdiomsContent.distinctNotionIds().length,
           onPlayAgain: _playAgain,
           onBack: () => Navigator.of(context).maybePop(),
         ),

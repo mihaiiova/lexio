@@ -10,11 +10,15 @@ class GrammarSummary extends StatelessWidget {
     required this.state,
     required this.onPlayAgain,
     required this.onBack,
+    this.discoveredCount,
+    this.discoveredTotal,
   });
 
   final GrammarGameState state;
   final VoidCallback onPlayAgain;
   final VoidCallback onBack;
+  final int? discoveredCount;
+  final int? discoveredTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,8 @@ class GrammarSummary extends StatelessWidget {
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
       onBack: onBack,
+      discoveredCount: discoveredCount,
+      discoveredTotal: discoveredTotal,
     );
   }
 }

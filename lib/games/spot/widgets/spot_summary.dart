@@ -10,11 +10,15 @@ class SpotSummary extends StatelessWidget {
     required this.state,
     required this.onPlayAgain,
     required this.onBack,
+    this.discoveredCount,
+    this.discoveredTotal,
   });
 
   final SpotGameState state;
   final VoidCallback onPlayAgain;
   final VoidCallback onBack;
+  final int? discoveredCount;
+  final int? discoveredTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +66,8 @@ class SpotSummary extends StatelessWidget {
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
       onBack: onBack,
+      discoveredCount: discoveredCount,
+      discoveredTotal: discoveredTotal,
     );
   }
 }

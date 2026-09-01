@@ -10,11 +10,15 @@ class IdiomsSummary extends StatelessWidget {
     required this.state,
     required this.onPlayAgain,
     required this.onBack,
+    this.discoveredCount,
+    this.discoveredTotal,
   });
 
   final IdiomsGameState state;
   final VoidCallback onPlayAgain;
   final VoidCallback onBack;
+  final int? discoveredCount;
+  final int? discoveredTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +46,8 @@ class IdiomsSummary extends StatelessWidget {
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
       onBack: onBack,
+      discoveredCount: discoveredCount,
+      discoveredTotal: discoveredTotal,
     );
   }
 }

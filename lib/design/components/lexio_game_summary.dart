@@ -4,14 +4,17 @@ import '../colors.dart';
 import '../spacing.dart';
 import '../typography.dart';
 import 'lexio_action_row.dart';
+import 'lexio_discovery_progress.dart';
 
 final class LexioReviewItem {
   const LexioReviewItem({
     required this.wrongAnswer,
     required this.correctAnswer,
     required this.explanation,
+    this.subject,
   });
 
+  final String? subject;
   final String wrongAnswer;
   final String correctAnswer;
   final String explanation;
@@ -26,6 +29,8 @@ class LexioGameSummary extends StatelessWidget {
     required this.reviewItems,
     required this.onPlayAgain,
     required this.onBack,
+    this.discoveredCount,
+    this.discoveredTotal,
   });
 
   final Color accentColor;
@@ -34,6 +39,8 @@ class LexioGameSummary extends StatelessWidget {
   final List<LexioReviewItem> reviewItems;
   final VoidCallback onPlayAgain;
   final VoidCallback onBack;
+  final int? discoveredCount;
+  final int? discoveredTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +104,16 @@ class LexioGameSummary extends StatelessWidget {
                 ),
             ),
           ),
+          if (discoveredCount != null &&
+              discoveredTotal != null &&
+              discoveredTotal! > 0) ...[
+            const SizedBox(height: LexioSpacing.md),
+            LexioDiscoveryProgress(
+              discovered: discoveredCount!,
+              total: discoveredTotal!,
+              accentColor: accentColor,
+            ),
+          ],
         ],
       ),
     );
@@ -166,6 +183,16 @@ class _ReviewItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: LexioSpacing.md),
+        if (item.subject != null) ...[
+          Text(
+            item.subject!,
+            style: LexioTextStyles.headingSmall.copyWith(
+              color: LexioColors.textPrimary,
+              fontFamily: 'NoticiaText',
+            ),
+          ),
+          const SizedBox(height: LexioSpacing.sm),
+        ],
         Text(
           item.wrongAnswer,
           style: LexioTextStyles.bodyLarge.copyWith(

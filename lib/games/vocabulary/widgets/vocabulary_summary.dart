@@ -10,11 +10,15 @@ class VocabularySummary extends StatelessWidget {
     required this.state,
     required this.onPlayAgain,
     required this.onBack,
+    this.discoveredCount,
+    this.discoveredTotal,
   });
 
   final VocabularyGameState state;
   final VoidCallback onPlayAgain;
   final VoidCallback onBack;
+  final int? discoveredCount;
+  final int? discoveredTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +32,7 @@ class VocabularySummary extends StatelessWidget {
 
       reviewItems.add(
         LexioReviewItem(
+          subject: exercise.word,
           wrongAnswer: exercise.options[selectedIndex],
           correctAnswer: exercise.correctOption,
           explanation: exercise.explanation,
@@ -42,6 +47,8 @@ class VocabularySummary extends StatelessWidget {
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
       onBack: onBack,
+      discoveredCount: discoveredCount,
+      discoveredTotal: discoveredTotal,
     );
   }
 }
