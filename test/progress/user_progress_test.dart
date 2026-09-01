@@ -530,6 +530,129 @@ void main() {
 
       expect(result.length, 10);
     });
+
+    test('orders items by difficulty ascending, stable by notion id', () {
+      final progress = const GameProgress();
+      final exercises = [
+        const _TestEx('b', 'notion_2', difficulty: 2),
+        const _TestEx('a1', 'notion_1', difficulty: 1),
+        const _TestEx('c', 'notion_3', difficulty: 2),
+        const _TestEx('a0', 'notion_0', difficulty: 1),
+      ];
+
+      final result = RoundSelector.select(
+        exercises: exercises,
+        count: 4,
+        progress: progress,
+        notionIdOf: (e) => e.id,
+        difficultyOf: (e) => e.difficulty,
+        today: 100,
+      );
+
+      expect(result.map((e) => e.label).toList(), ['a0', 'a1', 'b', 'c']);
+    });
+
+    test('serves overdue before new before ineligible', () {
+      var progress = const GameProgress();
+      progress = progress.recordAnswer(
+        notionId: 'n_overdue',
+        isCorrect: true,
+        today: 90,
+      );
+      progress = progress.recordAnswer(
+        notionId: 'n_future',
+        isCorrect: true,
+        today: 100,
+      );
+
+      final exercises = [
+        const _TestEx('future', 'n_future'),
+        const _TestEx('new', 'n_new'),
+        const _TestEx('overdue', 'n_overdue'),
+      ];
+
+      final result = RoundSelector.select(
+        exercises: exercises,
+        count: 3,
+        progress: progress,
+        notionIdOf: (e) => e.id,
+        difficultyOf: (e) => e.difficulty,
+        today: 100,
+      );
+
+      expect(
+        result.map((e) => e.label).toList(),
+        ['overdue', 'new', 'future'],
+      );
+    });
+
+    test('two rounds deterministically consume new items easy-to-hard', () {
+      const progress = GameProgress();
+      final exercises = [
+        const _TestEx('n4', 'n4', difficulty: 4),
+        const _TestEx('n1', 'n1', difficulty: 1),
+        const _TestEx('n3', 'n3', difficulty: 3),
+        const _TestEx('n2', 'n2', difficulty: 2),
+      ];
+
+      final round1 = RoundSelector.select(
+        exercises: exercises,
+        count: 2,
+        progress: progress,
+        notionIdOf: (e) => e.id,
+        difficultyOf: (e) => e.difficulty,
+        today: 100,
+      );
+      expect(round1.map((e) => e.label).toList(), ['n1', 'n2']);
+
+      var updated = progress;
+      for (final e in round1) {
+        updated = updated.recordAnswer(
+          notionId: e.id,
+          isCorrect: true,
+          today: 100,
+        );
+      }
+
+      final round2 = RoundSelector.select(
+        exercises: exercises,
+        count: 2,
+        progress: updated,
+        notionIdOf: (e) => e.id,
+        difficultyOf: (e) => e.difficulty,
+        today: 100,
+      );
+      expect(round2.map((e) => e.label).toList(), ['n3', 'n4']);
+    });
+
+    test('reserves a slot for a new item even with many overdue', () {
+      var progress = const GameProgress();
+      for (var i = 0; i < 10; i++) {
+        progress = progress.recordAnswer(
+          notionId: 'due_$i',
+          isCorrect: true,
+          today: 90,
+        );
+      }
+
+      final exercises = [
+        ...List.generate(10, (i) => _TestEx('due_$i', 'due_$i')),
+        const _TestEx('new_easy', 'new_easy', difficulty: 1),
+      ];
+
+      final result = RoundSelector.select(
+        exercises: exercises,
+        count: 10,
+        progress: progress,
+        notionIdOf: (e) => e.id,
+        difficultyOf: (e) => e.difficulty,
+        today: 100,
+      );
+
+      expect(result, hasLength(10));
+      expect(result.any((e) => e.label == 'new_easy'), isTrue);
+      expect(result.where((e) => e.label != 'new_easy'), hasLength(9));
+    });
   });
 
   group('RoundSelector multi notion', () {
@@ -585,14 +708,35 @@ void main() {
 
       expect(result.length, 1);
     });
+
+    test('orders by text difficulty ascending', () {
+      const progress = GameProgress();
+      final exercises = [
+        const _MultiNotionEx('hard', ['n_h_a', 'n_h_b'], difficulty: 5),
+        const _MultiNotionEx('easy', ['n_e_a'], difficulty: 1),
+        const _MultiNotionEx('mid', ['n_m_a'], difficulty: 3),
+      ];
+
+      final result = RoundSelector.selectMultiNotion(
+        exercises: exercises,
+        count: 3,
+        progress: progress,
+        notionIdsOf: (e) => e.notionIds,
+        difficultyOf: (e) => e.difficulty,
+        today: 100,
+      );
+
+      expect(result.map((e) => e.label).toList(), ['easy', 'mid', 'hard']);
+    });
   });
 }
 
 final class _TestEx {
   final String label;
   final String id;
+  final int difficulty;
 
-  const _TestEx(this.label, this.id);
+  const _TestEx(this.label, this.id, {this.difficulty = 0});
 
   @override
   bool operator ==(Object other) =>
@@ -605,8 +749,9 @@ final class _TestEx {
 final class _MultiNotionEx {
   final String label;
   final List<String> notionIds;
+  final int difficulty;
 
-  const _MultiNotionEx(this.label, this.notionIds);
+  const _MultiNotionEx(this.label, this.notionIds, {this.difficulty = 0});
 
   @override
   bool operator ==(Object other) =>
