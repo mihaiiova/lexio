@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int? _discoveredFor(String gameId) => _totals == null
       ? null
-      : (_progress?.forGame(gameId).countMastered() ?? 0);
+      : (_progress?.forGame(gameId).countStarted() ?? 0);
 
   int? _totalFor(String gameId) => _totals?[gameId];
 
@@ -162,26 +162,51 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _open(BuildContext context, Widget screen) {
-    Navigator.of(context).push(
-      PageRouteBuilder<void>(
-        pageBuilder: (context, animation, secondaryAnimation) => screen,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final offsetAnimation =
-              Tween<Offset>(
-                begin: const Offset(0, 0.05),
-                end: Offset.zero,
-              ).animate(
-                CurvedAnimation(parent: animation, curve: LexioCurves.easeOut),
-              );
+    unawaited(
+      Navigator.of(context)
+          .push(
+            PageRouteBuilder<void>(
+              pageBuilder: (context, animation, secondaryAnimation) => screen,
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    final offsetAnimation =
+                        Tween<Offset>(
+                          begin: const Offset(0, 0.05),
+                          end: Offset.zero,
+                        ).animate(
+                          CurvedAnimation(
+                            parent: animation,
+                            curve: LexioCurves.easeOut,
+                          ),
+                        );
 
-          return FadeTransition(
-            opacity: animation,
-            child: SlideTransition(position: offsetAnimation, child: child),
-          );
-        },
-        transitionDuration: LexioDurations.page,
-      ),
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: offsetAnimation,
+                        child: child,
+                      ),
+                    );
+                  },
+              transitionDuration: LexioDurations.page,
+            ),
+          )
+          .then((_) => _reloadProgress()),
     );
+  }
+
+  Future<void> _reloadProgress() async {
+    try {
+      final progress = await ProgressRepository.load(
+        storage: widget.progressStorage,
+      );
+      if (!mounted) return;
+      setState(() {
+        _progress = progress;
+      });
+    } catch (error) {
+      debugPrint('HomeScreen: failed to reload progress: $error');
+    }
   }
 
   Widget _buildLegalFooter(BuildContext context) {
@@ -274,6 +299,7 @@ class _GameEntry extends StatelessWidget {
                     discovered: discovered!,
                     total: total!,
                     accentColor: accentColor,
+                    showLabel: false,
                   ),
                 ],
               ],

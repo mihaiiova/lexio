@@ -179,8 +179,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     _startTimer();
   }
 
-  void _handleBack() {
+  Future<void> _handleBack() async {
     _timer?.cancel();
+    await _progress?.flush();
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 
@@ -276,7 +278,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       backgroundColor: LexioColors.background,
       body: SpotSummary(
         state: state,
-        discoveredCount: _progress?.forGame('spot').countMastered() ?? 0,
+        discoveredCount: _progress?.forGame('spot').countStarted() ?? 0,
         discoveredTotal: SpotContent.distinctNotionIds().length,
         onPlayAgain: _handlePlayAgain,
         onBack: _handleBack,

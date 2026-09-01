@@ -11,7 +11,7 @@ import '../../lib/progress/user_progress.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('shows one discovery bar per game with mastered/total', (
+  testWidgets('shows a progress bar per game without a count label', (
     tester,
   ) async {
     final progress = UserProgress(
@@ -49,10 +49,18 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('2 din 100'), findsOneWidget);
-    expect(find.text('0 din 60'), findsOneWidget);
-    expect(find.text('0 din 258'), findsOneWidget);
-    expect(find.text('0 din 231'), findsOneWidget);
+    final indicators = tester
+        .widgetList<LinearProgressIndicator>(
+          find.byType(LinearProgressIndicator),
+        )
+        .toList();
+
+    expect(indicators, hasLength(4));
+    expect(indicators[0].value, 0);
+    expect(indicators[1].value, closeTo(0.02, 0.0001));
+    expect(indicators[2].value, 0);
+    expect(indicators[3].value, 0);
+    expect(find.textContaining('din'), findsNothing);
   });
 }
 

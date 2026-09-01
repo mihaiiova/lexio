@@ -38,6 +38,27 @@ void main() {
       );
     });
 
+    test('flush completes after pending writes finish', () async {
+      final storage = _ControlledProgressStorage();
+      final repository = ProgressRepository(storage: storage);
+
+      final write = repository.recordAnswer(
+        gameId: 'vocabulary',
+        notionId: 'first',
+        isCorrect: true,
+      );
+
+      await _flushMicrotasks();
+      expect(storage.pendingWrites, hasLength(1));
+      storage.completeNextWrite();
+
+      await repository.flush();
+
+      final saved = UserProgress.fromJson(storage.value!);
+      expect(saved.forGame('vocabulary').items.keys, contains('first'));
+      await write;
+    });
+
     test('keeps in-memory progress when a storage write fails', () async {
       final repository = ProgressRepository(storage: _FailingProgressStorage());
 

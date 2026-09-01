@@ -129,6 +129,12 @@ class _GrammarScreenState extends State<GrammarScreen> {
     _advance();
   }
 
+  Future<void> _handleBack() async {
+    await _progress?.flush();
+    if (!mounted) return;
+    Navigator.of(context).maybePop();
+  }
+
   void _playAgain() {
     final progress = _progress;
     if (progress == null) return;
@@ -206,10 +212,10 @@ class _GrammarScreenState extends State<GrammarScreen> {
         backgroundColor: LexioColors.surface,
         body: GrammarSummary(
           state: state,
-          discoveredCount: _progress?.forGame('grammar').countMastered() ?? 0,
+          discoveredCount: _progress?.forGame('grammar').countStarted() ?? 0,
           discoveredTotal: GrammarContent.distinctNotionIds().length,
           onPlayAgain: _playAgain,
-          onBack: () => Navigator.of(context).maybePop(),
+          onBack: _handleBack,
         ),
       );
     }

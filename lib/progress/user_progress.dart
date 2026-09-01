@@ -29,6 +29,10 @@ final class GameProgress {
   int countMastered() =>
       items.values.where((item) => item.state == LearningItemState.mastered).length;
 
+  /// Notions the user has answered at least once (anything past `newItem`).
+  int countStarted() =>
+      items.values.where((item) => item.state != LearningItemState.newItem).length;
+
   GameProgress recordAnswer({
     required String notionId,
     required bool isCorrect,
@@ -175,6 +179,9 @@ final class ProgressRepository {
     _progress = updated;
     return _enqueueWrite();
   }
+
+  /// Completes once every previously enqueued write has finished.
+  Future<void> flush() => _pendingWrite;
 
   Future<void> _enqueueWrite() {
     final snapshot = _progress.toJson();

@@ -12,11 +12,13 @@ class LexioDiscoveryProgress extends StatelessWidget {
     required this.discovered,
     required this.total,
     this.accentColor = LexioColors.primary,
+    this.showLabel = true,
   });
 
   final int discovered;
   final int total;
   final Color accentColor;
+  final bool showLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +41,15 @@ class LexioDiscoveryProgress extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: LexioSpacing.sm),
-          Text(
-            '$discovered din $total',
-            style: LexioTextStyles.labelSmall.copyWith(
-              color: LexioColors.textSecondary,
+          if (showLabel) ...[
+            const SizedBox(width: LexioSpacing.sm),
+            Text(
+              '$discovered din $total',
+              style: LexioTextStyles.labelSmall.copyWith(
+                color: LexioColors.textSecondary,
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
