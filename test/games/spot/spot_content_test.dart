@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import '../../../lib/content/hyphenation_content.dart';
 // ignore: avoid_relative_lib_imports
 import '../../../lib/games/spot/spot_content.dart';
+// ignore: avoid_relative_lib_imports
+import '../../../lib/progress/user_progress.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -115,6 +117,16 @@ void main() {
     );
     expect(usedHyphenationPairIds, equals(hyphenationPairIds));
     expect(visiblePairCounts.values.every((count) => count <= 3), isTrue);
+  });
+
+  test('adaptiveSession orders texts by difficulty', () async {
+    await SpotContent.load();
+
+    final texts = SpotContent.adaptiveSession(59, const GameProgress());
+
+    expect(texts, isNotEmpty);
+    final difficulties = texts.map((t) => t.difficulty).toList();
+    expect(difficulties, List<int>.from(difficulties)..sort());
   });
 }
 

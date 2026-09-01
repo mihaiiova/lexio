@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../lib/content/hyphenation_content.dart';
 // ignore: avoid_relative_lib_imports
 import '../../../lib/games/grammar/grammar_content.dart';
+// ignore: avoid_relative_lib_imports
+import '../../../lib/progress/user_progress.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -60,4 +62,14 @@ void main() {
       );
     },
   );
+
+  test('adaptiveRound serves exercises easy-to-hard', () async {
+    await GrammarContent.load();
+
+    final round = GrammarContent.adaptiveRound(15, const GameProgress());
+
+    expect(round, hasLength(15));
+    final difficulties = round.map((e) => e.difficulty).toList();
+    expect(difficulties, List<int>.from(difficulties)..sort());
+  });
 }

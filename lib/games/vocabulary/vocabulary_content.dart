@@ -120,6 +120,7 @@ final class VocabularyContent {
       count: count,
       progress: progress,
       notionIdOf: (exercise) => exercise.notionId,
+      difficultyOf: (exercise) => exercise.difficulty,
     );
   }
 }

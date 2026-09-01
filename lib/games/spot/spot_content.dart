@@ -183,6 +183,7 @@ final class SpotContent {
       count: count,
       progress: progress,
       notionIdsOf: (text) => text.mistakeNotionIds,
+      difficultyOf: (text) => text.difficulty,
     );
   }
 }
