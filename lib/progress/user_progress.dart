@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'learning_item.dart';
@@ -182,7 +183,13 @@ final class ProgressRepository {
     final storage = _storage;
     if (storage == null) return Future<void>.value();
     final snapshot = _progress.toJson();
-    _writeQueue = _writeQueue.then((_) => storage.write(snapshot));
+    _writeQueue = _writeQueue.then((_) async {
+      try {
+        await storage.write(snapshot);
+      } catch (error) {
+        debugPrint('ProgressRepository: failed to persist progress: $error');
+      }
+    });
     return _writeQueue;
   }
 }

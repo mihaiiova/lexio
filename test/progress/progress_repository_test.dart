@@ -51,6 +51,107 @@ void main() {
         LearningItemState.learning,
       );
     });
+
+    test('failed write is swallowed and later writes persist', () async {
+      final storage = _MemoryProgressStorage()..failuresRemaining = 1;
+      final repo = await ProgressRepository.load(storage: storage);
+
+      await repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_failed',
+        isCorrect: true,
+      );
+
+      await repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_retried',
+        isCorrect: true,
+      );
+      await repo.flush();
+
+      final persisted = UserProgress.fromJson(storage.value!);
+      expect(
+        persisted.forGame('grammar').progressFor('n_retried').state,
+        LearningItemState.learning,
+      );
+    });
+
+    test('rapid answer sequence persists every answer in order', () async {
+      final storage = _MemoryProgressStorage();
+      final repo = await ProgressRepository.load(storage: storage);
+
+      for (var i = 0; i < 5; i++) {
+        repo.recordAnswer(
+          gameId: 'grammar',
+          notionId: 'n_$i',
+          isCorrect: true,
+        );
+      }
+      await repo.flush();
+
+      expect(storage.writes, hasLength(5));
+      for (var i = 0; i < 5; i++) {
+        final snapshot = UserProgress.fromJson(storage.writes[i]);
+        expect(snapshot.forGame('grammar').items, hasLength(i + 1));
+      }
+    });
+
+    test('recordAnswers persists multiple notions in one flush', () async {
+      final storage = _MemoryProgressStorage();
+      final repo = await ProgressRepository.load(storage: storage);
+
+      repo.recordAnswers(gameId: 'spot', notionResults: {
+        'n_a': true,
+        'n_b': false,
+      });
+      await repo.flush();
+
+      final persisted = UserProgress.fromJson(storage.value!);
+      final spot = persisted.forGame('spot');
+      expect(spot.items, hasLength(2));
+      expect(spot.progressFor('n_a').state, LearningItemState.learning);
+      expect(spot.progressFor('n_b').state, LearningItemState.learning);
+    });
+
+    test('load recovers from a failing storage read', () async {
+      final repo = await ProgressRepository.load(
+        storage: _FailingReadProgressStorage(),
+      );
+
+      expect(repo.forGame('grammar').items, isEmpty);
+      await repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_memory_only',
+        isCorrect: true,
+      );
+      await repo.flush();
+    });
+
+    test('writes are serialized one at a time', () async {
+      final storage = _BlockingProgressStorage();
+      final repo = await ProgressRepository.load(storage: storage);
+
+      repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_first',
+        isCorrect: true,
+      );
+      repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_second',
+        isCorrect: true,
+      );
+
+      await Future<void>.delayed(Duration.zero);
+      expect(storage.pendingWrites, hasLength(1));
+
+      storage.pendingWrites.first.complete();
+      await Future<void>.delayed(Duration.zero);
+      expect(storage.pendingWrites, hasLength(2));
+
+      storage.pendingWrites.last.complete();
+      await repo.flush();
+    });
   });
 }
 
@@ -58,6 +159,7 @@ final class _MemoryProgressStorage implements ProgressStorage {
   _MemoryProgressStorage([this.value]);
 
   String? value;
+  int failuresRemaining = 0;
   final List<String> writes = [];
 
   @override
@@ -65,6 +167,10 @@ final class _MemoryProgressStorage implements ProgressStorage {
 
   @override
   Future<void> write(String updated) async {
+    if (failuresRemaining > 0) {
+      failuresRemaining--;
+      throw Exception('write failed');
+    }
     writes.add(updated);
     value = updated;
   }
@@ -84,4 +190,12 @@ final class _BlockingProgressStorage implements ProgressStorage {
     pendingWrites.add(completer);
     return completer.future;
   }
+}
+
+final class _FailingReadProgressStorage implements ProgressStorage {
+  @override
+  Future<String?> read() async => throw Exception('read failed');
+
+  @override
+  Future<void> write(String updated) async {}
 }
