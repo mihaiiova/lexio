@@ -40,6 +40,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    unawaited(_progress?.flush());
     WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     _session.dispose();
@@ -50,6 +51,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _onResume();
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      unawaited(_progress?.flush());
     }
   }
 
@@ -175,17 +180,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void _saveSessionProgress(SpotGameState state) {
     if (_hasSavedSession) return;
     _hasSavedSession = true;
-    final notionResults = <String, bool>{};
-    for (final text in state.texts) {
-      final index = state.texts.indexOf(text);
-      final foundIndices = state.foundMistakeIndices[index];
-      for (var i = 0; i < text.mistakes.length; i++) {
-        final notionId = text.mistakes[i].notionId;
-        final wasFound = foundIndices.contains(i);
-        notionResults[notionId] = wasFound;
-      }
-    }
-    _progress?.recordAnswers(gameId: 'spot', notionResults: notionResults);
+    _progress?.recordAnswers(
+      gameId: 'spot',
+      notionResults: state.notionResults,
+    );
   }
 
   Widget _buildErrorScreen() {
@@ -323,9 +321,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   Widget _buildProgressSegments(SpotGameState state) {
     return Row(
       children: List.generate(state.texts.length, (i) {
-        final isCompleted =
-            state.foundMistakeIndices[i].length ==
-            state.texts[i].mistakes.length;
+        final isCompleted = state.isTextCompleted(i);
         final isCurrent = i == state.currentTextIndex;
 
         Color color;

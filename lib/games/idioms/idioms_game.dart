@@ -32,7 +32,7 @@ final class IdiomsGameState {
       : null;
 
   double get progress =>
-      exercises.isEmpty ? 0 : totalAnswered / exercises.length;
+      exercises.isEmpty ? 0 : correctCount / exercises.length;
 
   IdiomsGameState answer(int optionIndex) {
     if (hasAnswered ||

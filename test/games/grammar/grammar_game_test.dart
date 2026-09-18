@@ -63,6 +63,13 @@ void main() {
       expect(next.totalAnswered, 1);
     });
 
+    test('answer ignores a second answer to the same exercise', () {
+      final state = GrammarGameState(exercises: exercises);
+      final answered = state.answer(true);
+
+      expect(answered.answer(false), same(answered));
+    });
+
     test('results tracks per-question outcomes', () {
       var state = GrammarGameState(exercises: exercises);
       state = state.answer(true);
@@ -90,12 +97,33 @@ void main() {
       expect(state.isFinished, true);
     });
 
-    test('progress is 1.0 after all answered', () {
+    test('next ignores an incomplete or finished exercise', () {
+      final initial = GrammarGameState(exercises: exercises);
+      final answered = initial.answer(true);
+      final next = answered.next();
+      final finished = next.answer(false).next();
+
+      expect(initial.next(), same(initial));
+      expect(finished.next(), same(finished));
+    });
+
+    test('progress counts only correct answers', () {
+      var state = GrammarGameState(exercises: exercises);
+      state = state.answer(true);
+      state = state.next();
+      state = state.answer(true);
+      state = state.next();
+
+      expect(state.progress, 0.5);
+    });
+
+    test('progress is 1.0 after every answer is correct', () {
       var state = GrammarGameState(exercises: exercises);
       state = state.answer(true);
       state = state.next();
       state = state.answer(false);
       state = state.next();
+
       expect(state.progress, 1.0);
     });
   });

@@ -22,11 +22,13 @@ final class GrammarGameState {
   GrammarExercise get currentExercise => exercises[currentIndex];
 
   double get progress =>
-      exercises.isEmpty ? 0 : totalAnswered / exercises.length;
+      exercises.isEmpty ? 0 : correctCount / exercises.length;
 
   int get remaining => exercises.length - totalAnswered;
 
   GrammarGameState answer(bool playerSaysCorrect) {
+    if (isFinished || results[currentIndex] != null) return this;
+
     final actualCorrect = currentExercise.isCorrect;
     final isRight = playerSaysCorrect == actualCorrect;
 
@@ -45,6 +47,8 @@ final class GrammarGameState {
   }
 
   GrammarGameState next() {
+    if (isFinished || results[currentIndex] == null) return this;
+
     final nextIndex = currentIndex + 1;
     if (nextIndex >= exercises.length) {
       return GrammarGameState(

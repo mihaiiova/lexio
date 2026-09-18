@@ -138,13 +138,33 @@ void main() {
       expect(afterFind.state.displayedWord(3), 'in');
     });
 
-    test('allMistakesFoundInCurrentText is true after all found', () {
+    test('a text is complete only when every mistake is found', () {
       final state = createState();
-      final state1 = state.tapWord(3).state;
-      final state2 = state1.tapWord(4).state;
+      final partiallyAnswered = state.tapWord(3).state;
+      final completelyAnswered = partiallyAnswered.tapWord(4).state;
 
-      expect(state2.mistakesFound, 2);
-      expect(state2.allMistakesFoundInCurrentText, true);
+      expect(partiallyAnswered.isTextCompleted(0), isFalse);
+      expect(partiallyAnswered.allMistakesFoundInCurrentText, isFalse);
+      expect(completelyAnswered.mistakesFound, 2);
+      expect(completelyAnswered.isTextCompleted(0), isTrue);
+      expect(completelyAnswered.allMistakesFoundInCurrentText, isTrue);
+    });
+
+    test('notion results preserve each mistake answer', () {
+      final state = createState().tapWord(3).state;
+
+      expect(state.notionResults, {
+        'sp_in_%C3%AEn': true,
+        'sp_oras_ora%C8%99': false,
+        'sp_Mam_M-am': false,
+      });
+    });
+
+    test('empty state is not considered complete', () {
+      final state = SpotGameState(texts: const []);
+
+      expect(state.isTextCompleted(0), isFalse);
+      expect(state.allMistakesFoundInCurrentText, isFalse);
     });
 
     test('nextText advances to next text and resets startTime', () {

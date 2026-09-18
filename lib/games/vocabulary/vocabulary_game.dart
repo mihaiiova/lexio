@@ -32,7 +32,7 @@ final class VocabularyGameState {
       : null;
 
   double get progress =>
-      exercises.isEmpty ? 0 : totalAnswered / exercises.length;
+      exercises.isEmpty ? 0 : correctCount / exercises.length;
 
   VocabularyGameState answer(int optionIndex) {
     if (hasAnswered ||
