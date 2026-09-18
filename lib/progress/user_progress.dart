@@ -96,28 +96,49 @@ final class UserProgress {
   }
 }
 
+abstract class ProgressStorage {
+  Future<String?> read();
+  Future<void> write(String value);
+}
+
+final class SharedPreferencesProgressStorage implements ProgressStorage {
+  SharedPreferencesProgressStorage(
+    this._key, [
+    SharedPreferencesAsync? preferences,
+  ]) : _preferences = preferences ?? SharedPreferencesAsync();
+
+  final String _key;
+  final SharedPreferencesAsync _preferences;
+
+  @override
+  Future<String?> read() => _preferences.getString(_key);
+
+  @override
+  Future<void> write(String value) => _preferences.setString(_key, value);
+}
+
 final class ProgressRepository {
   static const _storageKey = 'user_progress_v2';
 
-  ProgressRepository._(this._preferences, this._progress);
+  ProgressRepository._(this._storage, this._progress);
 
-  final SharedPreferencesAsync? _preferences;
+  final ProgressStorage? _storage;
   UserProgress _progress;
 
-  static Future<ProgressRepository> load() async {
-    SharedPreferencesAsync? preferences;
+  static Future<ProgressRepository> load({ProgressStorage? storage}) async {
+    ProgressStorage? effectiveStorage =
+        storage ?? SharedPreferencesProgressStorage(_storageKey);
     UserProgress progress;
     try {
-      preferences = SharedPreferencesAsync();
-      final source = await preferences.getString(_storageKey);
+      final source = await effectiveStorage.read();
       progress = source == null
           ? const UserProgress()
           : UserProgress.fromJson(source);
     } catch (_) {
-      preferences = null;
+      effectiveStorage = null;
       progress = const UserProgress();
     }
-    return ProgressRepository._(preferences, progress);
+    return ProgressRepository._(effectiveStorage, progress);
   }
 
   GameProgress forGame(String gameId) => _progress.forGame(gameId);
@@ -134,7 +155,7 @@ final class ProgressRepository {
       isCorrect: isCorrect,
       today: today,
     );
-    await _preferences?.setString(_storageKey, _progress.toJson());
+    await _storage?.write(_progress.toJson());
   }
 
   Future<void> recordAnswers({
@@ -152,7 +173,7 @@ final class ProgressRepository {
       );
     }
     _progress = updated;
-    await _preferences?.setString(_storageKey, _progress.toJson());
+    await _storage?.write(_progress.toJson());
   }
 }
 
