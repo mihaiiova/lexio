@@ -180,20 +180,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void _saveSessionProgress(SpotGameState state) {
     if (_hasSavedSession) return;
     _hasSavedSession = true;
-    final notionResults = <String, bool>{};
-    for (var textIndex = 0; textIndex < state.texts.length; textIndex++) {
-      final text = state.texts[textIndex];
-      final isCorrect = state.isTextCompleted(textIndex);
-      for (final mistake in text.mistakes) {
-        final notionId = mistake.notionId;
-        notionResults.update(
-          notionId,
-          (previousResult) => previousResult && isCorrect,
-          ifAbsent: () => isCorrect,
-        );
-      }
-    }
-    _progress?.recordAnswers(gameId: 'spot', notionResults: notionResults);
+    _progress?.recordAnswers(
+      gameId: 'spot',
+      notionResults: state.notionResults,
+    );
   }
 
   Widget _buildErrorScreen() {

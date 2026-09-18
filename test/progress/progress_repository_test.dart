@@ -53,7 +53,7 @@ void main() {
       );
     });
 
-    test('failed write is swallowed and later writes persist', () async {
+    test('failed write is swallowed and a later retry persists', () async {
       final storage = _MemoryProgressStorage()..failuresRemaining = 1;
       final repo = await ProgressRepository.load(storage: storage);
 
@@ -65,14 +65,14 @@ void main() {
 
       await repo.recordAnswer(
         gameId: 'grammar',
-        notionId: 'n_retried',
+        notionId: 'n_failed',
         isCorrect: true,
       );
       await repo.flush();
 
       final persisted = UserProgress.fromJson(storage.value!);
       expect(
-        persisted.forGame('grammar').progressFor('n_retried').state,
+        persisted.forGame('grammar').progressFor('n_failed').state,
         LearningItemState.learning,
       );
     });

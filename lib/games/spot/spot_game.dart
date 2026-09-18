@@ -57,7 +57,23 @@ final class SpotGameState {
   bool get isLastText => texts.isEmpty || currentTextIndex >= texts.length - 1;
 
   bool isTextCompleted(int textIndex) =>
+      texts.isNotEmpty &&
       foundMistakeIndices[textIndex].length == texts[textIndex].mistakes.length;
+
+  Map<String, bool> get notionResults {
+    final results = <String, bool>{};
+    for (var textIndex = 0; textIndex < texts.length; textIndex++) {
+      final foundIndices = foundMistakeIndices[textIndex];
+      final text = texts[textIndex];
+      for (var mistakeIndex = 0;
+          mistakeIndex < text.mistakes.length;
+          mistakeIndex++) {
+        results[text.mistakes[mistakeIndex].notionId] =
+            foundIndices.contains(mistakeIndex);
+      }
+    }
+    return results;
+  }
 
   int get textsCompleted {
     int count = 0;

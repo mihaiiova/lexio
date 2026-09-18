@@ -150,6 +150,23 @@ void main() {
       expect(completelyAnswered.allMistakesFoundInCurrentText, isTrue);
     });
 
+    test('notion results preserve each mistake answer', () {
+      final state = createState().tapWord(3).state;
+
+      expect(state.notionResults, {
+        'sp_in_%C3%AEn': true,
+        'sp_oras_ora%C8%99': false,
+        'sp_Mam_M-am': false,
+      });
+    });
+
+    test('empty state is not considered complete', () {
+      final state = SpotGameState(texts: const []);
+
+      expect(state.isTextCompleted(0), isFalse);
+      expect(state.allMistakesFoundInCurrentText, isFalse);
+    });
+
     test('nextText advances to next text and resets startTime', () {
       final state = createState();
       final allFound = state.tapWord(3).state.tapWord(4).state;

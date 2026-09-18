@@ -63,6 +63,13 @@ void main() {
       expect(next.totalAnswered, 1);
     });
 
+    test('answer ignores a second answer to the same exercise', () {
+      final state = GrammarGameState(exercises: exercises);
+      final answered = state.answer(true);
+
+      expect(answered.answer(false), same(answered));
+    });
+
     test('results tracks per-question outcomes', () {
       var state = GrammarGameState(exercises: exercises);
       state = state.answer(true);
