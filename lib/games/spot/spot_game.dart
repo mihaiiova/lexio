@@ -49,18 +49,20 @@ final class SpotGameState {
        startTime = startTime ?? DateTime.now();
 
   SpotText get currentText => texts[currentTextIndex];
-  int get mistakesFound => foundMistakeIndices[currentTextIndex].length;
-  int get totalMistakesInCurrentText => currentText.mistakes.length;
-  bool get allMistakesFoundInCurrentText =>
-      mistakesFound == totalMistakesInCurrentText;
-  bool get isLastText => currentTextIndex >= texts.length - 1;
+  int get mistakesFound =>
+      texts.isEmpty ? 0 : foundMistakeIndices[currentTextIndex].length;
+  int get totalMistakesInCurrentText =>
+      texts.isEmpty ? 0 : currentText.mistakes.length;
+  bool get allMistakesFoundInCurrentText => isTextCompleted(currentTextIndex);
+  bool get isLastText => texts.isEmpty || currentTextIndex >= texts.length - 1;
+
+  bool isTextCompleted(int textIndex) =>
+      foundMistakeIndices[textIndex].length == texts[textIndex].mistakes.length;
 
   int get textsCompleted {
     int count = 0;
     for (int i = 0; i < texts.length; i++) {
-      if (foundMistakeIndices[i].length == texts[i].mistakes.length) {
-        count++;
-      }
+      if (isTextCompleted(i)) count++;
     }
     return count;
   }

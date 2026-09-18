@@ -204,7 +204,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     return Padding(
       padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
       child: Semantics(
-        label: 'Progres: ${state.totalAnswered} din ${state.exercises.length}',
+        label: 'Progres: ${state.correctCount} din ${state.exercises.length}',
         child: Row(
         children: List.generate(state.exercises.length, (index) {
           final result = state.results[index];

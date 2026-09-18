@@ -176,13 +176,16 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     if (_hasSavedSession) return;
     _hasSavedSession = true;
     final notionResults = <String, bool>{};
-    for (final text in state.texts) {
-      final index = state.texts.indexOf(text);
-      final foundIndices = state.foundMistakeIndices[index];
-      for (var i = 0; i < text.mistakes.length; i++) {
-        final notionId = text.mistakes[i].notionId;
-        final wasFound = foundIndices.contains(i);
-        notionResults[notionId] = wasFound;
+    for (var textIndex = 0; textIndex < state.texts.length; textIndex++) {
+      final text = state.texts[textIndex];
+      final isCorrect = state.isTextCompleted(textIndex);
+      for (final mistake in text.mistakes) {
+        final notionId = mistake.notionId;
+        notionResults.update(
+          notionId,
+          (previousResult) => previousResult && isCorrect,
+          ifAbsent: () => isCorrect,
+        );
       }
     }
     _progress?.recordAnswers(gameId: 'spot', notionResults: notionResults);
@@ -323,9 +326,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   Widget _buildProgressSegments(SpotGameState state) {
     return Row(
       children: List.generate(state.texts.length, (i) {
-        final isCompleted =
-            state.foundMistakeIndices[i].length ==
-            state.texts[i].mistakes.length;
+        final isCompleted = state.isTextCompleted(i);
         final isCurrent = i == state.currentTextIndex;
 
         Color color;

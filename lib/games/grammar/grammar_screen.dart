@@ -232,7 +232,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
     return Padding(
       padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
       child: Semantics(
-        label: 'Progres: ${state.totalAnswered} din ${state.exercises.length}',
+        label: 'Progres: ${state.correctCount} din ${state.exercises.length}',
         child: Row(
         children: List.generate(state.exercises.length, (i) {
           final result = state.results[i];
