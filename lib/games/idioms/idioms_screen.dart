@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,15 +18,17 @@ import 'widgets/idiom_sentence.dart';
 import 'widgets/idioms_summary.dart';
 
 class IdiomsScreen extends StatefulWidget {
-  const IdiomsScreen({super.key, this.exercises});
+  const IdiomsScreen({super.key, this.exercises, this.progressRepository});
 
   final List<IdiomExercise>? exercises;
+  final ProgressRepository? progressRepository;
 
   @override
   State<IdiomsScreen> createState() => _IdiomsScreenState();
 }
 
-class _IdiomsScreenState extends State<IdiomsScreen> {
+class _IdiomsScreenState extends State<IdiomsScreen>
+    with WidgetsBindingObserver {
   static const _roundSize = 10;
 
   IdiomsGameState? _state;
@@ -36,9 +40,11 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     final exercises = widget.exercises;
     if (exercises != null) {
       _state = IdiomsGameState(exercises: exercises);
+      _progress = widget.progressRepository;
       _isLoading = false;
       _session.start();
     } else {
@@ -48,14 +54,26 @@ class _IdiomsScreenState extends State<IdiomsScreen> {
 
   @override
   void dispose() {
+    unawaited(_progress?.flush());
+    WidgetsBinding.instance.removeObserver(this);
     _session.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      unawaited(_progress?.flush());
+    }
   }
 
   Future<void> _init() async {
     try {
       await IdiomsContent.load();
-      final progress = await ProgressRepository.load();
+      final progress =
+          widget.progressRepository ?? await ProgressRepository.load();
       final exercises = IdiomsContent.adaptiveRound(
         _roundSize,
         progress.forGame('idioms'),

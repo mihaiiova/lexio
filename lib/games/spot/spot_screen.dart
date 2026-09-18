@@ -40,6 +40,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    unawaited(_progress?.flush());
     WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     _session.dispose();
@@ -50,6 +51,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _onResume();
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      unawaited(_progress?.flush());
     }
   }
 

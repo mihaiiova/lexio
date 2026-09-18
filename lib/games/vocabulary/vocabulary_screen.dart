@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,15 +18,21 @@ import 'widgets/vocabulary_sentence.dart';
 import 'widgets/vocabulary_summary.dart';
 
 class VocabularyScreen extends StatefulWidget {
-  const VocabularyScreen({super.key, this.exercises});
+  const VocabularyScreen({
+    super.key,
+    this.exercises,
+    this.progressRepository,
+  });
 
   final List<VocabularyExercise>? exercises;
+  final ProgressRepository? progressRepository;
 
   @override
   State<VocabularyScreen> createState() => _VocabularyScreenState();
 }
 
-class _VocabularyScreenState extends State<VocabularyScreen> {
+class _VocabularyScreenState extends State<VocabularyScreen>
+    with WidgetsBindingObserver {
   static const _roundSize = 10;
 
   VocabularyGameState? _state;
@@ -36,9 +44,11 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     final exercises = widget.exercises;
     if (exercises != null) {
       _state = VocabularyGameState(exercises: exercises);
+      _progress = widget.progressRepository;
       _isLoading = false;
       _session.start();
     } else {
@@ -48,14 +58,26 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
 
   @override
   void dispose() {
+    unawaited(_progress?.flush());
+    WidgetsBinding.instance.removeObserver(this);
     _session.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      unawaited(_progress?.flush());
+    }
   }
 
   Future<void> _init() async {
     try {
       await VocabularyContent.load();
-      final progress = await ProgressRepository.load();
+      final progress =
+          widget.progressRepository ?? await ProgressRepository.load();
       final exercises = VocabularyContent.adaptiveRound(
         _roundSize,
         progress.forGame('vocabulary'),

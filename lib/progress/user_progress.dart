@@ -128,10 +128,10 @@ final class ProgressRepository {
   Future<void> _writeQueue = Future<void>.value();
 
   static Future<ProgressRepository> load({ProgressStorage? storage}) async {
-    ProgressStorage? effectiveStorage =
-        storage ?? SharedPreferencesProgressStorage(_storageKey);
+    ProgressStorage? effectiveStorage = storage;
     UserProgress progress;
     try {
+      effectiveStorage ??= SharedPreferencesProgressStorage(_storageKey);
       final source = await effectiveStorage.read();
       progress = source == null
           ? const UserProgress()

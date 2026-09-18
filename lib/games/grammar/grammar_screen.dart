@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../analytics/game_session_analytics.dart';
@@ -22,7 +24,8 @@ class GrammarScreen extends StatefulWidget {
   State<GrammarScreen> createState() => _GrammarScreenState();
 }
 
-class _GrammarScreenState extends State<GrammarScreen> {
+class _GrammarScreenState extends State<GrammarScreen>
+    with WidgetsBindingObserver {
   GrammarGameState? _state;
   bool _isLoading = true;
   bool _hasError = false;
@@ -36,13 +39,25 @@ class _GrammarScreenState extends State<GrammarScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _init();
   }
 
   @override
   void dispose() {
+    unawaited(_progress?.flush());
+    WidgetsBinding.instance.removeObserver(this);
     _session.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      unawaited(_progress?.flush());
+    }
   }
 
   Future<void> _init() async {

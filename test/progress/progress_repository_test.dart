@@ -156,8 +156,6 @@ void main() {
 }
 
 final class _MemoryProgressStorage implements ProgressStorage {
-  _MemoryProgressStorage([this.value]);
-
   String? value;
   int failuresRemaining = 0;
   final List<String> writes = [];
