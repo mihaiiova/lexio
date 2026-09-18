@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: avoid_relative_lib_imports
 import '../../lib/progress/learning_item.dart';
 // ignore: avoid_relative_lib_imports
 import '../../lib/progress/user_progress.dart';
-import 'dart:async';
 
 void main() {
   group('ProgressRepository', () {
