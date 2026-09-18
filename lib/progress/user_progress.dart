@@ -124,6 +124,7 @@ final class ProgressRepository {
 
   final ProgressStorage? _storage;
   UserProgress _progress;
+  Future<void> _writeQueue = Future<void>.value();
 
   static Future<ProgressRepository> load({ProgressStorage? storage}) async {
     ProgressStorage? effectiveStorage =
@@ -147,21 +148,20 @@ final class ProgressRepository {
     required String gameId,
     required String notionId,
     required bool isCorrect,
-  }) async {
-    final today = _todayDay();
+  }) {
     _progress = _progress.recordAnswer(
       gameId: gameId,
       notionId: notionId,
       isCorrect: isCorrect,
-      today: today,
+      today: _todayDay(),
     );
-    await _storage?.write(_progress.toJson());
+    return _enqueueWrite();
   }
 
   Future<void> recordAnswers({
     required String gameId,
     required Map<String, bool> notionResults,
-  }) async {
+  }) {
     final today = _todayDay();
     var updated = _progress;
     for (final entry in notionResults.entries) {
@@ -173,7 +173,17 @@ final class ProgressRepository {
       );
     }
     _progress = updated;
-    await _storage?.write(_progress.toJson());
+    return _enqueueWrite();
+  }
+
+  Future<void> flush() => _writeQueue;
+
+  Future<void> _enqueueWrite() {
+    final storage = _storage;
+    if (storage == null) return Future<void>.value();
+    final snapshot = _progress.toJson();
+    _writeQueue = _writeQueue.then((_) => storage.write(snapshot));
+    return _writeQueue;
   }
 }
 
