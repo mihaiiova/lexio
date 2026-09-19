@@ -18,6 +18,9 @@ class LexioActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
+      label: label,
+      onTap: onPressed,
+      excludeSemantics: true,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

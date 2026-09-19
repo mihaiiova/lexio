@@ -18,7 +18,14 @@ import 'widgets/question_card.dart';
 import 'widgets/result_overlay.dart';
 
 class GrammarScreen extends StatefulWidget {
-  const GrammarScreen({super.key});
+  const GrammarScreen({
+    super.key,
+    this.exercises,
+    this.progressRepository,
+  });
+
+  final List<GrammarExercise>? exercises;
+  final ProgressRepository? progressRepository;
 
   @override
   State<GrammarScreen> createState() => _GrammarScreenState();
@@ -40,7 +47,15 @@ class _GrammarScreenState extends State<GrammarScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _init();
+    final exercises = widget.exercises;
+    if (exercises != null) {
+      _state = GrammarGameState(exercises: exercises);
+      _progress = widget.progressRepository;
+      _isLoading = false;
+      _session.start();
+    } else {
+      _init();
+    }
   }
 
   @override
@@ -53,17 +68,21 @@ class _GrammarScreenState extends State<GrammarScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused ||
+    if (state == AppLifecycleState.resumed) {
+      _session.markResumed();
+    } else if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
       unawaited(_progress?.flush());
+      _session.markBackgrounded();
     }
   }
 
   Future<void> _init() async {
     try {
       await GrammarContent.load();
-      final progress = await ProgressRepository.load();
+      final progress =
+          widget.progressRepository ?? await ProgressRepository.load();
       final exercises = GrammarContent.adaptiveRound(
         15,
         progress.forGame('grammar'),
@@ -134,15 +153,15 @@ class _GrammarScreenState extends State<GrammarScreen>
   }
 
   void _playAgain() {
-    final progress = _progress;
-    if (progress == null) return;
-    setState(() {
-      _state = GrammarGameState(
-        exercises: GrammarContent.adaptiveRound(
+    final suppliedExercises = widget.exercises;
+    final exercises =
+        suppliedExercises ??
+        GrammarContent.adaptiveRound(
           15,
-          progress.forGame('grammar'),
-        ),
-      );
+          _progress?.forGame('grammar') ?? const GameProgress(),
+        );
+    setState(() {
+      _state = GrammarGameState(exercises: exercises);
       _hasAnswered = false;
       _showingExplanation = false;
       _showCorrectFlash = false;

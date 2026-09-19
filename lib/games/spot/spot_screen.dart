@@ -16,7 +16,14 @@ import 'widgets/spot_summary.dart';
 import 'widgets/text_token.dart';
 
 class SpotScreen extends StatefulWidget {
-  const SpotScreen({super.key});
+  const SpotScreen({
+    super.key,
+    this.texts,
+    this.progressRepository,
+  });
+
+  final List<SpotText>? texts;
+  final ProgressRepository? progressRepository;
 
   @override
   State<SpotScreen> createState() => _SpotScreenState();
@@ -35,7 +42,16 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _init();
+    final texts = widget.texts;
+    if (texts != null) {
+      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+      _progress = widget.progressRepository;
+      _isLoading = false;
+      _session.start();
+      _startTimer();
+    } else {
+      _init();
+    }
   }
 
   @override
@@ -51,10 +67,12 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _onResume();
+      _session.markResumed();
     } else if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
       unawaited(_progress?.flush());
+      _session.markBackgrounded();
     }
   }
 
@@ -75,7 +93,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   Future<void> _init() async {
     try {
       await SpotContent.load();
-      final progress = await ProgressRepository.load();
+      final progress =
+          widget.progressRepository ?? await ProgressRepository.load();
       final texts = SpotContent.adaptiveSession(5, progress.forGame('spot'));
       if (!mounted) return;
       setState(() {
@@ -155,10 +174,12 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   void _handlePlayAgain() {
     _timer?.cancel();
-    final texts = SpotContent.adaptiveSession(
-      5,
-      _progress?.forGame('spot') ?? const GameProgress(),
-    );
+    final texts =
+        widget.texts ??
+        SpotContent.adaptiveSession(
+          5,
+          _progress?.forGame('spot') ?? const GameProgress(),
+        );
     setState(() {
       _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
       _hasSavedSession = false;
@@ -194,6 +215,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: 'Înapoi la jocuri',
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -287,6 +309,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       scrolledUnderElevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
+        tooltip: 'Înapoi la jocuri',
         onPressed: _handleBack,
       ),
       title: Padding(
@@ -475,17 +498,17 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     final mistakesText =
         '${state.mistakesFound} / ${state.totalMistakesInCurrentText} greșeli';
 
-    return Row(
+    return Wrap(
+      spacing: LexioSpacing.md,
+      runSpacing: LexioSpacing.sm,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-            mistakesText,
-            style: LexioTextStyles.labelSmall.copyWith(
-              color: LexioColors.textSecondary,
-            ),
+        Text(
+          mistakesText,
+          style: LexioTextStyles.labelSmall.copyWith(
+            color: LexioColors.textSecondary,
           ),
         ),
-        const SizedBox(width: LexioSpacing.md),
         LexioButton(
           label: 'Arată toate greșelile',
           variant: LexioButtonVariant.ghost,
