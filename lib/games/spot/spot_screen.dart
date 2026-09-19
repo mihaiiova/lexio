@@ -51,10 +51,12 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _onResume();
+      _session.markResumed();
     } else if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
       unawaited(_progress?.flush());
+      _session.markBackgrounded();
     }
   }
 
