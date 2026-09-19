@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: avoid_relative_lib_imports
@@ -155,8 +155,9 @@ void main() {
 }
 
 List<SemanticsData> _allSemantics(WidgetTester tester) {
-  final owner = tester.binding.pipelineOwner.semanticsOwner;
-  if (owner == null || owner.rootSemanticsNode == null) return const [];
+  final root = RendererBinding.instance.rootPipelineOwner.semanticsOwner
+      ?.rootSemanticsNode;
+  if (root == null) return const [];
   final result = <SemanticsData>[];
   void visit(SemanticsNode node) {
     result.add(node.getSemanticsData());
@@ -166,7 +167,7 @@ List<SemanticsData> _allSemantics(WidgetTester tester) {
     });
   }
 
-  visit(owner.rootSemanticsNode!);
+  visit(root);
   return result;
 }
 
@@ -182,8 +183,7 @@ bool _hasLabel(WidgetTester tester, String text) {
 bool _hasButtonLabel(WidgetTester tester, String text) {
   return _allSemantics(tester).any(
     (data) =>
-        data.hasFlag(SemanticsFlag.isButton) &&
-        _accessibleName(data).contains(text),
+        data.flagsCollection.isButton && _accessibleName(data).contains(text),
   );
 }
 
