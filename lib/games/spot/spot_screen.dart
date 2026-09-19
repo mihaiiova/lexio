@@ -496,17 +496,17 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     final mistakesText =
         '${state.mistakesFound} / ${state.totalMistakesInCurrentText} greșeli';
 
-    return Row(
+    return Wrap(
+      spacing: LexioSpacing.md,
+      runSpacing: LexioSpacing.sm,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-            mistakesText,
-            style: LexioTextStyles.labelSmall.copyWith(
-              color: LexioColors.textSecondary,
-            ),
+        Text(
+          mistakesText,
+          style: LexioTextStyles.labelSmall.copyWith(
+            color: LexioColors.textSecondary,
           ),
         ),
-        const SizedBox(width: LexioSpacing.md),
         LexioButton(
           label: 'Arată toate greșelile',
           variant: LexioButtonVariant.ghost,
