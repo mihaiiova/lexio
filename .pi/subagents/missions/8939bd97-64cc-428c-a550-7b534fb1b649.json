@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "8939bd97-64cc-428c-a550-7b534fb1b649",
+  "title": "Review the current uncommitted working-tree diff in /Users/m/dev/lexio against baseline HEAD (5dd...",
+  "objective": "Review the current uncommitted working-tree diff in /Users/m/dev/lexio against baseline HEAD (5dddcbb3177682d24517c653e5b100a0c41ccc28). This is a working-tree review, so use: git diff HEAD; git diff --no-index /dev/null test/progress/progress_repository_test.dart || true; git status --short. Commit range HEAD..HEAD is empty because the requested changes are uncommitted. Do not modify files.\n\nStandards source: /Users/m/dev/lexio/AGENTS.md. Relevant rules: code/comments/docs English; files snake_case; PascalCase types/camelCase members/private prefix _; const where possible/final over var; relative internal imports; state local and immutable state models; tests mirror lib structure; flutter analyze must pass.\n\nSmell baseline: Mysterious Name—unclear name, rename. Duplicated Code—same logic in multiple hunks, extract it. Feature Envy—method reaches into another object’s data, move it. Data Clumps—same fields/parameters travel together, bundle them. Primitive Obsession—primitive/string represents a domain concept, give it a type. Repeated Switches—repeated cascade, centralize or polymorphism. Shotgun Surgery—one logical change scatters, gather it. Divergent Change—module changes for unrelated reasons, split it. Speculative Generality—abstraction/hook no current need, delete it. Message Chains—long navigation, hide behind first object. Middle Man—mostly delegation, cut it. Refused Bequest—implementer ignores inherited contract, use composition. These are judgment calls, not hard violations; repo standards override them. Skip tooling-enforced issues.\n\nReport, under 400 words: per file/hunk, (a) documented standard violations with AGENTS.md rule, (b) baseline smells with quoted hunk. Distinguish hard violations from judgment calls.",
+  "status": "waiting",
+  "createdAt": "2026-08-18T08:01:20.137Z",
+  "updatedAt": "2026-08-18T08:03:34.398Z",
+  "runs": [
+    {
+      "runId": "call_LbJUefG4FskxK0dGpnLFyEuh|fc_02bbce03e087154f016a8411434cc487d08388f1eb000b041e",
+      "mode": "workflow",
+      "status": "paused",
+      "startedAt": "2026-08-18T08:02:27.673Z",
+      "completedAt": "2026-08-18T08:02:27.673Z",
+      "usage": {
+        "tokens": 23080
+      }
+    }
+  ],
+  "workflowChildren": [
+    {
+      "workflowRunId": "call_LbJUefG4FskxK0dGpnLFyEuh|fc_02bbce03e087154f016a8411434cc487d08388f1eb000b041e",
+      "key": "standards",
+      "status": "completed",
+      "startedAt": "2026-08-18T08:01:20.215Z",
+      "updatedAt": "2026-08-18T08:03:34.398Z",
+      "artifactPaths": [],
+      "runId": "e7f2d082",
+      "agent": "reviewer",
+      "task": "Review the current uncommitted working-tree diff in /Users/m/dev/lexio against baseline HEAD (5dddcbb3177682d24517c653e5b100a0c41ccc28). This is a working-tree review, so use: git diff HEAD; git diff --no-index /dev/null test/progress/progress_repository_test.dart || true; git status --short. Commit range HEAD..HEAD is empty because the requested changes are uncommitted. Do not modify files.\n\nStandards source: /Users/m/dev/lexio/AGENTS.md. Relevant rules: code/comments/docs English; files snake_case; PascalCase types/camelCase members/private prefix _; const where possible/final over var; relative internal imports; state local and immutable state models; tests mirror lib structure; flutter analyze must pass.\n\nSmell baseline: Mysterious Name—unclear name, rename. Duplicated Code—same logic in multiple hunks, extract it. Feature Envy—method reaches into another object’s data, move it. Data Clumps—same fields/parameters travel together, bundle them. Primitive Obsession—primitive/string represents a domain concept, give it a type. Repeated Switches—repeated cascade, centralize or polymorphism. Shotgun Surgery—one logical change scatters, gather it. Divergent Change—module changes for unrelated reasons, split it. Speculative Generality—abstraction/hook no current need, delete it. Message Chains—long navigation, hide behind first object. Middle Man—mostly delegation, cut it. Refused Bequest—implementer ignores inherited contract, use composition. These are judgment calls, not hard violations; repo standards override them. Skip tooling-enforced issues.\n\nReport, under 400 words: per file/hunk, (a) documented standard violations with AGENTS.md rule, (b) baseline smells with quoted hunk. Distinguish hard violations from judgment calls.",
+      "sessionPath": "/Users/m/.pi/agent/sessions/--Users-m-dev-lexio--/2026-08-18T07-48-33-791Z_01a013d7-ef7e-7d9c-ae7d-87e7b4940248/e7f2d082/run-0/session.jsonl",
+      "heartbeat": {
+        "updatedAt": "2026-08-18T08:03:34.398Z",
+        "status": "completed"
+      }
+    },
+    {
+      "workflowRunId": "call_LbJUefG4FskxK0dGpnLFyEuh|fc_02bbce03e087154f016a8411434cc487d08388f1eb000b041e",
+      "key": "spec",
+      "status": "completed",
+      "startedAt": "2026-08-18T08:01:20.337Z",
+      "updatedAt": "2026-08-18T08:02:27.668Z",
+      "artifactPaths": [
+        "/Users/m/.pi/agent/sessions/--Users-m-dev-lexio--/2026-08-18T07-48-33-791Z_01a013d7-ef7e-7d9c-ae7d-87e7b4940248/0a0008c8/run-0/session.jsonl"
+      ],
+      "runId": "0a0008c8",
+      "agent": "reviewer",
+      "task": "Review the current uncommitted working-tree diff in /Users/m/dev/lexio against baseline HEAD (5dddcbb3177682d24517c653e5b100a0c41ccc28) for issue #36 only. This is a working-tree review: use git diff HEAD; git diff --no-index /dev/null test/progress/progress_repository_test.dart || true; git status --short. Commit range HEAD..HEAD is empty because changes are uncommitted. Do not modify files. Note pubspec.yaml, pubspec.lock, integration_test/, screenshots/, and test_driver/ predated the #36 changes and are out of #36 scope.\n\nIssue #36 spec:\nSummary: Make local spaced-repetition progress durable when answers are recorded rapidly or the app exits shortly after an answer.\nBackground: ProgressRepository.recordAnswer() and recordAnswers() update memory then asynchronously write SharedPreferences. Game screens invoke without awaiting, serializing, or handling failures. A stale or unfinished write can leave stored progress behind memory.\nGoals: Persist newest UserProgress snapshot reliably. Serialize writes so an older snapshot cannot overwrite newer. Handle storage failures without unhandled async errors.\nConstraints: preserve local-only SharedPreferences; game interaction responsive/no block; failed write must not corrupt in-memory session state.\nTesting seams: backend injectable or otherwise testable; test rapid sequential answers, write ordering, failing write.\nAcceptance: rapid recording persists latest complete snapshot; failures explicit/no uncaught async; existing stored progress readable/compatible; flutter analyze/test pass.\n\nReport, under 400 words: (a) missing/partial requirements, (b) scope creep, (c) implementation that looks wrong; quote the applicable spec wording. Include only actionable findings.",
+      "completedAt": "2026-08-18T08:02:27.668Z",
+      "sessionPath": "/Users/m/.pi/agent/sessions/--Users-m-dev-lexio--/2026-08-18T07-48-33-791Z_01a013d7-ef7e-7d9c-ae7d-87e7b4940248/0a0008c8/run-0/session.jsonl",
+      "heartbeat": {
+        "updatedAt": "2026-08-18T08:02:27.668Z",
+        "status": "completed"
+      }
+    }
+  ],
+  "decisions": [],
+  "artifacts": [
+    {
+      "kind": "output",
+      "path": "/Users/m/dev/lexio/.pi/subagents/artifacts/e7f2d082_reviewer_0_output.md"
+    },
+    {
+      "kind": "other",
+      "path": "/Users/m/dev/lexio/.pi/subagents/artifacts/e7f2d082_reviewer_0_transcript.jsonl",
+      "description": "Child transcript"
+    },
+    {
+      "kind": "output",
+      "path": "/Users/m/dev/lexio/.pi/subagents/artifacts/0a0008c8_reviewer_0_output.md"
+    },
+    {
+      "kind": "other",
+      "path": "/Users/m/dev/lexio/.pi/subagents/artifacts/0a0008c8_reviewer_0_transcript.jsonl",
+      "description": "Child transcript"
+    }
+  ],
+  "receipts": [],
+  "cwd": "/Users/m/dev/lexio",
+  "ownerSessionId": "/Users/m/.pi/agent/sessions/--Users-m-dev-lexio--/2026-08-18T07-48-33-791Z_01a013d7-ef7e-7d9c-ae7d-87e7b4940248.jsonl",
+  "summary": "Workflow completed.\n\nReturn:\n{\n  \"standards\": \"Detached for intercom coordination before task completion.\",\n  \"spec\": \"## Review\\n- Blocker: Storage failures are silently treated as successes. `lib/progress/user_progress.dart:188-192` catches and discards every write error, so `recordAnswer()`/`recordAnswers()` resolve successfully even when persistence failed. This does not make failure “**explicit/no uncaught async**.” Return a non-throwing failure result (or otherwise report it) and add an assertion in `test/progress/progress_repository_test.dart:43-57` that callers can detect it while in-memory progress remains intact.\\n\\n- Note: The app still has no completion/flush handling for its ignored persistence futures (`grammar_screen.dart:84-88`, `idioms_screen.dart:86-90`, `vocabulary_screen.dart:86-90`, `spot_screen.dart:188`). Additionally, the first write is deferred through `.then` in `user_progress.dart:181-184`. Thus an exit immediately after recording can occur before even the first backend write starts, only partially addressing “**app exits shortly after an answer**” and “**Persist newest UserProgress snapshot reliably**.” Start the first queued write immediately and provide an appropriate lifecycle-safe flush strategy or document/test the durability boundary.\"\n}\n\nCall trace:\n- run standards: started\n- run spec: started\n- run standards: failed (e7f2d082) in 7295ms — Detached for intercom coordination: reviewer. Reply to the supervisor request first, then wait with subagent_wait({ id: \"e7f2d082\" }). Use subagent({ action: \"status\", id: \"e7f2d082\" }) to recover the result; do not resume or launch a replacement while it remains detached.\n- run spec: completed (0a0008c8) in 67332ms"
+}

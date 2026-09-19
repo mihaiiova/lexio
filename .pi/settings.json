@@ -1,0 +1,27 @@
+{
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-luna",
+  "defaultThinkingLevel": "high",
+  "subagents": {
+    "agentOverrides": {
+      "oracle": {
+        "model": "deepseek/deepseek-v4-pro"
+      },
+      "reviewer": {
+        "model": "deepseek/deepseek-flash"
+      },
+      "scout": {
+        "model": "deepseek/deepseek-flash"
+      },
+      "worker": {
+        "model": "deepseek/deepseek-v4-pro"
+      }
+    }
+  },
+  "spec": {
+    "baseBranch": "staging",
+    "releaseBranch": "master",
+    "tagPrefix": "v",
+    "versionFile": "pubspec.yaml"
+  }
+}
