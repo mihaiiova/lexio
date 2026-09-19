@@ -58,6 +58,24 @@ void main() {
       await _expectNoOverflow(tester);
     });
 
+    testWidgets('grammar summary renders without overflow at $label', (
+      tester,
+    ) async {
+      _setSize(tester, size);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: LexioTheme.light,
+          home: GrammarScreen(exercises: [_grammarCorrect()]),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Corect'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      await _expectNoOverflow(tester);
+      expect(find.text('RUNDĂ ÎNCHEIATĂ'), findsOneWidget);
+    });
+
     testWidgets('vocabulary renders without overflow at $label', (
       tester,
     ) async {
@@ -98,6 +116,25 @@ void main() {
       await _expectNoOverflow(tester);
     });
 
+    testWidgets('spot summary renders without overflow at $label', (
+      tester,
+    ) async {
+      _setSize(tester, size);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: LexioTheme.light,
+          home: SpotScreen(texts: [_spotText()]),
+        ),
+      );
+      await tester.pump();
+      await tester.tap(find.text('Mie'));
+      await tester.pump();
+      await tester.tap(find.text('Vezi rezumatul'));
+      await tester.pump();
+      await _expectNoOverflow(tester);
+      expect(find.text('RUNDĂ ÎNCHEIATĂ'), findsOneWidget);
+    });
+
     testWidgets('privacy renders without overflow at $label', (tester) async {
       _setSize(tester, size);
       await tester.pumpWidget(
@@ -129,6 +166,21 @@ GrammarExercise _grammarIncorrect() {
     isCorrect: false,
     explanation: 'Propoziția este corectă.',
     correctSentence: 'Am văzut multe filme interesante.',
+    difficulty: 1,
+    tags: const [],
+    pairId: null,
+  );
+}
+
+GrammarExercise _grammarCorrect() {
+  return GrammarExercise(
+    id: 'g2',
+    sentence: 'Copiii au plecat la școală.',
+    category: 'test',
+    topic: 'test',
+    isCorrect: true,
+    explanation: 'Propoziția este corectă.',
+    correctSentence: null,
     difficulty: 1,
     tags: const [],
     pairId: null,

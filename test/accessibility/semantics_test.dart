@@ -95,6 +95,29 @@ void main() {
     handle.dispose();
   });
 
+  testWidgets('grammar summary actions expose labelled button semantics', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: LexioTheme.light,
+        home: GrammarScreen(exercises: [_grammarCorrect()]),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Corect'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+
+    expect(_hasButtonLabel(tester, 'Joacă din nou'), isTrue);
+    expect(_hasButtonLabel(tester, 'Înapoi la jocuri'), isTrue);
+
+    handle.dispose();
+  });
+
   testWidgets('vocabulary controls expose back and progress semantics', (
     tester,
   ) async {
@@ -196,6 +219,21 @@ GrammarExercise _grammarIncorrect() {
     isCorrect: false,
     explanation: 'Propoziția este corectă.',
     correctSentence: 'Am văzut multe filme interesante.',
+    difficulty: 1,
+    tags: const [],
+    pairId: null,
+  );
+}
+
+GrammarExercise _grammarCorrect() {
+  return GrammarExercise(
+    id: 'g2',
+    sentence: 'Copiii au plecat la școală.',
+    category: 'test',
+    topic: 'test',
+    isCorrect: true,
+    explanation: 'Propoziția este corectă.',
+    correctSentence: null,
     difficulty: 1,
     tags: const [],
     pairId: null,
