@@ -186,6 +186,8 @@ class _GameEntry extends StatelessWidget {
     return Semantics(
       button: true,
       label: 'Joc $number: $title',
+      onTap: onTap,
+      excludeSemantics: true,
       child: Material(
         child: InkWell(
           onTap: onTap,

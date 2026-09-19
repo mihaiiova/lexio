@@ -215,6 +215,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: 'Înapoi la jocuri',
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -308,6 +309,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       scrolledUnderElevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
+        tooltip: 'Înapoi la jocuri',
         onPressed: _handleBack,
       ),
       title: Padding(
