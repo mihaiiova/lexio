@@ -13,9 +13,12 @@ import '../games/idioms/idioms_screen.dart';
 import '../games/spot/spot_screen.dart';
 import '../games/vocabulary/vocabulary_screen.dart';
 import '../privacy/privacy_screen.dart';
+import '../progress/user_progress.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.progressRepository});
+
+  final ProgressRepository? progressRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +44,11 @@ class HomeScreen extends StatelessWidget {
                       number: '01',
                       title: 'Corect sau greșit?',
                       accentColor: LexioColors.primary,
-                      onTap: () =>
-                          _openGame(context, 'grammar', const GrammarScreen()),
+                      onTap: () => _openGame(
+                        context,
+                        'grammar',
+                        GrammarScreen(progressRepository: progressRepository),
+                      ),
                     ),
                     const Divider(color: LexioColors.divider),
                     _GameEntry(
@@ -52,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                       onTap: () => _openGame(
                         context,
                         'vocabulary',
-                        const VocabularyScreen(),
+                        VocabularyScreen(progressRepository: progressRepository),
                       ),
                     ),
                     const Divider(color: LexioColors.divider),
@@ -60,16 +66,22 @@ class HomeScreen extends StatelessWidget {
                       number: '03',
                       title: 'Vorba vine',
                       accentColor: LexioColors.teal,
-                      onTap: () =>
-                          _openGame(context, 'idioms', const IdiomsScreen()),
+                      onTap: () => _openGame(
+                        context,
+                        'idioms',
+                        IdiomsScreen(progressRepository: progressRepository),
+                      ),
                     ),
                     const Divider(color: LexioColors.divider),
                     _GameEntry(
                       number: '04',
                       title: 'Găsește greșeala',
                       accentColor: LexioColors.accent,
-                      onTap: () =>
-                          _openGame(context, 'spot', const SpotScreen()),
+                      onTap: () => _openGame(
+                        context,
+                        'spot',
+                        SpotScreen(progressRepository: progressRepository),
+                      ),
                     ),
                     const Divider(color: LexioColors.divider),
                     const Spacer(),

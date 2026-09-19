@@ -93,7 +93,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   Future<void> _init() async {
     try {
       await SpotContent.load();
-      final progress = await ProgressRepository.load();
+      final progress =
+          widget.progressRepository ?? await ProgressRepository.load();
       final texts = SpotContent.adaptiveSession(5, progress.forGame('spot'));
       if (!mounted) return;
       setState(() {
