@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: avoid_relative_lib_imports
@@ -155,8 +155,8 @@ void main() {
 }
 
 List<SemanticsData> _allSemantics(WidgetTester tester) {
-  final root = RendererBinding.instance.rootPipelineOwner.semanticsOwner
-      ?.rootSemanticsNode;
+  // ignore: deprecated_member_use
+  final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
   if (root == null) return const [];
   final result = <SemanticsData>[];
   void visit(SemanticsNode node) {
