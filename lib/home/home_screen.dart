@@ -16,9 +16,20 @@ import '../privacy/privacy_screen.dart';
 import '../progress/user_progress.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key, this.progressRepository});
+  const HomeScreen({
+    super.key,
+    this.progressRepository,
+    this.grammarScreenBuilder,
+    this.vocabularyScreenBuilder,
+    this.idiomsScreenBuilder,
+    this.spotScreenBuilder,
+  });
 
   final ProgressRepository? progressRepository;
+  final Widget Function()? grammarScreenBuilder;
+  final Widget Function()? vocabularyScreenBuilder;
+  final Widget Function()? idiomsScreenBuilder;
+  final Widget Function()? spotScreenBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +58,8 @@ class HomeScreen extends StatelessWidget {
                       onTap: () => _openGame(
                         context,
                         'grammar',
-                        GrammarScreen(progressRepository: progressRepository),
+                        grammarScreenBuilder?.call() ??
+                            GrammarScreen(progressRepository: progressRepository),
                       ),
                     ),
                     const Divider(color: LexioColors.divider),
@@ -58,7 +70,10 @@ class HomeScreen extends StatelessWidget {
                       onTap: () => _openGame(
                         context,
                         'vocabulary',
-                        VocabularyScreen(progressRepository: progressRepository),
+                        vocabularyScreenBuilder?.call() ??
+                            VocabularyScreen(
+                              progressRepository: progressRepository,
+                            ),
                       ),
                     ),
                     const Divider(color: LexioColors.divider),
@@ -69,7 +84,8 @@ class HomeScreen extends StatelessWidget {
                       onTap: () => _openGame(
                         context,
                         'idioms',
-                        IdiomsScreen(progressRepository: progressRepository),
+                        idiomsScreenBuilder?.call() ??
+                            IdiomsScreen(progressRepository: progressRepository),
                       ),
                     ),
                     const Divider(color: LexioColors.divider),
@@ -80,7 +96,8 @@ class HomeScreen extends StatelessWidget {
                       onTap: () => _openGame(
                         context,
                         'spot',
-                        SpotScreen(progressRepository: progressRepository),
+                        spotScreenBuilder?.call() ??
+                            SpotScreen(progressRepository: progressRepository),
                       ),
                     ),
                     const Divider(color: LexioColors.divider),
