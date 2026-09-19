@@ -16,7 +16,14 @@ import 'widgets/spot_summary.dart';
 import 'widgets/text_token.dart';
 
 class SpotScreen extends StatefulWidget {
-  const SpotScreen({super.key});
+  const SpotScreen({
+    super.key,
+    this.texts,
+    this.progressRepository,
+  });
+
+  final List<SpotText>? texts;
+  final ProgressRepository? progressRepository;
 
   @override
   State<SpotScreen> createState() => _SpotScreenState();
@@ -35,7 +42,16 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _init();
+    final texts = widget.texts;
+    if (texts != null) {
+      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+      _progress = widget.progressRepository;
+      _isLoading = false;
+      _session.start();
+      _startTimer();
+    } else {
+      _init();
+    }
   }
 
   @override
@@ -157,10 +173,12 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   void _handlePlayAgain() {
     _timer?.cancel();
-    final texts = SpotContent.adaptiveSession(
-      5,
-      _progress?.forGame('spot') ?? const GameProgress(),
-    );
+    final texts =
+        widget.texts ??
+        SpotContent.adaptiveSession(
+          5,
+          _progress?.forGame('spot') ?? const GameProgress(),
+        );
     setState(() {
       _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
       _hasSavedSession = false;
