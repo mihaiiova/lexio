@@ -14,32 +14,35 @@ import '../../lib/progress/user_progress.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('every bundled exercise and mistake exposes a non-empty notion id', () async {
-    final grammar = await GrammarContent.load();
-    final idioms = await IdiomsContent.load();
-    final vocabulary = await VocabularyContent.load();
-    final spot = await SpotContent.load();
+  test(
+    'every bundled exercise and mistake exposes a non-empty notion id',
+    () async {
+      final grammar = await GrammarContent.load();
+      final idioms = await IdiomsContent.load();
+      final vocabulary = await VocabularyContent.load();
+      final spot = await SpotContent.load();
 
-    for (final exercise in grammar) {
-      expect(exercise.notionId, isNotEmpty, reason: exercise.id);
-    }
-    for (final exercise in idioms) {
-      expect(exercise.notionId, isNotEmpty, reason: exercise.id);
-    }
-    for (final exercise in vocabulary) {
-      expect(exercise.notionId, isNotEmpty, reason: exercise.id);
-    }
-    for (final text in spot) {
-      expect(text.mistakeNotionIds, isNotEmpty, reason: text.id);
-      for (final mistake in text.mistakes) {
-        expect(
-          mistake.notionId,
-          isNotEmpty,
-          reason: '${text.id}:${mistake.token}',
-        );
+      for (final exercise in grammar) {
+        expect(exercise.notionId, isNotEmpty, reason: exercise.id);
       }
-    }
-  });
+      for (final exercise in idioms) {
+        expect(exercise.notionId, isNotEmpty, reason: exercise.id);
+      }
+      for (final exercise in vocabulary) {
+        expect(exercise.notionId, isNotEmpty, reason: exercise.id);
+      }
+      for (final text in spot) {
+        expect(text.mistakeNotionIds, isNotEmpty, reason: text.id);
+        for (final mistake in text.mistakes) {
+          expect(
+            mistake.notionId,
+            isNotEmpty,
+            reason: '${text.id}:${mistake.token}',
+          );
+        }
+      }
+    },
+  );
 
   test('vocabulary and idiom notions are unique across the corpus', () async {
     final idioms = await IdiomsContent.load();
@@ -71,14 +74,13 @@ void main() {
         expect(
           entry.value,
           hasLength(1),
-          reason:
-              'notion ${entry.key} spans multiple topics: ${entry.value}',
+          reason: 'notion ${entry.key} spans multiple topics: ${entry.value}',
         );
       }
     },
     skip:
-        'blocked: grammar pairId "p186" spans vocativ + pluralul '
-        'substantivelor (lib/content/grammar_exercises.json lines 6312-6380)',
+        'blocked by GitHub issue #49: grammar pairId "p186" spans vocativ + '
+        'pluralul substantivelor',
   );
 
   test(
@@ -96,8 +98,8 @@ void main() {
       }
     },
     skip:
-        'blocked: text_051 reuses commonErrorPairIndex 186 for both '
-        '"Aceiași" and "comfort" (lib/content/spot_texts.json lines 2831-2851)',
+        'blocked by GitHub issue #50: text_051 reuses '
+        'commonErrorPairIndex 186 for both "Aceiași" and "comfort"',
   );
 
   test('adaptive rounds never serve duplicate notions', () async {
@@ -134,7 +136,7 @@ void main() {
     expect(spotSession, hasLength(5));
     final usedNotions = <String>{};
     for (final text in spotSession) {
-      for (final notion in text.mistakeNotionIds) {
+      for (final notion in text.mistakeNotionIds.toSet()) {
         expect(usedNotions.contains(notion), isFalse, reason: notion);
         usedNotions.add(notion);
       }

@@ -50,8 +50,7 @@ Future<void> _pumpHome(WidgetTester tester) {
       theme: LexioTheme.light,
       home: HomeScreen(
         grammarScreenBuilder: () => const _TargetScreen('GRAMMAR_SCREEN'),
-        vocabularyScreenBuilder: () =>
-            const _TargetScreen('VOCABULARY_SCREEN'),
+        vocabularyScreenBuilder: () => const _TargetScreen('VOCABULARY_SCREEN'),
         idiomsScreenBuilder: () => const _TargetScreen('IDIOMS_SCREEN'),
         spotScreenBuilder: () => const _TargetScreen('SPOT_SCREEN'),
       ),
