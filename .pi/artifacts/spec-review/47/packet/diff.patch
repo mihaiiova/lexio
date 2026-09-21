@@ -1,0 +1,1244 @@
+diff --git a/lib/analytics/game_session_analytics.dart b/lib/analytics/game_session_analytics.dart
+index 803de2a..d6ef0fa 100644
+--- a/lib/analytics/game_session_analytics.dart
++++ b/lib/analytics/game_session_analytics.dart
+@@ -2,16 +2,59 @@ import 'dart:async';
+ 
+ import 'analytics_service.dart';
+ 
++/// Receives lifecycle events emitted by [GameSessionAnalytics].
++///
++/// The production implementation forwards to [AnalyticsService]; tests inject a
++/// recording sink so lifecycle events are deterministic and observable.
++abstract class GameSessionAnalyticsSink {
++  const GameSessionAnalyticsSink();
++
++  void recordCompletion(String gameId, int score, int durationSeconds);
++  void recordAbandonment(String gameId);
++}
++
++/// Default sink that forwards events to the real [AnalyticsService].
++final class AnalyticsServiceSink extends GameSessionAnalyticsSink {
++  const AnalyticsServiceSink();
++
++  @override
++  void recordCompletion(String gameId, int score, int durationSeconds) {
++    unawaited(
++      AnalyticsService.logGameCompleted(
++        gameId,
++        score: score,
++        durationSeconds: durationSeconds,
++      ),
++    );
++  }
++
++  @override
++  void recordAbandonment(String gameId) {
++    unawaited(AnalyticsService.logGameAbandoned(gameId));
++  }
++}
++
+ /// Tracks a single game session and emits exactly one analytics event:
+ /// [AnalyticsService.logGameCompleted] on completion, or
+ /// [AnalyticsService.logGameAbandoned] when the session ends unfinished.
+ class GameSessionAnalytics {
+-  GameSessionAnalytics(this.gameId);
++  GameSessionAnalytics(
++    this.gameId, {
++    GameSessionAnalyticsSink? sink,
++    this.backgroundAbandonmentDelay = const Duration(minutes: 5),
++  }) : _sink = sink ?? const AnalyticsServiceSink();
+ 
+   final String gameId;
++  final GameSessionAnalyticsSink _sink;
++
++  /// How long a session may stay backgrounded before it is abandoned.
++  final Duration backgroundAbandonmentDelay;
++
+   final Stopwatch _stopwatch = Stopwatch();
+   bool _active = false;
+   bool _ended = false;
++  bool _backgrounded = false;
++  Timer? _backgroundTimer;
+ 
+   void start() {
+     _active = true;
+@@ -26,20 +69,47 @@ class GameSessionAnalytics {
+     _ended = true;
+     _active = false;
+     _stopwatch.stop();
+-    unawaited(
+-      AnalyticsService.logGameCompleted(
+-        gameId,
+-        score: score,
+-        durationSeconds: _stopwatch.elapsed.inSeconds,
+-      ),
++    _cancelBackgroundTimer();
++    _sink.recordCompletion(gameId, score, _stopwatch.elapsed.inSeconds);
++  }
++
++  /// Marks the session as backgrounded; if it stays backgrounded past
++  /// [backgroundAbandonmentDelay] it is abandoned.
++  void markBackgrounded() {
++    if (!_active || _ended) return;
++    _backgrounded = true;
++    _cancelBackgroundTimer();
++    _backgroundTimer = Timer(
++      backgroundAbandonmentDelay,
++      _abandonIfStillBackgrounded,
+     );
+   }
+ 
++  void markResumed() {
++    _backgrounded = false;
++    _cancelBackgroundTimer();
++  }
++
+   void dispose() {
++    _abandon();
++  }
++
++  void _abandonIfStillBackgrounded() {
++    if (!_backgrounded) return;
++    _abandon();
++  }
++
++  void _abandon() {
+     if (!_active || _ended) return;
+     _ended = true;
+     _active = false;
+     _stopwatch.stop();
+-    unawaited(AnalyticsService.logGameAbandoned(gameId));
++    _cancelBackgroundTimer();
++    _sink.recordAbandonment(gameId);
++  }
++
++  void _cancelBackgroundTimer() {
++    _backgroundTimer?.cancel();
++    _backgroundTimer = null;
+   }
+ }
+diff --git a/lib/design/components/lexio_incorrect_answer_card.dart b/lib/design/components/lexio_incorrect_answer_card.dart
+index 8267d94..f74ba8c 100644
+--- a/lib/design/components/lexio_incorrect_answer_card.dart
++++ b/lib/design/components/lexio_incorrect_answer_card.dart
+@@ -37,10 +37,12 @@ class LexioIncorrectAnswerCard extends StatelessWidget {
+             children: [
+               const Icon(Icons.cancel_outlined, color: LexioColors.error),
+               const SizedBox(width: LexioSpacing.sm),
+-              Text(
+-                'Răspuns greșit',
+-                style: LexioTextStyles.labelLarge.copyWith(
+-                  color: LexioColors.error,
++              Expanded(
++                child: Text(
++                  'Răspuns greșit',
++                  style: LexioTextStyles.labelLarge.copyWith(
++                    color: LexioColors.error,
++                  ),
+                 ),
+               ),
+             ],
+diff --git a/lib/games/grammar/grammar_screen.dart b/lib/games/grammar/grammar_screen.dart
+index 38cbf27..b8b0624 100644
+--- a/lib/games/grammar/grammar_screen.dart
++++ b/lib/games/grammar/grammar_screen.dart
+@@ -18,7 +18,14 @@ import 'widgets/question_card.dart';
+ import 'widgets/result_overlay.dart';
+ 
+ class GrammarScreen extends StatefulWidget {
+-  const GrammarScreen({super.key});
++  const GrammarScreen({
++    super.key,
++    this.exercises,
++    this.progressRepository,
++  });
++
++  final List<GrammarExercise>? exercises;
++  final ProgressRepository? progressRepository;
+ 
+   @override
+   State<GrammarScreen> createState() => _GrammarScreenState();
+@@ -40,7 +47,15 @@ class _GrammarScreenState extends State<GrammarScreen>
+   void initState() {
+     super.initState();
+     WidgetsBinding.instance.addObserver(this);
+-    _init();
++    final exercises = widget.exercises;
++    if (exercises != null) {
++      _state = GrammarGameState(exercises: exercises);
++      _progress = widget.progressRepository;
++      _isLoading = false;
++      _session.start();
++    } else {
++      _init();
++    }
+   }
+ 
+   @override
+@@ -53,17 +68,21 @@ class _GrammarScreenState extends State<GrammarScreen>
+ 
+   @override
+   void didChangeAppLifecycleState(AppLifecycleState state) {
+-    if (state == AppLifecycleState.paused ||
++    if (state == AppLifecycleState.resumed) {
++      _session.markResumed();
++    } else if (state == AppLifecycleState.paused ||
+         state == AppLifecycleState.inactive ||
+         state == AppLifecycleState.detached) {
+       unawaited(_progress?.flush());
++      _session.markBackgrounded();
+     }
+   }
+ 
+   Future<void> _init() async {
+     try {
+       await GrammarContent.load();
+-      final progress = await ProgressRepository.load();
++      final progress =
++          widget.progressRepository ?? await ProgressRepository.load();
+       final exercises = GrammarContent.adaptiveRound(
+         15,
+         progress.forGame('grammar'),
+@@ -134,15 +153,15 @@ class _GrammarScreenState extends State<GrammarScreen>
+   }
+ 
+   void _playAgain() {
+-    final progress = _progress;
+-    if (progress == null) return;
+-    setState(() {
+-      _state = GrammarGameState(
+-        exercises: GrammarContent.adaptiveRound(
++    final suppliedExercises = widget.exercises;
++    final exercises =
++        suppliedExercises ??
++        GrammarContent.adaptiveRound(
+           15,
+-          progress.forGame('grammar'),
+-        ),
+-      );
++          _progress?.forGame('grammar') ?? const GameProgress(),
++        );
++    setState(() {
++      _state = GrammarGameState(exercises: exercises);
+       _hasAnswered = false;
+       _showingExplanation = false;
+       _showCorrectFlash = false;
+diff --git a/lib/games/idioms/idioms_screen.dart b/lib/games/idioms/idioms_screen.dart
+index a6dfa1f..e3e3456 100644
+--- a/lib/games/idioms/idioms_screen.dart
++++ b/lib/games/idioms/idioms_screen.dart
+@@ -62,10 +62,13 @@ class _IdiomsScreenState extends State<IdiomsScreen>
+ 
+   @override
+   void didChangeAppLifecycleState(AppLifecycleState state) {
+-    if (state == AppLifecycleState.paused ||
++    if (state == AppLifecycleState.resumed) {
++      _session.markResumed();
++    } else if (state == AppLifecycleState.paused ||
+         state == AppLifecycleState.inactive ||
+         state == AppLifecycleState.detached) {
+       unawaited(_progress?.flush());
++      _session.markBackgrounded();
+     }
+   }
+ 
+diff --git a/lib/games/spot/spot_screen.dart b/lib/games/spot/spot_screen.dart
+index 00c7a78..762ab8a 100644
+--- a/lib/games/spot/spot_screen.dart
++++ b/lib/games/spot/spot_screen.dart
+@@ -16,7 +16,14 @@ import 'widgets/spot_summary.dart';
+ import 'widgets/text_token.dart';
+ 
+ class SpotScreen extends StatefulWidget {
+-  const SpotScreen({super.key});
++  const SpotScreen({
++    super.key,
++    this.texts,
++    this.progressRepository,
++  });
++
++  final List<SpotText>? texts;
++  final ProgressRepository? progressRepository;
+ 
+   @override
+   State<SpotScreen> createState() => _SpotScreenState();
+@@ -35,7 +42,16 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
+   void initState() {
+     super.initState();
+     WidgetsBinding.instance.addObserver(this);
+-    _init();
++    final texts = widget.texts;
++    if (texts != null) {
++      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
++      _progress = widget.progressRepository;
++      _isLoading = false;
++      _session.start();
++      _startTimer();
++    } else {
++      _init();
++    }
+   }
+ 
+   @override
+@@ -51,10 +67,12 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
+   void didChangeAppLifecycleState(AppLifecycleState state) {
+     if (state == AppLifecycleState.resumed) {
+       _onResume();
++      _session.markResumed();
+     } else if (state == AppLifecycleState.paused ||
+         state == AppLifecycleState.inactive ||
+         state == AppLifecycleState.detached) {
+       unawaited(_progress?.flush());
++      _session.markBackgrounded();
+     }
+   }
+ 
+@@ -75,7 +93,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
+   Future<void> _init() async {
+     try {
+       await SpotContent.load();
+-      final progress = await ProgressRepository.load();
++      final progress =
++          widget.progressRepository ?? await ProgressRepository.load();
+       final texts = SpotContent.adaptiveSession(5, progress.forGame('spot'));
+       if (!mounted) return;
+       setState(() {
+@@ -155,10 +174,12 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
+ 
+   void _handlePlayAgain() {
+     _timer?.cancel();
+-    final texts = SpotContent.adaptiveSession(
+-      5,
+-      _progress?.forGame('spot') ?? const GameProgress(),
+-    );
++    final texts =
++        widget.texts ??
++        SpotContent.adaptiveSession(
++          5,
++          _progress?.forGame('spot') ?? const GameProgress(),
++        );
+     setState(() {
+       _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+       _hasSavedSession = false;
+@@ -194,6 +215,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
+         scrolledUnderElevation: 0,
+         leading: IconButton(
+           icon: const Icon(Icons.arrow_back),
++          tooltip: 'Înapoi la jocuri',
+           onPressed: () => Navigator.of(context).pop(),
+         ),
+       ),
+@@ -287,6 +309,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
+       scrolledUnderElevation: 0,
+       leading: IconButton(
+         icon: const Icon(Icons.arrow_back),
++        tooltip: 'Înapoi la jocuri',
+         onPressed: _handleBack,
+       ),
+       title: Padding(
+@@ -475,17 +498,17 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
+     final mistakesText =
+         '${state.mistakesFound} / ${state.totalMistakesInCurrentText} greșeli';
+ 
+-    return Row(
++    return Wrap(
++      spacing: LexioSpacing.md,
++      runSpacing: LexioSpacing.sm,
++      crossAxisAlignment: WrapCrossAlignment.center,
+       children: [
+-        Expanded(
+-          child: Text(
+-            mistakesText,
+-            style: LexioTextStyles.labelSmall.copyWith(
+-              color: LexioColors.textSecondary,
+-            ),
++        Text(
++          mistakesText,
++          style: LexioTextStyles.labelSmall.copyWith(
++            color: LexioColors.textSecondary,
+           ),
+         ),
+-        const SizedBox(width: LexioSpacing.md),
+         LexioButton(
+           label: 'Arată toate greșelile',
+           variant: LexioButtonVariant.ghost,
+diff --git a/lib/games/vocabulary/vocabulary_screen.dart b/lib/games/vocabulary/vocabulary_screen.dart
+index 6caa1f5..c86b692 100644
+--- a/lib/games/vocabulary/vocabulary_screen.dart
++++ b/lib/games/vocabulary/vocabulary_screen.dart
+@@ -66,10 +66,13 @@ class _VocabularyScreenState extends State<VocabularyScreen>
+ 
+   @override
+   void didChangeAppLifecycleState(AppLifecycleState state) {
+-    if (state == AppLifecycleState.paused ||
++    if (state == AppLifecycleState.resumed) {
++      _session.markResumed();
++    } else if (state == AppLifecycleState.paused ||
+         state == AppLifecycleState.inactive ||
+         state == AppLifecycleState.detached) {
+       unawaited(_progress?.flush());
++      _session.markBackgrounded();
+     }
+   }
+ 
+diff --git a/lib/home/home_screen.dart b/lib/home/home_screen.dart
+index fede173..c342952 100644
+--- a/lib/home/home_screen.dart
++++ b/lib/home/home_screen.dart
+@@ -13,9 +13,12 @@ import '../games/idioms/idioms_screen.dart';
+ import '../games/spot/spot_screen.dart';
+ import '../games/vocabulary/vocabulary_screen.dart';
+ import '../privacy/privacy_screen.dart';
++import '../progress/user_progress.dart';
+ 
+ class HomeScreen extends StatelessWidget {
+-  const HomeScreen({super.key});
++  const HomeScreen({super.key, this.progressRepository});
++
++  final ProgressRepository? progressRepository;
+ 
+   @override
+   Widget build(BuildContext context) {
+@@ -41,8 +44,11 @@ class HomeScreen extends StatelessWidget {
+                       number: '01',
+                       title: 'Corect sau greșit?',
+                       accentColor: LexioColors.primary,
+-                      onTap: () =>
+-                          _openGame(context, 'grammar', const GrammarScreen()),
++                      onTap: () => _openGame(
++                        context,
++                        'grammar',
++                        GrammarScreen(progressRepository: progressRepository),
++                      ),
+                     ),
+                     const Divider(color: LexioColors.divider),
+                     _GameEntry(
+@@ -52,7 +58,7 @@ class HomeScreen extends StatelessWidget {
+                       onTap: () => _openGame(
+                         context,
+                         'vocabulary',
+-                        const VocabularyScreen(),
++                        VocabularyScreen(progressRepository: progressRepository),
+                       ),
+                     ),
+                     const Divider(color: LexioColors.divider),
+@@ -60,16 +66,22 @@ class HomeScreen extends StatelessWidget {
+                       number: '03',
+                       title: 'Vorba vine',
+                       accentColor: LexioColors.teal,
+-                      onTap: () =>
+-                          _openGame(context, 'idioms', const IdiomsScreen()),
++                      onTap: () => _openGame(
++                        context,
++                        'idioms',
++                        IdiomsScreen(progressRepository: progressRepository),
++                      ),
+                     ),
+                     const Divider(color: LexioColors.divider),
+                     _GameEntry(
+                       number: '04',
+                       title: 'Găsește greșeala',
+                       accentColor: LexioColors.accent,
+-                      onTap: () =>
+-                          _openGame(context, 'spot', const SpotScreen()),
++                      onTap: () => _openGame(
++                        context,
++                        'spot',
++                        SpotScreen(progressRepository: progressRepository),
++                      ),
+                     ),
+                     const Divider(color: LexioColors.divider),
+                     const Spacer(),
+@@ -174,6 +186,8 @@ class _GameEntry extends StatelessWidget {
+     return Semantics(
+       button: true,
+       label: 'Joc $number: $title',
++      onTap: onTap,
++      excludeSemantics: true,
+       child: Material(
+         child: InkWell(
+           onTap: onTap,
+diff --git a/test/accessibility/responsive_test.dart b/test/accessibility/responsive_test.dart
+new file mode 100644
+index 0000000..857839f
+--- /dev/null
++++ b/test/accessibility/responsive_test.dart
+@@ -0,0 +1,187 @@
++import 'package:flutter/material.dart';
++import 'package:flutter_test/flutter_test.dart';
++
++// ignore: avoid_relative_lib_imports
++import '../../lib/design/theme.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/grammar/grammar_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/grammar/grammar_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/idioms/idioms_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/idioms/idioms_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/spot/spot_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/spot/spot_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/vocabulary/vocabulary_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/vocabulary/vocabulary_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/home/home_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/privacy/privacy_screen.dart';
++
++const _sizes = <String, Size>{
++  '320x568': Size(320, 568),
++  '375x667': Size(375, 667),
++  'tablet': Size(800, 1280),
++};
++
++void main() {
++  for (final entry in _sizes.entries) {
++    final label = entry.key;
++    final size = entry.value;
++
++    testWidgets('home renders without overflow at $label', (tester) async {
++      _setSize(tester, size);
++      await tester.pumpWidget(
++        const MaterialApp(home: HomeScreen()),
++      );
++      await _expectNoOverflow(tester);
++    });
++
++    testWidgets('grammar renders without overflow at $label', (tester) async {
++      _setSize(tester, size);
++      await tester.pumpWidget(
++        MaterialApp(
++          theme: LexioTheme.light,
++          home: GrammarScreen(exercises: [_grammarIncorrect()]),
++        ),
++      );
++      await tester.pumpAndSettle();
++      await tester.tap(find.text('Corect'));
++      await tester.pump();
++      await tester.pump(const Duration(milliseconds: 700));
++      await _expectNoOverflow(tester);
++    });
++
++    testWidgets('vocabulary renders without overflow at $label', (
++      tester,
++    ) async {
++      _setSize(tester, size);
++      await tester.pumpWidget(
++        MaterialApp(
++          theme: LexioTheme.light,
++          home: VocabularyScreen(exercises: [_vocabulary()]),
++        ),
++      );
++      await tester.pumpAndSettle();
++      await tester.tap(find.text('foarte simplu'));
++      await _expectNoOverflow(tester);
++    });
++
++    testWidgets('idioms renders without overflow at $label', (tester) async {
++      _setSize(tester, size);
++      await tester.pumpWidget(
++        MaterialApp(
++          theme: LexioTheme.light,
++          home: IdiomsScreen(exercises: [_idiom()]),
++        ),
++      );
++      await tester.pumpAndSettle();
++      await tester.tap(find.text('a pleca'));
++      await _expectNoOverflow(tester);
++    });
++
++    testWidgets('spot renders without overflow at $label', (tester) async {
++      _setSize(tester, size);
++      await tester.pumpWidget(
++        MaterialApp(
++          theme: LexioTheme.light,
++          home: SpotScreen(texts: [_spotText()]),
++        ),
++      );
++      await tester.pump();
++      await _expectNoOverflow(tester);
++    });
++
++    testWidgets('privacy renders without overflow at $label', (tester) async {
++      _setSize(tester, size);
++      await tester.pumpWidget(
++        const MaterialApp(home: PrivacyScreen()),
++      );
++      await _expectNoOverflow(tester);
++    });
++  }
++}
++
++Future<void> _expectNoOverflow(WidgetTester tester) async {
++  await tester.pumpAndSettle();
++  expect(tester.takeException(), isNull, reason: 'layout overflow detected');
++}
++
++void _setSize(WidgetTester tester, Size size) {
++  tester.view.physicalSize = size;
++  tester.view.devicePixelRatio = 1.0;
++  addTearDown(tester.view.resetPhysicalSize);
++  addTearDown(tester.view.resetDevicePixelRatio);
++}
++
++GrammarExercise _grammarIncorrect() {
++  return GrammarExercise(
++    id: 'g1',
++    sentence: 'Am văzut multe filme interesante.',
++    category: 'test',
++    topic: 'test',
++    isCorrect: false,
++    explanation: 'Propoziția este corectă.',
++    correctSentence: 'Am văzut multe filme interesante.',
++    difficulty: 1,
++    tags: const [],
++    pairId: null,
++  );
++}
++
++VocabularyExercise _vocabulary() {
++  return VocabularyExercise(
++    id: 'v1',
++    word: 'anevoios',
++    partOfSpeech: 'adjectiv',
++    definition: 'care se realizează cu dificultate',
++    example: 'Drumul a fost anevoios.',
++    options: const ['foarte simplu', 'dificil și obositor', 'plin de culoare'],
++    correctOptionIndex: 1,
++    explanation: 'Cuvântul descrie ceva care cere mult efort.',
++    category: 'însușiri',
++    synonyms: const ['dificil', 'obositor'],
++    difficulty: 1,
++  );
++}
++
++IdiomExercise _idiom() {
++  return IdiomExercise(
++    id: 'i1',
++    expression: 'a pune umărul',
++    meaning: 'a contribui prin ajutor',
++    example: 'Toți au pus umărul la proiect.',
++    highlightedText: 'au pus umărul',
++    options: const ['a pleca', 'a ajuta', 'a aștepta'],
++    correctOptionIndex: 1,
++    category: 'cooperare',
++    difficulty: 1,
++  );
++}
++
++SpotText _spotText() {
++  return SpotText(
++    id: 's1',
++    type: 'story',
++    title: 'Test',
++    difficulty: 1,
++    content: 'Mie îmi place să citesc.',
++    mistakes: [
++      SpotMistake(
++        wordIndex: 0,
++        wordCount: 1,
++        token: 'Mie',
++        replacement: 'Mi-e',
++        explanation: '„Mi-e” este forma corectă.',
++        category: 'ortografie',
++        topic: 'cratima',
++      ),
++    ],
++  );
++}
+diff --git a/test/accessibility/semantics_test.dart b/test/accessibility/semantics_test.dart
+index 74b98c7..6f31af6 100644
+--- a/test/accessibility/semantics_test.dart
++++ b/test/accessibility/semantics_test.dart
+@@ -1,6 +1,27 @@
++import 'package:flutter/material.dart';
++import 'package:flutter/semantics.dart';
+ import 'package:flutter_test/flutter_test.dart';
+ 
+-import 'package:lexio/app/app.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/app/app.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/design/theme.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/grammar/grammar_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/grammar/grammar_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/idioms/idioms_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/idioms/idioms_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/spot/spot_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/spot/spot_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/vocabulary/vocabulary_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/games/vocabulary/vocabulary_screen.dart';
+ 
+ void main() {
+   testWidgets('Home screen renders all game titles', (tester) async {
+@@ -32,4 +53,202 @@ void main() {
+     await tester.pumpWidget(const LexioApp());
+     expect(find.text('Slove'), findsOneWidget);
+   });
++
++  testWidgets('game entries expose button semantics with Romanian labels', (
++    tester,
++  ) async {
++    final handle = tester.ensureSemantics();
++    await tester.pumpWidget(const LexioApp());
++    await tester.pumpAndSettle();
++
++    expect(_hasLabel(tester, 'Joc 01: Corect sau greșit?'), isTrue);
++    expect(_hasLabel(tester, 'Joc 02: Ce înseamnă?'), isTrue);
++    expect(_hasLabel(tester, 'Joc 03: Vorba vine'), isTrue);
++    expect(_hasLabel(tester, 'Joc 04: Găsește greșeala'), isTrue);
++    expect(_hasButtonLabel(tester, 'Joc 01: Corect sau greșit?'), isTrue);
++
++    handle.dispose();
++  });
++
++  testWidgets('grammar answer controls expose button semantics', (
++    tester,
++  ) async {
++    final handle = tester.ensureSemantics();
++    await tester.pumpWidget(
++      MaterialApp(
++        theme: LexioTheme.light,
++        home: GrammarScreen(exercises: [_grammarIncorrect()]),
++      ),
++    );
++    await tester.pumpAndSettle();
++
++    expect(_hasButtonLabel(tester, 'Corect'), isTrue);
++    expect(_hasButtonLabel(tester, 'Greșit'), isTrue);
++    expect(_hasLabel(tester, 'Progres: 0 din 1'), isTrue);
++
++    await tester.tap(find.text('Corect'));
++    await tester.pump();
++    await tester.pump(const Duration(milliseconds: 700));
++
++    expect(_hasButtonLabel(tester, 'Următoarea întrebare'), isTrue);
++
++    handle.dispose();
++  });
++
++  testWidgets('vocabulary controls expose back and progress semantics', (
++    tester,
++  ) async {
++    final handle = tester.ensureSemantics();
++    await tester.pumpWidget(
++      MaterialApp(
++        theme: LexioTheme.light,
++        home: VocabularyScreen(exercises: [_vocabulary()]),
++      ),
++    );
++    await tester.pumpAndSettle();
++
++    expect(_hasLabel(tester, 'Înapoi la jocuri'), isTrue);
++    expect(_hasLabel(tester, 'Progres: 0 din 1'), isTrue);
++    expect(_hasButtonLabel(tester, 'foarte simplu'), isTrue);
++    expect(_hasButtonLabel(tester, 'dificil și obositor'), isTrue);
++
++    handle.dispose();
++  });
++
++  testWidgets('idioms controls expose back and progress semantics', (
++    tester,
++  ) async {
++    final handle = tester.ensureSemantics();
++    await tester.pumpWidget(
++      MaterialApp(
++        theme: LexioTheme.light,
++        home: IdiomsScreen(exercises: [_idiom()]),
++      ),
++    );
++    await tester.pumpAndSettle();
++
++    expect(_hasLabel(tester, 'Înapoi la jocuri'), isTrue);
++    expect(_hasLabel(tester, 'Progres: 0 din 1'), isTrue);
++
++    handle.dispose();
++  });
++
++  testWidgets('spot exposes back, timer, and progress semantics', (
++    tester,
++  ) async {
++    final handle = tester.ensureSemantics();
++    await tester.pumpWidget(
++      MaterialApp(
++        theme: LexioTheme.light,
++        home: SpotScreen(texts: [_spotText()]),
++      ),
++    );
++    await tester.pump();
++
++    expect(_hasLabel(tester, 'Înapoi la jocuri'), isTrue);
++    expect(_hasLabel(tester, 'Timp rămas: 01:00'), isTrue);
++    expect(_hasLabel(tester, 'Progres: 0 din 1 texte'), isTrue);
++    expect(_hasButtonLabel(tester, 'Mie'), isTrue);
++
++    handle.dispose();
++  });
++}
++
++List<SemanticsData> _allSemantics(WidgetTester tester) {
++  // ignore: deprecated_member_use
++  final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
++  if (root == null) return const [];
++  final result = <SemanticsData>[];
++  void visit(SemanticsNode node) {
++    result.add(node.getSemanticsData());
++    node.visitChildren((child) {
++      visit(child);
++      return true;
++    });
++  }
++
++  visit(root);
++  return result;
++}
++
++String _accessibleName(SemanticsData data) =>
++    data.label.isNotEmpty ? data.label : data.tooltip;
++
++bool _hasLabel(WidgetTester tester, String text) {
++  return _allSemantics(tester).any(
++    (data) => _accessibleName(data).contains(text),
++  );
++}
++
++bool _hasButtonLabel(WidgetTester tester, String text) {
++  return _allSemantics(tester).any(
++    (data) =>
++        data.flagsCollection.isButton && _accessibleName(data).contains(text),
++  );
++}
++
++GrammarExercise _grammarIncorrect() {
++  return GrammarExercise(
++    id: 'g1',
++    sentence: 'Am văzut multe filme interesante.',
++    category: 'test',
++    topic: 'test',
++    isCorrect: false,
++    explanation: 'Propoziția este corectă.',
++    correctSentence: 'Am văzut multe filme interesante.',
++    difficulty: 1,
++    tags: const [],
++    pairId: null,
++  );
++}
++
++VocabularyExercise _vocabulary() {
++  return VocabularyExercise(
++    id: 'v1',
++    word: 'anevoios',
++    partOfSpeech: 'adjectiv',
++    definition: 'care se realizează cu dificultate',
++    example: 'Drumul a fost anevoios.',
++    options: const ['foarte simplu', 'dificil și obositor', 'plin de culoare'],
++    correctOptionIndex: 1,
++    explanation: 'Cuvântul descrie ceva care cere mult efort.',
++    category: 'însușiri',
++    synonyms: const ['dificil', 'obositor'],
++    difficulty: 1,
++  );
++}
++
++IdiomExercise _idiom() {
++  return IdiomExercise(
++    id: 'i1',
++    expression: 'a pune umărul',
++    meaning: 'a contribui prin ajutor',
++    example: 'Toți au pus umărul la proiect.',
++    highlightedText: 'au pus umărul',
++    options: const ['a pleca', 'a ajuta', 'a aștepta'],
++    correctOptionIndex: 1,
++    category: 'cooperare',
++    difficulty: 1,
++  );
++}
++
++SpotText _spotText() {
++  return SpotText(
++    id: 's1',
++    type: 'story',
++    title: 'Test',
++    difficulty: 1,
++    content: 'Mie îmi place să citesc.',
++    mistakes: [
++      SpotMistake(
++        wordIndex: 0,
++        wordCount: 1,
++        token: 'Mie',
++        replacement: 'Mi-e',
++        explanation: '„Mi-e” este forma corectă.',
++        category: 'ortografie',
++        topic: 'cratima',
++      ),
++    ],
++  );
+ }
+diff --git a/test/analytics/game_session_analytics_test.dart b/test/analytics/game_session_analytics_test.dart
+new file mode 100644
+index 0000000..469891c
+--- /dev/null
++++ b/test/analytics/game_session_analytics_test.dart
+@@ -0,0 +1,125 @@
++import 'package:flutter_test/flutter_test.dart';
++
++// ignore: avoid_relative_lib_imports
++import '../../lib/analytics/game_session_analytics.dart';
++
++void main() {
++  test('records completion with score and a non-negative duration', () {
++    final sink = _RecordingSink();
++    final session = GameSessionAnalytics('grammar', sink: sink);
++
++    session.start();
++    session.complete(7);
++
++    expect(sink.completions, hasLength(1));
++    final completion = sink.completions.single;
++    expect(completion.gameId, 'grammar');
++    expect(completion.score, 7);
++    expect(completion.durationSeconds, greaterThanOrEqualTo(0));
++    expect(sink.abandonments, isEmpty);
++  });
++
++  test('records abandonment when disposed unfinished', () {
++    final sink = _RecordingSink();
++    final session = GameSessionAnalytics('grammar', sink: sink);
++
++    session.start();
++    session.dispose();
++
++    expect(sink.abandonments, ['grammar']);
++    expect(sink.completions, isEmpty);
++  });
++
++  test('does not record abandonment after completion', () {
++    final sink = _RecordingSink();
++    final session = GameSessionAnalytics('grammar', sink: sink);
++
++    session.start();
++    session.complete(3);
++    session.dispose();
++
++    expect(sink.completions, hasLength(1));
++    expect(sink.abandonments, isEmpty);
++  });
++
++  test('does not record anything before start', () {
++    final sink = _RecordingSink();
++    final session = GameSessionAnalytics('grammar', sink: sink);
++
++    session.dispose();
++
++    expect(sink.completions, isEmpty);
++    expect(sink.abandonments, isEmpty);
++  });
++
++  testWidgets('records abandonment after the background delay', (tester) async {
++    final sink = _RecordingSink();
++    final session = GameSessionAnalytics(
++      'spot',
++      sink: sink,
++      backgroundAbandonmentDelay: const Duration(minutes: 1),
++    );
++
++    session.start();
++    session.markBackgrounded();
++    await tester.pump(const Duration(minutes: 1));
++
++    expect(sink.abandonments, ['spot']);
++    expect(sink.completions, isEmpty);
++  });
++
++  testWidgets('resuming before the delay prevents abandonment', (
++    tester,
++  ) async {
++    final sink = _RecordingSink();
++    final session = GameSessionAnalytics(
++      'spot',
++      sink: sink,
++      backgroundAbandonmentDelay: const Duration(minutes: 1),
++    );
++
++    session.start();
++    session.markBackgrounded();
++    await tester.pump(const Duration(seconds: 30));
++    session.markResumed();
++    await tester.pump(const Duration(minutes: 2));
++
++    expect(sink.abandonments, isEmpty);
++
++    session.dispose();
++    expect(sink.abandonments, ['spot']);
++  });
++}
++
++final class _RecordingSink extends GameSessionAnalyticsSink {
++  final List<_Completion> completions = [];
++  final List<String> abandonments = [];
++
++  @override
++  void recordCompletion(String gameId, int score, int durationSeconds) {
++    completions.add(
++      _Completion(
++        gameId: gameId,
++        score: score,
++        durationSeconds: durationSeconds,
++      ),
++    );
++  }
++
++  @override
++  void recordAbandonment(String gameId) {
++    abandonments.add(gameId);
++  }
++}
++
++final class _Completion {
++  const _Completion({
++    required this.gameId,
++    required this.score,
++    required this.durationSeconds,
++  });
++
++  final String gameId;
++  final int score;
++  final int durationSeconds;
++}
+diff --git a/test/games/grammar/grammar_screen_injection_test.dart b/test/games/grammar/grammar_screen_injection_test.dart
+new file mode 100644
+index 0000000..a3792a4
+--- /dev/null
++++ b/test/games/grammar/grammar_screen_injection_test.dart
+@@ -0,0 +1,109 @@
++import 'package:flutter/material.dart';
++import 'package:flutter_test/flutter_test.dart';
++
++// ignore: avoid_relative_lib_imports
++import '../../../lib/design/theme.dart';
++// ignore: avoid_relative_lib_imports
++import '../../../lib/games/grammar/grammar_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../../lib/games/grammar/grammar_screen.dart';
++
++void main() {
++  testWidgets('renders injected exercises without loading content', (
++    tester,
++  ) async {
++    final exercise = _exercise(
++      id: 'one',
++      sentence: 'Copiii au plecat la școală.',
++      isCorrect: true,
++    );
++
++    await tester.pumpWidget(
++      MaterialApp(
++        theme: LexioTheme.light,
++        home: GrammarScreen(exercises: [exercise]),
++      ),
++    );
++    await tester.pumpAndSettle();
++
++    expect(find.text('Copiii au plecat la școală.'), findsOneWidget);
++    expect(find.text('Corect'), findsOneWidget);
++    expect(find.text('Greșit'), findsOneWidget);
++  });
++
++  testWidgets('a correct answer advances through injected exercises', (
++    tester,
++  ) async {
++    final exercise = _exercise(
++      id: 'one',
++      sentence: 'Copiii au plecat la școală.',
++      isCorrect: true,
++    );
++
++    await tester.pumpWidget(
++      MaterialApp(
++        theme: LexioTheme.light,
++        home: GrammarScreen(exercises: [exercise]),
++      ),
++    );
++    await tester.pumpAndSettle();
++
++    await tester.tap(find.text('Corect'));
++    await tester.pump();
++    await tester.pump(const Duration(milliseconds: 400));
++    await tester.pumpAndSettle();
++
++    expect(find.text('RUNDĂ ÎNCHEIATĂ'), findsOneWidget);
++    expect(find.text('1 din 1'), findsOneWidget);
++    expect(find.text('Joacă din nou'), findsOneWidget);
++  });
++
++  testWidgets('a wrong answer shows the explanation and a next button', (
++    tester,
++  ) async {
++    final exercise = _exercise(
++      id: 'one',
++      sentence: 'Am văzut multe filme interesante.',
++      isCorrect: false,
++      correctSentence: 'Am văzut multe filme interesante.',
++      explanation: 'Propoziția este corectă.',
++    );
++
++    await tester.pumpWidget(
++      MaterialApp(
++        theme: LexioTheme.light,
++        home: GrammarScreen(exercises: [exercise]),
++      ),
++    );
++    await tester.pumpAndSettle();
++
++    await tester.tap(find.text('Corect'));
++    await tester.pump();
++    await tester.pump(const Duration(milliseconds: 700));
++    await tester.pumpAndSettle();
++
++    expect(find.text('Propoziția este corectă.'), findsOneWidget);
++    expect(find.text('Următoarea'), findsOneWidget);
++  });
++}
++
++GrammarExercise _exercise({
++  required String id,
++  required String sentence,
++  required bool isCorrect,
++  String? correctSentence,
++  String? explanation,
++}) {
++  return GrammarExercise(
++    id: id,
++    sentence: sentence,
++    category: 'test',
++    topic: 'test',
++    isCorrect: isCorrect,
++    explanation: explanation ?? 'Explicație de test.',
++    correctSentence: correctSentence,
++    difficulty: 1,
++    tags: const [],
++    pairId: null,
++  );
++}
+diff --git a/test/games/spot/spot_screen_injection_test.dart b/test/games/spot/spot_screen_injection_test.dart
+new file mode 100644
+index 0000000..eb479f9
+--- /dev/null
++++ b/test/games/spot/spot_screen_injection_test.dart
+@@ -0,0 +1,58 @@
++import 'package:flutter/material.dart';
++import 'package:flutter_test/flutter_test.dart';
++
++// ignore: avoid_relative_lib_imports
++import '../../../lib/design/theme.dart';
++// ignore: avoid_relative_lib_imports
++import '../../../lib/games/spot/spot_content.dart';
++// ignore: avoid_relative_lib_imports
++import '../../../lib/games/spot/spot_screen.dart';
++
++void main() {
++  testWidgets('renders injected texts without loading content', (tester) async {
++    final text = _spotText();
++
++    await tester.pumpWidget(
++      MaterialApp(theme: LexioTheme.light, home: SpotScreen(texts: [text])),
++    );
++    await tester.pump();
++
++    expect(find.text('Mie'), findsOneWidget);
++    expect(find.text('01:00'), findsOneWidget);
++  });
++
++  testWidgets('tapping a mistake reveals its correction', (tester) async {
++    final text = _spotText();
++
++    await tester.pumpWidget(
++      MaterialApp(theme: LexioTheme.light, home: SpotScreen(texts: [text])),
++    );
++    await tester.pump();
++
++    await tester.tap(find.text('Mie'));
++    await tester.pump();
++
++    expect(find.text('Mi-e'), findsOneWidget);
++  });
++}
++
++SpotText _spotText() {
++  return SpotText(
++    id: 'spot_one',
++    type: 'story',
++    title: 'Test',
++    difficulty: 1,
++    content: 'Mie îmi place să citesc.',
++    mistakes: [
++      SpotMistake(
++        wordIndex: 0,
++        wordCount: 1,
++        token: 'Mie',
++        replacement: 'Mi-e',
++        explanation: '„Mi-e” este forma corectă.',
++        category: 'ortografie',
++        topic: 'cratima',
++      ),
++    ],
++  );
++}
+diff --git a/test/home/home_screen_test.dart b/test/home/home_screen_test.dart
+new file mode 100644
+index 0000000..b60823c
+--- /dev/null
++++ b/test/home/home_screen_test.dart
+@@ -0,0 +1,38 @@
++import 'package:flutter/material.dart';
++import 'package:flutter_test/flutter_test.dart';
++
++// ignore: avoid_relative_lib_imports
++import '../../lib/design/theme.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/home/home_screen.dart';
++// ignore: avoid_relative_lib_imports
++import '../../lib/progress/user_progress.dart';
++
++void main() {
++  testWidgets('renders game entries with an injected progress repository', (
++    tester,
++  ) async {
++    final repo = await ProgressRepository.load(storage: _MemoryStorage());
++
++    await tester.pumpWidget(
++      MaterialApp(theme: LexioTheme.light, home: HomeScreen(progressRepository: repo)),
++    );
++
++    expect(find.text('Corect sau greșit?'), findsOneWidget);
++    expect(find.text('Ce înseamnă?'), findsOneWidget);
++    expect(find.text('Vorba vine'), findsOneWidget);
++    expect(find.text('Găsește greșeala'), findsOneWidget);
++  });
++}
++
++final class _MemoryStorage implements ProgressStorage {
++  String? _value;
++
++  @override
++  Future<String?> read() async => _value;
++
++  @override
++  Future<void> write(String value) async {
++    _value = value;
++  }
++}

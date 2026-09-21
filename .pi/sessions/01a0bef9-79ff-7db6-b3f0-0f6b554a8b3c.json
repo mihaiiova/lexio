@@ -1,0 +1,84 @@
+{
+  "activeSpec": null,
+  "branch": "staging",
+  "changedFiles": [
+    "pi/state.json",
+    "analysis_options.yaml",
+    ".pi/artifacts/spec-review/47/",
+    ".pi/sessions/01a0b4d7-fdca-782d-b082-87322ce68056.json",
+    ".pi/sessions/01a0b9de-eefc-73f2-b927-f18538c04651.json",
+    ".pi/sessions/01a0ba06-07e1-743a-8d48-253d716276dc.json",
+    ".pi/sessions/01a0ba1c-8418-7182-8610-f29656f3dd20.json"
+  ],
+  "checkResults": null,
+  "cwd": "/Users/m/dev/lexio",
+  "finalizedAt": "2026-09-20T13:48:26.983Z",
+  "model": {
+    "model": "gpt-5.6-luna",
+    "provider": "openai-codex",
+    "thinkingLevel": "high"
+  },
+  "outcome": null,
+  "phase": null,
+  "piSessionFile": "/Users/m/.pi/agent/sessions/--Users-m-dev-lexio--/2026-09-20T13-20-15-871Z_01a0bef9-79ff-7db6-b3f0-0f6b554a8b3c.jsonl",
+  "piSessionId": "01a0bef9-79ff-7db6-b3f0-0f6b554a8b3c",
+  "provenance": {
+    "configHash": "594d85cf6221321a542067b093b6fc535bf991da56c028579236a82135be2445",
+    "piConfigCommit": "41842ea1db22ec280743305dbd810f12fe6ea983",
+    "piSessionFormatVersion": 3,
+    "piVersion": "0.84.1",
+    "productVersion": null
+  },
+  "schemaVersion": 1,
+  "sessionId": "01a0bef9-79ff-7db6-b3f0-0f6b554a8b3c",
+  "startedAt": "2026-09-20T13:20:18.513Z",
+  "subagentModels": {
+    "oracle": {
+      "model": "deepseek/deepseek-v4-pro"
+    },
+    "reviewer": {
+      "model": "deepseek/deepseek-flash"
+    },
+    "scout": {
+      "model": "deepseek/deepseek-flash"
+    },
+    "worker": {
+      "model": "deepseek/deepseek-v4-pro"
+    }
+  },
+  "subagentUsage": {
+    "agents": [
+      {
+        "agent": "reviewer",
+        "cost": 0.36110690400000006,
+        "runs": 8
+      },
+      {
+        "agent": "scout",
+        "cost": 0.042067968,
+        "runs": 1
+      },
+      {
+        "agent": "worker",
+        "cost": 2.36876684,
+        "runs": 3
+      }
+    ],
+    "totalCost": 2.7719417120000003
+  },
+  "summary": null,
+  "usage": {
+    "cacheRead": 4723200,
+    "cacheWrite": 0,
+    "cost": {
+      "cacheRead": 0.09446399999999999,
+      "cacheWrite": 0,
+      "input": 0.0311852,
+      "output": 0.016131600000000003,
+      "total": 0.14178080000000004
+    },
+    "input": 155926,
+    "output": 13443,
+    "totalTokens": 4892569
+  }
+}

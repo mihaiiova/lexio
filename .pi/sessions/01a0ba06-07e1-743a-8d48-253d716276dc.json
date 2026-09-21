@@ -1,0 +1,81 @@
+{
+  "activeSpec": null,
+  "branch": "staging",
+  "changedFiles": [
+    "pi/state.json",
+    ".pi/artifacts/spec-review/47/",
+    ".pi/sessions/01a0b4d7-fdca-782d-b082-87322ce68056.json",
+    ".pi/sessions/01a0b9de-eefc-73f2-b927-f18538c04651.json"
+  ],
+  "checkResults": null,
+  "cwd": "/Users/m/dev/lexio",
+  "finalizedAt": "2026-09-19T14:40:26.204Z",
+  "model": {
+    "model": "deepseek-v4-pro",
+    "provider": "deepseek",
+    "thinkingLevel": "high"
+  },
+  "outcome": null,
+  "phase": null,
+  "piSessionFile": "/Users/m/.pi/agent/sessions/--Users-m-dev-lexio--/2026-09-19T14-15-52-546Z_01a0ba06-07e1-743a-8d48-253d716276dc.jsonl",
+  "piSessionId": "01a0ba06-07e1-743a-8d48-253d716276dc",
+  "provenance": {
+    "configHash": "594d85cf6221321a542067b093b6fc535bf991da56c028579236a82135be2445",
+    "piConfigCommit": "41842ea1db22ec280743305dbd810f12fe6ea983",
+    "piSessionFormatVersion": 3,
+    "piVersion": "0.84.1",
+    "productVersion": null
+  },
+  "schemaVersion": 1,
+  "sessionId": "01a0ba06-07e1-743a-8d48-253d716276dc",
+  "startedAt": "2026-09-19T14:15:54.417Z",
+  "subagentModels": {
+    "oracle": {
+      "model": "deepseek/deepseek-v4-pro"
+    },
+    "reviewer": {
+      "model": "deepseek/deepseek-flash"
+    },
+    "scout": {
+      "model": "deepseek/deepseek-flash"
+    },
+    "worker": {
+      "model": "deepseek/deepseek-v4-pro"
+    }
+  },
+  "subagentUsage": {
+    "agents": [
+      {
+        "agent": "reviewer",
+        "cost": 0.20810844000000003,
+        "runs": 6
+      },
+      {
+        "agent": "scout",
+        "cost": 0.042067968,
+        "runs": 1
+      },
+      {
+        "agent": "worker",
+        "cost": 1.8742851600000003,
+        "runs": 2
+      }
+    ],
+    "totalCost": 2.1244615680000005
+  },
+  "summary": null,
+  "usage": {
+    "cacheRead": 5557504,
+    "cacheWrite": 0,
+    "cost": {
+      "cacheRead": 0.244530176,
+      "cacheWrite": 0,
+      "input": 0.10394868000000006,
+      "output": 0.25938792,
+      "total": 0.6078667760000002
+    },
+    "input": 78749,
+    "output": 65502,
+    "totalTokens": 5701755
+  }
+}
