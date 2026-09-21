@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+
+import '../../../design/animations.dart';
 import '../../../design/colors.dart';
+import '../../../design/spacing.dart';
 import '../../../design/typography.dart';
 
-TextStyle _wordStyle(Color color) {
-  return LexioTextStyles.bodyLarge.copyWith(
-    fontSize: 20,
-    height: 1.35,
-    color: color,
-    fontFamily: 'NoticiaText',
-  );
-}
+TextStyle _wordStyle(Color color) =>
+    LexioTextStyles.spotText.copyWith(color: color);
 
 enum TextTokenState { normal, found, shaking, checking }
 
@@ -31,7 +28,10 @@ class TextToken extends StatelessWidget {
   Widget build(BuildContext context) {
     final isTappable = state != TextTokenState.found && onTap != null;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 3),
+      padding: const EdgeInsets.symmetric(
+        horizontal: LexioSpacing.hairline,
+        vertical: LexioSpacing.tokenVertical,
+      ),
       child: MergeSemantics(
         child: Semantics(
           button: isTappable,
@@ -51,10 +51,7 @@ class TextToken extends StatelessWidget {
       case TextTokenState.normal:
         return _NormalToken(text: originalText);
       case TextTokenState.found:
-        return _FoundToken(
-          original: originalText,
-          correction: correctionText,
-        );
+        return _FoundToken(original: originalText, correction: correctionText);
       case TextTokenState.shaking:
         return _ShakingToken(text: originalText);
       case TextTokenState.checking:
@@ -72,10 +69,7 @@ class _NormalToken extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: _wordStyle(LexioColors.textPrimary),
-    );
+    return Text(text, style: _wordStyle(LexioColors.textPrimary));
   }
 }
 
@@ -89,19 +83,13 @@ class _FoundToken extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Text(
-          original,
-          style: _wordStyle(LexioColors.textPrimary),
-        ),
+        Text(original, style: _wordStyle(LexioColors.textPrimary)),
         TweenAnimationBuilder<double>(
           tween: Tween(begin: 0.0, end: 1.0),
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeOut,
+          duration: LexioDurations.slow,
+          curve: LexioCurves.easeOut,
           builder: (context, value, child) {
-            return Opacity(
-              opacity: value.clamp(0.0, 1.0),
-              child: child,
-            );
+            return Opacity(opacity: value.clamp(0.0, 1.0), child: child);
           },
           child: Text(
             original,
@@ -113,27 +101,26 @@ class _FoundToken extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: -11,
+          top: -LexioSpacing.tokenCorrectionOffset,
           left: 0,
           right: 0,
           child: TweenAnimationBuilder<double>(
             tween: Tween(begin: 0.0, end: 1.0),
-            duration: const Duration(milliseconds: 450),
-            curve: Curves.easeOut,
+            duration: LexioDurations.feedback,
+            curve: LexioCurves.easeOut,
             builder: (context, value, child) {
               return Opacity(
                 opacity: value.clamp(0.0, 1.0),
                 child: Transform.translate(
-                  offset: Offset(0, (1 - value) * 4),
+                  offset: Offset(0, (1 - value) * LexioSpacing.feedbackOffset),
                   child: child,
                 ),
               );
             },
             child: Text(
               correction,
-              style: _wordStyle(LexioColors.success).copyWith(
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
+              style: LexioTextStyles.spotCorrection.copyWith(
+                color: LexioColors.success,
               ),
               textAlign: TextAlign.center,
             ),
@@ -162,10 +149,7 @@ class _CheckingToken extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Text(
-          original,
-          style: _wordStyle(LexioColors.textPrimary),
-        ),
+        Text(original, style: _wordStyle(LexioColors.textPrimary)),
         Text(
           original,
           style: _wordStyle(LexioColors.textSecondary).copyWith(
@@ -175,14 +159,13 @@ class _CheckingToken extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: -11,
+          top: -LexioSpacing.tokenCorrectionOffset,
           left: 0,
           right: 0,
           child: Text(
             correction,
-            style: _wordStyle(LexioColors.textPrimary).copyWith(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
+            style: LexioTextStyles.spotCorrection.copyWith(
+              color: LexioColors.textPrimary,
             ),
             textAlign: TextAlign.center,
           ),
@@ -201,19 +184,19 @@ class _ShakingTokenState extends State<_ShakingToken>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: LexioDurations.shake,
       vsync: this,
     );
-    _shakeAnimation = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 0, end: 4), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: 4, end: -3), weight: 2),
-      TweenSequenceItem(tween: Tween(begin: -3, end: 2), weight: 2),
-      TweenSequenceItem(tween: Tween(begin: 2, end: -1), weight: 2),
-      TweenSequenceItem(tween: Tween(begin: -1, end: 0), weight: 1),
-    ]).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
+    _shakeAnimation =
+        TweenSequence<double>([
+          TweenSequenceItem(tween: Tween(begin: 0, end: 4), weight: 1),
+          TweenSequenceItem(tween: Tween(begin: 4, end: -3), weight: 2),
+          TweenSequenceItem(tween: Tween(begin: -3, end: 2), weight: 2),
+          TweenSequenceItem(tween: Tween(begin: 2, end: -1), weight: 2),
+          TweenSequenceItem(tween: Tween(begin: -1, end: 0), weight: 1),
+        ]).animate(
+          CurvedAnimation(parent: _controller, curve: LexioCurves.easeInOut),
+        );
     _controller.forward();
   }
 
@@ -230,10 +213,7 @@ class _ShakingTokenState extends State<_ShakingToken>
       builder: (context, child) {
         return Transform.translate(
           offset: Offset(_shakeAnimation.value, 0),
-          child: Text(
-            widget.text,
-            style: _wordStyle(LexioColors.textPrimary),
-          ),
+          child: Text(widget.text, style: _wordStyle(LexioColors.textPrimary)),
         );
       },
     );

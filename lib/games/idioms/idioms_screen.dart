@@ -132,6 +132,12 @@ class _IdiomsScreenState extends State<IdiomsScreen>
     if (next.isFinished) _session.complete(next.correctCount);
   }
 
+  Future<void> _handleBack() async {
+    await _progress?.flush();
+    if (!mounted) return;
+    Navigator.of(context).maybePop();
+  }
+
   void _playAgain() {
     final suppliedExercises = widget.exercises;
     final exercises =
@@ -163,8 +169,10 @@ class _IdiomsScreenState extends State<IdiomsScreen>
         backgroundColor: LexioColors.background,
         body: IdiomsSummary(
           state: state,
+          discoveredCount: _progress?.forGame('idioms').countStarted() ?? 0,
+          discoveredTotal: IdiomsContent.distinctNotionIds().length,
           onPlayAgain: _playAgain,
-          onBack: () => Navigator.of(context).maybePop(),
+          onBack: _handleBack,
         ),
       );
     }

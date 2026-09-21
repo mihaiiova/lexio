@@ -7,9 +7,24 @@ import 'package:flutter/services.dart';
 import '../../../lib/content/hyphenation_content.dart';
 // ignore: avoid_relative_lib_imports
 import '../../../lib/games/spot/spot_content.dart';
+// ignore: avoid_relative_lib_imports
+import '../../../lib/progress/user_progress.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  test('exposes 230 distinct mistake notion IDs for discovery progress',
+      () async {
+    final texts = await SpotContent.load();
+
+    final notions = SpotContent.distinctNotionIds();
+
+    expect(notions, hasLength(230));
+    expect(
+      notions,
+      equals(texts.expand((t) => t.mistakeNotionIds).toSet()),
+    );
+  });
 
   test('spot corpus satisfies content constraints', () async {
     final texts = await SpotContent.load();
@@ -102,6 +117,16 @@ void main() {
     );
     expect(usedHyphenationPairIds, equals(hyphenationPairIds));
     expect(visiblePairCounts.values.every((count) => count <= 3), isTrue);
+  });
+
+  test('adaptiveSession orders texts by difficulty', () async {
+    await SpotContent.load();
+
+    final texts = SpotContent.adaptiveSession(59, const GameProgress());
+
+    expect(texts, isNotEmpty);
+    final difficulties = texts.map((t) => t.difficulty).toList();
+    expect(difficulties, List<int>.from(difficulties)..sort());
   });
 }
 

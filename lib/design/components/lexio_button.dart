@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../colors.dart';
 import '../radius.dart';
+import '../sizes.dart';
 import '../spacing.dart';
 import '../typography.dart';
 
@@ -75,7 +76,7 @@ class LexioButton extends StatelessWidget {
       case LexioButtonSize.small:
         padding = const EdgeInsets.symmetric(
           horizontal: LexioSpacing.lg,
-          vertical: LexioSpacing.sm + 2,
+          vertical: LexioSpacing.buttonSmallVertical,
         );
         textStyle = LexioTextStyles.labelMedium;
       case LexioButtonSize.medium:
@@ -83,7 +84,7 @@ class LexioButton extends StatelessWidget {
           horizontal: LexioSpacing.xl,
           vertical: LexioSpacing.md,
         );
-        textStyle = LexioTextStyles.labelLarge.copyWith(fontSize: 15);
+        textStyle = LexioTextStyles.buttonMedium;
       case LexioButtonSize.large:
         padding = const EdgeInsets.symmetric(
           horizontal: LexioSpacing.xl,
@@ -100,10 +101,10 @@ class LexioButton extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: LexioSpacing.sm),
             child: SizedBox(
-              width: 16,
-              height: 16,
+              width: LexioSizes.iconSpinner,
+              height: LexioSizes.iconSpinner,
               child: CircularProgressIndicator(
-                strokeWidth: 2,
+                strokeWidth: LexioSizes.strokeWidth,
                 color: foregroundColor,
               ),
             ),
@@ -111,7 +112,10 @@ class LexioButton extends StatelessWidget {
         else if (icon != null)
           Padding(
             padding: const EdgeInsets.only(right: LexioSpacing.sm),
-            child: Icon(icon, size: textStyle.fontSize! + 2),
+            child: Icon(
+              icon,
+              size: textStyle.fontSize! + LexioSizes.iconSizeStep,
+            ),
           ),
         Flexible(
           child: Text(

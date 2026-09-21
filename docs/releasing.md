@@ -29,8 +29,9 @@ version: 1.0.0+1
 | Breaking / major redesign | major — `2.0.0+1` |
 
 The build number (`+N`) is **managed automatically in CI** from
-`GITHUB_RUN_NUMBER` — a per-repository counter that is always increasing, so it
-is unique and monotonic across both the test and production tracks. You only
+`GITHUB_RUN_ID` — a unique, always-increasing number per workflow run, shared
+across both the staging and production workflows, so it is monotonic and never
+collides between the two tracks. You only
 ever edit the `X.Y.Z` part; leave `+N` alone.
 
 ## Branch-driven workflow
@@ -63,11 +64,23 @@ feature/xxx ──PR──▶ staging ──push──▶ test builds go out aut
 
 | Workflow | Trigger | Result |
 |---|---|---|
-| `ci.yml` | push to feature branches, and all PRs | analyze + test + unsigned builds (sanity gate) |
+| `ci.yml` | push to feature branches, and all PRs | analyze + unit/widget tests + unsigned builds (sanity gate) |
 | `deploy-staging.yml` | push to `staging` | signed Android AAB → Play internal testing; signed IPA → TestFlight |
 | `deploy-prod.yml` | push to `master` | signed Android AAB → Play production; signed IPA → App Store Connect |
 
 Signing secrets are configured per `RELEASE_SIGNING.md`; never commit them.
+
+### Screenshot integration workflow
+
+`integration_test/screenshot_test.dart` captures store-review screenshots on a
+connected device or emulator. It is not run by `flutter test` or by CI because
+it depends on device screenshots and is an editorial asset workflow, not a
+release gate. Run it explicitly with:
+
+```bash
+flutter drive --driver test_driver/integration_test.dart \
+  --target integration_test/screenshot_test.dart
+```
 
 ## Getting changes to testers
 

@@ -10,11 +10,15 @@ class SpotSummary extends StatelessWidget {
     required this.state,
     required this.onPlayAgain,
     required this.onBack,
+    this.discoveredCount,
+    this.discoveredTotal,
   });
 
   final SpotGameState state;
   final VoidCallback onPlayAgain;
   final VoidCallback onBack;
+  final int? discoveredCount;
+  final int? discoveredTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,7 @@ class SpotSummary extends StatelessWidget {
         final mistake = text.mistakes[mistakeIndex];
         reviewItems.add(
           LexioReviewItem(
+            subject: text.title,
             wrongAnswer: mistake.token,
             correctAnswer: mistake.replacement,
             explanation: mistake.explanation,
@@ -47,6 +52,7 @@ class SpotSummary extends StatelessWidget {
         final selectedWord = text.words[wordIndex];
         reviewItems.add(
           LexioReviewItem(
+            subject: text.title,
             wrongAnswer: 'Ai selectat „$selectedWord”.',
             correctAnswer: 'Cuvântul este corect în acest context.',
             explanation: 'Selecția nu corespunde unei greșeli din text.',
@@ -62,6 +68,8 @@ class SpotSummary extends StatelessWidget {
       reviewItems: reviewItems,
       onPlayAgain: onPlayAgain,
       onBack: onBack,
+      discoveredCount: discoveredCount,
+      discoveredTotal: discoveredTotal,
     );
   }
 }

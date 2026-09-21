@@ -10,6 +10,7 @@ import '../../design/radius.dart';
 import '../../design/animations.dart';
 import '../../design/components/lexio_answer_button.dart';
 import '../../design/components/lexio_feedback.dart';
+import '../../design/components/lexio_feedback_screen.dart';
 import '../../progress/user_progress.dart';
 import 'grammar_content.dart';
 import 'grammar_game.dart';
@@ -52,7 +53,7 @@ class _GrammarScreenState extends State<GrammarScreen>
       _state = GrammarGameState(exercises: exercises);
       _progress = widget.progressRepository;
       _isLoading = false;
-      _session.start();
+      if (exercises.isNotEmpty) _session.start();
     } else {
       _init();
     }
@@ -170,6 +171,19 @@ class _GrammarScreenState extends State<GrammarScreen>
     _session.start();
   }
 
+  Widget _buildEmptyScreen() {
+    return LexioFeedbackScreen(
+      backgroundColor: LexioColors.surface,
+      appBar: AppBar(
+        leading: BackButton(),
+        backgroundColor: LexioColors.surface,
+      ),
+      type: LexioFeedbackType.error,
+      message: 'Nu există exerciții disponibile',
+      description: 'Conținutul local nu conține exerciții pentru această rundă.',
+    );
+  }
+
   Widget _buildErrorScreen() {
     return Scaffold(
       backgroundColor: LexioColors.surface,
@@ -217,6 +231,10 @@ class _GrammarScreenState extends State<GrammarScreen>
     }
 
     final state = _state!;
+
+    if (state.exercises.isEmpty) {
+      return _buildEmptyScreen();
+    }
 
     if (state.isFinished) {
       return Scaffold(

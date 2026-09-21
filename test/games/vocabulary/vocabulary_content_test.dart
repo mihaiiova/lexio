@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 // ignore: avoid_relative_lib_imports
 import '../../../lib/games/vocabulary/vocabulary_content.dart';
+// ignore: avoid_relative_lib_imports
+import '../../../lib/progress/user_progress.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +46,15 @@ void main() {
     );
   });
 
+  test('exposes 100 distinct notion IDs for discovery progress', () async {
+    final exercises = await VocabularyContent.load();
+
+    final notions = VocabularyContent.distinctNotionIds();
+
+    expect(notions, hasLength(100));
+    expect(notions, equals(exercises.map((e) => e.notionId).toSet()));
+  });
+
   test('creates a round with distinct exercises', () async {
     await VocabularyContent.load();
 
@@ -61,5 +72,15 @@ void main() {
       ],
       [2, 2, 2, 2, 2],
     );
+  });
+
+  test('adaptiveRound serves exercises easy-to-hard', () async {
+    await VocabularyContent.load();
+
+    final round = VocabularyContent.adaptiveRound(100, const GameProgress());
+
+    expect(round, hasLength(100));
+    final difficulties = round.map((e) => e.difficulty).toList();
+    expect(difficulties, List<int>.from(difficulties)..sort());
   });
 }

@@ -101,6 +101,37 @@ sealed class LexioTextStyles {
     letterSpacing: 0.4,
   );
 
+  // Spot game text tokens (mirrors the game-accent pattern in colors.dart)
+  static TextStyle get spotText => const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    height: 1.35,
+    letterSpacing: _defaultLetterSpacing,
+    fontFamily: 'NoticiaText',
+  );
+
+  static TextStyle get spotCorrection => const TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w700,
+    height: 1.35,
+    letterSpacing: _defaultLetterSpacing,
+    fontFamily: 'NoticiaText',
+  );
+
+  static TextStyle get overline => const TextStyle(
+    fontSize: 11,
+    fontWeight: FontWeight.w500,
+    height: 1.3,
+    letterSpacing: 1.2,
+  );
+
+  static TextStyle get buttonMedium => const TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    height: 1.3,
+    letterSpacing: 0.2,
+  );
+
   // Utility
   static TextStyle get accentLarge => const TextStyle(
     fontSize: 20,

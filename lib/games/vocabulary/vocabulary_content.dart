@@ -74,6 +74,9 @@ final class VocabularyContent {
     return _cached!;
   }
 
+  static Set<String> distinctNotionIds() =>
+      (_cached ?? const []).map((e) => e.notionId).toSet();
+
   static List<VocabularyExercise> randomRound(int count, {Random? random}) {
     final all = _cached;
     if (all == null || all.isEmpty || count <= 0) return [];
@@ -108,9 +111,6 @@ final class VocabularyContent {
     return selected.toList(growable: false);
   }
 
-  static Set<String> distinctNotionIds() =>
-      _cached?.map((exercise) => exercise.notionId).toSet() ?? {};
-
   static List<VocabularyExercise> adaptiveRound(
     int count,
     GameProgress progress,
@@ -120,6 +120,7 @@ final class VocabularyContent {
       count: count,
       progress: progress,
       notionIdOf: (exercise) => exercise.notionId,
+      difficultyOf: (exercise) => exercise.difficulty,
     );
   }
 }

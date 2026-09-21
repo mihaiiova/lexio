@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../design/colors.dart';
+import '../../../design/sizes.dart';
 import '../../../design/spacing.dart';
 import '../../../design/typography.dart';
 import '../../../design/theme.dart';
@@ -21,7 +22,7 @@ class ResultOverlay extends StatelessWidget {
         return Opacity(
           opacity: value,
           child: Transform.translate(
-            offset: Offset(0, 20 * (1 - value)),
+            offset: Offset(0, LexioSizes.slideOffsetLarge * (1 - value)),
             child: child,
           ),
         );
@@ -61,7 +62,6 @@ class ResultOverlay extends StatelessWidget {
           exercise.explanation,
           style: LexioTextStyles.bodyMedium.copyWith(
             color: LexioColors.textSecondary,
-            height: 1.5,
           ),
         ),
       ],
@@ -79,7 +79,6 @@ class ResultOverlay extends StatelessWidget {
           exercise.explanation,
           style: LexioTextStyles.bodyMedium.copyWith(
             color: LexioColors.textSecondary,
-            height: 1.5,
           ),
         ),
       ],
@@ -138,7 +137,7 @@ class ResultOverlay extends StatelessWidget {
       color: LexioColors.error,
       decoration: TextDecoration.lineThrough,
       decorationColor: LexioColors.error,
-      decorationThickness: 2,
+      decorationThickness: LexioSizes.strikeThickness,
     );
 
     final correctStyle = TextStyle(

@@ -132,6 +132,7 @@ final class SpotGameState {
   }
 
   bool isFoundMistakeWord(int wordIndex) {
+    if (texts.isEmpty) return false;
     final found = foundMistakeIndices[currentTextIndex];
     for (int i = 0; i < currentText.mistakes.length; i++) {
       if (currentText.mistakes[i].containsWordIndex(wordIndex) &&
@@ -143,6 +144,7 @@ final class SpotGameState {
   }
 
   bool isUnfoundMistakeWord(int wordIndex) {
+    if (texts.isEmpty) return false;
     for (int i = 0; i < currentText.mistakes.length; i++) {
       if (currentText.mistakes[i].containsWordIndex(wordIndex) &&
           !foundMistakeIndices[currentTextIndex].contains(i)) {
@@ -153,7 +155,7 @@ final class SpotGameState {
   }
 
   SpotTapOutcome tapWord(int wordIndex) {
-    if (isFinished) {
+    if (isFinished || texts.isEmpty) {
       return SpotTapOutcome(state: this, result: SpotTapResult.incorrect);
     }
 
@@ -199,6 +201,7 @@ final class SpotGameState {
   }
 
   SpotGameState nextText() {
+    if (isFinished || texts.isEmpty) return this;
     if (isLastText) {
       return _copyWith(
         isFinished: true,
@@ -214,7 +217,7 @@ final class SpotGameState {
   }
 
   SpotGameState checkTimerExpiry() {
-    if (isFinished || !isTimerExpired) return this;
+    if (isFinished || texts.isEmpty || !isTimerExpired) return this;
     if (isLastText) {
       return _copyWith(
         isFinished: true,
@@ -227,7 +230,8 @@ final class SpotGameState {
     );
   }
 
-  SpotGameState checkAnswers() => _copyWith(isChecking: true);
+  SpotGameState checkAnswers() =>
+      texts.isEmpty || isFinished ? this : _copyWith(isChecking: true);
 
   SpotGameState _copyWith({
     List<Set<int>>? foundMistakeIndices,

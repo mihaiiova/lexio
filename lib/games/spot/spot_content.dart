@@ -168,14 +168,14 @@ final class SpotContent {
     return _cached!;
   }
 
+  static Set<String> distinctNotionIds() =>
+      (_cached ?? const []).expand((t) => t.mistakeNotionIds).toSet();
+
   static List<SpotText> session(int count) {
     if (_cached == null || _cached!.isEmpty) return [];
     final shuffled = List<SpotText>.from(_cached!)..shuffle();
     return shuffled.take(count).toList();
   }
-
-  static Set<String> distinctNotionIds() =>
-      _cached?.expand((text) => text.mistakeNotionIds).toSet() ?? {};
 
   static List<SpotText> adaptiveSession(int count, GameProgress progress) {
     return RoundSelector.selectMultiNotion(
@@ -183,6 +183,7 @@ final class SpotContent {
       count: count,
       progress: progress,
       notionIdsOf: (text) => text.mistakeNotionIds,
+      difficultyOf: (text) => text.difficulty,
     );
   }
 }

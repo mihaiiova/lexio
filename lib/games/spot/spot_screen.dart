@@ -7,6 +7,7 @@ import '../../analytics/game_session_analytics.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_button.dart';
 import '../../design/components/lexio_feedback.dart';
+import '../../design/components/lexio_feedback_screen.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
 import '../../progress/user_progress.dart';
@@ -47,8 +48,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
       _progress = widget.progressRepository;
       _isLoading = false;
-      _session.start();
-      _startTimer();
+      if (texts.isNotEmpty) {
+        _session.start();
+        _startTimer();
+      }
     } else {
       _init();
     }
@@ -207,6 +210,19 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     );
   }
 
+  Widget _buildEmptyScreen() {
+    return LexioFeedbackScreen(
+      backgroundColor: LexioColors.background,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: BackButton(),
+      ),
+      type: LexioFeedbackType.error,
+      message: 'Nu există texte disponibile',
+      description: 'Conținutul local nu conține texte pentru această rundă.',
+    );
+  }
+
   Widget _buildErrorScreen() {
     return Scaffold(
       backgroundColor: LexioColors.background,
@@ -259,6 +275,9 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     }
 
     final state = _state!;
+    if (state.texts.isEmpty) {
+      return _buildEmptyScreen();
+    }
     if (state.isFinished) {
       return _buildSummary(state);
     }

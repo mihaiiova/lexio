@@ -18,7 +18,6 @@
 
 ### Logic Layer
 - **Game State** (`lib/games/<name>/<name>_game.dart`): Immutable state classes
-- **Game Interface** (`lib/games/game_interface.dart`): Contract for all games
 
 ### Data Layer
 - **Content Loader** (`lib/games/<name>/<name>_content.dart`): Loads and caches JSON
@@ -35,6 +34,10 @@ games/<name>/
   <name>_content.dart       # Loader class (load, shuffle, getDaily)
   widgets/                  # Game-specific reusable widgets
 ```
+
+### Shared Game Flow
+
+Vocabulary and idioms intentionally retain separate screen flows. They share visual conventions, but their content, state transitions, feedback, and summaries differ enough that a shared screen abstraction would expose a shallow configuration surface. Extract shared components only when a tested behavior is demonstrably identical across games.
 
 ### State Pattern
 
@@ -102,13 +105,13 @@ Fields vary by game type but follow the same array-of-objects pattern.
 ## Adding a Game
 
 1. Create `lib/games/<name>/` with screen, game, content, widgets
-2. Implement the `LexioGame` interface
-3. Create content JSON in `lib/content/`
-4. Add a card to `HomeScreen`'s `_buildTodaySection` or `_buildComingSoon`
+2. Create content JSON in `lib/content/`
+3. Add the game entry and navigation to `HomeScreen`
+4. Add focused state and widget tests
 
 ## Technical Constraints
 
-- **No dependencies** beyond Flutter SDK, cupertino_icons, google_fonts
+- **Dependencies**: Flutter SDK, cupertino_icons, shared_preferences, url_launcher, firebase_core, and firebase_analytics
 - **No package:lexio imports** — always use relative paths
 - **No state management library** — simple StatefulWidget + setState
 - **No code generation** — manual fromJson/toJson

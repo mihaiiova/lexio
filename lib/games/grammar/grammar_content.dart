@@ -177,6 +177,9 @@ final class GrammarContent {
     }
   }
 
+  static Set<String> distinctNotionIds() =>
+      (_cached ?? const []).map((e) => e.notionId).toSet();
+
   static List<GrammarExercise> randomRound(int count) {
     final all = _cached;
     if (all == null || all.isEmpty) return [];
@@ -233,15 +236,13 @@ final class GrammarContent {
     return selected.take(count).toList();
   }
 
-  static Set<String> distinctNotionIds() =>
-      _cached?.map((exercise) => exercise.notionId).toSet() ?? {};
-
   static List<GrammarExercise> adaptiveRound(int count, GameProgress progress) {
     return RoundSelector.select(
       exercises: _cached ?? const [],
       count: count,
       progress: progress,
       notionIdOf: (exercise) => exercise.notionId,
+      difficultyOf: (exercise) => exercise.difficulty,
     );
   }
 }

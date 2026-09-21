@@ -1,6 +1,7 @@
 abstract class LexioSpacing {
   LexioSpacing._();
 
+  static const double hairline = 1;
   static const double xxs = 2;
   static const double xs = 4;
   static const double sm = 8;
@@ -20,4 +21,11 @@ abstract class LexioSpacing {
   static const double inputPadding = 16;
   static const double sectionGap = 32;
   static const double itemGap = 16;
+
+  static const double buttonSmallVertical = 10;
+
+  // Spot game text tokens (mirrors the game-accent pattern in colors.dart)
+  static const double tokenVertical = 3;
+  static const double feedbackOffset = 4;
+  static const double tokenCorrectionOffset = 11;
 }

@@ -109,11 +109,9 @@ void main() {
     expect(find.text('1 din 2'), findsOneWidget);
     expect(find.text('DE REVĂZUT'), findsOneWidget);
     expect(find.text('a pleca'), findsOneWidget);
+    expect(find.text('„a pune umărul”'), findsOneWidget);
     expect(find.text('Corect: a ajuta', findRichText: true), findsOneWidget);
-    expect(
-      find.text('„a pune umărul” înseamnă a contribui prin ajutor.'),
-      findsOneWidget,
-    );
+    expect(find.text('Înseamnă a contribui prin ajutor.'), findsOneWidget);
     expect(find.byTooltip('Închide'), findsNothing);
     expect(find.text('Joacă din nou'), findsOneWidget);
     expect(find.text('Înapoi la jocuri'), findsOneWidget);

@@ -27,6 +27,9 @@ final class GameProgress {
   int countEligible(int today) =>
       items.values.where((item) => item.isEligibleForReview(today)).length;
 
+  int countMastered() =>
+      items.values.where((item) => item.state == LearningItemState.mastered).length;
+
   int countStarted() =>
       items.values.where((item) => item.state != LearningItemState.newItem).length;
 
@@ -205,62 +208,41 @@ final class RoundSelector {
     required int count,
     required GameProgress progress,
     required String Function(T exercise) notionIdOf,
+    int Function(T exercise)? difficultyOf,
     Random? random,
     int? today,
   }) {
     if (count <= 0 || exercises.isEmpty) return [];
 
-    final generator = random ?? Random();
     final effectiveToday = today ?? _todayDay();
     final selected = <T>[];
     final usedNotions = <String>{};
 
-    final shuffled = List<T>.from(exercises)..shuffle(generator);
-
     final overdue = <T>[];
-    final eligible = <T>[];
     final newItems = <T>[];
     final ineligible = <T>[];
 
-    for (final exercise in shuffled) {
+    for (final exercise in exercises) {
       final notionId = notionIdOf(exercise);
       final item = progress.progressFor(notionId);
       if (item.isOverdue(effectiveToday)) {
         overdue.add(exercise);
       } else if (item.state == LearningItemState.newItem) {
         newItems.add(exercise);
-      } else if (item.isEligibleForReview(effectiveToday)) {
-        eligible.add(exercise);
       } else {
         ineligible.add(exercise);
       }
     }
 
-    _addFromBucket(overdue, selected, usedNotions, notionIdOf, count, generator);
-    _addFromBucket(
-      eligible,
-      selected,
-      usedNotions,
-      notionIdOf,
-      count,
-      generator,
-    );
-    _addFromBucket(
-      newItems,
-      selected,
-      usedNotions,
-      notionIdOf,
-      count,
-      generator,
-    );
-    _addFromBucket(
-      ineligible,
-      selected,
-      usedNotions,
-      notionIdOf,
-      count,
-      generator,
-    );
+    _sortBucket(overdue, difficultyOf, notionIdOf);
+    _sortBucket(newItems, difficultyOf, notionIdOf);
+    _sortBucket(ineligible, difficultyOf, notionIdOf);
+
+    final overdueQuota = newItems.isNotEmpty ? count - 1 : count;
+
+    _addFromBucket(overdue, selected, usedNotions, notionIdOf, overdueQuota);
+    _addFromBucket(newItems, selected, usedNotions, notionIdOf, count);
+    _addFromBucket(ineligible, selected, usedNotions, notionIdOf, count);
 
     if (selected.isEmpty && exercises.isNotEmpty) {
       return [exercises.first];
@@ -274,76 +256,65 @@ final class RoundSelector {
     required int count,
     required GameProgress progress,
     required List<String> Function(T exercise) notionIdsOf,
+    int Function(T exercise)? difficultyOf,
     Random? random,
     int? today,
   }) {
     if (count <= 0 || exercises.isEmpty) return [];
 
-    final generator = random ?? Random();
     final effectiveToday = today ?? _todayDay();
     final selected = <T>[];
     final usedNotions = <String>{};
 
-    final shuffled = List<T>.from(exercises)..shuffle(generator);
-
     final overdue = <T>[];
-    final eligible = <T>[];
     final newItems = <T>[];
     final ineligible = <T>[];
 
-    for (final exercise in shuffled) {
+    for (final exercise in exercises) {
       final notions = notionIdsOf(exercise);
       final items = notions.map((n) => progress.progressFor(n)).toList();
 
-      final anyOverdue =
-          items.any((item) => item.isOverdue(effectiveToday));
-      final anyNew =
-          items.any((item) => item.state == LearningItemState.newItem);
-      final anyEligible =
-          items.any((item) => item.isEligibleForReview(effectiveToday));
+      final anyOverdue = items.any((item) => item.isOverdue(effectiveToday));
+      final anyNew = items.any(
+        (item) => item.state == LearningItemState.newItem,
+      );
 
       if (anyOverdue) {
         overdue.add(exercise);
       } else if (anyNew) {
         newItems.add(exercise);
-      } else if (anyEligible) {
-        eligible.add(exercise);
       } else {
         ineligible.add(exercise);
       }
     }
+
+    String notionKeyOf(T exercise) {
+      final notions = notionIdsOf(exercise);
+      if (notions.isEmpty) return '';
+      final sorted = List<String>.from(notions)..sort();
+      return sorted.join('\u0000');
+    }
+
+    _sortBucket(overdue, difficultyOf, notionKeyOf);
+    _sortBucket(newItems, difficultyOf, notionKeyOf);
+    _sortBucket(ineligible, difficultyOf, notionKeyOf);
+
+    final overdueQuota = newItems.isNotEmpty ? count - 1 : count;
 
     _addFromBucketMulti(
       overdue,
       selected,
       usedNotions,
       notionIdsOf,
-      count,
-      generator,
+      overdueQuota,
     );
-    _addFromBucketMulti(
-      eligible,
-      selected,
-      usedNotions,
-      notionIdsOf,
-      count,
-      generator,
-    );
-    _addFromBucketMulti(
-      newItems,
-      selected,
-      usedNotions,
-      notionIdsOf,
-      count,
-      generator,
-    );
+    _addFromBucketMulti(newItems, selected, usedNotions, notionIdsOf, count);
     _addFromBucketMulti(
       ineligible,
       selected,
       usedNotions,
       notionIdsOf,
       count,
-      generator,
     );
 
     if (selected.isEmpty && exercises.isNotEmpty) {
@@ -353,17 +324,29 @@ final class RoundSelector {
     return selected.toList(growable: false);
   }
 
+  static void _sortBucket<T>(
+    List<T> bucket,
+    int Function(T)? difficultyOf,
+    String Function(T) notionKeyOf,
+  ) {
+    bucket.sort((a, b) {
+      final byDifficulty = (difficultyOf?.call(a) ?? 0).compareTo(
+        difficultyOf?.call(b) ?? 0,
+      );
+      if (byDifficulty != 0) return byDifficulty;
+      return notionKeyOf(a).compareTo(notionKeyOf(b));
+    });
+  }
+
   static void _addFromBucket<T>(
     List<T> bucket,
     List<T> selected,
     Set<String> usedNotions,
     String Function(T) notionIdOf,
     int targetCount,
-    Random generator,
   ) {
     if (selected.length >= targetCount) return;
-    final shuffled = List<T>.from(bucket)..shuffle(generator);
-    for (final exercise in shuffled) {
+    for (final exercise in bucket) {
       if (selected.length >= targetCount) break;
       final notionId = notionIdOf(exercise);
       if (usedNotions.contains(notionId)) continue;
@@ -378,11 +361,9 @@ final class RoundSelector {
     Set<String> usedNotions,
     List<String> Function(T) notionIdsOf,
     int targetCount,
-    Random generator,
   ) {
     if (selected.length >= targetCount) return;
-    final shuffled = List<T>.from(bucket)..shuffle(generator);
-    for (final exercise in shuffled) {
+    for (final exercise in bucket) {
       if (selected.length >= targetCount) break;
       final notions = notionIdsOf(exercise);
       if (notions.any((n) => usedNotions.contains(n))) continue;

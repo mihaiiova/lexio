@@ -64,6 +64,9 @@ final class IdiomsContent {
     return _cached!;
   }
 
+  static Set<String> distinctNotionIds() =>
+      (_cached ?? const []).map((e) => e.notionId).toSet();
+
   static List<IdiomExercise> randomRound(int count, {Random? random}) {
     final all = _cached;
     if (all == null || all.isEmpty || count <= 0) return [];
@@ -90,15 +93,13 @@ final class IdiomsContent {
     return selected.toList(growable: false);
   }
 
-  static Set<String> distinctNotionIds() =>
-      _cached?.map((exercise) => exercise.notionId).toSet() ?? {};
-
   static List<IdiomExercise> adaptiveRound(int count, GameProgress progress) {
     return RoundSelector.select(
       exercises: _cached ?? const [],
       count: count,
       progress: progress,
       notionIdOf: (exercise) => exercise.notionId,
+      difficultyOf: (exercise) => exercise.difficulty,
     );
   }
 }
