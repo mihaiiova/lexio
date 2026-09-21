@@ -22,14 +22,20 @@ Future<void> _waitForContent(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-/// Back buttons differ across screens: most use `BackButton`, Spot uses a
-/// plain `IconButton` with an `arrow_back` icon.
-Finder _backButton() {
+/// Games use a mix of app-bar back controls and summary action rows.
+Future<void> _leaveGame(WidgetTester tester) async {
   final backButton = find.byType(BackButton);
   if (backButton.evaluate().isNotEmpty) {
-    return backButton;
+    await tester.tap(backButton);
+  } else {
+    final backIcon = find.byIcon(Icons.arrow_back);
+    if (backIcon.evaluate().isNotEmpty) {
+      await tester.tap(backIcon);
+    } else {
+      await tester.tap(find.text('Înapoi la jocuri'));
+    }
   }
-  return find.byIcon(Icons.arrow_back);
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -57,8 +63,25 @@ void main() {
 
       await _shot(binding, tester, entry.value);
 
-      await tester.tap(_backButton());
-      await tester.pumpAndSettle();
+      if (entry.key == 'Corect sau greșit?') {
+        for (var question = 0; question < 15; question++) {
+          final answerButton = find.text('Corect');
+          if (answerButton.evaluate().isEmpty) break;
+          await tester.tap(answerButton);
+          await tester.pump(const Duration(milliseconds: 600));
+          await tester.pumpAndSettle();
+
+          final nextButton = find.text('Următoarea');
+          if (nextButton.evaluate().isNotEmpty) {
+            await tester.tap(nextButton);
+            await tester.pumpAndSettle();
+          }
+        }
+        expect(find.text('RUNDĂ ÎNCHEIATĂ'), findsOneWidget);
+        await _shot(binding, tester, '06_summary');
+      }
+
+      await _leaveGame(tester);
     }
   });
 }
