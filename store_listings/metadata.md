@@ -117,3 +117,14 @@ Aplicația este complet funcțională fără conexiune la internet.
 4. **Vorba vine**: O expresie idiomatică cu opțiunile și sensul corect
 5. **Găsește greșeala**: Un text cu greșeli găsite evidențiate și cronometrul
 6. **Sumar/Rezultat**: Ecranul de final cu scorul și statistica (demonstrând progresul)
+
+### Files prepared
+
+The complete upload set is in [`../store_assets/`](../store_assets/README.md),
+including six screenshots per platform, App Store iPhone and iPad sizes,
+Google Play phone and tablet sets, the 1024 × 500 feature graphic, and the
+approved store icons. Generate it again with:
+
+```bash
+python3 scripts/prepare_store_assets.py
+```
