@@ -233,6 +233,9 @@ final class GrammarContent {
     return selected.take(count).toList();
   }
 
+  static Set<String> distinctNotionIds() =>
+      _cached?.map((exercise) => exercise.notionId).toSet() ?? {};
+
   static List<GrammarExercise> adaptiveRound(int count, GameProgress progress) {
     return RoundSelector.select(
       exercises: _cached ?? const [],

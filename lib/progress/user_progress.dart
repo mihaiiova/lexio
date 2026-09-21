@@ -27,6 +27,9 @@ final class GameProgress {
   int countEligible(int today) =>
       items.values.where((item) => item.isEligibleForReview(today)).length;
 
+  int countStarted() =>
+      items.values.where((item) => item.state != LearningItemState.newItem).length;
+
   GameProgress recordAnswer({
     required String notionId,
     required bool isCorrect,

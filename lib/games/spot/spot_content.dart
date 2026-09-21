@@ -174,6 +174,9 @@ final class SpotContent {
     return shuffled.take(count).toList();
   }
 
+  static Set<String> distinctNotionIds() =>
+      _cached?.expand((text) => text.mistakeNotionIds).toSet() ?? {};
+
   static List<SpotText> adaptiveSession(int count, GameProgress progress) {
     return RoundSelector.selectMultiNotion(
       exercises: _cached ?? const [],

@@ -90,6 +90,9 @@ final class IdiomsContent {
     return selected.toList(growable: false);
   }
 
+  static Set<String> distinctNotionIds() =>
+      _cached?.map((exercise) => exercise.notionId).toSet() ?? {};
+
   static List<IdiomExercise> adaptiveRound(int count, GameProgress progress) {
     return RoundSelector.select(
       exercises: _cached ?? const [],

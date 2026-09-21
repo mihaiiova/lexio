@@ -31,11 +31,13 @@ abstract class LexioColors {
   static const primary = blue;
   static const primaryLight = Color(0xFF6FA3EF);
   static const primaryDark = Color(0xFF336EC4);
+  static const primaryMuted = blueMuted;
 
   static const secondary = coral;
   static const secondaryMuted = coralMuted;
 
   static const accent = amber;
+  static const accentMuted = amberMuted;
   static const success = green;
   static const error = red;
   static const warning = amber;
@@ -43,6 +45,7 @@ abstract class LexioColors {
 
   // --- Surfaces ---
   static const background = Color(0xFFFFFFFF);
+  static const backgroundSubtle = Color(0xFFF2F3F5);
   static const surface = Color(0xFFFFFFFF);
   static const surfaceSecondary = Color(0xFFFFFFFF);
   static const surfaceTertiary = Color(0xFFFFFFFF);

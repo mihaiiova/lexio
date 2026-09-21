@@ -108,6 +108,9 @@ final class VocabularyContent {
     return selected.toList(growable: false);
   }
 
+  static Set<String> distinctNotionIds() =>
+      _cached?.map((exercise) => exercise.notionId).toSet() ?? {};
+
   static List<VocabularyExercise> adaptiveRound(
     int count,
     GameProgress progress,
