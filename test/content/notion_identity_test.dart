@@ -78,9 +78,6 @@ void main() {
         );
       }
     },
-    skip:
-        'blocked by GitHub issue #49: grammar pairId "p186" spans vocativ + '
-        'pluralul substantivelor',
   );
 
   test(
@@ -97,9 +94,6 @@ void main() {
         );
       }
     },
-    skip:
-        'blocked by GitHub issue #50: text_051 reuses '
-        'commonErrorPairIndex 186 for both "Aceiași" and "comfort"',
   );
 
   test('adaptive rounds never serve duplicate notions', () async {
