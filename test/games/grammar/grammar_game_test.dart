@@ -63,14 +63,11 @@ void main() {
       expect(next.totalAnswered, 1);
     });
 
-    test('answer ignores a repeated response for the same exercise', () {
-      final state = GrammarGameState(exercises: exercises).answer(true);
-      final repeated = state.answer(false);
+    test('answer ignores a second answer to the same exercise', () {
+      final state = GrammarGameState(exercises: exercises);
+      final answered = state.answer(true);
 
-      expect(repeated, same(state));
-      expect(repeated.correctCount, 1);
-      expect(repeated.totalAnswered, 1);
-      expect(repeated.results, [true, null]);
+      expect(answered.answer(false), same(answered));
     });
 
     test('results tracks per-question outcomes', () {
@@ -110,12 +107,23 @@ void main() {
       expect(finished.next(), same(finished));
     });
 
-    test('progress is 1.0 after all answered', () {
+    test('progress counts only correct answers', () {
+      var state = GrammarGameState(exercises: exercises);
+      state = state.answer(true);
+      state = state.next();
+      state = state.answer(true);
+      state = state.next();
+
+      expect(state.progress, 0.5);
+    });
+
+    test('progress is 1.0 after every answer is correct', () {
       var state = GrammarGameState(exercises: exercises);
       state = state.answer(true);
       state = state.next();
       state = state.answer(false);
       state = state.next();
+
       expect(state.progress, 1.0);
     });
   });

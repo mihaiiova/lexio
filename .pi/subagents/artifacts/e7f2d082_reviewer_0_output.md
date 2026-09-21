@@ -1,0 +1,5 @@
+## Review
+- Correct: `lib/progress/user_progress.dart:99-191` uses English names, PascalCase types/camelCase members, private `_` fields, and immutable `UserProgress` snapshots. Internal import remains relative. The queued-write hunk (`_pendingWrite = _pendingWrite.then(...)`) serializes snapshots without duplicating persistence logic.
+- Correct: `test/progress/progress_repository_test.dart` mirrors `lib/progress/`, uses relative internal imports, and covers queued rapid writes, write failure, and loading. Reported `flutter analyze` and targeted test pass.
+- Hard violations: None found in the scoped diff. `var updated` at `lib/progress/user_progress.dart:168` must be reassigned in the loop, so `final` is not applicable.
+- Note (judgment call — Speculative Generality/dead fixture state): `test/progress/progress_repository_test.dart:121-125` adds `"final String value;"` and `"_PendingWrite(this.value)"`, but the controlled storage completion uses the `write` parameter instead: `"then((_) => this.value = value)"` (line 91). `_PendingWrite.value` is never read. Remove the unused field/constructor argument unless it is intended for an additional assertion.

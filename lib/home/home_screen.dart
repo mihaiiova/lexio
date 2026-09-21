@@ -17,9 +17,20 @@ import '../progress/user_progress.dart';
 import 'discovery_catalog.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, this.progressStorage});
+  const HomeScreen({
+    super.key,
+    this.progressRepository,
+    this.grammarScreenBuilder,
+    this.vocabularyScreenBuilder,
+    this.idiomsScreenBuilder,
+    this.spotScreenBuilder,
+  });
 
-  final ProgressStorage? progressStorage;
+  final ProgressRepository? progressRepository;
+  final Widget Function()? grammarScreenBuilder;
+  final Widget Function()? vocabularyScreenBuilder;
+  final Widget Function()? idiomsScreenBuilder;
+  final Widget Function()? spotScreenBuilder;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -38,9 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _init() async {
     try {
       final totals = await DiscoveryCatalog.totalNotionsByGame();
-      final progress = await ProgressRepository.load(
-        storage: widget.progressStorage,
-      );
+      final progress =
+          widget.progressRepository ?? await ProgressRepository.load();
       if (!mounted) return;
       setState(() {
         _totals = totals;
@@ -51,11 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  int? _discoveredFor(String gameId) => _totals == null
-      ? null
-      : (_progress?.forGame(gameId).countStarted() ?? 0);
+  int _discoveredFor(String gameId) =>
+      _progress?.forGame(gameId).countStarted() ?? 0;
 
-  int? _totalFor(String gameId) => _totals?[gameId];
+  int _totalFor(String gameId) => _totals?[gameId] ?? 0;
 
   @override
   Widget build(BuildContext context) {
@@ -74,34 +83,48 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: LexioSpacing.sectionGap),
               _buildGameCard(
                 title: 'Corect sau greșit?',
+                semanticLabel: 'Joc 01: Corect sau greșit?',
                 accentColor: LexioColors.primary,
                 mutedColor: LexioColors.primaryMuted,
                 gameId: 'grammar',
-                screen: const GrammarScreen(),
+                screen:
+                    widget.grammarScreenBuilder?.call() ??
+                    GrammarScreen(progressRepository: widget.progressRepository),
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
                 title: 'Ce înseamnă?',
+                semanticLabel: 'Joc 02: Ce înseamnă?',
                 accentColor: LexioColors.secondary,
                 mutedColor: LexioColors.secondaryMuted,
                 gameId: 'vocabulary',
-                screen: const VocabularyScreen(),
+                screen:
+                    widget.vocabularyScreenBuilder?.call() ??
+                    VocabularyScreen(
+                      progressRepository: widget.progressRepository,
+                    ),
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
                 title: 'Vorba vine',
+                semanticLabel: 'Joc 03: Vorba vine',
                 accentColor: LexioColors.teal,
                 mutedColor: LexioColors.tealMuted,
                 gameId: 'idioms',
-                screen: const IdiomsScreen(),
+                screen:
+                    widget.idiomsScreenBuilder?.call() ??
+                    IdiomsScreen(progressRepository: widget.progressRepository),
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
                 title: 'Găsește greșeala',
+                semanticLabel: 'Joc 04: Găsește greșeala',
                 accentColor: LexioColors.accent,
                 mutedColor: LexioColors.accentMuted,
                 gameId: 'spot',
-                screen: const SpotScreen(),
+                screen:
+                    widget.spotScreenBuilder?.call() ??
+                    SpotScreen(progressRepository: widget.progressRepository),
               ),
               const SizedBox(height: LexioSpacing.xxl),
               _buildLegalFooter(context),
@@ -114,20 +137,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildGameCard({
     required String title,
+    required String semanticLabel,
     required Color accentColor,
     required Color mutedColor,
     required String gameId,
     required Widget screen,
   }) {
-    final discovered = _discoveredFor(gameId) ?? 0;
-    final total = _totalFor(gameId) ?? 0;
-
     return LexioGameCard(
       title: title,
+      semanticLabel: semanticLabel,
       accentColor: accentColor,
       mutedColor: mutedColor,
-      discovered: discovered,
-      total: total,
+      discovered: _discoveredFor(gameId),
+      total: _totalFor(gameId),
       onTap: () => _openGame(context, gameId, screen),
     );
   }
@@ -196,9 +218,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _reloadProgress() async {
     try {
-      final progress = await ProgressRepository.load(
-        storage: widget.progressStorage,
-      );
+      final progress =
+          widget.progressRepository ?? await ProgressRepository.load();
       if (!mounted) return;
       setState(() {
         _progress = progress;
@@ -228,4 +249,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

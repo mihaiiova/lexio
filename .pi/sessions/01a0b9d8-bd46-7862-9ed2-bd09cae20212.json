@@ -1,0 +1,74 @@
+{
+  "activeSpec": null,
+  "branch": "staging",
+  "changedFiles": [
+    ".pi/artifacts/",
+    ".pi/extensions/",
+    ".pi/pi-config.json",
+    ".pi/sessions/",
+    ".pi/settings.json",
+    ".pi/state.json",
+    ".pi/subagents/",
+    "revision-log/2026-09-17-correct-answer-progress.md",
+    "revision-log/2026-09-18-spec-review-46.md",
+    "screenshots/"
+  ],
+  "checkResults": null,
+  "cwd": "/Users/m/dev/lexio",
+  "finalizedAt": "2026-09-19T13:26:57.610Z",
+  "model": {
+    "model": "gpt-5.6-luna",
+    "provider": "openai-codex",
+    "thinkingLevel": "high"
+  },
+  "outcome": null,
+  "phase": null,
+  "piSessionFile": "/Users/m/.pi/agent/sessions/--Users-m-dev-lexio--/2026-09-19T13-26-24-326Z_01a0b9d8-bd46-7862-9ed2-bd09cae20212.jsonl",
+  "piSessionId": "01a0b9d8-bd46-7862-9ed2-bd09cae20212",
+  "provenance": {
+    "configHash": "594d85cf6221321a542067b093b6fc535bf991da56c028579236a82135be2445",
+    "piConfigCommit": "2f7226a2a3f16bb3ac7e4c0d8ada5866130fc780",
+    "piSessionFormatVersion": 3,
+    "piVersion": "0.84.1",
+    "productVersion": null
+  },
+  "schemaVersion": 1,
+  "sessionId": "01a0b9d8-bd46-7862-9ed2-bd09cae20212",
+  "startedAt": "2026-09-19T13:26:25.295Z",
+  "subagentModels": {
+    "oracle": {
+      "model": "deepseek/deepseek-v4-pro"
+    },
+    "reviewer": {
+      "model": "deepseek/deepseek-flash"
+    },
+    "scout": {
+      "model": "deepseek/deepseek-flash"
+    },
+    "worker": {
+      "model": "deepseek/deepseek-v4-pro"
+    }
+  },
+  "subagentUsage": {
+    "agents": [
+      {
+        "agent": "reviewer",
+        "cost": 0.107010084,
+        "runs": 4
+      },
+      {
+        "agent": "scout",
+        "cost": 0.042067968,
+        "runs": 1
+      },
+      {
+        "agent": "worker",
+        "cost": 0.6630822000000001,
+        "runs": 1
+      }
+    ],
+    "totalCost": 0.8121602520000001
+  },
+  "summary": null,
+  "usage": null
+}

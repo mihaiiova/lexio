@@ -1,103 +1,125 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lexio/analytics/game_session_analytics.dart';
+
+// ignore: avoid_relative_lib_imports
+import '../../lib/analytics/game_session_analytics.dart';
 
 void main() {
-  group('GameSessionAnalytics', () {
-    testWidgets('abandons an unfinished backgrounded session exactly once', (
-      tester,
-    ) async {
-      final sink = _RecordingSessionSink();
-      final session = GameSessionAnalytics(
-        'grammar',
-        sink: sink,
-        backgroundAbandonmentDelay: const Duration(milliseconds: 30),
-      )..start();
+  test('records completion with score and a non-negative duration', () {
+    final sink = _RecordingSink();
+    final session = GameSessionAnalytics('grammar', sink: sink);
 
-      session.didChangeAppLifecycleState(AppLifecycleState.hidden);
-      session.didChangeAppLifecycleState(AppLifecycleState.paused);
-      await tester.pump(const Duration(milliseconds: 31));
+    session.start();
+    session.complete(7);
 
-      expect(sink.abandonedGameIds, ['grammar']);
-      session.complete(100);
-      await tester.pump();
-      expect(sink.completedGameIds, isEmpty);
+    expect(sink.completions, hasLength(1));
+    final completion = sink.completions.single;
+    expect(completion.gameId, 'grammar');
+    expect(completion.score, 7);
+    expect(completion.durationSeconds, greaterThanOrEqualTo(0));
+    expect(sink.abandonments, isEmpty);
+  });
 
-      session.dispose();
-    });
+  test('records abandonment when disposed unfinished', () {
+    final sink = _RecordingSink();
+    final session = GameSessionAnalytics('grammar', sink: sink);
 
-    testWidgets('resuming before the timeout keeps the session completable', (
-      tester,
-    ) async {
-      final sink = _RecordingSessionSink();
-      final session = GameSessionAnalytics(
-        'vocabulary',
-        sink: sink,
-        backgroundAbandonmentDelay: const Duration(milliseconds: 30),
-      )..start();
+    session.start();
+    session.dispose();
 
-      session.didChangeAppLifecycleState(AppLifecycleState.paused);
-      await tester.pump(const Duration(milliseconds: 10));
-      session.didChangeAppLifecycleState(AppLifecycleState.resumed);
-      await tester.pump(const Duration(milliseconds: 30));
-      session.complete(200);
-      await tester.pump();
+    expect(sink.abandonments, ['grammar']);
+    expect(sink.completions, isEmpty);
+  });
 
-      expect(sink.abandonedGameIds, isEmpty);
-      expect(sink.completedGameIds, ['vocabulary']);
+  test('does not record abandonment after completion', () {
+    final sink = _RecordingSink();
+    final session = GameSessionAnalytics('grammar', sink: sink);
 
-      session.dispose();
-    });
+    session.start();
+    session.complete(3);
+    session.dispose();
 
-    testWidgets('completed sessions never emit abandonment events', (
-      tester,
-    ) async {
-      final sink = _RecordingSessionSink();
-      final session = GameSessionAnalytics(
-        'idioms',
-        sink: sink,
-        backgroundAbandonmentDelay: const Duration(milliseconds: 30),
-      )..start();
+    expect(sink.completions, hasLength(1));
+    expect(sink.abandonments, isEmpty);
+  });
 
-      session.complete(300);
-      session.didChangeAppLifecycleState(AppLifecycleState.paused);
-      await tester.pump(const Duration(milliseconds: 31));
-      session.dispose();
+  test('does not record anything before start', () {
+    final sink = _RecordingSink();
+    final session = GameSessionAnalytics('grammar', sink: sink);
 
-      expect(sink.completedGameIds, ['idioms']);
-      expect(sink.abandonedGameIds, isEmpty);
-    });
+    session.dispose();
 
-    testWidgets('disposing an unfinished session abandons it exactly once', (
-      tester,
-    ) async {
-      final sink = _RecordingSessionSink();
-      final session = GameSessionAnalytics('spot', sink: sink)..start();
+    expect(sink.completions, isEmpty);
+    expect(sink.abandonments, isEmpty);
+  });
 
-      session.dispose();
-      session.dispose();
-      await tester.pump();
+  testWidgets('records abandonment after the background delay', (tester) async {
+    final sink = _RecordingSink();
+    final session = GameSessionAnalytics(
+      'spot',
+      sink: sink,
+      backgroundAbandonmentDelay: const Duration(minutes: 1),
+    );
 
-      expect(sink.abandonedGameIds, ['spot']);
-    });
+    session.start();
+    session.markBackgrounded();
+    await tester.pump(const Duration(minutes: 1));
+
+    expect(sink.abandonments, ['spot']);
+    expect(sink.completions, isEmpty);
+  });
+
+  testWidgets('resuming before the delay prevents abandonment', (
+    tester,
+  ) async {
+    final sink = _RecordingSink();
+    final session = GameSessionAnalytics(
+      'spot',
+      sink: sink,
+      backgroundAbandonmentDelay: const Duration(minutes: 1),
+    );
+
+    session.start();
+    session.markBackgrounded();
+    await tester.pump(const Duration(seconds: 30));
+    session.markResumed();
+    await tester.pump(const Duration(minutes: 2));
+
+    expect(sink.abandonments, isEmpty);
+
+    session.dispose();
+    expect(sink.abandonments, ['spot']);
   });
 }
 
-final class _RecordingSessionSink implements GameSessionAnalyticsSink {
-  final List<String> completedGameIds = [];
-  final List<String> abandonedGameIds = [];
+final class _RecordingSink extends GameSessionAnalyticsSink {
+  final List<_Completion> completions = [];
+  final List<String> abandonments = [];
 
   @override
-  Future<void> logAbandoned(String gameId) async {
-    abandonedGameIds.add(gameId);
+  void recordCompletion(String gameId, int score, int durationSeconds) {
+    completions.add(
+      _Completion(
+        gameId: gameId,
+        score: score,
+        durationSeconds: durationSeconds,
+      ),
+    );
   }
 
   @override
-  Future<void> logCompleted(
-    String gameId, {
-    required int score,
-    required int durationSeconds,
-  }) async {
-    completedGameIds.add(gameId);
+  void recordAbandonment(String gameId) {
+    abandonments.add(gameId);
   }
+}
+
+final class _Completion {
+  const _Completion({
+    required this.gameId,
+    required this.score,
+    required this.durationSeconds,
+  });
+
+  final String gameId;
+  final int score;
+  final int durationSeconds;
 }

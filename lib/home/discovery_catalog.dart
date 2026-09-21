@@ -3,9 +3,6 @@ import '../games/idioms/idioms_content.dart';
 import '../games/spot/spot_content.dart';
 import '../games/vocabulary/vocabulary_content.dart';
 
-/// Single source of truth that maps a game id to its total discoverable
-/// notion count. Content loaders own the actual notion enumeration; this
-/// helper only aggregates them for the home screen.
 final class DiscoveryCatalog {
   DiscoveryCatalog._();
 

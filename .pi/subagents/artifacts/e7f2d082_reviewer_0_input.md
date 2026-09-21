@@ -1,0 +1,9 @@
+# Task for reviewer
+
+Review the current uncommitted working-tree diff in /Users/m/dev/lexio against baseline HEAD (5dddcbb3177682d24517c653e5b100a0c41ccc28). This is a working-tree review, so use: git diff HEAD; git diff --no-index /dev/null test/progress/progress_repository_test.dart || true; git status --short. Commit range HEAD..HEAD is empty because the requested changes are uncommitted. Do not modify files.
+
+Standards source: /Users/m/dev/lexio/AGENTS.md. Relevant rules: code/comments/docs English; files snake_case; PascalCase types/camelCase members/private prefix _; const where possible/final over var; relative internal imports; state local and immutable state models; tests mirror lib structure; flutter analyze must pass.
+
+Smell baseline: Mysterious Name—unclear name, rename. Duplicated Code—same logic in multiple hunks, extract it. Feature Envy—method reaches into another object’s data, move it. Data Clumps—same fields/parameters travel together, bundle them. Primitive Obsession—primitive/string represents a domain concept, give it a type. Repeated Switches—repeated cascade, centralize or polymorphism. Shotgun Surgery—one logical change scatters, gather it. Divergent Change—module changes for unrelated reasons, split it. Speculative Generality—abstraction/hook no current need, delete it. Message Chains—long navigation, hide behind first object. Middle Man—mostly delegation, cut it. Refused Bequest—implementer ignores inherited contract, use composition. These are judgment calls, not hard violations; repo standards override them. Skip tooling-enforced issues.
+
+Report, under 400 words: per file/hunk, (a) documented standard violations with AGENTS.md rule, (b) baseline smells with quoted hunk. Distinguish hard violations from judgment calls.

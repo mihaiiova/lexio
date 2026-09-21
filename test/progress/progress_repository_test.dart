@@ -1,183 +1,200 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lexio/progress/learning_item.dart';
-import 'package:lexio/progress/user_progress.dart';
+
+// ignore: avoid_relative_lib_imports
+import '../../lib/progress/learning_item.dart';
+// ignore: avoid_relative_lib_imports
+import '../../lib/progress/user_progress.dart';
 
 void main() {
-  group('ProgressRepository persistence', () {
-    test('writes the latest snapshot after rapid sequential answers', () async {
-      final storage = _ControlledProgressStorage();
-      final repository = ProgressRepository(storage: storage);
-
-      final first = repository.recordAnswer(
-        gameId: 'vocabulary',
-        notionId: 'first',
-        isCorrect: true,
-      );
-      final second = repository.recordAnswer(
-        gameId: 'vocabulary',
-        notionId: 'second',
-        isCorrect: false,
+  group('ProgressRepository', () {
+    test('loads persisted progress from storage', () async {
+      final storage = _MemoryProgressStorage();
+      await storage.write(
+        const UserProgress().recordAnswer(
+          gameId: 'grammar',
+          notionId: 'n_loaded',
+          isCorrect: true,
+          today: 100,
+        ).toJson(),
       );
 
-      await _flushMicrotasks();
-      expect(storage.pendingWrites, hasLength(1));
+      final repo = await ProgressRepository.load(storage: storage);
 
-      storage.completeNextWrite();
-      await _flushMicrotasks();
-      expect(storage.pendingWrites, hasLength(2));
-
-      storage.completeNextWrite();
-      await Future.wait([first, second]);
-
-      final saved = UserProgress.fromJson(storage.value!);
-      expect(
-        saved.forGame('vocabulary').items.keys,
-        containsAll(['first', 'second']),
-      );
+      final item = repo.forGame('grammar').progressFor('n_loaded');
+      expect(item.state, LearningItemState.learning);
+      expect(item.nextReviewDay, 101);
     });
 
-    test('flush completes after pending writes finish', () async {
-      final storage = _ControlledProgressStorage();
-      final repository = ProgressRepository(storage: storage);
+    test('flush persists an ignored recordAnswer future', () async {
+      final storage = _BlockingProgressStorage();
+      final repo = await ProgressRepository.load(storage: storage);
 
-      final write = repository.recordAnswer(
-        gameId: 'vocabulary',
-        notionId: 'first',
-        isCorrect: true,
-      );
-
-      await _flushMicrotasks();
-      expect(storage.pendingWrites, hasLength(1));
-      storage.completeNextWrite();
-
-      await repository.flush();
-
-      final saved = UserProgress.fromJson(storage.value!);
-      expect(saved.forGame('vocabulary').items.keys, contains('first'));
-      await write;
-    });
-
-    test('keeps in-memory progress when a storage write fails', () async {
-      final repository = ProgressRepository(storage: _FailingProgressStorage());
-
-      await repository.recordAnswer(
+      repo.recordAnswer(
         gameId: 'grammar',
-        notionId: 'agreement',
+        notionId: 'n_flushed',
         isCorrect: true,
       );
 
+      final flush = repo.flush();
+      var completed = false;
+      flush.whenComplete(() => completed = true);
+      await Future<void>.delayed(Duration.zero);
+      expect(completed, isFalse);
+
+      storage.pendingWrites.single.complete();
+      await flush;
+
+      final persisted = UserProgress.fromJson(storage.value!);
       expect(
-        repository.forGame('grammar').progressFor('agreement').state,
+        persisted.forGame('grammar').progressFor('n_flushed').state,
         LearningItemState.learning,
       );
     });
 
-    test('persists a newer snapshot after an earlier write fails', () async {
-      final storage = _FailFirstProgressStorage();
-      final repository = ProgressRepository(storage: storage);
+    test('failed write is swallowed and a later retry persists', () async {
+      final storage = _MemoryProgressStorage()..failuresRemaining = 1;
+      final repo = await ProgressRepository.load(storage: storage);
 
-      await repository.recordAnswer(
-        gameId: 'spot',
-        notionId: 'first',
+      await repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_failed',
         isCorrect: true,
       );
-      await repository.recordAnswer(
-        gameId: 'spot',
-        notionId: 'second',
-        isCorrect: false,
-      );
 
-      final saved = UserProgress.fromJson(storage.value!);
+      await repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_failed',
+        isCorrect: true,
+      );
+      await repo.flush();
+
+      final persisted = UserProgress.fromJson(storage.value!);
       expect(
-        saved.forGame('spot').items.keys,
-        containsAll(['first', 'second']),
+        persisted.forGame('grammar').progressFor('n_failed').state,
+        LearningItemState.learning,
       );
     });
 
-    test('loads a compatible stored snapshot', () async {
-      final stored = const UserProgress().recordAnswer(
-        gameId: 'idioms',
-        notionId: 'idiom_1',
-        isCorrect: true,
-        today: 100,
-      );
-      final repository = await ProgressRepository.load(
-        storage: _StoredProgressStorage(stored.toJson()),
+    test('rapid answer sequence persists every answer in order', () async {
+      final storage = _MemoryProgressStorage();
+      final repo = await ProgressRepository.load(storage: storage);
+
+      for (var i = 0; i < 5; i++) {
+        repo.recordAnswer(
+          gameId: 'grammar',
+          notionId: 'n_$i',
+          isCorrect: true,
+        );
+      }
+      await repo.flush();
+
+      expect(storage.writes, hasLength(5));
+      for (var i = 0; i < 5; i++) {
+        final snapshot = UserProgress.fromJson(storage.writes[i]);
+        expect(snapshot.forGame('grammar').items, hasLength(i + 1));
+      }
+    });
+
+    test('recordAnswers persists multiple notions in one flush', () async {
+      final storage = _MemoryProgressStorage();
+      final repo = await ProgressRepository.load(storage: storage);
+
+      repo.recordAnswers(gameId: 'spot', notionResults: {
+        'n_a': true,
+        'n_b': false,
+      });
+      await repo.flush();
+
+      final persisted = UserProgress.fromJson(storage.value!);
+      final spot = persisted.forGame('spot');
+      expect(spot.items, hasLength(2));
+      expect(spot.progressFor('n_a').state, LearningItemState.learning);
+      expect(spot.progressFor('n_b').state, LearningItemState.learning);
+    });
+
+    test('load recovers from a failing storage read', () async {
+      final repo = await ProgressRepository.load(
+        storage: _FailingReadProgressStorage(),
       );
 
-      expect(
-        repository.forGame('idioms').progressFor('idiom_1').nextReviewDay,
-        101,
+      expect(repo.forGame('grammar').items, isEmpty);
+      await repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_memory_only',
+        isCorrect: true,
       );
+      await repo.flush();
+    });
+
+    test('writes are serialized one at a time', () async {
+      final storage = _BlockingProgressStorage();
+      final repo = await ProgressRepository.load(storage: storage);
+
+      repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_first',
+        isCorrect: true,
+      );
+      repo.recordAnswer(
+        gameId: 'grammar',
+        notionId: 'n_second',
+        isCorrect: true,
+      );
+
+      await Future<void>.delayed(Duration.zero);
+      expect(storage.pendingWrites, hasLength(1));
+
+      storage.pendingWrites.first.complete();
+      await Future<void>.delayed(Duration.zero);
+      expect(storage.pendingWrites, hasLength(2));
+
+      storage.pendingWrites.last.complete();
+      await repo.flush();
     });
   });
 }
 
-Future<void> _flushMicrotasks() => Future<void>.delayed(Duration.zero);
-
-final class _ControlledProgressStorage implements ProgressStorage {
-  final List<_PendingWrite> pendingWrites = [];
+final class _MemoryProgressStorage implements ProgressStorage {
   String? value;
+  int failuresRemaining = 0;
+  final List<String> writes = [];
 
   @override
-  Future<String?> read(String key) async => value;
+  Future<String?> read() async => value;
 
   @override
-  Future<void> write(String key, String value) {
-    final pending = _PendingWrite(value);
-    pendingWrites.add(pending);
-    return pending.completer.future.then((_) => this.value = value);
-  }
-
-  void completeNextWrite() => pendingWrites
-      .firstWhere((pending) => !pending.completer.isCompleted)
-      .completer
-      .complete();
-}
-
-final class _FailingProgressStorage implements ProgressStorage {
-  @override
-  Future<String?> read(String key) async => null;
-
-  @override
-  Future<void> write(String key, String value) =>
-      Future<void>.error(StateError('Storage unavailable'));
-}
-
-final class _FailFirstProgressStorage implements ProgressStorage {
-  int _writeCount = 0;
-  String? value;
-
-  @override
-  Future<String?> read(String key) async => value;
-
-  @override
-  Future<void> write(String key, String value) {
-    if (_writeCount++ == 0) {
-      return Future<void>.error(StateError('Storage unavailable'));
+  Future<void> write(String updated) async {
+    if (failuresRemaining > 0) {
+      failuresRemaining--;
+      throw Exception('write failed');
     }
-    this.value = value;
-    return Future<void>.value();
+    writes.add(updated);
+    value = updated;
   }
 }
 
-final class _StoredProgressStorage implements ProgressStorage {
-  final String storedValue;
-
-  const _StoredProgressStorage(this.storedValue);
-
-  @override
-  Future<String?> read(String key) async => storedValue;
+final class _BlockingProgressStorage implements ProgressStorage {
+  String? value;
+  final List<Completer<void>> pendingWrites = [];
 
   @override
-  Future<void> write(String key, String value) async {}
+  Future<String?> read() async => value;
+
+  @override
+  Future<void> write(String updated) {
+    value = updated;
+    final completer = Completer<void>();
+    pendingWrites.add(completer);
+    return completer.future;
+  }
 }
 
-final class _PendingWrite {
-  final String value;
-  final Completer<void> completer = Completer<void>();
+final class _FailingReadProgressStorage implements ProgressStorage {
+  @override
+  Future<String?> read() async => throw Exception('read failed');
 
-  _PendingWrite(this.value);
+  @override
+  Future<void> write(String updated) async {}
 }

@@ -11,9 +11,7 @@ import '../../../lib/design/theme.dart';
 import '../../../lib/design/typography.dart';
 
 void main() {
-  testWidgets('renders progress label, title, and chevron and handles tap', (
-    tester,
-  ) async {
+  testWidgets('renders card content and handles tap', (tester) async {
     var tapped = false;
 
     await tester.pumpWidget(
@@ -35,78 +33,43 @@ void main() {
     expect(find.text('12/234'), findsOneWidget);
     expect(find.text('Corect sau greșit?'), findsOneWidget);
     expect(find.byIcon(Icons.arrow_forward), findsOneWidget);
-
-    final titleText = tester.widget<Text>(find.text('Corect sau greșit?'));
-    expect(titleText.style?.fontSize, LexioTextStyles.displayMedium.fontSize);
+    expect(
+      tester.widget<Text>(find.text('Corect sau greșit?')).style?.fontSize,
+      LexioTextStyles.displayMedium.fontSize,
+    );
 
     await tester.tap(find.text('Corect sau greșit?'));
     expect(tapped, isTrue);
   });
 
-  testWidgets('fills width proportional to progress', (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: LexioTheme.light,
-        home: Scaffold(
-          body: LexioGameCard(
-            title: 'Corect sau greșit?',
-            accentColor: LexioColors.primary,
-            mutedColor: LexioColors.blueMuted,
-            discovered: 60,
-            total: 100,
-            onTap: () {},
+  testWidgets('fills width proportionally and clamps bounds', (tester) async {
+    Future<void> pumpCard(int discovered, int total) {
+      return tester.pumpWidget(
+        MaterialApp(
+          theme: LexioTheme.light,
+          home: Scaffold(
+            body: LexioGameCard(
+              title: 'Corect sau greșit?',
+              accentColor: LexioColors.primary,
+              mutedColor: LexioColors.blueMuted,
+              discovered: discovered,
+              total: total,
+              onTap: () {},
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
+
+    await pumpCard(60, 100);
     await tester.pumpAndSettle();
-
-    final fill = tester.widget<FractionallySizedBox>(
-      find.byKey(const ValueKey('game_card_fill')),
-    );
-    expect(fill.widthFactor, closeTo(0.6, 0.001));
-  });
-
-  testWidgets('clamps progress and fills zero and full', (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: LexioTheme.light,
-        home: Scaffold(
-          body: LexioGameCard(
-            title: 'Corect sau greșit?',
-            accentColor: LexioColors.primary,
-            mutedColor: LexioColors.blueMuted,
-            discovered: 0,
-            total: 100,
-            onTap: () {},
-          ),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
     var fill = tester.widget<FractionallySizedBox>(
       find.byKey(const ValueKey('game_card_fill')),
     );
-    expect(fill.widthFactor, 0.0);
+    expect(fill.widthFactor, closeTo(0.6, 0.001));
 
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: LexioTheme.light,
-        home: Scaffold(
-          body: LexioGameCard(
-            title: 'Corect sau greșit?',
-            accentColor: LexioColors.primary,
-            mutedColor: LexioColors.blueMuted,
-            discovered: 150,
-            total: 100,
-            onTap: () {},
-          ),
-        ),
-      ),
-    );
+    await pumpCard(150, 100);
     await tester.pumpAndSettle();
-
     fill = tester.widget<FractionallySizedBox>(
       find.byKey(const ValueKey('game_card_fill')),
     );
@@ -131,7 +94,6 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
 
     expect(
       find.bySemanticsLabel('Joc Corect sau greșit?, progres 12 din 234'),

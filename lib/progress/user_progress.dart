@@ -8,7 +8,8 @@ import 'learning_item.dart';
 
 int _todayDay() {
   final now = DateTime.now();
-  return DateTime.utc(now.year, now.month, now.day).millisecondsSinceEpoch ~/
+  return DateTime.utc(now.year, now.month, now.day)
+          .millisecondsSinceEpoch ~/
       Duration.millisecondsPerDay;
 }
 
@@ -29,7 +30,6 @@ final class GameProgress {
   int countMastered() =>
       items.values.where((item) => item.state == LearningItemState.mastered).length;
 
-  /// Notions the user has answered at least once (anything past `newItem`).
   int countStarted() =>
       items.values.where((item) => item.state != LearningItemState.newItem).length;
 
@@ -53,8 +53,10 @@ final class GameProgress {
     final itemsJson = json['items'] as Map<String, dynamic>? ?? {};
     return GameProgress(
       items: itemsJson.map(
-        (id, data) =>
-            MapEntry(id, LearningItem.fromJson(data as Map<String, dynamic>)),
+        (id, data) => MapEntry(
+          id,
+          LearningItem.fromJson(data as Map<String, dynamic>),
+        ),
       ),
     );
   }
@@ -65,7 +67,8 @@ final class UserProgress {
 
   const UserProgress({this.games = const {}});
 
-  GameProgress forGame(String gameId) => games[gameId] ?? const GameProgress();
+  GameProgress forGame(String gameId) =>
+      games[gameId] ?? const GameProgress();
 
   UserProgress recordAnswer({
     required String gameId,
@@ -74,9 +77,11 @@ final class UserProgress {
     required int today,
   }) {
     final updatedGames = Map<String, GameProgress>.from(games);
-    updatedGames[gameId] = forGame(
-      gameId,
-    ).recordAnswer(notionId: notionId, isCorrect: isCorrect, today: today);
+    updatedGames[gameId] = forGame(gameId).recordAnswer(
+      notionId: notionId,
+      isCorrect: isCorrect,
+      today: today,
+    );
     return UserProgress(games: updatedGames);
   }
 
@@ -98,51 +103,50 @@ final class UserProgress {
   }
 }
 
-abstract interface class ProgressStorage {
-  Future<String?> read(String key);
-
-  Future<void> write(String key, String value);
+abstract class ProgressStorage {
+  Future<String?> read();
+  Future<void> write(String value);
 }
 
 final class SharedPreferencesProgressStorage implements ProgressStorage {
+  SharedPreferencesProgressStorage(
+    this._key, [
+    SharedPreferencesAsync? preferences,
+  ]) : _preferences = preferences ?? SharedPreferencesAsync();
+
+  final String _key;
   final SharedPreferencesAsync _preferences;
 
-  SharedPreferencesProgressStorage(this._preferences);
+  @override
+  Future<String?> read() => _preferences.getString(_key);
 
   @override
-  Future<String?> read(String key) => _preferences.getString(key);
-
-  @override
-  Future<void> write(String key, String value) =>
-      _preferences.setString(key, value);
+  Future<void> write(String value) => _preferences.setString(_key, value);
 }
 
 final class ProgressRepository {
   static const _storageKey = 'user_progress_v2';
 
-  ProgressRepository({
-    ProgressStorage? storage,
-    UserProgress progress = const UserProgress(),
-  }) : this._(storage: storage, progress: progress);
-
-  ProgressRepository._({this._storage, required this._progress});
+  ProgressRepository._(this._storage, this._progress);
 
   final ProgressStorage? _storage;
   UserProgress _progress;
-  Future<void> _pendingWrite = Future<void>.value();
+  Future<void> _writeQueue = Future<void>.value();
 
   static Future<ProgressRepository> load({ProgressStorage? storage}) async {
+    ProgressStorage? effectiveStorage = storage;
+    UserProgress progress;
     try {
-      final effectiveStorage =
-          storage ?? SharedPreferencesProgressStorage(SharedPreferencesAsync());
-      final source = await effectiveStorage.read(_storageKey);
-      final progress = source == null
+      effectiveStorage ??= SharedPreferencesProgressStorage(_storageKey);
+      final source = await effectiveStorage.read();
+      progress = source == null
           ? const UserProgress()
           : UserProgress.fromJson(source);
-      return ProgressRepository(storage: effectiveStorage, progress: progress);
     } catch (_) {
-      return ProgressRepository();
+      effectiveStorage = null;
+      progress = const UserProgress();
     }
+    return ProgressRepository._(effectiveStorage, progress);
   }
 
   GameProgress forGame(String gameId) => _progress.forGame(gameId);
@@ -152,12 +156,11 @@ final class ProgressRepository {
     required String notionId,
     required bool isCorrect,
   }) {
-    final today = _todayDay();
     _progress = _progress.recordAnswer(
       gameId: gameId,
       notionId: notionId,
       isCorrect: isCorrect,
-      today: today,
+      today: _todayDay(),
     );
     return _enqueueWrite();
   }
@@ -180,21 +183,20 @@ final class ProgressRepository {
     return _enqueueWrite();
   }
 
-  /// Completes once every previously enqueued write has finished.
-  Future<void> flush() => _pendingWrite;
+  Future<void> flush() => _writeQueue;
 
   Future<void> _enqueueWrite() {
+    final storage = _storage;
+    if (storage == null) return Future<void>.value();
     final snapshot = _progress.toJson();
-    _pendingWrite = _pendingWrite.then((_) => _writeSnapshot(snapshot));
-    return _pendingWrite;
-  }
-
-  Future<void> _writeSnapshot(String snapshot) async {
-    try {
-      await _storage?.write(_storageKey, snapshot);
-    } catch (error) {
-      debugPrint('ProgressRepository: failed to persist progress: $error');
-    }
+    _writeQueue = _writeQueue.then((_) async {
+      try {
+        await storage.write(snapshot);
+      } catch (error) {
+        debugPrint('ProgressRepository: failed to persist progress: $error');
+      }
+    });
+    return _writeQueue;
   }
 }
 

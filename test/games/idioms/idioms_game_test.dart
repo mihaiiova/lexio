@@ -56,7 +56,18 @@ void main() {
       expect(state.next(), same(state));
     });
 
-    test('finishes after the last answered exercise', () {
+    test('progress counts only correct answers', () {
+      var state = IdiomsGameState(exercises: exercises);
+      state = state.answer(1).next();
+      state = state.answer(0).next();
+
+      expect(state.isFinished, isTrue);
+      expect(state.correctCount, 1);
+      expect(state.totalAnswered, 2);
+      expect(state.progress, 0.5);
+    });
+
+    test('progress is complete only after every correct answer', () {
       var state = IdiomsGameState(exercises: exercises);
       state = state.answer(1).next();
       state = state.answer(2).next();

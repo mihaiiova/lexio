@@ -1,126 +1,115 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
-
 import 'analytics_service.dart';
 
-abstract interface class GameSessionAnalyticsSink {
-  Future<void> logCompleted(
-    String gameId, {
-    required int score,
-    required int durationSeconds,
-  });
-
-  Future<void> logAbandoned(String gameId);
-}
-
-final class _AnalyticsServiceSessionSink implements GameSessionAnalyticsSink {
-  const _AnalyticsServiceSessionSink();
-
-  @override
-  Future<void> logCompleted(
-    String gameId, {
-    required int score,
-    required int durationSeconds,
-  }) => AnalyticsService.logGameCompleted(
-    gameId,
-    score: score,
-    durationSeconds: durationSeconds,
-  );
-
-  @override
-  Future<void> logAbandoned(String gameId) =>
-      AnalyticsService.logGameAbandoned(gameId);
-}
-
-/// Tracks a single game session and emits exactly one analytics event.
+/// Receives lifecycle events emitted by [GameSessionAnalytics].
 ///
-/// A session is abandoned after 30 seconds in a hidden or paused state. A
-/// resumed session cancels the pending abandonment and remains completable.
-class GameSessionAnalytics with WidgetsBindingObserver {
-  GameSessionAnalytics(
-    this.gameId, {
-    GameSessionAnalyticsSink? sink,
-    this.backgroundAbandonmentDelay = const Duration(seconds: 30),
-  }) : _sink = sink ?? const _AnalyticsServiceSessionSink();
+/// The production implementation forwards to [AnalyticsService]; tests inject a
+/// recording sink so lifecycle events are deterministic and observable.
+abstract class GameSessionAnalyticsSink {
+  const GameSessionAnalyticsSink();
 
-  final String gameId;
-  final Duration backgroundAbandonmentDelay;
-  final GameSessionAnalyticsSink _sink;
-  final Stopwatch _stopwatch = Stopwatch();
-  Timer? _backgroundTimer;
-  bool _active = false;
-  bool _ended = false;
-  bool _isObservingLifecycle = false;
+  void recordCompletion(String gameId, int score, int durationSeconds);
+  void recordAbandonment(String gameId);
+}
 
-  void start() {
-    _backgroundTimer?.cancel();
-    _active = true;
-    _ended = false;
-    _stopwatch
-      ..reset()
-      ..start();
-    if (!_isObservingLifecycle) {
-      WidgetsBinding.instance.addObserver(this);
-      _isObservingLifecycle = true;
-    }
-  }
+/// Default sink that forwards events to the real [AnalyticsService].
+final class AnalyticsServiceSink extends GameSessionAnalyticsSink {
+  const AnalyticsServiceSink();
 
-  void complete(int score) {
-    if (!_active || _ended) return;
-    _end();
+  @override
+  void recordCompletion(String gameId, int score, int durationSeconds) {
     unawaited(
-      _sink.logCompleted(
+      AnalyticsService.logGameCompleted(
         gameId,
         score: score,
-        durationSeconds: _stopwatch.elapsed.inSeconds,
+        durationSeconds: durationSeconds,
       ),
     );
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (!_active || _ended) return;
+  void recordAbandonment(String gameId) {
+    unawaited(AnalyticsService.logGameAbandoned(gameId));
+  }
+}
 
-    switch (state) {
-      case AppLifecycleState.resumed:
-        _backgroundTimer?.cancel();
-        _backgroundTimer = null;
-        return;
-      case AppLifecycleState.hidden:
-      case AppLifecycleState.paused:
-        _scheduleBackgroundAbandonment();
-        return;
-      case AppLifecycleState.detached:
-        _abandon();
-        return;
-      case AppLifecycleState.inactive:
-        return;
-    }
+/// Tracks a single game session and emits exactly one analytics event:
+/// [AnalyticsService.logGameCompleted] on completion, or
+/// [AnalyticsService.logGameAbandoned] when the session ends unfinished.
+class GameSessionAnalytics {
+  GameSessionAnalytics(
+    this.gameId, {
+    GameSessionAnalyticsSink? sink,
+    this.backgroundAbandonmentDelay = const Duration(minutes: 5),
+  }) : _sink = sink ?? const AnalyticsServiceSink();
+
+  final String gameId;
+  final GameSessionAnalyticsSink _sink;
+
+  /// How long a session may stay backgrounded before it is abandoned.
+  final Duration backgroundAbandonmentDelay;
+
+  final Stopwatch _stopwatch = Stopwatch();
+  bool _active = false;
+  bool _ended = false;
+  bool _backgrounded = false;
+  Timer? _backgroundTimer;
+
+  void start() {
+    _active = true;
+    _ended = false;
+    _stopwatch
+      ..reset()
+      ..start();
   }
 
-  void dispose() => _abandon();
+  void complete(int score) {
+    if (!_active || _ended) return;
+    _ended = true;
+    _active = false;
+    _stopwatch.stop();
+    _cancelBackgroundTimer();
+    _sink.recordCompletion(gameId, score, _stopwatch.elapsed.inSeconds);
+  }
 
-  void _scheduleBackgroundAbandonment() {
-    if (_backgroundTimer != null) return;
-    _backgroundTimer = Timer(backgroundAbandonmentDelay, _abandon);
+  /// Marks the session as backgrounded; if it stays backgrounded past
+  /// [backgroundAbandonmentDelay] it is abandoned.
+  void markBackgrounded() {
+    if (!_active || _ended) return;
+    _backgrounded = true;
+    _cancelBackgroundTimer();
+    _backgroundTimer = Timer(
+      backgroundAbandonmentDelay,
+      _abandonIfStillBackgrounded,
+    );
+  }
+
+  void markResumed() {
+    _backgrounded = false;
+    _cancelBackgroundTimer();
+  }
+
+  void dispose() {
+    _abandon();
+  }
+
+  void _abandonIfStillBackgrounded() {
+    if (!_backgrounded) return;
+    _abandon();
   }
 
   void _abandon() {
     if (!_active || _ended) return;
-    _end();
-    unawaited(_sink.logAbandoned(gameId));
-  }
-
-  void _end() {
-    _backgroundTimer?.cancel();
-    _backgroundTimer = null;
     _ended = true;
     _active = false;
     _stopwatch.stop();
-    if (_isObservingLifecycle) {
-      WidgetsBinding.instance.removeObserver(this);
-      _isObservingLifecycle = false;
-    }
+    _cancelBackgroundTimer();
+    _sink.recordAbandonment(gameId);
+  }
+
+  void _cancelBackgroundTimer() {
+    _backgroundTimer?.cancel();
+    _backgroundTimer = null;
   }
 }

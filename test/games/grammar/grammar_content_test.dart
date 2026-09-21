@@ -1,23 +1,15 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: avoid_relative_lib_imports
 import '../../../lib/content/hyphenation_content.dart';
 // ignore: avoid_relative_lib_imports
 import '../../../lib/games/grammar/grammar_content.dart';
-// ignore: avoid_relative_lib_imports
-import '../../../lib/progress/user_progress.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  test('exposes 257 distinct notion IDs for discovery progress', () async {
-    final exercises = await GrammarContent.load();
-
-    final notions = GrammarContent.distinctNotionIds();
-
-    expect(notions, hasLength(257));
-    expect(notions, equals(exercises.map((e) => e.notionId).toSet()));
-  });
 
   test(
     'grammar content generates exercises from every hyphenation pair',
@@ -63,13 +55,33 @@ void main() {
     },
   );
 
-  test('adaptiveRound serves exercises easy-to-hard', () async {
-    await GrammarContent.load();
+  test(
+    'bundled grammar JSON satisfies the content validator contracts',
+    () async {
+      final jsonString = await rootBundle.loadString(
+        'lib/content/grammar_exercises.json',
+      );
+      final jsonList = json.decode(jsonString) as List<dynamic>;
 
-    final round = GrammarContent.adaptiveRound(15, const GameProgress());
+      final ids = <String>{};
+      for (final entry in jsonList) {
+        final map = entry as Map<String, dynamic>;
+        final id = map['id'] as String;
 
-    expect(round, hasLength(15));
-    final difficulties = round.map((e) => e.difficulty).toList();
-    expect(difficulties, List<int>.from(difficulties)..sort());
-  });
+        expect(id, isNotEmpty);
+        expect(ids.add(id), isTrue, reason: 'duplicate id: $id');
+        expect(map['sentence'], isNotEmpty, reason: id);
+        expect(map['isCorrect'], isA<bool>(), reason: id);
+        expect(map['explanation'], isNotEmpty, reason: id);
+        expect(map['category'], isNotEmpty, reason: id);
+        expect(map['topic'], isNotEmpty, reason: id);
+        expect(map['difficulty'], inInclusiveRange(1, 3), reason: id);
+
+        if (!(map['isCorrect'] as bool)) {
+          expect(map['correctSentence'], isNotNull, reason: id);
+          expect(map['correctSentence'], isNot(map['sentence']), reason: id);
+        }
+      }
+    },
+  );
 }

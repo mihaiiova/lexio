@@ -37,10 +37,12 @@ class LexioIncorrectAnswerCard extends StatelessWidget {
             children: [
               const Icon(Icons.cancel_outlined, color: LexioColors.error),
               const SizedBox(width: LexioSpacing.sm),
-              Text(
-                'Răspuns greșit',
-                style: LexioTextStyles.labelLarge.copyWith(
-                  color: LexioColors.error,
+              Expanded(
+                child: Text(
+                  'Răspuns greșit',
+                  style: LexioTextStyles.labelLarge.copyWith(
+                    color: LexioColors.error,
+                  ),
                 ),
               ),
             ],

@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../analytics/game_session_analytics.dart';
-import '../../design/animations.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_button.dart';
 import '../../design/components/lexio_feedback.dart';
 import '../../design/components/lexio_feedback_screen.dart';
-import '../../design/radius.dart';
-import '../../design/sizes.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
 import '../../progress/user_progress.dart';
@@ -20,9 +17,14 @@ import 'widgets/spot_summary.dart';
 import 'widgets/text_token.dart';
 
 class SpotScreen extends StatefulWidget {
-  const SpotScreen({super.key, this.texts});
+  const SpotScreen({
+    super.key,
+    this.texts,
+    this.progressRepository,
+  });
 
   final List<SpotText>? texts;
+  final ProgressRepository? progressRepository;
 
   @override
   State<SpotScreen> createState() => _SpotScreenState();
@@ -41,11 +43,23 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _init();
+    final texts = widget.texts;
+    if (texts != null) {
+      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+      _progress = widget.progressRepository;
+      _isLoading = false;
+      if (texts.isNotEmpty) {
+        _session.start();
+        _startTimer();
+      }
+    } else {
+      _init();
+    }
   }
 
   @override
   void dispose() {
+    unawaited(_progress?.flush());
     WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     _session.dispose();
@@ -56,6 +70,12 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _onResume();
+      _session.markResumed();
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      unawaited(_progress?.flush());
+      _session.markBackgrounded();
     }
   }
 
@@ -74,20 +94,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   }
 
   Future<void> _init() async {
-    final suppliedTexts = widget.texts;
-    if (suppliedTexts != null) {
-      _state = SpotGameState(texts: suppliedTexts, mode: SpotGameMode.timed);
-      _isLoading = false;
-      if (suppliedTexts.isNotEmpty) {
-        _session.start();
-        _startTimer();
-      }
-      return;
-    }
-
     try {
       await SpotContent.load();
-      final progress = await ProgressRepository.load();
+      final progress =
+          widget.progressRepository ?? await ProgressRepository.load();
       final texts = SpotContent.adaptiveSession(5, progress.forGame('spot'));
       if (!mounted) return;
       setState(() {
@@ -142,7 +152,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       setState(() {
         _state = outcome.state;
       });
-      Future.delayed(LexioDurations.feedback, () {
+      Future.delayed(const Duration(milliseconds: 450), () {
         if (mounted) {
           setState(() {
             _state = _state!.clearShaker();
@@ -167,10 +177,12 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   void _handlePlayAgain() {
     _timer?.cancel();
-    final texts = SpotContent.adaptiveSession(
-      5,
-      _progress?.forGame('spot') ?? const GameProgress(),
-    );
+    final texts =
+        widget.texts ??
+        SpotContent.adaptiveSession(
+          5,
+          _progress?.forGame('spot') ?? const GameProgress(),
+        );
     setState(() {
       _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
       _hasSavedSession = false;
@@ -179,10 +191,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     _startTimer();
   }
 
-  Future<void> _handleBack() async {
+  void _handleBack() {
     _timer?.cancel();
-    await _progress?.flush();
-    if (!mounted) return;
     Navigator.of(context).pop();
   }
 
@@ -194,17 +204,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void _saveSessionProgress(SpotGameState state) {
     if (_hasSavedSession) return;
     _hasSavedSession = true;
-    final notionResults = <String, bool>{};
-    for (final text in state.texts) {
-      final index = state.texts.indexOf(text);
-      final foundIndices = state.foundMistakeIndices[index];
-      for (var i = 0; i < text.mistakes.length; i++) {
-        final notionId = text.mistakes[i].notionId;
-        final wasFound = foundIndices.contains(i);
-        notionResults[notionId] = wasFound;
-      }
-    }
-    _progress?.recordAnswers(gameId: 'spot', notionResults: notionResults);
+    _progress?.recordAnswers(
+      gameId: 'spot',
+      notionResults: state.notionResults,
+    );
   }
 
   Widget _buildEmptyScreen() {
@@ -212,11 +215,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       backgroundColor: LexioColors.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        leading: BackButton(),
       ),
       type: LexioFeedbackType.error,
       message: 'Nu există texte disponibile',
@@ -225,27 +224,40 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   }
 
   Widget _buildErrorScreen() {
-    return LexioFeedbackScreen(
+    return Scaffold(
       backgroundColor: LexioColors.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: 'Înapoi la jocuri',
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      type: LexioFeedbackType.error,
-      message: 'Nu s-au putut încărca exercițiile',
-      description: 'Verifică conexiunea la internet și încearcă din nou.',
-      actionLabel: 'Reîncearcă',
-      action: () {
-        setState(() {
-          _isLoading = true;
-          _hasError = false;
-        });
-        _init();
-      },
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: LexioSpacing.screenHorizontal,
+            ),
+            child: LexioFeedback(
+              type: LexioFeedbackType.error,
+              message: 'Nu s-au putut încărca exercițiile',
+              description:
+                  'Verifică conexiunea la internet și încearcă din nou.',
+              actionLabel: 'Reîncearcă',
+              action: () {
+                setState(() {
+                  _isLoading = true;
+                  _hasError = false;
+                });
+                _init();
+              },
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -278,8 +290,6 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       backgroundColor: LexioColors.background,
       body: SpotSummary(
         state: state,
-        discoveredCount: _progress?.forGame('spot').countStarted() ?? 0,
-        discoveredTotal: SpotContent.distinctNotionIds().length,
         onPlayAgain: _handlePlayAgain,
         onBack: _handleBack,
       ),
@@ -318,6 +328,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       scrolledUnderElevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
+        tooltip: 'Înapoi la jocuri',
         onPressed: _handleBack,
       ),
       title: Padding(
@@ -352,9 +363,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   Widget _buildProgressSegments(SpotGameState state) {
     return Row(
       children: List.generate(state.texts.length, (i) {
-        final isCompleted =
-            state.foundMistakeIndices[i].length ==
-            state.texts[i].mistakes.length;
+        final isCompleted = state.isTextCompleted(i);
         final isCurrent = i == state.currentTextIndex;
 
         Color color;
@@ -370,12 +379,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
           child: Padding(
             padding: EdgeInsets.only(left: i == 0 ? 0 : LexioSpacing.xxs),
             child: Container(
-              height: isCurrent
-                  ? LexioSizes.progressBarActive
-                  : LexioSizes.progressBarIdle,
+              height: isCurrent ? 4 : 3,
               decoration: BoxDecoration(
                 color: color,
-                borderRadius: BorderRadius.circular(LexioRadius.xs),
+                borderRadius: BorderRadius.circular(2),
               ),
             ),
           ),
@@ -398,7 +405,11 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
     return Text(
       label.toUpperCase(),
-      style: LexioTextStyles.overline.copyWith(color: LexioColors.textTertiary),
+      style: LexioTextStyles.labelSmall.copyWith(
+        color: LexioColors.textTertiary,
+        letterSpacing: 1.2,
+        fontSize: 11,
+      ),
     );
   }
 
@@ -483,8 +494,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         child: state.isChecking
             ? _buildNextButton(state)
             : state.allMistakesFoundInCurrentText
-            ? _buildNextButton(state)
-            : _buildPlayActions(state),
+                ? _buildNextButton(state)
+                : _buildPlayActions(state),
       ),
     );
   }
@@ -506,17 +517,17 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     final mistakesText =
         '${state.mistakesFound} / ${state.totalMistakesInCurrentText} greșeli';
 
-    return Row(
+    return Wrap(
+      spacing: LexioSpacing.md,
+      runSpacing: LexioSpacing.sm,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-            mistakesText,
-            style: LexioTextStyles.labelSmall.copyWith(
-              color: LexioColors.textSecondary,
-            ),
+        Text(
+          mistakesText,
+          style: LexioTextStyles.labelSmall.copyWith(
+            color: LexioColors.textSecondary,
           ),
         ),
-        const SizedBox(width: LexioSpacing.md),
         LexioButton(
           label: 'Arată toate greșelile',
           variant: LexioButtonVariant.ghost,

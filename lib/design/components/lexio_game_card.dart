@@ -7,16 +7,11 @@ import '../shadows.dart';
 import '../spacing.dart';
 import '../typography.dart';
 
-/// A game entry rendered as a card whose background doubles as a progress bar.
-///
-/// The card has a white base; a full-height fill in [mutedColor] grows
-/// left-to-right to the [discovered]/[total] fraction, covering the whole
-/// card. A compact progress label and the chevron use [accentColor] while the
-/// title stays dark.
 class LexioGameCard extends StatelessWidget {
   const LexioGameCard({
     super.key,
     required this.title,
+    this.semanticLabel,
     required this.accentColor,
     required this.mutedColor,
     required this.discovered,
@@ -25,6 +20,7 @@ class LexioGameCard extends StatelessWidget {
   });
 
   final String title;
+  final String? semanticLabel;
   final Color accentColor;
   final Color mutedColor;
   final int discovered;
@@ -38,7 +34,8 @@ class LexioGameCard extends StatelessWidget {
     return Semantics(
       container: true,
       button: true,
-      label: 'Joc $title, progres $discovered din $total',
+      label:
+          '${semanticLabel ?? 'Joc $title'}, progres $discovered din $total',
       onTap: onTap,
       excludeSemantics: true,
       child: Container(

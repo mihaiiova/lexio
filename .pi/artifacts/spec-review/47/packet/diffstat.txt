@@ -1,0 +1,14 @@
+ lib/analytics/game_session_analytics.dart          |  86 +++++++-
+ .../components/lexio_incorrect_answer_card.dart    |  10 +-
+ lib/games/grammar/grammar_screen.dart              |  43 ++--
+ lib/games/idioms/idioms_screen.dart                |   5 +-
+ lib/games/spot/spot_screen.dart                    |  53 +++--
+ lib/games/vocabulary/vocabulary_screen.dart        |   5 +-
+ lib/home/home_screen.dart                          |  30 ++-
+ test/accessibility/responsive_test.dart            | 187 +++++++++++++++++
+ test/accessibility/semantics_test.dart             | 221 ++++++++++++++++++++-
+ test/analytics/game_session_analytics_test.dart    | 125 ++++++++++++
+ .../grammar/grammar_screen_injection_test.dart     | 109 ++++++++++
+ test/games/spot/spot_screen_injection_test.dart    |  58 ++++++
+ test/home/home_screen_test.dart                    |  38 ++++
+ 13 files changed, 920 insertions(+), 50 deletions(-)

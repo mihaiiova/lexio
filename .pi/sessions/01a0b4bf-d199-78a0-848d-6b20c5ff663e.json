@@ -1,0 +1,82 @@
+{
+  "activeSpec": {
+    "number": 46
+  },
+  "branch": "spec/46-stabilize-verification-and-progress-durability",
+  "changedFiles": [
+    ".pi/extensions/",
+    ".pi/pi-config.json",
+    ".pi/sessions/",
+    ".pi/settings.json",
+    ".pi/state.json",
+    ".pi/subagents/",
+    "revision-log/2026-09-17-correct-answer-progress.md",
+    "screenshots/"
+  ],
+  "checkResults": null,
+  "cwd": "/Users/m/dev/lexio",
+  "finalizedAt": "2026-09-18T14:07:29.878Z",
+  "model": {
+    "model": "gpt-5.6-luna",
+    "provider": "openai-codex",
+    "thinkingLevel": "high"
+  },
+  "outcome": null,
+  "phase": "in-progress",
+  "piSessionFile": "/Users/m/.pi/agent/sessions/--Users-m-dev-lexio--/2026-09-18T13-41-05-050Z_01a0b4bf-d199-78a0-848d-6b20c5ff663e.jsonl",
+  "piSessionId": "01a0b4bf-d199-78a0-848d-6b20c5ff663e",
+  "provenance": {
+    "configHash": "88153e27527e36b49720c9fbac889c668bc9fddf1606b97fd43158d1a23d80f4",
+    "piConfigCommit": "2f7226a2a3f16bb3ac7e4c0d8ada5866130fc780",
+    "piSessionFormatVersion": 3,
+    "piVersion": "0.84.1",
+    "productVersion": null
+  },
+  "schemaVersion": 1,
+  "sessionId": "01a0b4bf-d199-78a0-848d-6b20c5ff663e",
+  "startedAt": "2026-09-18T13:41:05.812Z",
+  "subagentModels": {
+    "oracle": {
+      "model": "deepseek/deepseek-v4-pro"
+    },
+    "reviewer": {
+      "model": "deepseek/deepseek-flash"
+    },
+    "scout": {
+      "model": "deepseek/deepseek-flash"
+    },
+    "worker": {
+      "model": "deepseek/deepseek-v4-pro"
+    }
+  },
+  "subagentUsage": {
+    "agents": [
+      {
+        "agent": "scout",
+        "cost": 0.042067968,
+        "runs": 1
+      },
+      {
+        "agent": "worker",
+        "cost": 0.6630822000000001,
+        "runs": 1
+      }
+    ],
+    "totalCost": 0.7051501680000001
+  },
+  "summary": null,
+  "usage": {
+    "cacheRead": 2160640,
+    "cacheWrite": 0,
+    "cost": {
+      "cacheRead": 0.0432128,
+      "cacheWrite": 0,
+      "input": 0.02911040000000001,
+      "output": 0.0150792,
+      "total": 0.0874024
+    },
+    "input": 145552,
+    "output": 12566,
+    "totalTokens": 2318758
+  }
+}
