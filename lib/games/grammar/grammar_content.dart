@@ -97,13 +97,24 @@ final class GrammarContent {
     );
     final List<dynamic> jsonList = json.decode(jsonString) as List<dynamic>;
     final hyphenationPairs = await HyphenationContent.load();
-    _cached = [
-      ...jsonList.map(
+    _cached = parse(jsonList, hyphenationPairs);
+    return _cached!;
+  }
+
+  static List<GrammarExercise> parse(
+    List<dynamic> grammarJson,
+    List<HyphenationPair> hyphenationPairs,
+  ) {
+    return [
+      ...grammarJson.map(
         (entry) => GrammarExercise.fromJson(entry as Map<String, dynamic>),
       ),
       ..._buildHyphenationExercises(hyphenationPairs),
     ];
-    return _cached!;
+  }
+
+  static void seed(List<GrammarExercise> exercises) {
+    _cached = List<GrammarExercise>.from(exercises);
   }
 
   static Iterable<GrammarExercise> _buildHyphenationExercises(

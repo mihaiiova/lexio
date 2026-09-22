@@ -168,10 +168,18 @@ final class SpotContent {
       'lib/content/spot_texts.json',
     );
     final jsonList = json.decode(jsonString) as List<dynamic>;
-    _cached = jsonList
+    _cached = parse(jsonList);
+    return _cached!;
+  }
+
+  static List<SpotText> parse(List<dynamic> jsonList) {
+    return jsonList
         .map((item) => SpotText.fromJson(item as Map<String, dynamic>))
         .toList();
-    return _cached!;
+  }
+
+  static void seed(List<SpotText> texts) {
+    _cached = List<SpotText>.from(texts);
   }
 
   static Set<String> distinctNotionIds() =>

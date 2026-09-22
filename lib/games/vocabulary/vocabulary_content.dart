@@ -69,12 +69,20 @@ final class VocabularyContent {
       'lib/content/vocabulary_exercises.json',
     );
     final jsonList = json.decode(jsonString) as List<dynamic>;
-    _cached = jsonList
+    _cached = parse(jsonList);
+    return _cached!;
+  }
+
+  static List<VocabularyExercise> parse(List<dynamic> jsonList) {
+    return jsonList
         .map(
           (entry) => VocabularyExercise.fromJson(entry as Map<String, dynamic>),
         )
         .toList(growable: false);
-    return _cached!;
+  }
+
+  static void seed(List<VocabularyExercise> exercises) {
+    _cached = List<VocabularyExercise>.from(exercises);
   }
 
   static Set<String> distinctNotionIds() =>

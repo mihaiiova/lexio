@@ -91,9 +91,13 @@ final class HyphenationContent {
       'data/hyphenation_pairs.json',
     );
     final entries = json.decode(jsonString) as List<dynamic>;
-    _cached = entries
+    _cached = parse(entries);
+    return _cached!;
+  }
+
+  static List<HyphenationPair> parse(List<dynamic> entries) {
+    return entries
         .map((entry) => HyphenationPair.fromJson(entry as Map<String, dynamic>))
         .toList(growable: false);
-    return _cached!;
   }
 }

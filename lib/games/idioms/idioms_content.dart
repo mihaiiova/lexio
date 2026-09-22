@@ -61,10 +61,18 @@ final class IdiomsContent {
       'lib/content/idiom_exercises.json',
     );
     final jsonList = json.decode(jsonString) as List<dynamic>;
-    _cached = jsonList
+    _cached = parse(jsonList);
+    return _cached!;
+  }
+
+  static List<IdiomExercise> parse(List<dynamic> jsonList) {
+    return jsonList
         .map((entry) => IdiomExercise.fromJson(entry as Map<String, dynamic>))
         .toList(growable: false);
-    return _cached!;
+  }
+
+  static void seed(List<IdiomExercise> exercises) {
+    _cached = List<IdiomExercise>.from(exercises);
   }
 
   static Set<String> distinctNotionIds() =>
