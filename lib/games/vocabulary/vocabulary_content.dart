@@ -8,6 +8,7 @@ import '../../progress/user_progress.dart';
 
 final class VocabularyExercise {
   final String id;
+  final String? notionIdOverride;
   final String word;
   final String partOfSpeech;
   final String definition;
@@ -22,6 +23,7 @@ final class VocabularyExercise {
   const VocabularyExercise({
     required this.id,
     required this.word,
+    this.notionIdOverride,
     required this.partOfSpeech,
     required this.definition,
     required this.example,
@@ -33,7 +35,7 @@ final class VocabularyExercise {
     required this.difficulty,
   });
 
-  String get notionId => word;
+  String get notionId => notionIdOverride ?? word;
 
   String get correctOption => options[correctOptionIndex];
 
@@ -41,6 +43,7 @@ final class VocabularyExercise {
     return VocabularyExercise(
       id: json['id'] as String,
       word: json['word'] as String,
+      notionIdOverride: json['notionId'] as String?,
       partOfSpeech: json['partOfSpeech'] as String,
       definition: json['definition'] as String,
       example: json['example'] as String,

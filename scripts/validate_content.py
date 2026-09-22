@@ -24,6 +24,9 @@ ids = set()
 for ex in grammar:
     eid = ex.get('id', '?')
     check('id' in ex, 'grammar', eid, "missing id")
+    check('notionId' in ex and isinstance(ex.get('notionId'), str) and ex['notionId'], 'grammar', eid, "missing/empty notionId")
+    if ex.get('notionId') and ex.get('pairId'):
+        check(ex['notionId'] == ex['pairId'], 'grammar', eid, "notionId must equal pairId")
     check('sentence' in ex, 'grammar', eid, "missing sentence")
     check('isCorrect' in ex and isinstance(ex['isCorrect'], bool), 'grammar', eid, "missing/invalid isCorrect")
     check('explanation' in ex, 'grammar', eid, "missing explanation")
@@ -45,6 +48,9 @@ ids = set()
 for ex in vocab:
     eid = ex.get('id', '?')
     check('id' in ex, 'vocab', eid, "missing id")
+    check('notionId' in ex and isinstance(ex.get('notionId'), str) and ex['notionId'], 'vocab', eid, "missing/empty notionId")
+    if ex.get('notionId') and ex.get('word'):
+        check(ex['notionId'] == ex['word'], 'vocab', eid, "notionId must equal word")
     check('word' in ex, 'vocab', eid, "missing word")
     check('partOfSpeech' in ex, 'vocab', eid, "missing partOfSpeech")
     check('example' in ex, 'vocab', eid, "missing example")
@@ -64,6 +70,9 @@ ids = set()
 for ex in idioms:
     eid = ex.get('id', '?')
     check('id' in ex, 'idioms', eid, "missing id")
+    check('notionId' in ex and isinstance(ex.get('notionId'), str) and ex['notionId'], 'idioms', eid, "missing/empty notionId")
+    if ex.get('notionId') and ex.get('expression'):
+        check(ex['notionId'] == ex['expression'], 'idioms', eid, "notionId must equal expression")
     check('expression' in ex, 'idioms', eid, "missing expression")
     check('example' in ex, 'idioms', eid, "missing example")
     check('options' in ex and isinstance(ex['options'], list), 'idioms', eid, "missing options")
@@ -74,6 +83,24 @@ for ex in idioms:
     check(eid not in ids, 'idioms', eid, "duplicate id")
     ids.add(eid)
 print(f"  {len(idioms)} exercises checked")
+
+# --- Data files (loaded first so spot can validate references) ---
+print("Validating common_error_pairs.json ...")
+cep = load_json("data/common_error_pairs.json")
+for i, p in enumerate(cep):
+    check('corect' in p and 'incorect' in p, 'common_error', f"[{i}]", "missing corect/incorect")
+    check(p.get('notionId') == f"gp{i}", 'common_error', f"[{i}]", "notionId must equal gp<index>")
+print(f"  {len(cep)} pairs checked")
+
+print("Validating hyphenation_pairs.json ...")
+hyp = load_json("data/hyphenation_pairs.json")
+hyphenation_ids = set()
+for i, p in enumerate(hyp):
+    check('hyphenatedForm' in p and 'unhyphenatedForm' in p, 'hyphenation', f"[{i}]", "missing fields")
+    check('id' in p and isinstance(p.get('id'), str) and p['id'], 'hyphenation', f"[{i}]", "missing/empty id")
+    check(p.get('notionId') == f"hyphenated_{p['id']}", 'hyphenation', f"[{i}]", "notionId must equal hyphenated_<id>")
+    hyphenation_ids.add(p.get('id'))
+print(f"  {len(hyp)} pairs checked")
 
 # --- Spot texts ---
 print("Validating spot_texts.json ...")
@@ -91,25 +118,20 @@ for t in spot:
     content = t.get('content', '')
     for m in t.get('mistakes', []):
         total_mistakes += 1
+        check('notionId' in m and isinstance(m.get('notionId'), str) and m['notionId'], 'spot', tid, "mistake missing/empty notionId")
         check('token' in m, 'spot', tid, "mistake missing token")
         check('replacement' in m, 'spot', tid, "mistake missing replacement")
         check('explanation' in m, 'spot', tid, "mistake missing explanation")
+        cep_idx = m.get('commonErrorPairIndex')
+        hyp_ref = m.get('hyphenationPairId')
+        check((cep_idx is None) != (hyp_ref is None), 'spot', tid, "mistake must reference exactly one source")
+        if cep_idx is not None:
+            check(0 <= cep_idx < len(cep), 'spot', tid, f"commonErrorPairIndex {cep_idx} out of range [0,{len(cep)-1}]")
+        if hyp_ref is not None:
+            check(hyp_ref in hyphenation_ids, 'spot', tid, f"unknown hyphenationPairId '{hyp_ref}'")
         if 'token' in m and 'content' in t:
             check(m['token'] in content, 'spot', tid, f"token '{m['token']}' not found in content")
 print(f"  {len(spot)} texts, {total_mistakes} mistakes checked")
-
-# --- Data files ---
-print("Validating common_error_pairs.json ...")
-cep = load_json("data/common_error_pairs.json")
-for i, p in enumerate(cep):
-    check('corect' in p and 'incorect' in p, 'common_error', f"[{i}]", "missing corect/incorect")
-print(f"  {len(cep)} pairs checked")
-
-print("Validating hyphenation_pairs.json ...")
-hyp = load_json("data/hyphenation_pairs.json")
-for i, p in enumerate(hyp):
-    check('hyphenatedForm' in p and 'unhyphenatedForm' in p, 'hyphenation', f"[{i}]", "missing fields")
-print(f"  {len(hyp)} pairs checked")
 
 # --- Report ---
 print()

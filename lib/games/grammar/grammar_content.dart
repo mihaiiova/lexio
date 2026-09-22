@@ -18,6 +18,7 @@ final class GrammarExercise {
   final String? correctSentence;
   final int difficulty;
   final List<String> tags;
+  final String? notionIdOverride;
   final String? pairId;
   final String? doomWord;
   final String? doomDefinition;
@@ -34,12 +35,13 @@ final class GrammarExercise {
     required this.difficulty,
     required this.tags,
     required this.pairId,
+    this.notionIdOverride,
     this.doomWord,
     this.doomDefinition,
     this.hyphenationPairId,
   });
 
-  String get notionId => pairId ?? id;
+  String get notionId => notionIdOverride ?? pairId ?? id;
 
   String? get doomUrl => doomWord != null ? DoomUrl.forWord(doomWord!) : null;
 
@@ -57,6 +59,7 @@ final class GrammarExercise {
         (json['difficulty'] as num).toInt(),
       ),
       tags: (json['tags'] as List<dynamic>).cast<String>(),
+      notionIdOverride: json['notionId'] as String?,
       pairId: json['pairId'] as String?,
       doomWord: json['doomWord'] as String?,
       doomDefinition: json['doomDefinition'] as String?,
@@ -66,6 +69,7 @@ final class GrammarExercise {
 
   Map<String, dynamic> toJson() => {
     'id': id,
+    'notionId': notionId,
     'sentence': sentence,
     'category': category,
     'topic': topic,
@@ -118,6 +122,7 @@ final class GrammarContent {
         correctSentence: pair.hyphenatedExample,
         difficulty: difficulty,
         tags: const ['cratimă', 'greșeală frecventă'],
+        notionIdOverride: hyphenatedPairId,
         pairId: hyphenatedPairId,
         hyphenationPairId: pair.id,
       );
@@ -131,6 +136,7 @@ final class GrammarContent {
         correctSentence: null,
         difficulty: difficulty,
         tags: const ['cratimă', 'confirmare'],
+        notionIdOverride: hyphenatedPairId,
         pairId: hyphenatedPairId,
         hyphenationPairId: pair.id,
       );
@@ -158,6 +164,7 @@ final class GrammarContent {
         correctSentence: unhyphenatedExample,
         difficulty: 3,
         tags: const ['cratimă', 'forme omofone', 'greșeală frecventă'],
+        notionIdOverride: unhyphenatedPairId,
         pairId: unhyphenatedPairId,
         hyphenationPairId: pair.id,
       );
@@ -171,6 +178,7 @@ final class GrammarContent {
         correctSentence: null,
         difficulty: 3,
         tags: const ['cratimă', 'forme omofone', 'confirmare'],
+        notionIdOverride: unhyphenatedPairId,
         pairId: unhyphenatedPairId,
         hyphenationPairId: pair.id,
       );
