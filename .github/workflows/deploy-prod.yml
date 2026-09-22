@@ -24,6 +24,27 @@ jobs:
       - run: flutter analyze
       - run: flutter test
 
+  content-pages:
+    needs: analyze-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      CONTENT_PAGES_URL: ${{ vars.CONTENT_PAGES_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate production content manifest
+        run: |
+          test -n "$CONTENT_PAGES_URL"
+          python3 scripts/generate_content_bundle.py --base-url "$CONTENT_PAGES_URL"
+      - name: Publish content to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
+          directory: content_public
+
   android:
     needs: analyze-and-test
     runs-on: ubuntu-latest
@@ -60,7 +81,7 @@ jobs:
       - run: flutter pub get
 
       - name: Build AAB
-        run: flutter build appbundle --release --build-number=$(date +%s)
+        run: flutter build appbundle --release --build-number=$(date +%s) --dart-define=CONTENT_BASE_URL=${{ vars.CONTENT_PAGES_URL }}
 
       - name: Upload to Play production
         uses: r0adkll/upload-google-play@v1
@@ -172,7 +193,7 @@ jobs:
           EOF
 
       - name: Build IPA
-        run: flutter build ipa --release --build-number=${{ github.run_id }} --export-options-plist=ios/Runner/ExportOptions.plist
+        run: flutter build ipa --release --build-number=${{ github.run_id }} --dart-define=CONTENT_BASE_URL=${{ vars.CONTENT_PAGES_URL }} --export-options-plist=ios/Runner/ExportOptions.plist
 
       - name: Upload to App Store Connect
         env:

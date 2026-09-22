@@ -93,7 +93,7 @@ feature/xxx ──PR──▶ staging ──push──▶ test builds go out aut
 |---|---|---|
 | `ci.yml` | push to feature branches, and all PRs | analyze + unit/widget tests + unsigned builds (sanity gate) |
 | `deploy-staging.yml` | push to `staging` | signed Android AAB → Play internal testing; signed IPA → TestFlight |
-| `deploy-prod.yml` | push to `master` | signed Android AAB → Play production; signed IPA → App Store Connect |
+| `deploy-prod.yml` | push to `master` | Cloudflare Pages content publish; signed Android AAB → Play production; signed IPA → App Store Connect |
 
 Signing secrets are configured per `RELEASE_SIGNING.md`; never commit them.
 
@@ -162,6 +162,9 @@ etc.) before the first upload.
 - `RELEASE_SIGNING.md` — signing secrets and the Android Play service account.
 - The Play service-account JSON secret (`ANDROID_PLAY_SERVICE_ACCOUNT_JSON`) must
   exist before Android uploads can run.
+- The `CLOUDFLARE_API_TOKEN` secret and `CLOUDFLARE_ACCOUNT_ID`,
+  `CLOUDFLARE_PAGES_PROJECT`, and `CONTENT_PAGES_URL` repository variables must
+  be configured before production content publishing runs.
 
 ## Related docs
 
