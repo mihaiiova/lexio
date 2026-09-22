@@ -27,7 +27,7 @@ Un test contra cronometru: ai un text și 60 de secunde să identifici greșelil
 ### Caracteristici
 
 - Design tipografic curat: textul în prim-plan, fonturi premium, spațiere generoasă
-- Jocuri offline: toate exercițiile și fonturile sunt incluse
+- Jocuri offline: toate exercițiile și fonturile sunt incluse (conținutul poate fi actualizat automat când ești online, fără cont)
 - Fără conturi, fără rețele sociale: progresul rămâne pe dispozitivul tău
 - Fără reclame, fără microtranzacții: o experiență completă și gratuită
 - Exerciții cu explicații și referințe către DOOM
@@ -139,3 +139,9 @@ identificatorul fix al jocului și date tehnice despre instalare, aplicație și
 dispozitiv. Nu se colectează răspunsuri, texte introduse sau date personale.
 
 Nu sunt declarate permisiuni speciale. Linkurile externe (DOOM) se deschid în browserul sistemului fără permisiuni suplimentare.
+
+Aplicația poate descărca o versiune mai nouă a conținutului lingvistic dintr-un
+serviciu static (Cloudflare Pages) pentru a corecta sau adăuga exerciții fără o
+nouă lansare. Descărcarea este strict unidirecțională: aplicația primește
+conținut și nu trimite progres, răspunsuri sau date personale; nu este necesar
+un cont și nu se afișează o solicitare de consimțământ suplimentar.

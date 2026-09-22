@@ -18,6 +18,17 @@ jobs:
       - run: flutter analyze
       - name: Run unit and widget tests
         run: flutter test
+      - name: Validate content
+        run: python3 scripts/validate_content.py
+      - name: Verify content bundle is in sync
+        run: |
+          python3 scripts/generate_content_bundle.py
+          if [ -n "$(git status --porcelain content_public/)" ]; then
+            echo "Generated content bundle is out of sync with canonical content."
+            echo "Run: python3 scripts/generate_content_bundle.py --bump"
+            git status --porcelain content_public/
+            exit 1
+          fi
 
   build-web:
     needs: analyze-and-test
