@@ -32,31 +32,42 @@ final class ContentBundle {
   final List<SpotText> spotTexts;
 
   factory ContentBundle.fromJson(Map<String, dynamic> json) {
-    final schemaVersion = json['schemaVersion'] as int? ?? 1;
-    if (schemaVersion != supportedSchemaVersion) {
+    final schemaVersion = json['schemaVersion'];
+    if (schemaVersion is! int || schemaVersion != supportedSchemaVersion) {
       throw const FormatException('unsupported content bundle schema version');
     }
 
-    final hyphenationPairs = HyphenationContent.parse(
-      (json['hyphenationPairs'] as List<dynamic>? ?? const []).toList(),
-    );
+    final grammarJson = _requiredList(json, 'grammar');
+    final vocabularyJson = _requiredList(json, 'vocabulary');
+    final idiomsJson = _requiredList(json, 'idioms');
+    final spotJson = _requiredList(json, 'spotTexts');
+    final hyphenationJson = _requiredList(json, 'hyphenationPairs');
+    final commonErrorsJson = _requiredList(json, 'commonErrorPairs');
+    for (final entry in commonErrorsJson) {
+      if (entry is! Map<String, dynamic> ||
+          entry['notionId'] is! String ||
+          (entry['notionId'] as String).isEmpty) {
+        throw const FormatException('invalid common error pair');
+      }
+    }
+
+    final hyphenationPairs = HyphenationContent.parse(hyphenationJson);
 
     return ContentBundle(
       schemaVersion: schemaVersion,
-      grammar: GrammarContent.parse(
-        (json['grammar'] as List<dynamic>? ?? const []).toList(),
-        hyphenationPairs,
-      ),
-      vocabulary: VocabularyContent.parse(
-        (json['vocabulary'] as List<dynamic>? ?? const []).toList(),
-      ),
-      idioms: IdiomsContent.parse(
-        (json['idioms'] as List<dynamic>? ?? const []).toList(),
-      ),
-      spotTexts: SpotContent.parse(
-        (json['spotTexts'] as List<dynamic>? ?? const []).toList(),
-      ),
+      grammar: GrammarContent.parse(grammarJson, hyphenationPairs),
+      vocabulary: VocabularyContent.parse(vocabularyJson),
+      idioms: IdiomsContent.parse(idiomsJson),
+      spotTexts: SpotContent.parse(spotJson),
     );
+  }
+
+  static List<dynamic> _requiredList(Map<String, dynamic> json, String key) {
+    final value = json[key];
+    if (value is! List<dynamic>) {
+      throw FormatException('content bundle field "$key" must be a list');
+    }
+    return value;
   }
 
   factory ContentBundle.fromString(String source) {
@@ -88,14 +99,10 @@ final class ContentBundle {
             )
             as List<dynamic>;
     final spotJson =
-        json.decode(
-              await rootBundle.loadString('lib/content/spot_texts.json'),
-            )
+        json.decode(await rootBundle.loadString('lib/content/spot_texts.json'))
             as List<dynamic>;
     final hyphenationJson =
-        json.decode(
-              await rootBundle.loadString('data/hyphenation_pairs.json'),
-            )
+        json.decode(await rootBundle.loadString('data/hyphenation_pairs.json'))
             as List<dynamic>;
 
     return ContentBundle(

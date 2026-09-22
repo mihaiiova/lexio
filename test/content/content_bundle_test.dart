@@ -12,7 +12,11 @@ void main() {
     'generated bundle parses into the same domain models as bundled assets',
     () async {
       final file = File('content_public/content_bundle.json');
-      expect(file.existsSync(), isTrue, reason: 'run generate_content_bundle.py');
+      expect(
+        file.existsSync(),
+        isTrue,
+        reason: 'run generate_content_bundle.py',
+      );
 
       final bundle = ContentBundle.fromString(await file.readAsString());
       final bundled = await ContentBundle.loadBundled();
@@ -37,9 +41,7 @@ void main() {
       );
       expect(
         bundle.spotTexts.expand((t) => t.mistakeNotionIds).toSet(),
-        equals(
-          bundled.spotTexts.expand((t) => t.mistakeNotionIds).toSet(),
-        ),
+        equals(bundled.spotTexts.expand((t) => t.mistakeNotionIds).toSet()),
       );
     },
   );
@@ -51,6 +53,16 @@ void main() {
   test('rejects an unsupported bundle schema version', () {
     expect(
       () => ContentBundle.fromString('{"schemaVersion": 99}'),
+      throwsFormatException,
+    );
+  });
+
+  test('rejects a bundle missing a required section', () {
+    expect(
+      () => ContentBundle.fromString(
+        '{"schemaVersion": 1, "grammar": [], "vocabulary": [], '
+        '"idioms": [], "spotTexts": [], "hyphenationPairs": []}',
+      ),
       throwsFormatException,
     );
   });

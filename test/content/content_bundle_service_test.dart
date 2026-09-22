@@ -31,6 +31,7 @@ String _minimalBundle(String notionId) {
     'idioms': <dynamic>[],
     'spotTexts': <dynamic>[],
     'hyphenationPairs': <dynamic>[],
+    'commonErrorPairs': <dynamic>[],
   });
 }
 
@@ -73,6 +74,15 @@ void main() {
         throwsFormatException,
       );
     });
+
+    test('rejects non-HTTPS bundle URLs', () {
+      expect(
+        () => ContentManifest.fromString(
+          _manifest(3, url: 'http://content.example/content_bundle_3.json'),
+        ),
+        throwsFormatException,
+      );
+    });
   });
 
   group('ContentBundleService', () {
@@ -108,30 +118,58 @@ void main() {
       expect(active.grammar, hasLength(bundled.length));
     });
 
-    test('stages a newer valid bundle without disturbing the active one',
-        () async {
+    test('repairs a corrupt cache when a manifest is available', () async {
       final cache = _FakeCache()
-        ..bundles[1] = _minimalBundle('n_old')
-        ..version = 1;
+        ..bundles[2] = 'not-json{'
+        ..version = 2;
       final transport = _FakeTransport(
         manifestBody: _manifest(2),
-        bundleBody: _minimalBundle('n_new'),
+        bundleBody: _minimalBundle('n_repaired'),
       );
-
       final service = ContentBundleService(cache: cache, transport: transport);
-      await service.start();
 
+      final active = await service.start();
       final pending = await service.refresh();
 
       expect(pending, isNotNull);
-      expect(service.activeBundle.grammar.single.notionId, 'n_old');
-      expect(service.pendingBundle!.grammar.single.notionId, 'n_new');
-      expect(cache.version, 2);
-      expect(cache.bundles[2], _minimalBundle('n_new'));
-
-      final activated = await service.activatePending();
-      expect(activated.grammar.single.notionId, 'n_new');
+      expect(transport.fetchBundleCalls, 1);
+      expect(cache.bundles[2], _minimalBundle('n_repaired'));
+      expect(service.activeBundle.grammar, hasLength(active.grammar.length));
     });
+
+    test(
+      'stages a newer valid bundle without disturbing the active one',
+      () async {
+        final cache = _FakeCache()
+          ..bundles[1] = _minimalBundle('n_old')
+          ..version = 1;
+        final transport = _FakeTransport(
+          manifestBody: _manifest(2),
+          bundleBody: _minimalBundle('n_new'),
+        );
+
+        final service = ContentBundleService(
+          cache: cache,
+          transport: transport,
+        );
+        await service.start();
+        final activeRound = List<GrammarExercise>.from(
+          service.activeBundle.grammar,
+        );
+
+        final pending = await service.refresh();
+
+        expect(pending, isNotNull);
+        expect(activeRound.single.notionId, 'n_old');
+        expect(service.activeBundle.grammar.single.notionId, 'n_old');
+        expect(service.pendingBundle!.grammar.single.notionId, 'n_new');
+        expect(cache.version, 2);
+        expect(cache.bundles[2], _minimalBundle('n_new'));
+
+        final activated = await service.activatePending();
+        expect(activated.grammar.single.notionId, 'n_new');
+      },
+    );
 
     test('activates a staged bundle through the app content runtime', () async {
       final cache = _FakeCache()
@@ -172,26 +210,32 @@ void main() {
       expect(service.pendingBundle, isNull);
     });
 
-    test('bundle download failure leaves the active snapshot untouched', () async {
-      final cache = _FakeCache()
-        ..bundles[1] = _minimalBundle('n_old')
-        ..version = 1;
-      final transport = _FakeTransport(
-        manifestBody: _manifest(2),
-        bundleBody: _minimalBundle('n_new'),
-        failBundle: true,
-      );
+    test(
+      'bundle download failure leaves the active snapshot untouched',
+      () async {
+        final cache = _FakeCache()
+          ..bundles[1] = _minimalBundle('n_old')
+          ..version = 1;
+        final transport = _FakeTransport(
+          manifestBody: _manifest(2),
+          bundleBody: _minimalBundle('n_new'),
+          failBundle: true,
+        );
 
-      final service = ContentBundleService(cache: cache, transport: transport);
-      await service.start();
+        final service = ContentBundleService(
+          cache: cache,
+          transport: transport,
+        );
+        await service.start();
 
-      final pending = await service.refresh();
+        final pending = await service.refresh();
 
-      expect(pending, isNull);
-      expect(service.activeBundle.grammar.single.notionId, 'n_old');
-      expect(cache.version, 1);
-      expect(cache.bundles[2], isNull);
-    });
+        expect(pending, isNull);
+        expect(service.activeBundle.grammar.single.notionId, 'n_old');
+        expect(cache.version, 1);
+        expect(cache.bundles[2], isNull);
+      },
+    );
 
     test('offline fallback leaves the active snapshot untouched', () async {
       final cache = _FakeCache()
@@ -281,30 +325,35 @@ void main() {
       expect(service.pendingBundle, isNull);
     });
 
-    test('atomic replacement keeps the previous version on a partial write',
-        () async {
-      final cache = _FakeCache()
-        ..bundles[1] = _minimalBundle('n_old')
-        ..version = 1
-        ..failWriteVersion = true;
-      final transport = _FakeTransport(
-        manifestBody: _manifest(2),
-        bundleBody: _minimalBundle('n_new'),
-      );
+    test(
+      'atomic replacement keeps the previous version on a partial write',
+      () async {
+        final cache = _FakeCache()
+          ..bundles[1] = _minimalBundle('n_old')
+          ..version = 1
+          ..failWriteVersion = true;
+        final transport = _FakeTransport(
+          manifestBody: _manifest(2),
+          bundleBody: _minimalBundle('n_new'),
+        );
 
-      final service = ContentBundleService(cache: cache, transport: transport);
-      await service.start();
+        final service = ContentBundleService(
+          cache: cache,
+          transport: transport,
+        );
+        await service.start();
 
-      final pending = await service.refresh();
+        final pending = await service.refresh();
 
-      expect(pending, isNull);
-      // The versioned bundle may have been written, but the version pointer was
-      // not committed, so a reader still sees the previous version.
-      expect(cache.version, 1);
-      final read = await cache.read();
-      expect(read!.version, 1);
-      expect(read.bundle, _minimalBundle('n_old'));
-    });
+        expect(pending, isNull);
+        // The versioned bundle may have been written, but the version pointer was
+        // not committed, so a reader still sees the previous version.
+        expect(cache.version, 1);
+        final read = await cache.read();
+        expect(read!.version, 1);
+        expect(read.bundle, _minimalBundle('n_old'));
+      },
+    );
   });
 }
 

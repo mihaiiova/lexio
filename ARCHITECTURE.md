@@ -8,7 +8,8 @@
 ├──────────────────────────────┤
 │  Game State + Logic           │  Business logic layer
 ├──────────────────────────────┤
-│  Content Loader (JSON)        │  Data layer
+│  Content Loader + Bundle      │  Data layer
+│  Service (JSON/cache)         │
 └──────────────────────────────┘
 ```
 
@@ -21,6 +22,7 @@
 
 ### Data Layer
 - **Content Loader** (`lib/games/<name>/<name>_content.dart`): Loads and caches JSON
+- **Content Bundle Service** (`lib/content/content_bundle_service.dart`): Resolves bundled, cached, and static remote snapshots
 - **Content Files** (`lib/content/*.json`): Raw exercise data
 
 ## Game Architecture

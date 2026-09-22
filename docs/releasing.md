@@ -28,13 +28,17 @@ Cloudflare Pages bundle while staying fully usable offline.
 
 1. Edit the canonical JSON files and commit them on a feature branch.
 2. Bump and regenerate the bundle: `python3 scripts/generate_content_bundle.py
-   --bump --base-url <cloudflare-pages-url>` (the bumped `manifest.json` and
-   immutable versioned snapshot are committed for review).
+   --bump` (the bumped `manifest.json` and immutable versioned snapshot are
+   committed for review). The production workflow injects the Pages base URL
+   when it publishes, so the committed manifest may have an empty `bundleUrl`.
 3. Open a PR; CI validates content and verifies the generated bundle is in sync.
 4. After merge to `master`, the deploy workflow publishes the generated static
    files (`manifest.json`, `content_bundle.json`, and the versioned snapshot)
    to Cloudflare Pages. Cloudflare credentials live only in GitHub Actions
-   secrets. Republishing the exact previous snapshot rolls a bad release back.
+   secrets. To roll back, restore the known-good canonical JSON while retaining
+   the current manifest version, then run `generate_content_bundle.py --bump`
+   and publish the newly numbered snapshot. Rollbacks must use a higher
+   `contentVersion`; clients intentionally ignore older versions already cached.
 
 > **Note:** Cloudflare Pages publishing requires the Pages project and its
 > credentials to be configured once (see *One-time prerequisites*).

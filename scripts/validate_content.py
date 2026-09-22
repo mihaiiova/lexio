@@ -4,6 +4,7 @@
 import json
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -16,6 +17,15 @@ errors = []
 def check(condition, path, item_id, msg):
     if not condition:
         errors.append(f"{path} | {item_id} | {msg}")
+
+
+def derived_spot_notion_id(mistake):
+    pair_index = mistake.get('commonErrorPairIndex')
+    if pair_index is not None:
+        return f"gp{pair_index}"
+    token = quote(mistake.get('token', ''), safe='')
+    replacement = quote(mistake.get('replacement', ''), safe='')
+    return f"sp_{token}_{replacement}"
 
 # --- Grammar exercises ---
 print("Validating grammar_exercises.json ...")
@@ -87,9 +97,14 @@ print(f"  {len(idioms)} exercises checked")
 # --- Data files (loaded first so spot can validate references) ---
 print("Validating common_error_pairs.json ...")
 cep = load_json("data/common_error_pairs.json")
+common_notion_ids = set()
 for i, p in enumerate(cep):
     check('corect' in p and 'incorect' in p, 'common_error', f"[{i}]", "missing corect/incorect")
-    check(p.get('notionId') == f"gp{i}", 'common_error', f"[{i}]", "notionId must equal gp<index>")
+    notion_id = p.get('notionId')
+    check(isinstance(notion_id, str) and notion_id, 'common_error', f"[{i}]", "missing/empty notionId")
+    if isinstance(notion_id, str):
+        check(notion_id not in common_notion_ids, 'common_error', f"[{i}]", "duplicate notionId")
+        common_notion_ids.add(notion_id)
 print(f"  {len(cep)} pairs checked")
 
 print("Validating hyphenation_pairs.json ...")
@@ -127,10 +142,22 @@ for t in spot:
         check((cep_idx is None) != (hyp_ref is None), 'spot', tid, "mistake must reference exactly one source")
         if cep_idx is not None:
             check(0 <= cep_idx < len(cep), 'spot', tid, f"commonErrorPairIndex {cep_idx} out of range [0,{len(cep)-1}]")
+            if 0 <= cep_idx < len(cep):
+                check(
+                    m.get('notionId') == cep[cep_idx].get('notionId'),
+                    'spot', tid,
+                    'notionId must match the referenced common-error pair',
+                )
         if hyp_ref is not None:
             check(hyp_ref in hyphenation_ids, 'spot', tid, f"unknown hyphenationPairId '{hyp_ref}'")
         if 'token' in m and 'content' in t:
             check(m['token'] in content, 'spot', tid, f"token '{m['token']}' not found in content")
+        if cep_idx is None:
+            check(
+                m.get('notionId') == derived_spot_notion_id(m),
+                'spot', tid,
+                'notionId must equal the current derived identity',
+            )
 print(f"  {len(spot)} texts, {total_mistakes} mistakes checked")
 
 # --- Report ---

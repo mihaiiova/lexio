@@ -137,53 +137,59 @@ void main() {
       return json.decode(raw) as List<dynamic>;
     }
 
-    test('grammar explicit notionIds equal the derived pair identity', () async {
-      final raw = await loadJsonList('lib/content/grammar_exercises.json');
-      final exercises = await GrammarContent.load();
+    test(
+      'grammar explicit notionIds equal the derived pair identity',
+      () async {
+        final raw = await loadJsonList('lib/content/grammar_exercises.json');
+        final exercises = await GrammarContent.load();
 
-      for (final entry in raw.cast<Map<String, dynamic>>()) {
-        final id = entry['id'] as String;
-        final explicit = entry['notionId'];
-        expect(explicit, isNotNull, reason: 'grammar $id missing notionId');
-        expect(explicit, isNotEmpty, reason: 'grammar $id empty notionId');
+        for (final entry in raw.cast<Map<String, dynamic>>()) {
+          final id = entry['id'] as String;
+          final explicit = entry['notionId'];
+          expect(explicit, isNotNull, reason: 'grammar $id missing notionId');
+          expect(explicit, isNotEmpty, reason: 'grammar $id empty notionId');
 
-        final model = exercises.firstWhere((e) => e.id == id);
-        expect(entry['notionId'], model.notionId, reason: id);
-      }
-    });
+          final model = exercises.firstWhere((e) => e.id == id);
+          expect(entry['notionId'], model.notionId, reason: id);
+        }
+      },
+    );
 
-    test('vocabulary explicit notionIds equal the derived word identity',
-        () async {
-      final raw = await loadJsonList('lib/content/vocabulary_exercises.json');
-      final exercises = await VocabularyContent.load();
+    test(
+      'vocabulary explicit notionIds equal the derived word identity',
+      () async {
+        final raw = await loadJsonList('lib/content/vocabulary_exercises.json');
+        final exercises = await VocabularyContent.load();
 
-      for (final entry in raw.cast<Map<String, dynamic>>()) {
-        final id = entry['id'] as String;
-        expect(entry['notionId'], isNotNull, reason: 'vocab $id');
-        expect(entry['notionId'], entry['word'], reason: id);
+        for (final entry in raw.cast<Map<String, dynamic>>()) {
+          final id = entry['id'] as String;
+          expect(entry['notionId'], isNotNull, reason: 'vocab $id');
+          expect(entry['notionId'], entry['word'], reason: id);
 
-        final model = exercises.firstWhere((e) => e.id == id);
-        expect(entry['notionId'], model.notionId, reason: id);
-      }
-    });
+          final model = exercises.firstWhere((e) => e.id == id);
+          expect(entry['notionId'], model.notionId, reason: id);
+        }
+      },
+    );
 
-    test('idiom explicit notionIds equal the derived expression identity',
-        () async {
-      final raw = await loadJsonList('lib/content/idiom_exercises.json');
-      final exercises = await IdiomsContent.load();
+    test(
+      'idiom explicit notionIds equal the derived expression identity',
+      () async {
+        final raw = await loadJsonList('lib/content/idiom_exercises.json');
+        final exercises = await IdiomsContent.load();
 
-      for (final entry in raw.cast<Map<String, dynamic>>()) {
-        final id = entry['id'] as String;
-        expect(entry['notionId'], isNotNull, reason: 'idiom $id');
-        expect(entry['notionId'], entry['expression'], reason: id);
+        for (final entry in raw.cast<Map<String, dynamic>>()) {
+          final id = entry['id'] as String;
+          expect(entry['notionId'], isNotNull, reason: 'idiom $id');
+          expect(entry['notionId'], entry['expression'], reason: id);
 
-        final model = exercises.firstWhere((e) => e.id == id);
-        expect(entry['notionId'], model.notionId, reason: id);
-      }
-    });
+          final model = exercises.firstWhere((e) => e.id == id);
+          expect(entry['notionId'], model.notionId, reason: id);
+        }
+      },
+    );
 
-    test('spot mistake explicit notionIds equal the derived identity',
-        () async {
+    test('spot mistake explicit notionIds equal the derived identity', () async {
       final raw = await loadJsonList('lib/content/spot_texts.json');
       final texts = await SpotContent.load();
 
@@ -201,6 +207,11 @@ void main() {
             isNotNull,
             reason: '$id mistake $i missing notionId',
           );
+          final commonErrorPairIndex = mistake['commonErrorPairIndex'] as int?;
+          final expected = commonErrorPairIndex == null
+              ? 'sp_${Uri.encodeComponent(mistake['token'] as String)}_${Uri.encodeComponent(mistake['replacement'] as String)}'
+              : 'gp$commonErrorPairIndex';
+          expect(explicit, expected, reason: '$id mistake $i');
           expect(
             explicit,
             model.mistakes[i].notionId,
@@ -224,11 +235,7 @@ void main() {
 
       for (final entry in raw.cast<Map<String, dynamic>>()) {
         final id = entry['id'] as String;
-        expect(
-          entry['notionId'],
-          'hyphenated_$id',
-          reason: 'hyphenation $id',
-        );
+        expect(entry['notionId'], 'hyphenated_$id', reason: 'hyphenation $id');
         expect(
           pairs.any((p) => p.id == id),
           isTrue,

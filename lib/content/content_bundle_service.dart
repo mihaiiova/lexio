@@ -31,8 +31,12 @@ final class ContentManifest {
     if (contentVersion <= 0) {
       throw const FormatException('manifest contentVersion must be positive');
     }
-    if (bundleUrl.isEmpty) {
-      throw const FormatException('manifest bundleUrl must not be empty');
+    final bundleUri = Uri.tryParse(bundleUrl);
+    if (bundleUrl.isEmpty ||
+        bundleUri == null ||
+        bundleUri.scheme != 'https' ||
+        bundleUri.host.isEmpty) {
+      throw const FormatException('manifest bundleUrl must be an HTTPS URL');
     }
     return ContentManifest(
       schemaVersion: schemaVersion,
@@ -87,10 +91,7 @@ final class SharedPreferencesContentCache implements ContentCache {
     // Write the immutable versioned bundle first; the version pointer is the
     // commit point, so a crash between the two leaves the previous bundle
     // active.
-    await _preferences.setString(
-      _bundleKey(content.version),
-      content.bundle,
-    );
+    await _preferences.setString(_bundleKey(content.version), content.bundle);
     await _preferences.setInt(_versionKey, content.version);
   }
 
@@ -153,7 +154,18 @@ final class ContentBundleService {
         await transport.fetchManifest(),
       );
       final cached = await cache.read();
-      if (cached != null && manifest.contentVersion <= cached.version) {
+      var cachedIsValid = false;
+      if (cached != null) {
+        try {
+          ContentBundle.fromString(cached.bundle);
+          cachedIsValid = true;
+        } catch (_) {
+          // A corrupt cache must not prevent downloading its replacement.
+        }
+      }
+      if (cached != null &&
+          cachedIsValid &&
+          manifest.contentVersion <= cached.version) {
         return null;
       }
 
@@ -161,10 +173,7 @@ final class ContentBundleService {
       // Parsing validates schema and content before anything is written.
       final bundle = ContentBundle.fromString(bundleRaw);
       await cache.write(
-        CachedContent(
-          version: manifest.contentVersion,
-          bundle: bundleRaw,
-        ),
+        CachedContent(version: manifest.contentVersion, bundle: bundleRaw),
       );
       _pending = bundle;
       return bundle;

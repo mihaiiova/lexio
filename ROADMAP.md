@@ -43,7 +43,7 @@
 
 ## v2.0 — Content Expansion
 
-- [x] Offline-first remote content bundles — [#52](https://github.com/mihaiiova/lexio/issues/52)
+- Offline-first remote content bundles — [#52](https://github.com/mihaiiova/lexio/issues/52)
 - [ ] Expand vocabulary to 200+ exercises
 - [ ] Expand idioms to 100+ expressions
 - [ ] Add Spot texts with new error categories
