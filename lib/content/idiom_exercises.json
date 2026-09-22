@@ -6,11 +6,7 @@
     "meaning": "a repeta mereu același lucru fără a ajunge la un rezultat",
     "example": "La ședință, cei doi au bătut apa-n piuă fără să propună o soluție.",
     "highlightedText": "au bătut apa-n piuă",
-    "options": [
-      "a discuta fără rezultat",
-      "a rezolva rapid o problemă",
-      "a schimba complet subiectul"
-    ],
+    "options": ["a discuta fără rezultat", "a rezolva rapid o problemă", "a schimba complet subiectul"],
     "correctOptionIndex": 0,
     "category": "comunicare",
     "difficulty": 1
@@ -22,11 +18,7 @@
     "meaning": "a înrăutăți o ceartă sau o situație tensionată",
     "example": "Comentariul lui a pus paie pe foc și discuția a devenit și mai aprinsă.",
     "highlightedText": "a pus paie pe foc",
-    "options": [
-      "a împăca două persoane",
-      "a înrăutăți un conflict",
-      "a ascunde o neînțelegere"
-    ],
+    "options": ["a împăca două persoane", "a înrăutăți un conflict", "a ascunde o neînțelegere"],
     "correctOptionIndex": 1,
     "category": "relații",
     "difficulty": 1
@@ -38,11 +30,7 @@
     "meaning": "a dezvălui informații care trebuiau păstrate secrete",
     "example": "Mihai a dat din casă și le-a spus tuturor ce surpriză pregăteam.",
     "highlightedText": "a dat din casă",
-    "options": [
-      "a pleca de acasă",
-      "a oferi lucruri vechi",
-      "a dezvălui un secret"
-    ],
+    "options": ["a pleca de acasă", "a oferi lucruri vechi", "a dezvălui un secret"],
     "correctOptionIndex": 2,
     "category": "comunicare",
     "difficulty": 1
@@ -54,11 +42,7 @@
     "meaning": "a exagera foarte mult importanța unei întâmplări mărunte",
     "example": "A fost doar o mică întârziere, dar Radu a făcut din țânțar armăsar.",
     "highlightedText": "a făcut din țânțar armăsar",
-    "options": [
-      "a exagera o problemă mică",
-      "a inventa o poveste amuzantă",
-      "a rezolva o situație complicată"
-    ],
+    "options": ["a exagera o problemă mică", "a inventa o poveste amuzantă", "a rezolva o situație complicată"],
     "correctOptionIndex": 0,
     "category": "comunicare",
     "difficulty": 1
@@ -70,11 +54,7 @@
     "meaning": "a pierde vremea fără să faci ceva folositor",
     "example": "În loc să termine proiectul, a frecat menta toată după-amiaza.",
     "highlightedText": "a frecat menta",
-    "options": [
-      "a lucra cu atenție",
-      "a pierde vremea",
-      "a face curățenie"
-    ],
+    "options": ["a lucra cu atenție", "a pierde vremea", "a face curățenie"],
     "correctOptionIndex": 1,
     "category": "muncă",
     "difficulty": 1
@@ -86,11 +66,7 @@
     "meaning": "a face o greșeală care te pune într-o situație neplăcută",
     "example": "A călcat pe bec când a trimis mesajul confidențial persoanei greșite.",
     "highlightedText": "A călcat pe bec",
-    "options": [
-      "a descoperi un pericol",
-      "a avea o idee bună",
-      "a face o greșeală serioasă"
-    ],
+    "options": ["a descoperi un pericol", "a avea o idee bună", "a face o greșeală serioasă"],
     "correctOptionIndex": 2,
     "category": "greșeli",
     "difficulty": 1
@@ -102,11 +78,7 @@
     "meaning": "a înfrunta direct și cu hotărâre o problemă",
     "example": "Ioana a luat taurul de coarne și a discutat deschis despre conflict.",
     "highlightedText": "a luat taurul de coarne",
-    "options": [
-      "a înfrunta direct problema",
-      "a amâna o hotărâre",
-      "a cere altcuiva să decidă"
-    ],
+    "options": ["a înfrunta direct problema", "a amâna o hotărâre", "a cere altcuiva să decidă"],
     "correctOptionIndex": 0,
     "category": "atitudine",
     "difficulty": 1
@@ -118,11 +90,7 @@
     "meaning": "a fi visător și neatent la ceea ce se întâmplă",
     "example": "Astăzi ești cu capul în nori și nu auzi nimic din ce spun.",
     "highlightedText": "ești cu capul în nori",
-    "options": [
-      "a fi foarte îngrijorat",
-      "a fi visător și neatent",
-      "a fi bine pregătit"
-    ],
+    "options": ["a fi foarte îngrijorat", "a fi visător și neatent", "a fi bine pregătit"],
     "correctOptionIndex": 1,
     "category": "atitudine",
     "difficulty": 1
@@ -134,11 +102,7 @@
     "meaning": "a fi lipsit de milă sau de sensibilitate",
     "example": "Numai cineva care are inimă de piatră ar ignora un asemenea necaz.",
     "highlightedText": "are inimă de piatră",
-    "options": [
-      "a fi foarte curajos",
-      "a fi greu de convins",
-      "a fi lipsit de milă"
-    ],
+    "options": ["a fi foarte curajos", "a fi greu de convins", "a fi lipsit de milă"],
     "correctOptionIndex": 2,
     "category": "trăsături",
     "difficulty": 1
@@ -150,11 +114,7 @@
     "meaning": "a contribui prin muncă sau ajutor la realizarea unui lucru",
     "example": "Toți vecinii au pus umărul la refacerea locului de joacă.",
     "highlightedText": "au pus umărul",
-    "options": [
-      "a ajuta la realizarea unui lucru",
-      "a refuza o sarcină grea",
-      "a supraveghea de la distanță"
-    ],
+    "options": ["a ajuta la realizarea unui lucru", "a refuza o sarcină grea", "a supraveghea de la distanță"],
     "correctOptionIndex": 0,
     "category": "cooperare",
     "difficulty": 1
@@ -166,11 +126,7 @@
     "meaning": "a se trăda singur prin vorbe sau comportament",
     "example": "S-a dat de gol când a pomenit un detaliu pe care nu trebuia să-l știe.",
     "highlightedText": "S-a dat de gol",
-    "options": [
-      "a se pierde într-un loc",
-      "a se trăda singur",
-      "a recunoaște o persoană"
-    ],
+    "options": ["a se pierde într-un loc", "a se trăda singur", "a recunoaște o persoană"],
     "correctOptionIndex": 1,
     "category": "comunicare",
     "difficulty": 1
@@ -182,11 +138,7 @@
     "meaning": "a fugi repede pentru a scăpa de ceva",
     "example": "Când a început furtuna, excursioniștii au luat-o la sănătoasa spre cabană.",
     "highlightedText": "au luat-o la sănătoasa",
-    "options": [
-      "au pornit la plimbare",
-      "au rămas pe loc",
-      "au fugit repede"
-    ],
+    "options": ["au pornit la plimbare", "au rămas pe loc", "au fugit repede"],
     "correctOptionIndex": 2,
     "category": "acțiuni",
     "difficulty": 1
@@ -198,11 +150,7 @@
     "meaning": "a păstra sau a apăra ceva cu foarte multă hotărâre",
     "example": "El ține cu dinții de ideea lui, deși ceilalți au propus alternative.",
     "highlightedText": "ține cu dinții",
-    "options": [
-      "a apăra cu îndârjire",
-      "a renunța fără regret",
-      "a asculta orice sfat"
-    ],
+    "options": ["a apăra cu îndârjire", "a renunța fără regret", "a asculta orice sfat"],
     "correctOptionIndex": 0,
     "category": "atitudine",
     "difficulty": 1
@@ -214,11 +162,7 @@
     "meaning": "a fi foarte ușor de făcut",
     "example": "După atâtea exerciții, testul a fost floare la ureche.",
     "highlightedText": "a fost floare la ureche",
-    "options": [
-      "a fost neașteptat",
-      "a fost foarte ușor",
-      "a fost lipsit de sens"
-    ],
+    "options": ["a fost neașteptat", "a fost foarte ușor", "a fost lipsit de sens"],
     "correctOptionIndex": 1,
     "category": "dificultate",
     "difficulty": 1
@@ -230,11 +174,7 @@
     "meaning": "a încerca să înșeli prezentând un lucru drept altceva",
     "example": "Vânzătorul umbla cu cioara vopsită și prezenta copia drept original.",
     "highlightedText": "umbla cu cioara vopsită",
-    "options": [
-      "spunea o poveste veche",
-      "căuta ceva pierdut",
-      "încerca să înșele"
-    ],
+    "options": ["spunea o poveste veche", "căuta ceva pierdut", "încerca să înșele"],
     "correctOptionIndex": 2,
     "category": "înșelătorie",
     "difficulty": 1
@@ -246,11 +186,7 @@
     "meaning": "a surprinde pe cineva chiar când face ceva necinstit",
     "example": "Paznicul l-a prins cu mâța-n sac când încerca să ascundă marfa.",
     "highlightedText": "l-a prins cu mâța-n sac",
-    "options": [
-      "l-a surprins făcând ceva necinstit",
-      "l-a ajutat să se ascundă",
-      "l-a confundat cu altcineva"
-    ],
+    "options": ["l-a surprins făcând ceva necinstit", "l-a ajutat să se ascundă", "l-a confundat cu altcineva"],
     "correctOptionIndex": 0,
     "category": "înșelătorie",
     "difficulty": 1
@@ -262,11 +198,7 @@
     "meaning": "a căuta cu orice preț greșeli sau motive de nemulțumire",
     "example": "Proiectul era bun, dar evaluatorul a căutat nod în papură.",
     "highlightedText": "a căutat nod în papură",
-    "options": [
-      "a verificat rezultatul",
-      "a căutat greșeli cu orice preț",
-      "a cerut o explicație simplă"
-    ],
+    "options": ["a verificat rezultatul", "a căutat greșeli cu orice preț", "a cerut o explicație simplă"],
     "correctOptionIndex": 1,
     "category": "atitudine",
     "difficulty": 1
@@ -278,11 +210,7 @@
     "meaning": "a avea mijlocul potrivit pentru a opri sau pedepsi pe cineva",
     "example": "Credea că poate păcăli pe oricine, dar directoarea avea ac de cojocul lui.",
     "highlightedText": "avea ac de cojocul lui",
-    "options": [
-      "îi pregătise un cadou",
-      "îi cunoștea familia",
-      "știa cum să-l pună la punct"
-    ],
+    "options": ["îi pregătise un cadou", "îi cunoștea familia", "știa cum să-l pună la punct"],
     "correctOptionIndex": 2,
     "category": "relații",
     "difficulty": 1
@@ -294,11 +222,7 @@
     "meaning": "a preciza clar aspectul esențial al unei probleme",
     "example": "Prin ultima observație, Ana a pus punctul pe i.",
     "highlightedText": "a pus punctul pe i",
-    "options": [
-      "a lămurit aspectul esențial",
-      "a încheiat discuția din politețe",
-      "a schimbat sensul unei propoziții"
-    ],
+    "options": ["a lămurit aspectul esențial", "a încheiat discuția din politețe", "a schimbat sensul unei propoziții"],
     "correctOptionIndex": 0,
     "category": "comunicare",
     "difficulty": 1
@@ -310,11 +234,7 @@
     "meaning": "a cheltui banii fără rost",
     "example": "Cumpărând lucruri inutile, și-a aruncat banii pe fereastră.",
     "highlightedText": "și-a aruncat banii pe fereastră",
-    "options": [
-      "a pierdut banii din greșeală",
-      "a cheltuit fără rost",
-      "a oferit bani cuiva"
-    ],
+    "options": ["a pierdut banii din greșeală", "a cheltuit fără rost", "a oferit bani cuiva"],
     "correctOptionIndex": 1,
     "category": "bani",
     "difficulty": 1
@@ -326,11 +246,7 @@
     "meaning": "a scăpa fără pedeapsă sau fără urmări neplăcute",
     "example": "Deși încălcase regula, a reușit să scoată basma curată.",
     "highlightedText": "să scoată basma curată",
-    "options": [
-      "să recunoască totul",
-      "să repare greșeala",
-      "să scape fără urmări"
-    ],
+    "options": ["să recunoască totul", "să repare greșeala", "să scape fără urmări"],
     "correctOptionIndex": 2,
     "category": "consecințe",
     "difficulty": 2
@@ -342,11 +258,7 @@
     "meaning": "a pierde vremea fără să muncești",
     "example": "În timp ce ceilalți lucrau, el tăia frunză la câini.",
     "highlightedText": "tăia frunză la câini",
-    "options": [
-      "pierdea vremea",
-      "îngrijea animalele",
-      "pregătea grădina"
-    ],
+    "options": ["pierdea vremea", "îngrijea animalele", "pregătea grădina"],
     "correctOptionIndex": 0,
     "category": "muncă",
     "difficulty": 2
@@ -358,11 +270,7 @@
     "meaning": "a se amăgi cu speranțe fără temei",
     "example": "Se îmbată cu apă rece dacă își închipuie că va reuși fără efort.",
     "highlightedText": "Se îmbată cu apă rece",
-    "options": [
-      "se pregătește cu atenție",
-      "se amăgește singur",
-      "se bucură de un succes"
-    ],
+    "options": ["se pregătește cu atenție", "se amăgește singur", "se bucură de un succes"],
     "correctOptionIndex": 1,
     "category": "gândire",
     "difficulty": 2
@@ -374,11 +282,7 @@
     "meaning": "a face tot posibilul pentru a obține sau a realiza ceva",
     "example": "Părinții s-au făcut luntre și punte ca să-i găsească tratamentul potrivit.",
     "highlightedText": "s-au făcut luntre și punte",
-    "options": [
-      "au renunțat la plan",
-      "au cerut să fie așteptați",
-      "au făcut tot ce au putut"
-    ],
+    "options": ["au renunțat la plan", "au cerut să fie așteptați", "au făcut tot ce au putut"],
     "correctOptionIndex": 2,
     "category": "efort",
     "difficulty": 2
@@ -390,11 +294,7 @@
     "meaning": "a se abate de la purtarea corectă sau de la o înțelegere",
     "example": "Antrenorul l-a avertizat să nu calce strâmb înainte de concurs.",
     "highlightedText": "să nu calce strâmb",
-    "options": [
-      "să nu se poarte greșit",
-      "să nu alerge prea repede",
-      "să nu schimbe traseul"
-    ],
+    "options": ["să nu se poarte greșit", "să nu alerge prea repede", "să nu schimbe traseul"],
     "correctOptionIndex": 0,
     "category": "comportament",
     "difficulty": 2
@@ -406,11 +306,7 @@
     "meaning": "a fugi sau a renunța când apar dificultăți",
     "example": "Când a văzut cât este de lucru, a dat bir cu fugiții.",
     "highlightedText": "a dat bir cu fugiții",
-    "options": [
-      "a cerut ajutor",
-      "a fugit de dificultate",
-      "a terminat înaintea tuturor"
-    ],
+    "options": ["a cerut ajutor", "a fugit de dificultate", "a terminat înaintea tuturor"],
     "correctOptionIndex": 1,
     "category": "atitudine",
     "difficulty": 2
@@ -422,11 +318,7 @@
     "meaning": "a face o gafă sau o greșeală nepotrivită",
     "example": "A dat cu bâta-n baltă când a felicitat persoana greșită.",
     "highlightedText": "A dat cu bâta-n baltă",
-    "options": [
-      "a rezolvat situația",
-      "a atras atenția tuturor",
-      "a făcut o gafă"
-    ],
+    "options": ["a rezolvat situația", "a atras atenția tuturor", "a făcut o gafă"],
     "correctOptionIndex": 2,
     "category": "greșeli",
     "difficulty": 2
@@ -438,11 +330,7 @@
     "meaning": "a avea idei ciudate sau preocupări exagerate",
     "example": "Are pitici pe creier când vine vorba despre ordinea obiectelor de pe birou.",
     "highlightedText": "Are pitici pe creier",
-    "options": [
-      "are idei sau obsesii ciudate",
-      "are o memorie foarte bună",
-      "are multe planuri de lucru"
-    ],
+    "options": ["are idei sau obsesii ciudate", "are o memorie foarte bună", "are multe planuri de lucru"],
     "correctOptionIndex": 0,
     "category": "trăsături",
     "difficulty": 2
@@ -454,11 +342,7 @@
     "meaning": "a face lucrurile într-o ordine greșită",
     "example": "Ai pus carul înaintea boilor: ai trimis invitațiile înainte să alegi data.",
     "highlightedText": "Ai pus carul înaintea boilor",
-    "options": [
-      "ai lucrat prea încet",
-      "ai făcut lucrurile în ordinea greșită",
-      "ai ales soluția cea mai simplă"
-    ],
+    "options": ["ai lucrat prea încet", "ai făcut lucrurile în ordinea greșită", "ai ales soluția cea mai simplă"],
     "correctOptionIndex": 1,
     "category": "organizare",
     "difficulty": 2
@@ -470,11 +354,7 @@
     "meaning": "a deveni nepăsător sau prea liniștit, crezând că totul este rezolvat",
     "example": "Nu te culca pe o ureche după prima victorie; mai urmează două meciuri.",
     "highlightedText": "Nu te culca pe o ureche",
-    "options": [
-      "nu te odihni deloc",
-      "nu asculta zvonurile",
-      "nu deveni prea sigur și nepăsător"
-    ],
+    "options": ["nu te odihni deloc", "nu asculta zvonurile", "nu deveni prea sigur și nepăsător"],
     "correctOptionIndex": 2,
     "category": "atitudine",
     "difficulty": 2
@@ -486,11 +366,7 @@
     "meaning": "a ajunge într-o situație greu de suportat",
     "example": "I-a ajuns cuțitul la os și a hotărât să reclame nedreptatea.",
     "highlightedText": "I-a ajuns cuțitul la os",
-    "options": [
-      "nu a mai putut suporta situația",
-      "s-a speriat de un pericol",
-      "a luat o decizie pripită"
-    ],
+    "options": ["nu a mai putut suporta situația", "s-a speriat de un pericol", "a luat o decizie pripită"],
     "correctOptionIndex": 0,
     "category": "limite",
     "difficulty": 2
@@ -502,11 +378,7 @@
     "meaning": "a-și face curaj pentru a întreprinde ceva dificil",
     "example": "Și-a luat inima în dinți și a urcat pe scenă.",
     "highlightedText": "Și-a luat inima în dinți",
-    "options": [
-      "a renunțat de teamă",
-      "și-a făcut curaj",
-      "a cerut o pauză"
-    ],
+    "options": ["a renunțat de teamă", "și-a făcut curaj", "a cerut o pauză"],
     "correctOptionIndex": 1,
     "category": "curaj",
     "difficulty": 2
@@ -518,11 +390,7 @@
     "meaning": "a-și schimba atitudinea sau felul de a acționa",
     "example": "După avertisment, și-a întors foaia și a început să lucreze serios.",
     "highlightedText": "și-a întors foaia",
-    "options": [
-      "a recitit documentul",
-      "a ascuns o greșeală",
-      "și-a schimbat atitudinea"
-    ],
+    "options": ["a recitit documentul", "a ascuns o greșeală", "și-a schimbat atitudinea"],
     "correctOptionIndex": 2,
     "category": "schimbare",
     "difficulty": 2
@@ -534,11 +402,7 @@
     "meaning": "a acuza sau a critica foarte aspru pe cineva",
     "example": "Jurnaliștii l-au pus la zid pentru promisiunile nerespectate.",
     "highlightedText": "l-au pus la zid",
-    "options": [
-      "l-au criticat aspru",
-      "l-au apărat public",
-      "l-au invitat la discuții"
-    ],
+    "options": ["l-au criticat aspru", "l-au apărat public", "l-au invitat la discuții"],
     "correctOptionIndex": 0,
     "category": "critică",
     "difficulty": 2
@@ -550,11 +414,7 @@
     "meaning": "a trăi greu, cu foarte puțini bani",
     "example": "La începutul carierei, au tras mâța de coadă câteva luni.",
     "highlightedText": "au tras mâța de coadă",
-    "options": [
-      "au muncit fără pauză",
-      "au trăit cu bani puțini",
-      "au călătorit mult"
-    ],
+    "options": ["au muncit fără pauză", "au trăit cu bani puțini", "au călătorit mult"],
     "correctOptionIndex": 1,
     "category": "bani",
     "difficulty": 2
@@ -566,11 +426,7 @@
     "meaning": "a încerca să înveți sau să păcălești pe cineva care știe mai bine",
     "example": "Nu încerca să-i explici programare expertului; vinzi castraveți grădinarului.",
     "highlightedText": "vinzi castraveți grădinarului",
-    "options": [
-      "îi oferi ceva de care are nevoie",
-      "îl ajuți să învețe",
-      "încerci să înveți un cunoscător"
-    ],
+    "options": ["îi oferi ceva de care are nevoie", "îl ajuți să învețe", "încerci să înveți un cunoscător"],
     "correctOptionIndex": 2,
     "category": "cunoaștere",
     "difficulty": 2
@@ -582,11 +438,7 @@
     "meaning": "a vorbi foarte corect, clar și convingător",
     "example": "Eleva a vorbit ca din carte la prezentare.",
     "highlightedText": "a vorbit ca din carte",
-    "options": [
-      "a vorbit corect și convingător",
-      "a citit fără să înțeleagă",
-      "a repetat cuvintele altcuiva"
-    ],
+    "options": ["a vorbit corect și convingător", "a citit fără să înțeleagă", "a repetat cuvintele altcuiva"],
     "correctOptionIndex": 0,
     "category": "comunicare",
     "difficulty": 2
@@ -598,11 +450,7 @@
     "meaning": "a privi nedumerit, fără să înțelegi ce se întâmplă",
     "example": "Când a văzut panoul de comandă, s-a uitat ca vițelul la poarta nouă.",
     "highlightedText": "s-a uitat ca vițelul la poarta nouă",
-    "options": [
-      "a privit cu admirație",
-      "a privit fără să înțeleagă",
-      "a observat fiecare detaliu"
-    ],
+    "options": ["a privit cu admirație", "a privit fără să înțeleagă", "a observat fiecare detaliu"],
     "correctOptionIndex": 1,
     "category": "reacții",
     "difficulty": 2
@@ -614,11 +462,7 @@
     "meaning": "a deschide larg ochii din cauza surprinderii",
     "example": "Copiii au făcut ochii cât cepele când au văzut tortul uriaș.",
     "highlightedText": "au făcut ochii cât cepele",
-    "options": [
-      "au început să plângă",
-      "au devenit neatenți",
-      "au rămas foarte surprinși"
-    ],
+    "options": ["au început să plângă", "au devenit neatenți", "au rămas foarte surprinși"],
     "correctOptionIndex": 2,
     "category": "reacții",
     "difficulty": 2
@@ -630,11 +474,7 @@
     "meaning": "a se amesteca în probleme care nu îl privesc",
     "example": "Și-a băgat nasul unde nu-i fierbe oala și a complicat discuția.",
     "highlightedText": "Și-a băgat nasul unde nu-i fierbe oala",
-    "options": [
-      "s-a amestecat unde nu trebuia",
-      "a refuzat să ofere ajutor",
-      "a rezolvat problema altora"
-    ],
+    "options": ["s-a amestecat unde nu trebuia", "a refuzat să ofere ajutor", "a rezolvat problema altora"],
     "correctOptionIndex": 0,
     "category": "relații",
     "difficulty": 2
@@ -646,11 +486,7 @@
     "meaning": "a fi foarte neatent la ceea ce faci",
     "example": "A umblat cu capul în traistă și a trimis raportul incomplet.",
     "highlightedText": "A umblat cu capul în traistă",
-    "options": [
-      "a lucrat în grabă",
-      "a fost foarte neatent",
-      "a ascuns o informație"
-    ],
+    "options": ["a lucrat în grabă", "a fost foarte neatent", "a ascuns o informație"],
     "correctOptionIndex": 1,
     "category": "atenție",
     "difficulty": 3
@@ -662,11 +498,7 @@
     "meaning": "a se înfuria brusc",
     "example": "I-a sărit muștarul când a aflat că fusese mințit.",
     "highlightedText": "I-a sărit muștarul",
-    "options": [
-      "a devenit nerăbdător",
-      "a rămas fără cuvinte",
-      "s-a înfuriat brusc"
-    ],
+    "options": ["a devenit nerăbdător", "a rămas fără cuvinte", "s-a înfuriat brusc"],
     "correctOptionIndex": 2,
     "category": "emoții",
     "difficulty": 3
@@ -678,11 +510,7 @@
     "meaning": "a ascunde sau a opri discutarea unei situații neplăcute",
     "example": "Conducerea a pus batista pe țambal și nu a mai vorbit despre incident.",
     "highlightedText": "a pus batista pe țambal",
-    "options": [
-      "a ascuns situația",
-      "a anunțat public problema",
-      "a cerut o anchetă"
-    ],
+    "options": ["a ascuns situația", "a anunțat public problema", "a cerut o anchetă"],
     "correctOptionIndex": 0,
     "category": "comunicare",
     "difficulty": 3
@@ -694,11 +522,7 @@
     "meaning": "a urmări propriul avantaj într-o situație",
     "example": "În negociere, fiecare a tras spuza pe turta sa.",
     "highlightedText": "a tras spuza pe turta sa",
-    "options": [
-      "a acceptat un compromis",
-      "și-a urmărit propriul avantaj",
-      "a apărat interesul tuturor"
-    ],
+    "options": ["a acceptat un compromis", "și-a urmărit propriul avantaj", "a apărat interesul tuturor"],
     "correctOptionIndex": 1,
     "category": "interese",
     "difficulty": 3
@@ -710,11 +534,7 @@
     "meaning": "a cerceta sau a întreba pe cineva în cele mai mici detalii",
     "example": "Inspectorul l-a luat la bani mărunți în legătură cu fiecare cheltuială.",
     "highlightedText": "l-a luat la bani mărunți",
-    "options": [
-      "i-a cerut să plătească",
-      "i-a oferit o recompensă",
-      "l-a cercetat amănunțit"
-    ],
+    "options": ["i-a cerut să plătească", "i-a oferit o recompensă", "l-a cercetat amănunțit"],
     "correctOptionIndex": 2,
     "category": "cercetare",
     "difficulty": 3
@@ -726,11 +546,7 @@
     "meaning": "a vorbi fără legătură cu subiectul sau fără sens",
     "example": "În loc să răspundă la întrebare, a început să bată câmpii.",
     "highlightedText": "să bată câmpii",
-    "options": [
-      "să vorbească fără legătură",
-      "să explice foarte clar",
-      "să povestească despre natură"
-    ],
+    "options": ["să vorbească fără legătură", "să explice foarte clar", "să povestească despre natură"],
     "correctOptionIndex": 0,
     "category": "comunicare",
     "difficulty": 3
@@ -742,11 +558,7 @@
     "meaning": "a înșela sau a amăgi pe cineva",
     "example": "Ne-a dus cu preșul, promițând mereu că va livra comanda mâine.",
     "highlightedText": "Ne-a dus cu preșul",
-    "options": [
-      "ne-a condus până acasă",
-      "ne-a amăgit",
-      "ne-a cerut răbdare"
-    ],
+    "options": ["ne-a condus până acasă", "ne-a amăgit", "ne-a cerut răbdare"],
     "correctOptionIndex": 1,
     "category": "înșelătorie",
     "difficulty": 3
@@ -758,11 +570,7 @@
     "meaning": "a crea intenționat piedici în realizarea unui lucru",
     "example": "De fiecare dată când avansam, cineva ne punea bețe în roate.",
     "highlightedText": "ne punea bețe în roate",
-    "options": [
-      "ne oferea un sfat",
-      "ne schimba obiectivul",
-      "ne crea piedici"
-    ],
+    "options": ["ne oferea un sfat", "ne schimba obiectivul", "ne crea piedici"],
     "correctOptionIndex": 2,
     "category": "obstacole",
     "difficulty": 3
@@ -774,11 +582,7 @@
     "meaning": "a oferi argumente sau încurajare unei atitudini nepotrivite",
     "example": "Prin reacția lui, le-a dat apă la moară celor care răspândeau zvonul.",
     "highlightedText": "le-a dat apă la moară",
-    "options": [
-      "le-a încurajat atitudinea",
-      "le-a cerut dovezi",
-      "le-a schimbat părerea"
-    ],
+    "options": ["le-a încurajat atitudinea", "le-a cerut dovezi", "le-a schimbat părerea"],
     "correctOptionIndex": 0,
     "category": "influență",
     "difficulty": 3
@@ -790,11 +594,7 @@
     "meaning": "a abandona pe cineva sau ceva înainte de final",
     "example": "A lăsat baltă proiectul chiar înainte de prezentare.",
     "highlightedText": "A lăsat baltă",
-    "options": [
-      "a amânat pentru o zi",
-      "a abandonat",
-      "a terminat în grabă"
-    ],
+    "options": ["a amânat pentru o zi", "a abandonat", "a terminat în grabă"],
     "correctOptionIndex": 1,
     "category": "atitudine",
     "difficulty": 3
@@ -806,11 +606,7 @@
     "meaning": "a fi foarte învățat și a avea multe cunoștințe",
     "example": "Bibliotecara este tobă de carte și găsește răspuns la orice întrebare.",
     "highlightedText": "este tobă de carte",
-    "options": [
-      "este foarte organizată",
-      "citește doar manuale",
-      "are foarte multe cunoștințe"
-    ],
+    "options": ["este foarte organizată", "citește doar manuale", "are foarte multe cunoștințe"],
     "correctOptionIndex": 2,
     "category": "cunoaștere",
     "difficulty": 3
@@ -822,11 +618,7 @@
     "meaning": "a fi foarte încrezut și arogant",
     "example": "De când a primit premiul, nu-i mai ajunge cu prăjina la nas.",
     "highlightedText": "nu-i mai ajunge cu prăjina la nas",
-    "options": [
-      "a devenit foarte arogant",
-      "a devenit greu de găsit",
-      "a început să muncească mai mult"
-    ],
+    "options": ["a devenit foarte arogant", "a devenit greu de găsit", "a început să muncească mai mult"],
     "correctOptionIndex": 0,
     "category": "trăsături",
     "difficulty": 3
@@ -838,11 +630,7 @@
     "meaning": "a urmări lucruri imposibile sau lipsite de realism",
     "example": "În loc să aleagă o soluție posibilă, umblă după cai verzi pe pereți.",
     "highlightedText": "umblă după cai verzi pe pereți",
-    "options": [
-      "caută o idee originală",
-      "urmărește lucruri imposibile",
-      "evită să ia o decizie"
-    ],
+    "options": ["caută o idee originală", "urmărește lucruri imposibile", "evită să ia o decizie"],
     "correctOptionIndex": 1,
     "category": "gândire",
     "difficulty": 3
@@ -854,11 +642,7 @@
     "meaning": "a folosi pe altcineva pentru a rezolva o situație riscantă în folosul tău",
     "example": "A scos castanele din foc cu mâna colegului, lăsându-l pe el să anunțe vestea.",
     "highlightedText": "A scos castanele din foc cu mâna colegului",
-    "options": [
-      "a împărțit o sarcină grea",
-      "a ajutat un coleg aflat în pericol",
-      "a folosit pe altcineva pentru riscul său"
-    ],
+    "options": ["a împărțit o sarcină grea", "a ajutat un coleg aflat în pericol", "a folosit pe altcineva pentru riscul său"],
     "correctOptionIndex": 2,
     "category": "interese",
     "difficulty": 3
@@ -870,11 +654,7 @@
     "meaning": "a distruge cu mare cruzime tot ce întâlnești",
     "example": "În poveste, armata a trecut ținutul prin foc și sabie.",
     "highlightedText": "a trecut ținutul prin foc și sabie",
-    "options": [
-      "a distrus ținutul fără milă",
-      "a apărat ținutul cu îndârjire",
-      "a traversat o zonă primejdioasă"
-    ],
+    "options": ["a distrus ținutul fără milă", "a apărat ținutul cu îndârjire", "a traversat o zonă primejdioasă"],
     "correctOptionIndex": 0,
     "category": "conflict",
     "difficulty": 3
@@ -886,11 +666,7 @@
     "meaning": "a reduce intensitatea unei acțiuni, afirmații sau manifestări",
     "example": "După criticile primite, și-a pus surdină declarațiilor.",
     "highlightedText": "și-a pus surdină declarațiilor",
-    "options": [
-      "și-a repetat declarațiile",
-      "și-a temperat declarațiile",
-      "și-a retras toate declarațiile"
-    ],
+    "options": ["și-a repetat declarațiile", "și-a temperat declarațiile", "și-a retras toate declarațiile"],
     "correctOptionIndex": 1,
     "category": "intensitate",
     "difficulty": 3
@@ -902,11 +678,7 @@
     "meaning": "a suporta consecințele neplăcute ale unei fapte",
     "example": "Toată echipa a tras ponoasele pentru greșeala unui singur coleg.",
     "highlightedText": "a tras ponoasele",
-    "options": [
-      "a primit o recompensă",
-      "a ascuns adevărul",
-      "a suportat consecințele"
-    ],
+    "options": ["a primit o recompensă", "a ascuns adevărul", "a suportat consecințele"],
     "correctOptionIndex": 2,
     "category": "consecințe",
     "difficulty": 3
@@ -918,11 +690,7 @@
     "meaning": "a glumi pe seama unei situații neplăcute pentru a o suporta mai ușor",
     "example": "Autobuzul întârzia, dar călătorii au făcut haz de necaz.",
     "highlightedText": "au făcut haz de necaz",
-    "options": [
-      "au glumit despre situația neplăcută",
-      "s-au certat din cauza întârzierii",
-      "au ignorat complet problema"
-    ],
+    "options": ["au glumit despre situația neplăcută", "s-au certat din cauza întârzierii", "au ignorat complet problema"],
     "correctOptionIndex": 0,
     "category": "atitudine",
     "difficulty": 3
@@ -934,11 +702,7 @@
     "meaning": "a răspândi o veste către cât mai multă lume",
     "example": "Organizatorii au dat sfoară-n țară că se caută voluntari.",
     "highlightedText": "au dat sfoară-n țară",
-    "options": [
-      "au trimis invitații oficiale",
-      "au răspândit vestea",
-      "au cerut păstrarea secretului"
-    ],
+    "options": ["au trimis invitații oficiale", "au răspândit vestea", "au cerut păstrarea secretului"],
     "correctOptionIndex": 1,
     "category": "comunicare",
     "difficulty": 3
@@ -950,11 +714,7 @@
     "meaning": "a certa sau a ironiza aspru pe cineva",
     "example": "Colegii l-au luat în tărbacă pentru laudele lui exagerate.",
     "highlightedText": "l-au luat în tărbacă",
-    "options": [
-      "l-au felicitat public",
-      "l-au lăsat să vorbească",
-      "l-au ironizat aspru"
-    ],
+    "options": ["l-au felicitat public", "l-au lăsat să vorbească", "l-au ironizat aspru"],
     "correctOptionIndex": 2,
     "category": "relații",
     "difficulty": 3
