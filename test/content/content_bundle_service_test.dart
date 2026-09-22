@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 // ignore: avoid_relative_lib_imports
 import '../../lib/content/content_bundle_service.dart';
 // ignore: avoid_relative_lib_imports
+import '../../lib/content/content_runtime.dart';
+// ignore: avoid_relative_lib_imports
 import '../../lib/games/grammar/grammar_content.dart';
 
 String _minimalBundle(String notionId) {
@@ -129,6 +131,26 @@ void main() {
 
       final activated = await service.activatePending();
       expect(activated.grammar.single.notionId, 'n_new');
+    });
+
+    test('activates a staged bundle through the app content runtime', () async {
+      final cache = _FakeCache()
+        ..bundles[1] = _minimalBundle('n_old')
+        ..version = 1;
+      final transport = _FakeTransport(
+        manifestBody: _manifest(2),
+        bundleBody: _minimalBundle('n_new'),
+      );
+      final service = ContentBundleService(cache: cache, transport: transport);
+      await service.start();
+      await service.refresh();
+      ContentRuntime.install(service);
+
+      await ContentRuntime.activatePending();
+
+      expect(service.activeBundle.grammar.single.notionId, 'n_new');
+      expect(GrammarContent.distinctNotionIds(), contains('n_new'));
+      ContentRuntime.reset();
     });
 
     test('does not re-download when the cached version is current', () async {

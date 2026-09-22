@@ -12,6 +12,7 @@ import '../../design/components/lexio_answer_button.dart';
 import '../../design/components/lexio_feedback.dart';
 import '../../design/components/lexio_feedback_screen.dart';
 import '../../progress/user_progress.dart';
+import '../../content/content_runtime.dart';
 import 'grammar_content.dart';
 import 'grammar_game.dart';
 import 'widgets/grammar_summary.dart';
@@ -81,6 +82,7 @@ class _GrammarScreenState extends State<GrammarScreen>
 
   Future<void> _init() async {
     try {
+      await ContentRuntime.activatePending();
       await GrammarContent.load();
       final progress =
           widget.progressRepository ?? await ProgressRepository.load();
@@ -153,7 +155,9 @@ class _GrammarScreenState extends State<GrammarScreen>
     _advance();
   }
 
-  void _playAgain() {
+  Future<void> _playAgain() async {
+    await ContentRuntime.activatePending();
+    if (!mounted) return;
     final suppliedExercises = widget.exercises;
     final exercises =
         suppliedExercises ??

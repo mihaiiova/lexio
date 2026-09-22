@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'analytics/analytics_service.dart';
 import 'app/app.dart';
 import 'content/content_bundle_service.dart';
+import 'content/content_runtime.dart';
 
 /// Compile-time base URL for static content. Empty in development and tests,
 /// where the app serves bundled content and never checks the manifest.
@@ -25,6 +26,7 @@ Future<void> _startContentBundleService() async {
           ? null
           : HttpContentTransport('$_contentBaseUrl/manifest.json'),
     );
+    ContentRuntime.install(service);
     // Resolve the active snapshot (valid cache first, bundled fallback) and
     // apply it before the first frame.
     await service.start();

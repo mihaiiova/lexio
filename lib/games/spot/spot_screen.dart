@@ -11,6 +11,7 @@ import '../../design/components/lexio_feedback_screen.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
 import '../../progress/user_progress.dart';
+import '../../content/content_runtime.dart';
 import 'spot_content.dart';
 import 'spot_game.dart';
 import 'widgets/spot_summary.dart';
@@ -95,6 +96,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   Future<void> _init() async {
     try {
+      await ContentRuntime.activatePending();
       await SpotContent.load();
       final progress =
           widget.progressRepository ?? await ProgressRepository.load();
@@ -175,7 +177,9 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     if (_state!.isFinished) _finish(_state!);
   }
 
-  void _handlePlayAgain() {
+  Future<void> _handlePlayAgain() async {
+    await ContentRuntime.activatePending();
+    if (!mounted) return;
     _timer?.cancel();
     final texts =
         widget.texts ??

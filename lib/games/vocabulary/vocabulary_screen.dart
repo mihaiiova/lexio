@@ -12,6 +12,7 @@ import '../../design/components/lexio_incorrect_answer_card.dart';
 import '../../design/radius.dart';
 import '../../design/spacing.dart';
 import '../../progress/user_progress.dart';
+import '../../content/content_runtime.dart';
 import 'vocabulary_content.dart';
 import 'vocabulary_game.dart';
 import 'widgets/vocabulary_sentence.dart';
@@ -78,6 +79,7 @@ class _VocabularyScreenState extends State<VocabularyScreen>
 
   Future<void> _init() async {
     try {
+      await ContentRuntime.activatePending();
       await VocabularyContent.load();
       final progress =
           widget.progressRepository ?? await ProgressRepository.load();
@@ -142,7 +144,9 @@ class _VocabularyScreenState extends State<VocabularyScreen>
     Navigator.of(context).maybePop();
   }
 
-  void _playAgain() {
+  Future<void> _playAgain() async {
+    await ContentRuntime.activatePending();
+    if (!mounted) return;
     final suppliedExercises = widget.exercises;
     final exercises =
         suppliedExercises ??
