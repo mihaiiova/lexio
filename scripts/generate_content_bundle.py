@@ -16,6 +16,8 @@ The version is monotonic and is bumped explicitly before publishing:
     python3 scripts/generate_content_bundle.py --bump --base-url https://...
 
 The base URL defaults to an empty string (publishing path is supplied by CI).
+Without `--bump`, the generator refuses to overwrite an existing bundle with
+changed canonical content; this keeps contentVersion monotonic in CI.
 
 Run from the repository root. The script exits non-zero if any content entry
 is missing an explicit notionId (the same contract validate_content.py checks).
@@ -113,6 +115,15 @@ def main():
     bundle_path = OUT_DIR / "content_bundle.json"
     versioned_path = OUT_DIR / f"content_bundle_{version}.json"
     bundle_bytes = json.dumps(bundle, ensure_ascii=False, indent=2) + "\n"
+
+    if (
+        not args.bump
+        and bundle_path.exists()
+        and bundle_path.read_text(encoding="utf-8") != bundle_bytes
+    ):
+        sys.exit(
+            "canonical content changed; regenerate with --bump before publishing"
+        )
 
     bundle_path.write_text(bundle_bytes, encoding="utf-8")
     versioned_path.write_text(bundle_bytes, encoding="utf-8")
