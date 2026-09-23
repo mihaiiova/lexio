@@ -8,7 +8,8 @@
 ├──────────────────────────────┤
 │  Game State + Logic           │  Business logic layer
 ├──────────────────────────────┤
-│  Content Loader (JSON)        │  Data layer
+│  Content Loader + Bundle      │  Data layer
+│  Service (JSON/cache)         │
 └──────────────────────────────┘
 ```
 
@@ -21,6 +22,7 @@
 
 ### Data Layer
 - **Content Loader** (`lib/games/<name>/<name>_content.dart`): Loads and caches JSON
+- **Content Bundle Service** (`lib/content/content_bundle_service.dart`): Resolves bundled, cached, and static remote snapshots
 - **Content Files** (`lib/content/*.json`): Raw exercise data
 
 ## Game Architecture
@@ -81,10 +83,15 @@ design/
 
 ## Content Strategy
 
-- All exercises stored as JSON in `lib/content/`
+- All exercises stored as JSON in `lib/content/` plus `data/*.json`
 - Each game has its own content file: `<name>_exercises.json`
 - Content loaded via `rootBundle.loadString()` (bundled at build time)
 - Loader classes cache parsed data in memory
+- Explicit permanent `notionId` fields give each learning concept a stable
+  identity across wording/explanation corrections and reordering
+- `scripts/generate_content_bundle.py` produces a complete, deterministic
+  `content_public/content_bundle.json` + `manifest.json` for offline-first
+  remote refresh (see `docs/releasing.md`)
 - Makes it easy to add thousands of exercises later (just add JSON entries)
 
 ### JSON Schema for Exercises
@@ -111,8 +118,9 @@ Fields vary by game type but follow the same array-of-objects pattern.
 
 ## Technical Constraints
 
-- **Dependencies**: Flutter SDK, cupertino_icons, shared_preferences, url_launcher, firebase_core, and firebase_analytics
+- **Dependencies**: Flutter SDK, cupertino_icons, shared_preferences, url_launcher, http, firebase_core, and firebase_analytics
 - **No package:lexio imports** — always use relative paths
 - **No state management library** — simple StatefulWidget + setState
 - **No code generation** — manual fromJson/toJson
-- **No network** — all content is local JSON
+- **No backend/database** — content refreshes from static files; progress stays local
+- **Content is offline-first** — bundled baseline plus an optional static bundle

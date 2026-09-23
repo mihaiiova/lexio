@@ -72,8 +72,9 @@ lib/
 - Each game is an isolated module; the home catalogue owns its navigation metadata
 - Design tokens are centralized — changing fonts, colors, spacing, radii, or animation timing needs edits in one place
 - Content is stored as local JSON for easy addition of thousands of exercises
+- **Offline-first content**: bundled baseline plus a static bundle refreshed in the background; progress stays local
 - **Local persistence**: Progress tracked via `SharedPreferences` with spaced repetition
-- **No backend or auth** — learning content and progress remain local
+- **No backend or auth** — learning content and progress remain local (a static CDN delivers content one-way)
 - **Privacy-conscious analytics**: Firebase records only game-open events; ad storage, ad personalization, and ad user data are disabled
 - **Deadline-based timer**: Spot game uses wall-clock deadlines, not callback counting
 - **Lifecycle-safe**: App respects background/foreground transitions (WidgetsBindingObserver)
@@ -101,15 +102,17 @@ integration_test/
   screenshot_test.dart  # Device-only screenshot capture workflow
 ```
 
-Content validation:
+Content validation and bundle generation:
 ```bash
-python3 scripts/validate_content.py
+python3 scripts/validate_content.py                 # structural + notionId validation
+python3 scripts/generate_content_bundle.py --bump   # regenerate the remote bundle + manifest
 ```
 
 ## Dependencies
 
 - **flutter**: UI framework
-- **shared_preferences**: Local progress storage
+- **shared_preferences**: Local progress and content-bundle storage
+- **http**: Offline-first remote content download
 - **url_launcher**: External DOOM dictionary links
 - **flutter_localizations**: Romanian locale support
 - **firebase_core / firebase_analytics**: Anonymous game usage statistics

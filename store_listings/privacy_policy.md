@@ -18,6 +18,10 @@ Folosim datele numai pentru statistici agregate, evaluarea funcțiilor aplicați
 
 Răspunsurile corecte și greșite și progresul de învățare sunt stocate local pe dispozitiv. Aceste date nu sunt trimise la Firebase și nu sunt asociate cu statisticile de utilizare.
 
+## Actualizarea conținutului
+
+Aplicația poate descărca o versiune mai nouă a conținutului lingvistic (exerciții, exemple, explicații) dintr-un serviciu static de fișiere (Cloudflare Pages), pentru a corecta sau adăuga exerciții fără o nouă lansare în magazine. Această descărcare este strict unidirecțională: aplicația primește conținut, dar nu trimite progresul de învățare, răspunsurile, numele, contul sau orice altă dată personală. Nu este necesar un cont și nu se afișează nicio solicitare de consimțământ suplimentar. Conținutul descărcat este validat și stocat local, iar aplicația rămâne utilizabilă complet offline cu conținutul inclus la instalare.
+
 ## Linkuri externe
 
 Unele explicații pot deschide în browser pagini ale Dicționarului Ortografic, Ortoepic și Morfologic al Limbii Române. Site-ul extern primește informațiile tehnice obișnuite ale unei accesări web și aplică propria politică de confidențialitate.

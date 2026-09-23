@@ -12,6 +12,7 @@ import '../../design/components/lexio_incorrect_answer_card.dart';
 import '../../design/radius.dart';
 import '../../design/spacing.dart';
 import '../../progress/user_progress.dart';
+import '../../content/content_runtime.dart';
 import 'idioms_content.dart';
 import 'idioms_game.dart';
 import 'widgets/idiom_sentence.dart';
@@ -74,6 +75,7 @@ class _IdiomsScreenState extends State<IdiomsScreen>
 
   Future<void> _init() async {
     try {
+      await ContentRuntime.activatePending();
       await IdiomsContent.load();
       final progress =
           widget.progressRepository ?? await ProgressRepository.load();
@@ -138,7 +140,9 @@ class _IdiomsScreenState extends State<IdiomsScreen>
     Navigator.of(context).maybePop();
   }
 
-  void _playAgain() {
+  Future<void> _playAgain() async {
+    await ContentRuntime.activatePending();
+    if (!mounted) return;
     final suppliedExercises = widget.exercises;
     final exercises =
         suppliedExercises ??

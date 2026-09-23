@@ -8,6 +8,7 @@ import '../../progress/user_progress.dart';
 
 final class IdiomExercise {
   final String id;
+  final String? notionIdOverride;
   final String expression;
   final String meaning;
   final String example;
@@ -20,6 +21,7 @@ final class IdiomExercise {
   const IdiomExercise({
     required this.id,
     required this.expression,
+    this.notionIdOverride,
     required this.meaning,
     required this.example,
     required this.highlightedText,
@@ -29,12 +31,13 @@ final class IdiomExercise {
     required this.difficulty,
   });
 
-  String get notionId => expression;
+  String get notionId => notionIdOverride ?? expression;
 
   factory IdiomExercise.fromJson(Map<String, dynamic> json) {
     return IdiomExercise(
       id: json['id'] as String,
       expression: json['expression'] as String,
+      notionIdOverride: json['notionId'] as String?,
       meaning: json['meaning'] as String,
       example: json['example'] as String,
       highlightedText: json['highlightedText'] as String,
@@ -58,10 +61,18 @@ final class IdiomsContent {
       'lib/content/idiom_exercises.json',
     );
     final jsonList = json.decode(jsonString) as List<dynamic>;
-    _cached = jsonList
+    _cached = parse(jsonList);
+    return _cached!;
+  }
+
+  static List<IdiomExercise> parse(List<dynamic> jsonList) {
+    return jsonList
         .map((entry) => IdiomExercise.fromJson(entry as Map<String, dynamic>))
         .toList(growable: false);
-    return _cached!;
+  }
+
+  static void seed(List<IdiomExercise> exercises) {
+    _cached = List<IdiomExercise>.from(exercises);
   }
 
   static Set<String> distinctNotionIds() =>
