@@ -4,8 +4,6 @@
 import json
 import sys
 from pathlib import Path
-from urllib.parse import quote
-
 ROOT = Path(__file__).resolve().parent.parent
 
 def load_json(path):
@@ -17,15 +15,6 @@ errors = []
 def check(condition, path, item_id, msg):
     if not condition:
         errors.append(f"{path} | {item_id} | {msg}")
-
-
-def derived_spot_notion_id(mistake):
-    pair_index = mistake.get('commonErrorPairIndex')
-    if pair_index is not None:
-        return f"gp{pair_index}"
-    token = quote(mistake.get('token', ''), safe='')
-    replacement = quote(mistake.get('replacement', ''), safe='')
-    return f"sp_{token}_{replacement}"
 
 # --- Grammar exercises ---
 print("Validating grammar_exercises.json ...")
@@ -59,8 +48,6 @@ for ex in vocab:
     eid = ex.get('id', '?')
     check('id' in ex, 'vocab', eid, "missing id")
     check('notionId' in ex and isinstance(ex.get('notionId'), str) and ex['notionId'], 'vocab', eid, "missing/empty notionId")
-    if ex.get('notionId') and ex.get('word'):
-        check(ex['notionId'] == ex['word'], 'vocab', eid, "notionId must equal word")
     check('word' in ex, 'vocab', eid, "missing word")
     check('partOfSpeech' in ex, 'vocab', eid, "missing partOfSpeech")
     check('example' in ex, 'vocab', eid, "missing example")
@@ -81,8 +68,6 @@ for ex in idioms:
     eid = ex.get('id', '?')
     check('id' in ex, 'idioms', eid, "missing id")
     check('notionId' in ex and isinstance(ex.get('notionId'), str) and ex['notionId'], 'idioms', eid, "missing/empty notionId")
-    if ex.get('notionId') and ex.get('expression'):
-        check(ex['notionId'] == ex['expression'], 'idioms', eid, "notionId must equal expression")
     check('expression' in ex, 'idioms', eid, "missing expression")
     check('example' in ex, 'idioms', eid, "missing example")
     check('options' in ex and isinstance(ex['options'], list), 'idioms', eid, "missing options")
@@ -152,12 +137,6 @@ for t in spot:
             check(hyp_ref in hyphenation_ids, 'spot', tid, f"unknown hyphenationPairId '{hyp_ref}'")
         if 'token' in m and 'content' in t:
             check(m['token'] in content, 'spot', tid, f"token '{m['token']}' not found in content")
-        if cep_idx is None:
-            check(
-                m.get('notionId') == derived_spot_notion_id(m),
-                'spot', tid,
-                'notionId must equal the current derived identity',
-            )
 print(f"  {len(spot)} texts, {total_mistakes} mistakes checked")
 
 # --- Report ---

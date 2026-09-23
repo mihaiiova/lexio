@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 // ignore: avoid_relative_lib_imports
 import '../../lib/content/content_bundle.dart';
+// ignore: avoid_relative_lib_imports
+import '../../lib/home/discovery_catalog.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +45,17 @@ void main() {
         bundle.spotTexts.expand((t) => t.mistakeNotionIds).toSet(),
         equals(bundled.spotTexts.expand((t) => t.mistakeNotionIds).toSet()),
       );
+
+      final totals = await DiscoveryCatalog.totalNotionsByGame();
+      expect(totals, {
+        'grammar': bundled.grammar.map((e) => e.notionId).toSet().length,
+        'vocabulary': bundled.vocabulary.map((e) => e.notionId).toSet().length,
+        'idioms': bundled.idioms.map((e) => e.notionId).toSet().length,
+        'spot': bundled.spotTexts
+            .expand((text) => text.mistakeNotionIds)
+            .toSet()
+            .length,
+      });
     },
   );
 

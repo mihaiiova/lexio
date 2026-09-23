@@ -71,6 +71,24 @@ void main() {
       expect(exercise.notionId, 'permanent-id');
     });
 
+    test('vocabulary wording corrections retain the explicit notionId', () {
+      final exercise = VocabularyExercise.fromJson({
+        'id': 'v001',
+        'word': 'curioasă',
+        'partOfSpeech': 'adjectiv',
+        'definition': 'd',
+        'example': 'e',
+        'options': ['a', 'b'],
+        'correctOptionIndex': 0,
+        'explanation': 'e',
+        'category': 'c',
+        'synonyms': <String>[],
+        'notionId': 'curios',
+      });
+
+      expect(exercise.notionId, 'curios');
+    });
+
     test('idiom exercise uses explicit notionId when present', () {
       final exercise = IdiomExercise.fromJson({
         'id': 'i001',
@@ -88,6 +106,23 @@ void main() {
       expect(exercise.notionId, 'permanent-id');
     });
 
+    test('idiom wording corrections retain the explicit notionId', () {
+      final exercise = IdiomExercise.fromJson({
+        'id': 'i001',
+        'expression': 'a bate apa-n piuă!',
+        'meaning': 'm',
+        'example': 'e',
+        'highlightedText': 'h',
+        'options': ['a', 'b'],
+        'correctOptionIndex': 0,
+        'category': 'c',
+        'difficulty': 1,
+        'notionId': 'a bate apa-n piuă',
+      });
+
+      expect(exercise.notionId, 'a bate apa-n piuă');
+    });
+
     test('spot mistake uses explicit notionId when present', () {
       final mistake = SpotMistake.fromJson({
         'wordIndex': 0,
@@ -101,6 +136,21 @@ void main() {
       });
 
       expect(mistake.notionId, 'permanent-id');
+    });
+
+    test('spot wording corrections retain the explicit notionId', () {
+      final mistake = SpotMistake.fromJson({
+        'wordIndex': 0,
+        'token': 'bari',
+        'replacement': 'bare',
+        'explanation': 'e corectat',
+        'category': 'c',
+        'topic': 't',
+        'commonErrorPairIndex': 0,
+        'notionId': 'gp0',
+      });
+
+      expect(mistake.notionId, 'gp0');
     });
 
     test('spot mistake falls back to derived identity without notionId', () {
@@ -164,7 +214,8 @@ void main() {
         for (final entry in raw.cast<Map<String, dynamic>>()) {
           final id = entry['id'] as String;
           expect(entry['notionId'], isNotNull, reason: 'vocab $id');
-          expect(entry['notionId'], entry['word'], reason: id);
+          expect(entry['notionId'], isA<String>(), reason: id);
+          expect(entry['notionId'], isNotEmpty, reason: id);
 
           final model = exercises.firstWhere((e) => e.id == id);
           expect(entry['notionId'], model.notionId, reason: id);
@@ -181,7 +232,8 @@ void main() {
         for (final entry in raw.cast<Map<String, dynamic>>()) {
           final id = entry['id'] as String;
           expect(entry['notionId'], isNotNull, reason: 'idiom $id');
-          expect(entry['notionId'], entry['expression'], reason: id);
+          expect(entry['notionId'], isA<String>(), reason: id);
+          expect(entry['notionId'], isNotEmpty, reason: id);
 
           final model = exercises.firstWhere((e) => e.id == id);
           expect(entry['notionId'], model.notionId, reason: id);
@@ -189,43 +241,51 @@ void main() {
       },
     );
 
-    test('spot mistake explicit notionIds equal the derived identity', () async {
-      final raw = await loadJsonList('lib/content/spot_texts.json');
-      final texts = await SpotContent.load();
+    test(
+      'spot mistakes carry explicit identities',
+      () async {
+        final raw = await loadJsonList('lib/content/spot_texts.json');
+        final texts = await SpotContent.load();
 
-      for (final text in raw.cast<Map<String, dynamic>>()) {
-        final id = text['id'] as String;
-        final mistakes = (text['mistakes'] as List<dynamic>)
-            .cast<Map<String, dynamic>>();
-        final model = texts.firstWhere((t) => t.id == id);
+        for (final text in raw.cast<Map<String, dynamic>>()) {
+          final id = text['id'] as String;
+          final mistakes = (text['mistakes'] as List<dynamic>)
+              .cast<Map<String, dynamic>>();
+          final model = texts.firstWhere((t) => t.id == id);
 
-        for (var i = 0; i < mistakes.length; i++) {
-          final mistake = mistakes[i];
-          final explicit = mistake['notionId'];
-          expect(
-            explicit,
-            isNotNull,
-            reason: '$id mistake $i missing notionId',
-          );
-          final commonErrorPairIndex = mistake['commonErrorPairIndex'] as int?;
-          final expected = commonErrorPairIndex == null
-              ? 'sp_${Uri.encodeComponent(mistake['token'] as String)}_${Uri.encodeComponent(mistake['replacement'] as String)}'
-              : 'gp$commonErrorPairIndex';
-          expect(explicit, expected, reason: '$id mistake $i');
-          expect(
-            explicit,
-            model.mistakes[i].notionId,
-            reason: '$id mistake $i',
-          );
+          for (var i = 0; i < mistakes.length; i++) {
+            final mistake = mistakes[i];
+            final explicit = mistake['notionId'];
+            expect(
+              explicit,
+              isNotNull,
+              reason: '$id mistake $i missing notionId',
+            );
+            final commonErrorPairIndex =
+                mistake['commonErrorPairIndex'] as int?;
+            expect(explicit, isA<String>(), reason: '$id mistake $i');
+            expect(explicit, isNotEmpty, reason: '$id mistake $i');
+            if (commonErrorPairIndex != null) {
+              expect(
+                explicit,
+                model.mistakes[i].notionId,
+                reason: '$id mistake $i',
+              );
+            }
+          }
         }
-      }
-    });
+      },
+    );
 
-    test('common error pairs carry the shared gp index identity', () async {
+    test('common error pairs carry stable explicit identities', () async {
       final raw = await loadJsonList('data/common_error_pairs.json');
-      for (var i = 0; i < raw.length; i++) {
-        final entry = raw[i] as Map<String, dynamic>;
-        expect(entry['notionId'], 'gp$i', reason: 'common error $i');
+      final ids = <String>{};
+      for (final value in raw) {
+        final entry = value as Map<String, dynamic>;
+        final notionId = entry['notionId'];
+        expect(notionId, isA<String>());
+        expect(notionId, isNotEmpty);
+        expect(ids.add(notionId as String), isTrue);
       }
     });
 
