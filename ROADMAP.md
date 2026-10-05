@@ -31,7 +31,6 @@
 - [x] Pin Flutter SDK version and verify release builds
 - [x] Spot full-flow integration test coverage
 - [x] Refresh project documentation (README, ROADMAP, release report)
-- [ ] Check Firebase Analytics events — [#33](https://github.com/mihaiiova/lexio/issues/33)
 - [ ] Review "Confidențialitate" footer wording — [#32](https://github.com/mihaiiova/lexio/issues/32)
 - [ ] Smoke-test on real devices — [#25](https://github.com/mihaiiova/lexio/issues/25)
 - [ ] Test signed TestFlight and Play Store builds — [#29](https://github.com/mihaiiova/lexio/issues/29)

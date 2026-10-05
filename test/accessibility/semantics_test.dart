@@ -46,7 +46,7 @@ void main() {
 
     expect(find.text('Politica de confidențialitate'), findsOneWidget);
     expect(find.text('Ce date colectăm'), findsOneWidget);
-    expect(find.textContaining('Firebase Analytics'), findsWidgets);
+    expect(find.textContaining('Nu colectăm'), findsWidgets);
   });
 
   testWidgets('App title text is present', (tester) async {
@@ -198,9 +198,9 @@ String _accessibleName(SemanticsData data) =>
     data.label.isNotEmpty ? data.label : data.tooltip;
 
 bool _hasLabel(WidgetTester tester, String text) {
-  return _allSemantics(tester).any(
-    (data) => _accessibleName(data).contains(text),
-  );
+  return _allSemantics(
+    tester,
+  ).any((data) => _accessibleName(data).contains(text));
 }
 
 bool _hasButtonLabel(WidgetTester tester, String text) {

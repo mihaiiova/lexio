@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../analytics/analytics_service.dart';
 import '../design/animations.dart';
 import '../design/colors.dart';
 import '../design/components/lexio_game_card.dart';
@@ -150,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
       mutedColor: mutedColor,
       discovered: _discoveredFor(gameId),
       total: _totalFor(gameId),
-      onTap: () => _openGame(context, gameId, screen),
+      onTap: () => _openGame(context, screen),
     );
   }
 
@@ -177,8 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _openGame(BuildContext context, String gameId, Widget screen) {
-    unawaited(AnalyticsService.logGameOpened(gameId));
+  void _openGame(BuildContext context, Widget screen) {
     _open(context, screen);
   }
 

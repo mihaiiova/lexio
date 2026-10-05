@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../analytics/game_session_analytics.dart';
 import '../../design/animations.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_answer_button.dart';
@@ -40,7 +39,6 @@ class _VocabularyScreenState extends State<VocabularyScreen>
   bool _isLoading = true;
   bool _hasError = false;
   ProgressRepository? _progress;
-  final GameSessionAnalytics _session = GameSessionAnalytics('vocabulary');
 
   @override
   void initState() {
@@ -51,7 +49,6 @@ class _VocabularyScreenState extends State<VocabularyScreen>
       _state = VocabularyGameState(exercises: exercises);
       _progress = widget.progressRepository;
       _isLoading = false;
-      _session.start();
     } else {
       _init();
     }
@@ -61,19 +58,15 @@ class _VocabularyScreenState extends State<VocabularyScreen>
   void dispose() {
     unawaited(_progress?.flush());
     WidgetsBinding.instance.removeObserver(this);
-    _session.dispose();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _session.markResumed();
-    } else if (state == AppLifecycleState.paused ||
+    if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
       unawaited(_progress?.flush());
-      _session.markBackgrounded();
     }
   }
 
@@ -93,7 +86,6 @@ class _VocabularyScreenState extends State<VocabularyScreen>
         _progress = progress;
         _isLoading = false;
       });
-      _session.start();
     } catch (error) {
       debugPrint('VocabularyScreen: failed to load content: $error');
       if (!mounted) return;
@@ -122,7 +114,6 @@ class _VocabularyScreenState extends State<VocabularyScreen>
         if (!mounted) return;
         final next = updated.next();
         setState(() => _state = next);
-        if (next.isFinished) _session.complete(next.correctCount);
       });
     } else {
       HapticFeedback.heavyImpact();
@@ -135,7 +126,6 @@ class _VocabularyScreenState extends State<VocabularyScreen>
     if (state == null) return;
     final next = state.next();
     setState(() => _state = next);
-    if (next.isFinished) _session.complete(next.correctCount);
   }
 
   Future<void> _handleBack() async {
@@ -155,7 +145,6 @@ class _VocabularyScreenState extends State<VocabularyScreen>
           _progress?.forGame('vocabulary') ?? const GameProgress(),
         );
     setState(() => _state = VocabularyGameState(exercises: exercises));
-    _session.start();
   }
 
   @override

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'analytics/analytics_service.dart';
 import 'app/app.dart';
 import 'content/content_bundle_service.dart';
 import 'content/content_runtime.dart';
@@ -13,7 +12,6 @@ const _contentBaseUrl = String.fromEnvironment('CONTENT_BASE_URL');
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await AnalyticsService.initialize();
   await _startContentBundleService();
   runApp(const LexioApp());
 }

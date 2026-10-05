@@ -6,7 +6,6 @@
 - `2026-09-01-spec-42-difficulty-ordered-serving.md`
 - `2026-09-01-spec-41-discovery-progress.md`
 - `2026-08-18-design-docs-ci-alignment.md`
-- `2026-08-18-lifecycle-session-analytics.md`
 - `2026-08-18-game-state-hardening.md`
 
 ## Recurring Patterns

@@ -158,8 +158,8 @@ etc.) before the first upload.
 - **Google Play** publishes production updates without a manual review gate, but
   the app must remain policy-compliant.
 - Both stores require the version string and privacy disclosures (in
-  `store_listings/`) to stay accurate — update them whenever analytics or data
-  collection changes.
+  `store_listings/`) to stay accurate — update them whenever data collection
+  changes.
 
 ## One-time prerequisites
 

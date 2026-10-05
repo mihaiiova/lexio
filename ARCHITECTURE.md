@@ -118,7 +118,7 @@ Fields vary by game type but follow the same array-of-objects pattern.
 
 ## Technical Constraints
 
-- **Dependencies**: Flutter SDK, cupertino_icons, shared_preferences, url_launcher, http, firebase_core, and firebase_analytics
+- **Dependencies**: Flutter SDK, cupertino_icons, shared_preferences, url_launcher, and http
 - **No package:lexio imports** — always use relative paths
 - **No state management library** — simple StatefulWidget + setState
 - **No code generation** — manual fromJson/toJson

@@ -3,7 +3,6 @@
 **Session:** Implemented issue #39 token cleanup, architecture decisions, documentation corrections, and CI-test coverage clarification.
 
 ## History Checked
-- `2026-08-18-lifecycle-session-analytics.md`
 - `2026-08-18-game-state-hardening.md`
 - `2026-08-18-progress-persistence-validation.md`
 - `2026-08-18-progress-persistence-round.md`

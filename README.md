@@ -65,7 +65,7 @@ lib/
 - **Minimalist**: Only essential UI chrome
 - **Calm**: Gentle colors, subtle animations
 - **Premium**: Clean cards, consistent spacing, refined details
-- **Fast**: Local content and progress with lightweight usage analytics
+- **Fast**: Local content and progress with no usage tracking
 
 ## Architecture Decisions
 
@@ -75,7 +75,7 @@ lib/
 - **Offline-first content**: bundled baseline plus a static bundle refreshed in the background; progress stays local
 - **Local persistence**: Progress tracked via `SharedPreferences` with spaced repetition
 - **No backend or auth** — learning content and progress remain local (a static CDN delivers content one-way)
-- **Privacy-conscious analytics**: Firebase records only game-open events; ad storage, ad personalization, and ad user data are disabled
+- **Privacy-conscious**: no usage tracking, advertising, accounts, or device identifiers; learning progress remains local
 - **Deadline-based timer**: Spot game uses wall-clock deadlines, not callback counting
 - **Lifecycle-safe**: App respects background/foreground transitions (WidgetsBindingObserver)
 - **Brand**: Primary blue `#4588E0`, NoticiaText font family, white surfaces
@@ -115,7 +115,6 @@ python3 scripts/generate_content_bundle.py --bump   # regenerate the remote bund
 - **http**: Offline-first remote content download
 - **url_launcher**: External DOOM dictionary links
 - **flutter_localizations**: Romanian locale support
-- **firebase_core / firebase_analytics**: Anonymous game usage statistics
 
 ## CI/CD
 
@@ -128,10 +127,9 @@ See [`docs/releasing.md`](docs/releasing.md) for how to version, test, and ship 
 
 ## Privacy
 
-- The Romanian privacy policy is available from the home-screen footer.
+- The Romanian privacy policy is available from the home-screen footer and at https://didactiv.ro/confidentialitate/slove/.
 - The canonical policy text is stored in `store_listings/privacy_policy.md`.
-- Android and iOS Firebase configuration is checked in. Web and macOS analytics
-  are not configured.
+- No usage-tracking SDK or remote user-data collection is configured.
 
 ## License
 
