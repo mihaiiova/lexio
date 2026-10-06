@@ -27,6 +27,9 @@ void main() {
     expect(find.text('Ce înseamnă?'), findsOneWidget);
     expect(find.text('Vorba vine'), findsOneWidget);
     expect(find.text('Găsește greșeala'), findsOneWidget);
+    final cards = tester.widgetList<LexioGameCard>(find.byType(LexioGameCard)).toList();
+    expect(cards.first.title, 'Găsește greșeala');
+    expect(cards.first.semanticLabel, 'Joc 01: Găsește greșeala');
 
     final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
     expect(scaffold.backgroundColor, LexioColors.backgroundSubtle);

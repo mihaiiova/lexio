@@ -61,11 +61,11 @@ void main() {
     await tester.pumpWidget(const LexioApp());
     await tester.pumpAndSettle();
 
-    expect(_hasLabel(tester, 'Joc 01: Corect sau greșit?'), isTrue);
-    expect(_hasLabel(tester, 'Joc 02: Ce înseamnă?'), isTrue);
-    expect(_hasLabel(tester, 'Joc 03: Vorba vine'), isTrue);
-    expect(_hasLabel(tester, 'Joc 04: Găsește greșeala'), isTrue);
-    expect(_hasButtonLabel(tester, 'Joc 01: Corect sau greșit?'), isTrue);
+    expect(_hasLabel(tester, 'Joc 01: Găsește greșeala'), isTrue);
+    expect(_hasLabel(tester, 'Joc 02: Corect sau greșit?'), isTrue);
+    expect(_hasLabel(tester, 'Joc 03: Ce înseamnă?'), isTrue);
+    expect(_hasLabel(tester, 'Joc 04: Vorba vine'), isTrue);
+    expect(_hasButtonLabel(tester, 'Joc 01: Găsește greșeala'), isTrue);
 
     handle.dispose();
   });

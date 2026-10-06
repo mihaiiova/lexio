@@ -96,12 +96,13 @@ Aplicația este complet funcțională fără conexiune la internet.
 
 | Store | Device | Required sizes |
 |---|---|---|
+| App Store | iPhone Dynamic Island (medium display) | 1179 × 2556 px |
 | App Store | iPhone 6.7" | 1290 × 2796 px |
 | App Store | iPhone 6.5" | 1242 × 2688 px (optionally 1284 × 2778) |
 | App Store | iPhone 5.5" | 1242 × 2208 px |
 | App Store | iPad 12.9" | 2048 × 2732 px |
 | App Store | iPad 11" | 1668 × 2388 px |
-| Google Play | Phone | Minimum 320 px, maximum 3840 px, 2:1 to 1:2 ratio |
+| Google Play | Phone | 1320 × 2640 px; minimum 320 px, maximum 3840 px, 2:1 to 1:2 ratio |
 | Google Play | Tablet 7" | Same as phone |
 | Google Play | Tablet 10" | Same as phone |
 | Google Play | Feature graphic | 1024 × 500 px |
@@ -119,9 +120,9 @@ Aplicația este complet funcțională fără conexiune la internet.
 ### Files prepared
 
 The complete upload set is in [`../store_assets/`](../store_assets/README.md),
-including six screenshots per platform, App Store iPhone and iPad sizes,
-Google Play phone and tablet sets, the 1024 × 500 feature graphic, and the
-approved store icons. Generate it again with:
+including six screenshots per device set, the required App Store Dynamic
+Island medium iPhone and 13-inch iPad sizes, Google Play phone and tablet sets,
+the 1024 × 500 feature graphic, and the approved store icons. Generate it again with:
 
 ```bash
 python3 scripts/prepare_store_assets.py
