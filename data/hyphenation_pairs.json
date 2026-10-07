@@ -1,6 +1,7 @@
 [
   {
     "id": "n_am",
+    "notionId": "hyphenated_n_am",
     "hyphenatedForm": "n-am",
     "components": [
       "nu",
@@ -15,6 +16,7 @@
   },
   {
     "id": "s_a_sa",
+    "notionId": "hyphenated_s_a_sa",
     "hyphenatedForm": "s-a",
     "components": [
       "s",
@@ -29,6 +31,7 @@
   },
   {
     "id": "s_au_sau",
+    "notionId": "hyphenated_s_au_sau",
     "hyphenatedForm": "s-au",
     "components": [
       "s",
@@ -43,6 +46,7 @@
   },
   {
     "id": "l_a_la",
+    "notionId": "hyphenated_l_a_la",
     "hyphenatedForm": "l-a",
     "components": [
       "l",
@@ -57,6 +61,7 @@
   },
   {
     "id": "i_a_ia",
+    "notionId": "hyphenated_i_a_ia",
     "hyphenatedForm": "i-a",
     "components": [
       "i",
@@ -71,6 +76,7 @@
   },
   {
     "id": "i_au_iau",
+    "notionId": "hyphenated_i_au_iau",
     "hyphenatedForm": "i-au",
     "components": [
       "i",
@@ -85,6 +91,7 @@
   },
   {
     "id": "m_ai_mai",
+    "notionId": "hyphenated_m_ai_mai",
     "hyphenatedForm": "m-ai",
     "components": [
       "m",
@@ -99,6 +106,7 @@
   },
   {
     "id": "v_a_va",
+    "notionId": "hyphenated_v_a_va",
     "hyphenatedForm": "v-a",
     "components": [
       "v",
@@ -113,6 +121,7 @@
   },
   {
     "id": "n_ai_nai",
+    "notionId": "hyphenated_n_ai_nai",
     "hyphenatedForm": "n-ai",
     "components": [
       "nu",
@@ -127,6 +136,7 @@
   },
   {
     "id": "c_ai_cai",
+    "notionId": "hyphenated_c_ai_cai",
     "hyphenatedForm": "c-ai",
     "components": [
       "că",
@@ -141,6 +151,7 @@
   },
   {
     "id": "ne_am_neam",
+    "notionId": "hyphenated_ne_am_neam",
     "hyphenatedForm": "ne-am",
     "components": [
       "ne",
@@ -155,6 +166,7 @@
   },
   {
     "id": "ce_ai_ceai",
+    "notionId": "hyphenated_ce_ai_ceai",
     "hyphenatedForm": "ce-ai",
     "components": [
       "ce",
@@ -169,6 +181,7 @@
   },
   {
     "id": "a_l_al",
+    "notionId": "hyphenated_a_l_al",
     "hyphenatedForm": "a-l",
     "components": [
       "a",
@@ -183,6 +196,7 @@
   },
   {
     "id": "a_i_ai",
+    "notionId": "hyphenated_a_i_ai",
     "hyphenatedForm": "a-i",
     "components": [
       "a",
@@ -197,6 +211,7 @@
   },
   {
     "id": "a_ti_ati",
+    "notionId": "hyphenated_a_ti_ati",
     "hyphenatedForm": "a-ți",
     "components": [
       "a",
@@ -211,6 +226,7 @@
   },
   {
     "id": "sa_i_sai",
+    "notionId": "hyphenated_sa_i_sai",
     "hyphenatedForm": "să-i",
     "components": [
       "să",
@@ -225,6 +241,7 @@
   },
   {
     "id": "ca_i_cai",
+    "notionId": "hyphenated_ca_i_cai",
     "hyphenatedForm": "că-i",
     "components": [
       "că",
@@ -239,6 +256,7 @@
   },
   {
     "id": "ce_a_cea",
+    "notionId": "hyphenated_ce_a_cea",
     "hyphenatedForm": "ce-a",
     "components": [
       "ce",
@@ -253,6 +271,7 @@
   },
   {
     "id": "ce_l_cel",
+    "notionId": "hyphenated_ce_l_cel",
     "hyphenatedForm": "ce-l",
     "components": [
       "ce",
@@ -267,6 +286,7 @@
   },
   {
     "id": "de_a_dea",
+    "notionId": "hyphenated_de_a_dea",
     "hyphenatedForm": "de-a",
     "components": [
       "de",
@@ -281,6 +301,7 @@
   },
   {
     "id": "intr_o",
+    "notionId": "hyphenated_intr_o",
     "hyphenatedForm": "într-o",
     "components": [
       "într",
@@ -295,6 +316,7 @@
   },
   {
     "id": "intr_un",
+    "notionId": "hyphenated_intr_un",
     "hyphenatedForm": "într-un",
     "components": [
       "într",
@@ -309,6 +331,7 @@
   },
   {
     "id": "dintr_o",
+    "notionId": "hyphenated_dintr_o",
     "hyphenatedForm": "dintr-o",
     "components": [
       "dintr",
@@ -323,6 +346,7 @@
   },
   {
     "id": "printr_o",
+    "notionId": "hyphenated_printr_o",
     "hyphenatedForm": "printr-o",
     "components": [
       "printr",
@@ -337,6 +361,7 @@
   },
   {
     "id": "si_a",
+    "notionId": "hyphenated_si_a",
     "hyphenatedForm": "și-a",
     "components": [
       "și",
@@ -351,6 +376,7 @@
   },
   {
     "id": "ti_a",
+    "notionId": "hyphenated_ti_a",
     "hyphenatedForm": "ți-a",
     "components": [
       "ți",

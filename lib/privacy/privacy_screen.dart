@@ -29,38 +29,28 @@ class PrivacyScreen extends StatelessWidget {
             _PolicySection(
               title: 'Ce date colectăm',
               body:
-                  'Slove colectează un set minimal de date anonime pentru a '
-                  'înțelege cum sunt folosite jocurile. Folosim Firebase '
-                  'Analytics fără nume sau cont și înregistrăm doar: deschiderea '
-                  'unui joc, finalizarea lui (cu scorul și durata în secunde) și '
-                  'abandonarea unui joc înainte de final. Nu trimitem răspunsurile '
-                  'tale, textele introduse, numele, adresa de email sau progresul '
-                  'de învățare.',
-            ),
-            _PolicySection(
-              title: 'Date tehnice',
-              body:
-                  'Firebase Analytics poate colecta automat informații tehnice '
-                  'precum un identificator al instalării, modelul dispozitivului, '
-                  'sistemul de operare, versiunea aplicației, limba și regiunea '
-                  'aproximativă. Aceste informații ne ajută să înțelegem ce '
-                  'jocuri sunt folosite și să îmbunătățim aplicația.',
+                  'Slove poate fi folosită de persoane de orice vârstă. Nu '
+                  'colectăm și nu transmitem date despre utilizarea jocurilor. Nu '
+                  'trimitem răspunsurile, textele introduse, scorurile sau '
+                  'progresul de învățare și nu solicităm numele, adresa de email, '
+                  'identificatori de publicitate ori date de localizare.',
             ),
             _PolicySection(
               title: 'Cum folosim datele',
               body:
-                  'Folosim datele numai pentru statistici agregate, evaluarea '
-                  'funcțiilor aplicației și îmbunătățirea jocurilor. Nu folosim '
-                  'datele pentru reclame personalizate și nu vindem datele. '
-                  'Google procesează datele prin serviciul Firebase Analytics, '
-                  'conform propriilor condiții și măsuri de securitate.',
+                  'Jocurile și progresul funcționează local și offline. Când există '
+                  'o conexiune, aplicația poate descărca actualizări statice pentru '
+                  'exerciții. Furnizorul de găzduire poate procesa metadatele tehnice '
+                  'obișnuite ale conexiunii, precum adresa IP; cererile nu includ '
+                  'răspunsuri, scoruri sau progres. Nu folosim datele pentru reclame '
+                  'și nu vindem date.',
             ),
             _PolicySection(
               title: 'Progresul tău',
               body:
                   'Răspunsurile corecte și greșite și progresul de învățare sunt '
-                  'stocate local pe dispozitiv. Aceste date nu sunt trimise la '
-                  'Firebase și nu sunt asociate cu statisticile de utilizare.',
+                  'stocate local pe dispozitiv. Aceste date nu părăsesc dispozitivul '
+                  'și nu sunt asociate cu un cont.',
             ),
             _PolicySection(
               title: 'Linkuri externe',
@@ -74,8 +64,9 @@ class PrivacyScreen extends StatelessWidget {
             _PolicySection(
               title: 'Copii',
               body:
-                  'Slove nu este destinată copiilor sub 13 ani și nu colectează '
-                  'cu bună știință date de la aceștia.',
+                  'Slove poate fi folosită și de copii sub 13 ani. Nu colectăm prin '
+                  'Slove date de identificare sau date de utilizare de la copii; '
+                  'progresul rămâne doar pe dispozitiv.',
             ),
             _PolicySection(
               title: 'Modificări și contact',
@@ -83,8 +74,7 @@ class PrivacyScreen extends StatelessWidget {
                   'Putem actualiza această politică atunci când se schimbă '
                   'aplicația sau cerințele legale. Versiunea curentă este '
                   'disponibilă permanent în aplicație. Pentru întrebări despre '
-                  'confidențialitate, folosește datele de contact ale '
-                  'dezvoltatorului afișate în pagina aplicației din magazin.',
+                  'confidențialitate, scrie la contact@didactiv.ro.',
             ),
           ],
         ),
@@ -109,7 +99,7 @@ class _PolicyIntro extends StatelessWidget {
         ),
         const SizedBox(height: LexioSpacing.sm),
         Text(
-          'Ultima actualizare: 7 august 2026',
+          'Ultima actualizare: 23 septembrie 2026',
           style: LexioTextStyles.labelSmall.copyWith(
             color: LexioColors.textTertiary,
           ),

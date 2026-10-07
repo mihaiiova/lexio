@@ -1,6 +1,7 @@
 [
   {
     "id": "v001",
+    "notionId": "curios",
     "word": "curios",
     "partOfSpeech": "adjectiv",
     "definition": "dornic să afle sau să descopere lucruri noi",
@@ -14,6 +15,7 @@
   },
   {
     "id": "v002",
+    "notionId": "atent",
     "word": "atent",
     "partOfSpeech": "adjectiv",
     "definition": "care urmărește cu grijă ceea ce se întâmplă",
@@ -27,6 +29,7 @@
   },
   {
     "id": "v003",
+    "notionId": "generos",
     "word": "generos",
     "partOfSpeech": "adjectiv",
     "definition": "dispus să ofere și să împartă cu ceilalți",
@@ -40,6 +43,7 @@
   },
   {
     "id": "v004",
+    "notionId": "timid",
     "word": "timid",
     "partOfSpeech": "adjectiv",
     "definition": "lipsit de îndrăzneală în prezența altora",
@@ -53,6 +57,7 @@
   },
   {
     "id": "v005",
+    "notionId": "isteț",
     "word": "isteț",
     "partOfSpeech": "adjectiv",
     "definition": "care înțelege repede și găsește soluții bune",
@@ -66,6 +71,7 @@
   },
   {
     "id": "v006",
+    "notionId": "răbdător",
     "word": "răbdător",
     "partOfSpeech": "adjectiv",
     "definition": "capabil să aștepte fără să se enerveze",
@@ -79,6 +85,7 @@
   },
   {
     "id": "v007",
+    "notionId": "sincer",
     "word": "sincer",
     "partOfSpeech": "adjectiv",
     "definition": "care spune ceea ce gândește și nu încearcă să înșele",
@@ -92,6 +99,7 @@
   },
   {
     "id": "v008",
+    "notionId": "precaut",
     "word": "precaut",
     "partOfSpeech": "adjectiv",
     "definition": "care acționează cu grijă pentru a evita un pericol",
@@ -105,6 +113,7 @@
   },
   {
     "id": "v009",
+    "notionId": "uimire",
     "word": "uimire",
     "partOfSpeech": "substantiv",
     "definition": "emoție puternică provocată de ceva neașteptat",
@@ -118,6 +127,7 @@
   },
   {
     "id": "v010",
+    "notionId": "a observa",
     "word": "a observa",
     "partOfSpeech": "verb",
     "definition": "a vedea sau a remarca un lucru cu atenție",
@@ -131,6 +141,7 @@
   },
   {
     "id": "v011",
+    "notionId": "a ezita",
     "word": "a ezita",
     "partOfSpeech": "verb",
     "definition": "a nu se hotărî imediat ce să facă",
@@ -144,6 +155,7 @@
   },
   {
     "id": "v012",
+    "notionId": "a încuraja",
     "word": "a încuraja",
     "partOfSpeech": "verb",
     "definition": "a da cuiva încredere sau curaj",
@@ -157,6 +169,7 @@
   },
   {
     "id": "v013",
+    "notionId": "fragil",
     "word": "fragil",
     "partOfSpeech": "adjectiv",
     "definition": "care se poate sparge sau deteriora ușor",
@@ -170,6 +183,7 @@
   },
   {
     "id": "v014",
+    "notionId": "vast",
     "word": "vast",
     "partOfSpeech": "adjectiv",
     "definition": "foarte întins sau cuprinzător",
@@ -183,6 +197,7 @@
   },
   {
     "id": "v015",
+    "notionId": "limpede",
     "word": "limpede",
     "partOfSpeech": "adjectiv",
     "definition": "clar, ușor de văzut sau de înțeles",
@@ -196,6 +211,7 @@
   },
   {
     "id": "v016",
+    "notionId": "aglomerat",
     "word": "aglomerat",
     "partOfSpeech": "adjectiv",
     "definition": "plin de oameni, vehicule sau obiecte",
@@ -209,6 +225,7 @@
   },
   {
     "id": "v017",
+    "notionId": "tihnit",
     "word": "tihnit",
     "partOfSpeech": "adjectiv",
     "definition": "liniștit și lipsit de grabă sau griji",
@@ -222,6 +239,7 @@
   },
   {
     "id": "v018",
+    "notionId": "priceput",
     "word": "priceput",
     "partOfSpeech": "adjectiv",
     "definition": "care știe să facă bine un anumit lucru",
@@ -235,6 +253,7 @@
   },
   {
     "id": "v019",
+    "notionId": "recunoscător",
     "word": "recunoscător",
     "partOfSpeech": "adjectiv",
     "definition": "care simte și arată mulțumire pentru un bine primit",
@@ -248,6 +267,7 @@
   },
   {
     "id": "v020",
+    "notionId": "neprielnic",
     "word": "neprielnic",
     "partOfSpeech": "adjectiv",
     "definition": "care nu favorizează o acțiune sau un rezultat",
@@ -261,6 +281,7 @@
   },
   {
     "id": "v021",
+    "notionId": "îndemânatic",
     "word": "îndemânatic",
     "partOfSpeech": "adjectiv",
     "definition": "care lucrează cu ușurință și pricepere, mai ales cu mâinile",
@@ -274,6 +295,7 @@
   },
   {
     "id": "v022",
+    "notionId": "zglobiu",
     "word": "zglobiu",
     "partOfSpeech": "adjectiv",
     "definition": "vioi, vesel și pus pe joacă",
@@ -287,6 +309,7 @@
   },
   {
     "id": "v023",
+    "notionId": "posomorât",
     "word": "posomorât",
     "partOfSpeech": "adjectiv",
     "definition": "trist și lipsit de voie bună",
@@ -300,6 +323,7 @@
   },
   {
     "id": "v024",
+    "notionId": "îmbelșugat",
     "word": "îmbelșugat",
     "partOfSpeech": "adjectiv",
     "definition": "care există din abundență, în cantitate mare",
@@ -313,6 +337,7 @@
   },
   {
     "id": "v025",
+    "notionId": "cumpătat",
     "word": "cumpătat",
     "partOfSpeech": "adjectiv",
     "definition": "care evită excesele și păstrează măsura",
@@ -326,6 +351,7 @@
   },
   {
     "id": "v026",
+    "notionId": "sfios",
     "word": "sfios",
     "partOfSpeech": "adjectiv",
     "definition": "lipsit de îndrăzneală, ușor rușinat",
@@ -339,6 +365,7 @@
   },
   {
     "id": "v027",
+    "notionId": "dornic",
     "word": "dornic",
     "partOfSpeech": "adjectiv",
     "definition": "care își dorește foarte mult ceva",
@@ -352,6 +379,7 @@
   },
   {
     "id": "v028",
+    "notionId": "năstrușnic",
     "word": "năstrușnic",
     "partOfSpeech": "adjectiv",
     "definition": "neobișnuit și amuzant prin idei sau comportament",
@@ -365,6 +393,7 @@
   },
   {
     "id": "v029",
+    "notionId": "a iscodi",
     "word": "a iscodi",
     "partOfSpeech": "verb",
     "definition": "a pune multe întrebări pentru a afla un lucru ascuns",
@@ -378,6 +407,7 @@
   },
   {
     "id": "v030",
+    "notionId": "a stărui",
     "word": "a stărui",
     "partOfSpeech": "verb",
     "definition": "a continua cu insistență o acțiune sau o rugăminte",
@@ -391,6 +421,7 @@
   },
   {
     "id": "v031",
+    "notionId": "a zări",
     "word": "a zări",
     "partOfSpeech": "verb",
     "definition": "a vedea ceva pentru scurt timp sau de la distanță",
@@ -404,6 +435,7 @@
   },
   {
     "id": "v032",
+    "notionId": "a ocroti",
     "word": "a ocroti",
     "partOfSpeech": "verb",
     "definition": "a apăra și a îngriji pe cineva sau ceva",
@@ -417,6 +449,7 @@
   },
   {
     "id": "v033",
+    "notionId": "a chibzui",
     "word": "a chibzui",
     "partOfSpeech": "verb",
     "definition": "a gândi atent înainte de a lua o hotărâre",
@@ -430,6 +463,7 @@
   },
   {
     "id": "v034",
+    "notionId": "a tăinui",
     "word": "a tăinui",
     "partOfSpeech": "verb",
     "definition": "a păstra ceva secret și a nu dezvălui",
@@ -443,6 +477,7 @@
   },
   {
     "id": "v035",
+    "notionId": "a cutreiera",
     "word": "a cutreiera",
     "partOfSpeech": "verb",
     "definition": "a străbate un loc în mai multe direcții",
@@ -456,6 +491,7 @@
   },
   {
     "id": "v036",
+    "notionId": "anevoios",
     "word": "anevoios",
     "partOfSpeech": "adjectiv",
     "definition": "care se realizează cu multă trudă și dificultate",
@@ -469,6 +505,7 @@
   },
   {
     "id": "v037",
+    "notionId": "aprig",
     "word": "aprig",
     "partOfSpeech": "adjectiv",
     "definition": "foarte puternic, înverșunat sau aspru",
@@ -482,6 +519,7 @@
   },
   {
     "id": "v038",
+    "notionId": "dibaci",
     "word": "dibaci",
     "partOfSpeech": "adjectiv",
     "definition": "foarte priceput și îndemânatic",
@@ -495,6 +533,7 @@
   },
   {
     "id": "v039",
+    "notionId": "domol",
     "word": "domol",
     "partOfSpeech": "adjectiv",
     "definition": "liniștit, lent sau lipsit de intensitate",
@@ -508,6 +547,7 @@
   },
   {
     "id": "v040",
+    "notionId": "fățiș",
     "word": "fățiș",
     "partOfSpeech": "adverb",
     "definition": "în mod deschis, fără ascunzișuri",
@@ -521,6 +561,7 @@
   },
   {
     "id": "v041",
+    "notionId": "laconic",
     "word": "laconic",
     "partOfSpeech": "adjectiv",
     "definition": "exprimat în foarte puține cuvinte",
@@ -534,6 +575,7 @@
   },
   {
     "id": "v042",
+    "notionId": "meticulos",
     "word": "meticulos",
     "partOfSpeech": "adjectiv",
     "definition": "foarte atent la fiecare detaliu",
@@ -547,6 +589,7 @@
   },
   {
     "id": "v043",
+    "notionId": "modest",
     "word": "modest",
     "partOfSpeech": "adjectiv",
     "definition": "care nu se laudă și nu își exagerează meritele",
@@ -560,6 +603,7 @@
   },
   {
     "id": "v044",
+    "notionId": "prielnic",
     "word": "prielnic",
     "partOfSpeech": "adjectiv",
     "definition": "favorabil pentru o acțiune sau dezvoltare",
@@ -573,6 +617,7 @@
   },
   {
     "id": "v045",
+    "notionId": "răzleț",
     "word": "răzleț",
     "partOfSpeech": "adjectiv",
     "definition": "aflat izolat sau la distanță de celelalte",
@@ -586,6 +631,7 @@
   },
   {
     "id": "v046",
+    "notionId": "statornic",
     "word": "statornic",
     "partOfSpeech": "adjectiv",
     "definition": "care rămâne constant și nu se schimbă ușor",
@@ -599,6 +645,7 @@
   },
   {
     "id": "v047",
+    "notionId": "temeinic",
     "word": "temeinic",
     "partOfSpeech": "adjectiv",
     "definition": "făcut cu grijă, solid și bine întemeiat",
@@ -612,6 +659,7 @@
   },
   {
     "id": "v048",
+    "notionId": "vădit",
     "word": "vădit",
     "partOfSpeech": "adjectiv",
     "definition": "care se vede sau se înțelege foarte clar",
@@ -625,6 +673,7 @@
   },
   {
     "id": "v049",
+    "notionId": "ager",
     "word": "ager",
     "partOfSpeech": "adjectiv",
     "definition": "care înțelege sau reacționează foarte repede",
@@ -638,6 +687,7 @@
   },
   {
     "id": "v050",
+    "notionId": "blajin",
     "word": "blajin",
     "partOfSpeech": "adjectiv",
     "definition": "bun, pașnic și îngăduitor",
@@ -651,6 +701,7 @@
   },
   {
     "id": "v051",
+    "notionId": "dârz",
     "word": "dârz",
     "partOfSpeech": "adjectiv",
     "definition": "hotărât și neclintit în fața greutăților",
@@ -664,6 +715,7 @@
   },
   {
     "id": "v052",
+    "notionId": "exuberant",
     "word": "exuberant",
     "partOfSpeech": "adjectiv",
     "definition": "care își arată bucuria și energia cu multă intensitate",
@@ -677,6 +729,7 @@
   },
   {
     "id": "v053",
+    "notionId": "firav",
     "word": "firav",
     "partOfSpeech": "adjectiv",
     "definition": "slab, delicat și lipsit de putere",
@@ -690,6 +743,7 @@
   },
   {
     "id": "v054",
+    "notionId": "impetuos",
     "word": "impetuos",
     "partOfSpeech": "adjectiv",
     "definition": "care acționează cu avânt puternic și greu de stăpânit",
@@ -703,6 +757,7 @@
   },
   {
     "id": "v055",
+    "notionId": "jovial",
     "word": "jovial",
     "partOfSpeech": "adjectiv",
     "definition": "vesel, prietenos și plin de voie bună",
@@ -716,6 +771,7 @@
   },
   {
     "id": "v056",
+    "notionId": "morocănos",
     "word": "morocănos",
     "partOfSpeech": "adjectiv",
     "definition": "mereu prost dispus și puțin comunicativ",
@@ -729,6 +785,7 @@
   },
   {
     "id": "v057",
+    "notionId": "năvalnic",
     "word": "năvalnic",
     "partOfSpeech": "adjectiv",
     "definition": "care se manifestă cu forță și repeziciune",
@@ -742,6 +799,7 @@
   },
   {
     "id": "v058",
+    "notionId": "perspicace",
     "word": "perspicace",
     "partOfSpeech": "adjectiv",
     "definition": "capabil să înțeleagă repede aspecte greu de observat",
@@ -755,6 +813,7 @@
   },
   {
     "id": "v059",
+    "notionId": "sceptic",
     "word": "sceptic",
     "partOfSpeech": "adjectiv",
     "definition": "care se îndoiește și cere dovezi înainte să creadă",
@@ -768,6 +827,7 @@
   },
   {
     "id": "v060",
+    "notionId": "ursuz",
     "word": "ursuz",
     "partOfSpeech": "adjectiv",
     "definition": "nesociabil, posac și greu de abordat",
@@ -781,6 +841,7 @@
   },
   {
     "id": "v061",
+    "notionId": "a dibui",
     "word": "a dibui",
     "partOfSpeech": "verb",
     "definition": "a găsi cu greu, căutând sau încercând mai multe variante",
@@ -794,6 +855,7 @@
   },
   {
     "id": "v062",
+    "notionId": "a făgădui",
     "word": "a făgădui",
     "partOfSpeech": "verb",
     "definition": "a promite că vei face sau vei oferi ceva",
@@ -807,6 +869,7 @@
   },
   {
     "id": "v063",
+    "notionId": "a îngădui",
     "word": "a îngădui",
     "partOfSpeech": "verb",
     "definition": "a permite sau a accepta ca ceva să se întâmple",
@@ -820,6 +883,7 @@
   },
   {
     "id": "v064",
+    "notionId": "a năzui",
     "word": "a năzui",
     "partOfSpeech": "verb",
     "definition": "a dori puternic să atingi un scop înalt",
@@ -833,6 +897,7 @@
   },
   {
     "id": "v065",
+    "notionId": "a nesocoti",
     "word": "a nesocoti",
     "partOfSpeech": "verb",
     "definition": "a nu ține seama de o regulă, un sfat sau un drept",
@@ -846,6 +911,7 @@
   },
   {
     "id": "v066",
+    "notionId": "a prevesti",
     "word": "a prevesti",
     "partOfSpeech": "verb",
     "definition": "a anunța dinainte că urmează să se întâmple ceva",
@@ -859,6 +925,7 @@
   },
   {
     "id": "v067",
+    "notionId": "a se bizui",
     "word": "a se bizui",
     "partOfSpeech": "verb",
     "definition": "a avea încredere și a se baza pe cineva sau ceva",
@@ -872,6 +939,7 @@
   },
   {
     "id": "v068",
+    "notionId": "a șovăi",
     "word": "a șovăi",
     "partOfSpeech": "verb",
     "definition": "a ezita înainte de a lua o hotărâre",
@@ -885,6 +953,7 @@
   },
   {
     "id": "v069",
+    "notionId": "a tăgădui",
     "word": "a tăgădui",
     "partOfSpeech": "verb",
     "definition": "a nega că un fapt este adevărat",
@@ -898,6 +967,7 @@
   },
   {
     "id": "v070",
+    "notionId": "a zădărnici",
     "word": "a zădărnici",
     "partOfSpeech": "verb",
     "definition": "a împiedica realizarea unui plan sau a unei acțiuni",
@@ -911,6 +981,7 @@
   },
   {
     "id": "v071",
+    "notionId": "abstrus",
     "word": "abstrus",
     "partOfSpeech": "adjectiv",
     "definition": "foarte greu de înțeles din cauza complexității",
@@ -924,6 +995,7 @@
   },
   {
     "id": "v072",
+    "notionId": "ambiguu",
     "word": "ambiguu",
     "partOfSpeech": "adjectiv",
     "definition": "care permite mai multe interpretări și nu este clar",
@@ -937,6 +1009,7 @@
   },
   {
     "id": "v073",
+    "notionId": "anacronic",
     "word": "anacronic",
     "partOfSpeech": "adjectiv",
     "definition": "nepotrivit cu epoca în care este plasat sau folosit",
@@ -950,6 +1023,7 @@
   },
   {
     "id": "v074",
+    "notionId": "auster",
     "word": "auster",
     "partOfSpeech": "adjectiv",
     "definition": "simplu și sever, lipsit de podoabe sau confort",
@@ -963,6 +1037,7 @@
   },
   {
     "id": "v075",
+    "notionId": "benevolent",
     "word": "benevolent",
     "partOfSpeech": "adjectiv",
     "definition": "binevoitor și dispus să ajute",
@@ -976,6 +1051,7 @@
   },
   {
     "id": "v076",
+    "notionId": "concludent",
     "word": "concludent",
     "partOfSpeech": "adjectiv",
     "definition": "care dovedește clar ceva și permite o concluzie sigură",
@@ -989,6 +1065,7 @@
   },
   {
     "id": "v077",
+    "notionId": "derizoriu",
     "word": "derizoriu",
     "partOfSpeech": "adjectiv",
     "definition": "atât de mic sau neînsemnat încât pare ridicol",
@@ -1002,6 +1079,7 @@
   },
   {
     "id": "v078",
+    "notionId": "efemer",
     "word": "efemer",
     "partOfSpeech": "adjectiv",
     "definition": "care durează foarte puțin timp",
@@ -1015,6 +1093,7 @@
   },
   {
     "id": "v079",
+    "notionId": "elocvent",
     "word": "elocvent",
     "partOfSpeech": "adjectiv",
     "definition": "care exprimă convingător și clar o idee",
@@ -1028,6 +1107,7 @@
   },
   {
     "id": "v080",
+    "notionId": "echivoc",
     "word": "echivoc",
     "partOfSpeech": "adjectiv",
     "definition": "care are un sens neclar sau poate fi interpretat diferit",
@@ -1041,6 +1121,7 @@
   },
   {
     "id": "v081",
+    "notionId": "exhaustiv",
     "word": "exhaustiv",
     "partOfSpeech": "adjectiv",
     "definition": "care tratează complet toate aspectele unui subiect",
@@ -1054,6 +1135,7 @@
   },
   {
     "id": "v082",
+    "notionId": "fortuit",
     "word": "fortuit",
     "partOfSpeech": "adjectiv",
     "definition": "produs din întâmplare, fără să fi fost planificat",
@@ -1067,6 +1149,7 @@
   },
   {
     "id": "v083",
+    "notionId": "iminent",
     "word": "iminent",
     "partOfSpeech": "adjectiv",
     "definition": "care este pe punctul de a se produce",
@@ -1080,6 +1163,7 @@
   },
   {
     "id": "v084",
+    "notionId": "inedit",
     "word": "inedit",
     "partOfSpeech": "adjectiv",
     "definition": "nou, original sau necunoscut până atunci",
@@ -1093,6 +1177,7 @@
   },
   {
     "id": "v085",
+    "notionId": "insolit",
     "word": "insolit",
     "partOfSpeech": "adjectiv",
     "definition": "foarte neobișnuit și surprinzător",
@@ -1106,6 +1191,7 @@
   },
   {
     "id": "v086",
+    "notionId": "judicios",
     "word": "judicios",
     "partOfSpeech": "adjectiv",
     "definition": "bazat pe o judecată bună și echilibrată",
@@ -1119,6 +1205,7 @@
   },
   {
     "id": "v087",
+    "notionId": "latent",
     "word": "latent",
     "partOfSpeech": "adjectiv",
     "definition": "care există, dar nu se manifestă încă în mod vizibil",
@@ -1132,6 +1219,7 @@
   },
   {
     "id": "v088",
+    "notionId": "lucid",
     "word": "lucid",
     "partOfSpeech": "adjectiv",
     "definition": "capabil să gândească limpede și să înțeleagă corect situația",
@@ -1145,6 +1233,7 @@
   },
   {
     "id": "v089",
+    "notionId": "nociv",
     "word": "nociv",
     "partOfSpeech": "adjectiv",
     "definition": "care produce efecte dăunătoare",
@@ -1158,6 +1247,7 @@
   },
   {
     "id": "v090",
+    "notionId": "pertinent",
     "word": "pertinent",
     "partOfSpeech": "adjectiv",
     "definition": "care se potrivește exact subiectului și este bine argumentat",
@@ -1171,6 +1261,7 @@
   },
   {
     "id": "v091",
+    "notionId": "plauzibil",
     "word": "plauzibil",
     "partOfSpeech": "adjectiv",
     "definition": "care pare posibil și poate fi crezut",
@@ -1184,6 +1275,7 @@
   },
   {
     "id": "v092",
+    "notionId": "precar",
     "word": "precar",
     "partOfSpeech": "adjectiv",
     "definition": "nesigur, instabil sau lipsit de condiții suficiente",
@@ -1197,6 +1289,7 @@
   },
   {
     "id": "v093",
+    "notionId": "prolific",
     "word": "prolific",
     "partOfSpeech": "adjectiv",
     "definition": "care produce multe opere, idei sau rezultate",
@@ -1210,6 +1303,7 @@
   },
   {
     "id": "v094",
+    "notionId": "reticent",
     "word": "reticent",
     "partOfSpeech": "adjectiv",
     "definition": "ezitant sau puțin dispus să vorbească ori să accepte ceva",
@@ -1223,6 +1317,7 @@
   },
   {
     "id": "v095",
+    "notionId": "tacit",
     "word": "tacit",
     "partOfSpeech": "adjectiv",
     "definition": "înțeles sau acceptat fără a fi spus direct",
@@ -1236,6 +1331,7 @@
   },
   {
     "id": "v096",
+    "notionId": "tenace",
     "word": "tenace",
     "partOfSpeech": "adjectiv",
     "definition": "care urmărește cu perseverență un scop și nu renunță",
@@ -1249,6 +1345,7 @@
   },
   {
     "id": "v097",
+    "notionId": "trivial",
     "word": "trivial",
     "partOfSpeech": "adjectiv",
     "definition": "obișnuit, lipsit de profunzime sau de importanță",
@@ -1262,6 +1359,7 @@
   },
   {
     "id": "v098",
+    "notionId": "verosimil",
     "word": "verosimil",
     "partOfSpeech": "adjectiv",
     "definition": "care pare adevărat sau posibil",
@@ -1275,6 +1373,7 @@
   },
   {
     "id": "v099",
+    "notionId": "a eluda",
     "word": "a eluda",
     "partOfSpeech": "verb",
     "definition": "a evita în mod abil o obligație, o regulă sau o dificultate",
@@ -1288,6 +1387,7 @@
   },
   {
     "id": "v100",
+    "notionId": "a tergiversa",
     "word": "a tergiversa",
     "partOfSpeech": "verb",
     "definition": "a amâna intenționat rezolvarea sau luarea unei decizii",

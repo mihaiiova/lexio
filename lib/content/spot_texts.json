@@ -8,6 +8,7 @@
     "mistakes": [
       {
         "wordIndex": 5,
+        "notionId": "gp0",
         "wordCount": 1,
         "token": "bări",
         "replacement": "bare",
@@ -21,6 +22,7 @@
       },
       {
         "wordIndex": 20,
+        "notionId": "gp1",
         "wordCount": 1,
         "token": "genoflexiuni",
         "replacement": "genuflexiuni",
@@ -34,6 +36,7 @@
       },
       {
         "wordIndex": 30,
+        "notionId": "gp2",
         "wordCount": 1,
         "token": "coșmare",
         "replacement": "coșmaruri",
@@ -47,6 +50,7 @@
       },
       {
         "wordIndex": 37,
+        "notionId": "gp3",
         "wordCount": 1,
         "token": "crează",
         "replacement": "creează",
@@ -69,6 +73,7 @@
     "mistakes": [
       {
         "wordIndex": 2,
+        "notionId": "gp4",
         "wordCount": 2,
         "token": "a curăți",
         "replacement": "a curăța",
@@ -82,6 +87,7 @@
       },
       {
         "wordIndex": 16,
+        "notionId": "gp5",
         "wordCount": 2,
         "token": "va scade",
         "replacement": "va scădea",
@@ -95,6 +101,7 @@
       },
       {
         "wordIndex": 25,
+        "notionId": "gp6",
         "wordCount": 1,
         "token": "tacem",
         "replacement": "tăcem",
@@ -108,6 +115,7 @@
       },
       {
         "wordIndex": 43,
+        "notionId": "gp7",
         "wordCount": 1,
         "token": "taburel",
         "replacement": "taburet",
@@ -130,6 +138,7 @@
     "mistakes": [
       {
         "wordIndex": 5,
+        "notionId": "gp8",
         "wordCount": 1,
         "token": "funerariile",
         "replacement": "funeraliile",
@@ -143,6 +152,7 @@
       },
       {
         "wordIndex": 19,
+        "notionId": "gp9",
         "wordCount": 1,
         "token": "trotoar",
         "replacement": "trotuar",
@@ -156,6 +166,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "gp10",
         "wordCount": 1,
         "token": "„Uite-te",
         "replacement": "„Uită-te",
@@ -169,6 +180,7 @@
       },
       {
         "wordIndex": 35,
+        "notionId": "gp11",
         "wordCount": 1,
         "token": "patinuar",
         "replacement": "patinoar",
@@ -191,6 +203,7 @@
     "mistakes": [
       {
         "wordIndex": 6,
+        "notionId": "gp12",
         "wordCount": 1,
         "token": "norei",
         "replacement": "nurorii",
@@ -204,6 +217,7 @@
       },
       {
         "wordIndex": 15,
+        "notionId": "gp13",
         "wordCount": 1,
         "token": "mingiile",
         "replacement": "mingile",
@@ -217,6 +231,7 @@
       },
       {
         "wordIndex": 30,
+        "notionId": "gp14",
         "wordCount": 1,
         "token": "servici,",
         "replacement": "serviciu,",
@@ -230,6 +245,7 @@
       },
       {
         "wordIndex": 41,
+        "notionId": "gp15",
         "wordCount": 1,
         "token": "protocoluri",
         "replacement": "protocoale",
@@ -252,6 +268,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp16",
         "wordCount": 1,
         "token": "monstră",
         "replacement": "mostră",
@@ -265,6 +282,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "gp17",
         "wordCount": 1,
         "token": "mingii",
         "replacement": "mingi",
@@ -278,6 +296,7 @@
       },
       {
         "wordIndex": 24,
+        "notionId": "gp18",
         "wordCount": 1,
         "token": "minciunei",
         "replacement": "minciunii",
@@ -291,6 +310,7 @@
       },
       {
         "wordIndex": 34,
+        "notionId": "gp19",
         "wordCount": 1,
         "token": "ordinei",
         "replacement": "ordinii",
@@ -313,6 +333,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp20",
         "wordCount": 1,
         "token": "ouălelor",
         "replacement": "ouălor",
@@ -326,6 +347,7 @@
       },
       {
         "wordIndex": 15,
+        "notionId": "gp21",
         "wordCount": 1,
         "token": "năvoduri",
         "replacement": "năvoade",
@@ -339,6 +361,7 @@
       },
       {
         "wordIndex": 26,
+        "notionId": "gp22",
         "wordCount": 1,
         "token": "moscheie",
         "replacement": "moschee",
@@ -352,6 +375,7 @@
       },
       {
         "wordIndex": 35,
+        "notionId": "gp23",
         "wordCount": 2,
         "token": "să miroase",
         "replacement": "să miroasă",
@@ -374,6 +398,7 @@
     "mistakes": [
       {
         "wordIndex": 7,
+        "notionId": "gp24",
         "wordCount": 1,
         "token": "mingei",
         "replacement": "mingii",
@@ -387,6 +412,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "gp25",
         "wordCount": 2,
         "token": "se merită",
         "replacement": "merită",
@@ -400,6 +426,7 @@
       },
       {
         "wordIndex": 33,
+        "notionId": "gp26",
         "wordCount": 1,
         "token": "mediteranean",
         "replacement": "mediteraneean",
@@ -413,6 +440,7 @@
       },
       {
         "wordIndex": 45,
+        "notionId": "gp27",
         "wordCount": 1,
         "token": "măzlină",
         "replacement": "măslină",
@@ -435,6 +463,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp28",
         "wordCount": 1,
         "token": "maron",
         "replacement": "maro",
@@ -448,6 +477,7 @@
       },
       {
         "wordIndex": 13,
+        "notionId": "gp29",
         "wordCount": 1,
         "token": "mătușei",
         "replacement": "mătușii",
@@ -461,6 +491,7 @@
       },
       {
         "wordIndex": 29,
+        "notionId": "gp30",
         "wordCount": 1,
         "token": "păienjeni",
         "replacement": "păianjeni",
@@ -474,6 +505,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp31",
         "wordCount": 1,
         "token": "mânuși",
         "replacement": "mănuși",
@@ -496,6 +528,7 @@
     "mistakes": [
       {
         "wordIndex": 2,
+        "notionId": "gp32",
         "wordCount": 1,
         "token": "năpraznic",
         "replacement": "năprasnic",
@@ -509,6 +542,7 @@
       },
       {
         "wordIndex": 12,
+        "notionId": "gp33",
         "wordCount": 1,
         "token": "liceean",
         "replacement": "licean",
@@ -522,6 +556,7 @@
       },
       {
         "wordIndex": 26,
+        "notionId": "gp34",
         "wordCount": 1,
         "token": "victimile",
         "replacement": "victimele",
@@ -535,6 +570,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp35",
         "wordCount": 1,
         "token": "slogane",
         "replacement": "sloganuri",
@@ -557,6 +593,7 @@
     "mistakes": [
       {
         "wordIndex": 5,
+        "notionId": "gp36",
         "wordCount": 1,
         "token": "soartei",
         "replacement": "sorții",
@@ -570,6 +607,7 @@
       },
       {
         "wordIndex": 10,
+        "notionId": "gp37",
         "wordCount": 2,
         "token": "Ca și",
         "replacement": "Ca",
@@ -583,6 +621,7 @@
       },
       {
         "wordIndex": 26,
+        "notionId": "gp38",
         "wordCount": 2,
         "token": "a absoarbe",
         "replacement": "a absorbi",
@@ -596,6 +635,7 @@
       },
       {
         "wordIndex": 38,
+        "notionId": "gp39",
         "wordCount": 1,
         "token": "alimentări",
         "replacement": "alimentare",
@@ -618,6 +658,7 @@
     "mistakes": [
       {
         "wordIndex": 1,
+        "notionId": "gp40",
         "wordCount": 1,
         "token": "îngenunchiază",
         "replacement": "îngenunchează",
@@ -631,6 +672,7 @@
       },
       {
         "wordIndex": 12,
+        "notionId": "gp41",
         "wordCount": 1,
         "token": "trăznet",
         "replacement": "trăsnet",
@@ -644,6 +686,7 @@
       },
       {
         "wordIndex": 27,
+        "notionId": "gp42",
         "wordCount": 1,
         "token": "visterie",
         "replacement": "vistierie",
@@ -657,6 +700,7 @@
       },
       {
         "wordIndex": 30,
+        "notionId": "gp43",
         "wordCount": 2,
         "token": "„Nu du",
         "replacement": "„Nu duce",
@@ -679,6 +723,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp44",
         "wordCount": 1,
         "token": "ultimile",
         "replacement": "ultimele",
@@ -692,6 +737,7 @@
       },
       {
         "wordIndex": 11,
+        "notionId": "gp45",
         "wordCount": 1,
         "token": "excroc",
         "replacement": "escroc",
@@ -705,6 +751,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "gp46",
         "wordCount": 1,
         "token": "dârzi",
         "replacement": "dârji",
@@ -718,6 +765,7 @@
       },
       {
         "wordIndex": 41,
+        "notionId": "gp47",
         "wordCount": 1,
         "token": "liniștei",
         "replacement": "liniștii",
@@ -740,6 +788,7 @@
     "mistakes": [
       {
         "wordIndex": 8,
+        "notionId": "gp48",
         "wordCount": 1,
         "token": "limbei",
         "replacement": "limbii",
@@ -753,6 +802,7 @@
       },
       {
         "wordIndex": 11,
+        "notionId": "gp49",
         "wordCount": 1,
         "token": "noștrii",
         "replacement": "noștri",
@@ -766,6 +816,7 @@
       },
       {
         "wordIndex": 25,
+        "notionId": "gp50",
         "wordCount": 1,
         "token": "maieu",
         "replacement": "maiou",
@@ -779,6 +830,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp51",
         "wordCount": 1,
         "token": "lopețică",
         "replacement": "lopățică",
@@ -801,6 +853,7 @@
     "mistakes": [
       {
         "wordIndex": 5,
+        "notionId": "gp52",
         "wordCount": 1,
         "token": "liceuri",
         "replacement": "licee",
@@ -814,6 +867,7 @@
       },
       {
         "wordIndex": 18,
+        "notionId": "gp53",
         "wordCount": 3,
         "token": "de către soare",
         "replacement": "de soare",
@@ -827,6 +881,7 @@
       },
       {
         "wordIndex": 26,
+        "notionId": "gp54",
         "wordCount": 1,
         "token": "albaștrii",
         "replacement": "albaștri",
@@ -840,6 +895,7 @@
       },
       {
         "wordIndex": 41,
+        "notionId": "gp55",
         "wordCount": 1,
         "token": "monezi",
         "replacement": "monede",
@@ -862,6 +918,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp56",
         "wordCount": 2,
         "token": "al zecilea",
         "replacement": "al zecelea",
@@ -875,6 +932,7 @@
       },
       {
         "wordIndex": 21,
+        "notionId": "gp57",
         "wordCount": 1,
         "token": "manechiură",
         "replacement": "manichiură",
@@ -888,6 +946,7 @@
       },
       {
         "wordIndex": 30,
+        "notionId": "gp58",
         "wordCount": 1,
         "token": "lăcașe",
         "replacement": "lăcașuri",
@@ -901,6 +960,7 @@
       },
       {
         "wordIndex": 38,
+        "notionId": "gp59",
         "wordCount": 1,
         "token": "întâiele",
         "replacement": "întâile",
@@ -923,6 +983,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp60",
         "wordCount": 2,
         "token": "fetelor acestea",
         "replacement": "fetelor acestora",
@@ -936,6 +997,7 @@
       },
       {
         "wordIndex": 13,
+        "notionId": "gp61",
         "wordCount": 3,
         "token": "însăși prietenei tale",
         "replacement": "înseși prietenei tale",
@@ -949,6 +1011,7 @@
       },
       {
         "wordIndex": 25,
+        "notionId": "gp62",
         "wordCount": 1,
         "token": "escursie",
         "replacement": "excursie",
@@ -962,6 +1025,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp63",
         "wordCount": 1,
         "token": "sughițe",
         "replacement": "sughiță",
@@ -984,6 +1048,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp64",
         "wordCount": 1,
         "token": "proprii",
         "replacement": "propriii",
@@ -997,6 +1062,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "gp65",
         "wordCount": 2,
         "token": "va succede",
         "replacement": "va succeda",
@@ -1010,6 +1076,7 @@
       },
       {
         "wordIndex": 26,
+        "notionId": "gp66",
         "wordCount": 2,
         "token": "a întrevede",
         "replacement": "a întrevedea",
@@ -1023,6 +1090,7 @@
       },
       {
         "wordIndex": 31,
+        "notionId": "gp67",
         "wordCount": 1,
         "token": "Întradevăr,",
         "replacement": "Într-adevăr,",
@@ -1045,6 +1113,7 @@
     "mistakes": [
       {
         "wordIndex": 6,
+        "notionId": "gp68",
         "wordCount": 1,
         "token": "sanviș",
         "replacement": "sandvici",
@@ -1058,6 +1127,7 @@
       },
       {
         "wordIndex": 16,
+        "notionId": "gp69",
         "wordCount": 1,
         "token": "ridichii",
         "replacement": "ridiche",
@@ -1071,6 +1141,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "gp70",
         "wordCount": 1,
         "token": "grije",
         "replacement": "grijă",
@@ -1084,6 +1155,7 @@
       },
       {
         "wordIndex": 35,
+        "notionId": "gp71",
         "wordCount": 4,
         "token": "caietul la o colegă,",
         "replacement": "caietul colegei,",
@@ -1106,6 +1178,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp72",
         "wordCount": 2,
         "token": "să fi",
         "replacement": "să fii",
@@ -1119,6 +1192,7 @@
       },
       {
         "wordIndex": 15,
+        "notionId": "gp73",
         "wordCount": 2,
         "token": "doisprezece mii",
         "replacement": "douăsprezece mii",
@@ -1132,6 +1206,7 @@
       },
       {
         "wordIndex": 27,
+        "notionId": "gp74",
         "wordCount": 1,
         "token": "japoneji",
         "replacement": "japonezi",
@@ -1145,6 +1220,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp75",
         "wordCount": 1,
         "token": "jambonuri",
         "replacement": "jamboane",
@@ -1167,6 +1243,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp76",
         "wordCount": 1,
         "token": "cisme",
         "replacement": "cizme",
@@ -1180,6 +1257,7 @@
       },
       {
         "wordIndex": 15,
+        "notionId": "gp77",
         "wordCount": 1,
         "token": "heleșteuri",
         "replacement": "heleșteie",
@@ -1193,6 +1271,7 @@
       },
       {
         "wordIndex": 27,
+        "notionId": "gp78",
         "wordCount": 1,
         "token": "frấnghie",
         "replacement": "frânghíe",
@@ -1206,6 +1285,7 @@
       },
       {
         "wordIndex": 38,
+        "notionId": "gp79",
         "wordCount": 1,
         "token": "ștecher",
         "replacement": "ștecăr",
@@ -1228,6 +1308,7 @@
     "mistakes": [
       {
         "wordIndex": 2,
+        "notionId": "gp80",
         "wordCount": 1,
         "token": "furtune",
         "replacement": "furtuni",
@@ -1241,6 +1322,7 @@
       },
       {
         "wordIndex": 16,
+        "notionId": "gp81",
         "wordCount": 1,
         "token": "jenți",
         "replacement": "jante",
@@ -1254,6 +1336,7 @@
       },
       {
         "wordIndex": 29,
+        "notionId": "gp82",
         "wordCount": 1,
         "token": "lampei",
         "replacement": "lămpii",
@@ -1267,6 +1350,7 @@
       },
       {
         "wordIndex": 38,
+        "notionId": "gp83",
         "wordCount": 1,
         "token": "jalonuri",
         "replacement": "jaloane",
@@ -1289,6 +1373,7 @@
     "mistakes": [
       {
         "wordIndex": 1,
+        "notionId": "gp84",
         "wordCount": 1,
         "token": "intreprindere",
         "replacement": "întreprindere",
@@ -1302,6 +1387,7 @@
       },
       {
         "wordIndex": 16,
+        "notionId": "gp85",
         "wordCount": 1,
         "token": "lunei",
         "replacement": "lunii",
@@ -1315,6 +1401,7 @@
       },
       {
         "wordIndex": 18,
+        "notionId": "gp86",
         "wordCount": 1,
         "token": "„Dragele",
         "replacement": "„Dragile",
@@ -1328,6 +1415,7 @@
       },
       {
         "wordIndex": 36,
+        "notionId": "gp87",
         "wordCount": 1,
         "token": "butelié",
         "replacement": "butélie",
@@ -1350,6 +1438,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp88",
         "wordCount": 1,
         "token": "înnăbuși",
         "replacement": "înăbuși",
@@ -1363,6 +1452,7 @@
       },
       {
         "wordIndex": 15,
+        "notionId": "gp89",
         "wordCount": 1,
         "token": "butucuri",
         "replacement": "butuci",
@@ -1376,6 +1466,7 @@
       },
       {
         "wordIndex": 21,
+        "notionId": "gp90",
         "wordCount": 1,
         "token": "ieșană",
         "replacement": "ieșeană",
@@ -1389,6 +1480,7 @@
       },
       {
         "wordIndex": 31,
+        "notionId": "gp91",
         "wordCount": 2,
         "token": "harta mapamondului",
         "replacement": "harta lumii",
@@ -1411,6 +1503,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp92",
         "wordCount": 1,
         "token": "greșală",
         "replacement": "greșeală",
@@ -1424,6 +1517,7 @@
       },
       {
         "wordIndex": 17,
+        "notionId": "gp93",
         "wordCount": 1,
         "token": "caramelă",
         "replacement": "caramea",
@@ -1437,6 +1531,7 @@
       },
       {
         "wordIndex": 28,
+        "notionId": "gp94",
         "wordCount": 1,
         "token": "Istambul,",
         "replacement": "Istanbul,",
@@ -1450,6 +1545,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp95",
         "wordCount": 1,
         "token": "înmuiăm",
         "replacement": "înmuiem",
@@ -1472,6 +1568,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp96",
         "wordCount": 1,
         "token": "înopta",
         "replacement": "înnopta",
@@ -1485,6 +1582,7 @@
       },
       {
         "wordIndex": 13,
+        "notionId": "gp97",
         "wordCount": 1,
         "token": "itinerariu",
         "replacement": "itinerar",
@@ -1498,6 +1596,7 @@
       },
       {
         "wordIndex": 27,
+        "notionId": "gp98",
         "wordCount": 1,
         "token": "cotidiane",
         "replacement": "cotidiene",
@@ -1511,6 +1610,7 @@
       },
       {
         "wordIndex": 31,
+        "notionId": "gp99",
         "wordCount": 1,
         "token": "Deasemenea,",
         "replacement": "De asemenea,",
@@ -1533,6 +1633,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp100",
         "wordCount": 2,
         "token": "„Nu zi",
         "replacement": "„Nu zice",
@@ -1546,6 +1647,7 @@
       },
       {
         "wordIndex": 16,
+        "notionId": "gp101",
         "wordCount": 1,
         "token": "teneși.",
         "replacement": "teniși.",
@@ -1559,6 +1661,7 @@
       },
       {
         "wordIndex": 22,
+        "notionId": "gp102",
         "wordCount": 1,
         "token": "esee",
         "replacement": "eseuri",
@@ -1572,6 +1675,7 @@
       },
       {
         "wordIndex": 38,
+        "notionId": "gp103",
         "wordCount": 3,
         "token": "să se cațere",
         "replacement": "să se cațăre",
@@ -1594,6 +1698,7 @@
     "mistakes": [
       {
         "wordIndex": 2,
+        "notionId": "gp104",
         "wordCount": 1,
         "token": "fii",
         "replacement": "fiii",
@@ -1607,6 +1712,7 @@
       },
       {
         "wordIndex": 21,
+        "notionId": "gp105",
         "wordCount": 1,
         "token": "aghiasmă",
         "replacement": "agheasmă",
@@ -1620,6 +1726,7 @@
       },
       {
         "wordIndex": 31,
+        "notionId": "gp106",
         "wordCount": 1,
         "token": "curcubee",
         "replacement": "curcubeie",
@@ -1633,6 +1740,7 @@
       },
       {
         "wordIndex": 38,
+        "notionId": "gp107",
         "wordCount": 1,
         "token": "vroiam",
         "replacement": "voiam",
@@ -1655,6 +1763,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp108",
         "wordCount": 1,
         "token": "vulpei",
         "replacement": "vulpii",
@@ -1668,6 +1777,7 @@
       },
       {
         "wordIndex": 15,
+        "notionId": "gp109",
         "wordCount": 1,
         "token": "afișuri",
         "replacement": "afișe",
@@ -1681,6 +1791,7 @@
       },
       {
         "wordIndex": 26,
+        "notionId": "gp111",
         "wordCount": 3,
         "token": "„firește și normal”",
         "replacement": "„firește”",
@@ -1694,6 +1805,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp112",
         "wordCount": 1,
         "token": "girofare",
         "replacement": "girofaruri",
@@ -1716,6 +1828,7 @@
     "mistakes": [
       {
         "wordIndex": 9,
+        "notionId": "gp113",
         "wordCount": 1,
         "token": "gogoșerie",
         "replacement": "gogoșărie",
@@ -1729,6 +1842,7 @@
       },
       {
         "wordIndex": 19,
+        "notionId": "gp114",
         "wordCount": 1,
         "token": "gălbenușe",
         "replacement": "gălbenușuri",
@@ -1742,6 +1856,7 @@
       },
       {
         "wordIndex": 25,
+        "notionId": "gp115",
         "wordCount": 1,
         "token": "grizonat,",
         "replacement": "grizonant,",
@@ -1755,6 +1870,7 @@
       },
       {
         "wordIndex": 36,
+        "notionId": "gp116",
         "wordCount": 1,
         "token": "hotele",
         "replacement": "hoteluri",
@@ -1777,6 +1893,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp117",
         "wordCount": 1,
         "token": "Iașul",
         "replacement": "Iașiul",
@@ -1790,6 +1907,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "gp118",
         "wordCount": 1,
         "token": "asimtomatică",
         "replacement": "asimptomatică",
@@ -1803,6 +1921,7 @@
       },
       {
         "wordIndex": 24,
+        "notionId": "gp119",
         "wordCount": 1,
         "token": "autovehicol",
         "replacement": "autovehicul",
@@ -1816,6 +1935,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp120",
         "wordCount": 1,
         "token": "succesuri",
         "replacement": "succese",
@@ -1838,6 +1958,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp121",
         "wordCount": 1,
         "token": "cazino",
         "replacement": "cazinou",
@@ -1851,6 +1972,7 @@
       },
       {
         "wordIndex": 11,
+        "notionId": "gp122",
         "wordCount": 1,
         "token": "comfort",
         "replacement": "confort",
@@ -1864,6 +1986,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "gp123",
         "wordCount": 1,
         "token": "ceței",
         "replacement": "ceții",
@@ -1877,6 +2000,7 @@
       },
       {
         "wordIndex": 30,
+        "notionId": "gp124",
         "wordCount": 1,
         "token": "chibrite",
         "replacement": "chibrituri",
@@ -1899,6 +2023,7 @@
     "mistakes": [
       {
         "wordIndex": 2,
+        "notionId": "gp125",
         "wordCount": 2,
         "token": "să fulguie",
         "replacement": "să fulguiască",
@@ -1912,6 +2037,7 @@
       },
       {
         "wordIndex": 18,
+        "notionId": "gp126",
         "wordCount": 1,
         "token": "aleator,",
         "replacement": "aleatoriu,",
@@ -1925,6 +2051,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "gp127",
         "wordCount": 2,
         "token": "ași vrea",
         "replacement": "aș vrea",
@@ -1938,6 +2065,7 @@
       },
       {
         "wordIndex": 35,
+        "notionId": "gp128",
         "wordCount": 2,
         "token": "însuți dumneavoastră",
         "replacement": "dumneavoastră înșivă",
@@ -1960,6 +2088,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp129",
         "wordCount": 3,
         "token": "a se înconvoia",
         "replacement": "a se încovoia",
@@ -1973,6 +2102,7 @@
       },
       {
         "wordIndex": 17,
+        "notionId": "gp130",
         "wordCount": 2,
         "token": "a-ți citit",
         "replacement": "ați citit",
@@ -1986,6 +2116,7 @@
       },
       {
         "wordIndex": 28,
+        "notionId": "gp131",
         "wordCount": 1,
         "token": "asterix",
         "replacement": "asterisc",
@@ -1999,6 +2130,7 @@
       },
       {
         "wordIndex": 31,
+        "notionId": "gp132",
         "wordCount": 1,
         "token": "inopinantă",
         "replacement": "inopinată",
@@ -2021,6 +2153,7 @@
     "mistakes": [
       {
         "wordIndex": 6,
+        "notionId": "gp133",
         "wordCount": 1,
         "token": "impacte",
         "replacement": "impacturi",
@@ -2034,6 +2167,7 @@
       },
       {
         "wordIndex": 15,
+        "notionId": "gp134",
         "wordCount": 2,
         "token": "ar fii",
         "replacement": "ar fi",
@@ -2047,6 +2181,7 @@
       },
       {
         "wordIndex": 29,
+        "notionId": "gp135",
         "wordCount": 1,
         "token": "ghiață.",
         "replacement": "gheață.",
@@ -2060,6 +2195,7 @@
       },
       {
         "wordIndex": 36,
+        "notionId": "gp136",
         "wordCount": 1,
         "token": "ghiare",
         "replacement": "gheare",
@@ -2082,6 +2218,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp137",
         "wordCount": 2,
         "token": "să copii",
         "replacement": "să copiezi",
@@ -2095,6 +2232,7 @@
       },
       {
         "wordIndex": 13,
+        "notionId": "gp138",
         "wordCount": 1,
         "token": "abea",
         "replacement": "abia",
@@ -2108,6 +2246,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "gp139",
         "wordCount": 1,
         "token": "bănuie",
         "replacement": "bănuiește",
@@ -2121,6 +2260,7 @@
       },
       {
         "wordIndex": 29,
+        "notionId": "gp140",
         "wordCount": 1,
         "token": "Defapt,",
         "replacement": "De fapt,",
@@ -2143,6 +2283,7 @@
     "mistakes": [
       {
         "wordIndex": 5,
+        "notionId": "gp141",
         "wordCount": 1,
         "token": "fuselaj",
         "replacement": "fuzelaj",
@@ -2156,6 +2297,7 @@
       },
       {
         "wordIndex": 13,
+        "notionId": "gp142",
         "wordCount": 1,
         "token": "furtune",
         "replacement": "furtunuri",
@@ -2169,6 +2311,7 @@
       },
       {
         "wordIndex": 25,
+        "notionId": "gp143",
         "wordCount": 1,
         "token": "funegru",
         "replacement": "funebru",
@@ -2182,6 +2325,7 @@
       },
       {
         "wordIndex": 32,
+        "notionId": "gp144",
         "wordCount": 3,
         "token": "fiecare au ales",
         "replacement": "fiecare a ales",
@@ -2204,6 +2348,7 @@
     "mistakes": [
       {
         "wordIndex": 0,
+        "notionId": "gp145",
         "wordCount": 2,
         "token": "Nu fii",
         "replacement": "Nu fi",
@@ -2217,6 +2362,7 @@
       },
       {
         "wordIndex": 9,
+        "notionId": "gp146",
         "wordCount": 2,
         "token": "Fi atent",
         "replacement": "Fii atent",
@@ -2230,6 +2376,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "gp147",
         "wordCount": 3,
         "token": "o să fi",
         "replacement": "o să fii",
@@ -2243,6 +2390,7 @@
       },
       {
         "wordIndex": 41,
+        "notionId": "gp148",
         "wordCount": 2,
         "token": "„Nu fă",
         "replacement": "„Nu face",
@@ -2265,6 +2413,7 @@
     "mistakes": [
       {
         "wordIndex": 1,
+        "notionId": "gp149",
         "wordCount": 1,
         "token": "embargo",
         "replacement": "embargou",
@@ -2278,6 +2427,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "gp150",
         "wordCount": 2,
         "token": "ar dispare",
         "replacement": "ar dispărea",
@@ -2291,6 +2441,7 @@
       },
       {
         "wordIndex": 25,
+        "notionId": "gp151",
         "wordCount": 1,
         "token": "dezăpezire",
         "replacement": "deszăpezire",
@@ -2304,6 +2455,7 @@
       },
       {
         "wordIndex": 37,
+        "notionId": "gp152",
         "wordCount": 1,
         "token": "desumflat",
         "replacement": "dezumflat",
@@ -2326,6 +2478,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp153",
         "wordCount": 3,
         "token": "destui de mulți",
         "replacement": "destul de mulți",
@@ -2339,6 +2492,7 @@
       },
       {
         "wordIndex": 13,
+        "notionId": "gp154",
         "wordCount": 1,
         "token": "delicvent",
         "replacement": "delincvent",
@@ -2352,6 +2506,7 @@
       },
       {
         "wordIndex": 31,
+        "notionId": "gp155",
         "wordCount": 1,
         "token": "cosciug",
         "replacement": "coșciug",
@@ -2365,6 +2520,7 @@
       },
       {
         "wordIndex": 41,
+        "notionId": "gp156",
         "wordCount": 1,
         "token": "contoar",
         "replacement": "contor",
@@ -2387,6 +2543,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp157",
         "wordCount": 3,
         "token": "a se complace",
         "replacement": "a se complăcea",
@@ -2400,6 +2557,7 @@
       },
       {
         "wordIndex": 21,
+        "notionId": "gp158",
         "wordCount": 1,
         "token": "„Combăteți-mă",
         "replacement": "„Combateți-mă",
@@ -2413,6 +2571,7 @@
       },
       {
         "wordIndex": 29,
+        "notionId": "gp159",
         "wordCount": 2,
         "token": "să coase",
         "replacement": "să coasă",
@@ -2426,6 +2585,7 @@
       },
       {
         "wordIndex": 42,
+        "notionId": "gp160",
         "wordCount": 1,
         "token": "ciolofan",
         "replacement": "celofan",
@@ -2448,6 +2608,7 @@
     "mistakes": [
       {
         "wordIndex": 1,
+        "notionId": "gp161",
         "wordCount": 1,
         "token": "ciocănitoarele",
         "replacement": "ciocănitorile",
@@ -2461,6 +2622,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "gp162",
         "wordCount": 1,
         "token": "cinsprezece",
         "replacement": "cincisprezece",
@@ -2474,6 +2636,7 @@
       },
       {
         "wordIndex": 19,
+        "notionId": "gp163",
         "wordCount": 2,
         "token": "Al cincelea",
         "replacement": "Al cincilea",
@@ -2487,6 +2650,7 @@
       },
       {
         "wordIndex": 32,
+        "notionId": "gp164",
         "wordCount": 1,
         "token": "cenușei",
         "replacement": "cenușii",
@@ -2509,6 +2673,7 @@
     "mistakes": [
       {
         "wordIndex": 5,
+        "notionId": "gp165",
         "wordCount": 4,
         "token": "cea mai puțin apreciată",
         "replacement": "cel mai puțin apreciată",
@@ -2522,6 +2687,7 @@
       },
       {
         "wordIndex": 16,
+        "notionId": "gp166",
         "wordCount": 2,
         "token": "câțiva zeci",
         "replacement": "câteva zeci",
@@ -2535,6 +2701,7 @@
       },
       {
         "wordIndex": 25,
+        "notionId": "gp167",
         "wordCount": 1,
         "token": "carnavale",
         "replacement": "carnavaluri",
@@ -2548,6 +2715,7 @@
       },
       {
         "wordIndex": 31,
+        "notionId": "gp168",
         "wordCount": 1,
         "token": "care",
         "replacement": "pe care",
@@ -2570,6 +2738,7 @@
     "mistakes": [
       {
         "wordIndex": 8,
+        "notionId": "gp169",
         "wordCount": 1,
         "token": "bunăcuviință.",
         "replacement": "bună-cuviință.",
@@ -2583,6 +2752,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "gp170",
         "wordCount": 1,
         "token": "briceaguri",
         "replacement": "bricege",
@@ -2596,6 +2766,7 @@
       },
       {
         "wordIndex": 26,
+        "notionId": "gp171",
         "wordCount": 1,
         "token": "bleumaren.",
         "replacement": "bleumarin.",
@@ -2609,6 +2780,7 @@
       },
       {
         "wordIndex": 32,
+        "notionId": "gp172",
         "wordCount": 1,
         "token": "blesteamă",
         "replacement": "blestemă",
@@ -2631,6 +2803,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp173",
         "wordCount": 1,
         "token": "biscuite",
         "replacement": "biscuit",
@@ -2644,6 +2817,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "gp174",
         "wordCount": 1,
         "token": "bătem",
         "replacement": "batem",
@@ -2657,6 +2831,7 @@
       },
       {
         "wordIndex": 24,
+        "notionId": "gp175",
         "wordCount": 1,
         "token": "barzei",
         "replacement": "berzei",
@@ -2670,6 +2845,7 @@
       },
       {
         "wordIndex": 35,
+        "notionId": "gp176",
         "wordCount": 1,
         "token": "baremuri",
         "replacement": "bareme",
@@ -2692,6 +2868,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp177",
         "wordCount": 1,
         "token": "balustrăzi",
         "replacement": "balustrade",
@@ -2705,6 +2882,7 @@
       },
       {
         "wordIndex": 10,
+        "notionId": "gp178",
         "wordCount": 1,
         "token": "atribuiește",
         "replacement": "atribuie",
@@ -2718,6 +2896,7 @@
       },
       {
         "wordIndex": 24,
+        "notionId": "gp179",
         "wordCount": 1,
         "token": "atlasuri",
         "replacement": "atlase",
@@ -2731,6 +2910,7 @@
       },
       {
         "wordIndex": 34,
+        "notionId": "gp180",
         "wordCount": 1,
         "token": "amiezei,",
         "replacement": "amiezii,",
@@ -2753,6 +2933,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp181",
         "wordCount": 1,
         "token": "amândorura",
         "replacement": "amândurora",
@@ -2766,6 +2947,7 @@
       },
       {
         "wordIndex": 12,
+        "notionId": "gp182",
         "wordCount": 1,
         "token": "aliniate",
         "replacement": "alineate",
@@ -2779,6 +2961,7 @@
       },
       {
         "wordIndex": 22,
+        "notionId": "gp183",
         "wordCount": 1,
         "token": "aleatoare",
         "replacement": "aleatorii",
@@ -2792,6 +2975,7 @@
       },
       {
         "wordIndex": 32,
+        "notionId": "gp184",
         "wordCount": 1,
         "token": "albumuri",
         "replacement": "albume",
@@ -2814,6 +2998,7 @@
     "mistakes": [
       {
         "wordIndex": 5,
+        "notionId": "gp185",
         "wordCount": 2,
         "token": "să aibe",
         "replacement": "să aibă",
@@ -2827,6 +3012,7 @@
       },
       {
         "wordIndex": 10,
+        "notionId": "gp186",
         "wordCount": 1,
         "token": "Aceiași",
         "replacement": "Aceeași",
@@ -2840,6 +3026,7 @@
       },
       {
         "wordIndex": 24,
+        "notionId": "gp122",
         "wordCount": 1,
         "token": "comfort",
         "replacement": "confort",
@@ -2853,6 +3040,7 @@
       },
       {
         "wordIndex": 30,
+        "notionId": "gp187",
         "wordCount": 1,
         "token": "Deobicei,",
         "replacement": "De obicei,",
@@ -2875,6 +3063,7 @@
     "mistakes": [
       {
         "wordIndex": 0,
+        "notionId": "gp86",
         "wordCount": 2,
         "token": "Dragele mele",
         "replacement": "Dragile mele",
@@ -2888,6 +3077,7 @@
       },
       {
         "wordIndex": 13,
+        "notionId": "gp188",
         "wordCount": 1,
         "token": "eșece",
         "replacement": "eșecuri",
@@ -2901,6 +3091,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "gp189",
         "wordCount": 3,
         "token": "copilului cel interesat",
         "replacement": "copilului celui interesat",
@@ -2914,6 +3105,7 @@
       },
       {
         "wordIndex": 36,
+        "notionId": "gp190",
         "wordCount": 2,
         "token": "soluție inovatoare",
         "replacement": "soluție novatoare",
@@ -2936,6 +3128,7 @@
     "mistakes": [
       {
         "wordIndex": 3,
+        "notionId": "gp191",
         "wordCount": 1,
         "token": "după",
         "replacement": "de pe",
@@ -2949,6 +3142,7 @@
       },
       {
         "wordIndex": 13,
+        "notionId": "gp192",
         "wordCount": 1,
         "token": "care",
         "replacement": "căruia",
@@ -2962,6 +3156,7 @@
       },
       {
         "wordIndex": 27,
+        "notionId": "gp193",
         "wordCount": 2,
         "token": "alegeri electorale",
         "replacement": "alegeri",
@@ -2975,6 +3170,7 @@
       },
       {
         "wordIndex": 34,
+        "notionId": "gp194",
         "wordCount": 3,
         "token": "averse de ploaie",
         "replacement": "averse",
@@ -2997,6 +3193,7 @@
     "mistakes": [
       {
         "wordIndex": 5,
+        "notionId": "gp195",
         "wordCount": 2,
         "token": "foarte benefic",
         "replacement": "benefic",
@@ -3010,6 +3207,7 @@
       },
       {
         "wordIndex": 15,
+        "notionId": "gp196",
         "wordCount": 1,
         "token": "decât",
         "replacement": "doar",
@@ -3023,6 +3221,7 @@
       },
       {
         "wordIndex": 29,
+        "notionId": "gp197",
         "wordCount": 2,
         "token": "contrabandă ilegală",
         "replacement": "contrabandă",
@@ -3036,6 +3235,7 @@
       },
       {
         "wordIndex": 39,
+        "notionId": "gp198",
         "wordCount": 2,
         "token": "colaborăm împreună",
         "replacement": "colaborăm",
@@ -3058,6 +3258,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp199",
         "wordCount": 2,
         "token": "al cărei",
         "replacement": "a cărui",
@@ -3071,6 +3272,7 @@
       },
       {
         "wordIndex": 10,
+        "notionId": "gp200",
         "wordCount": 2,
         "token": "Din cauza",
         "replacement": "Datorită",
@@ -3084,6 +3286,7 @@
       },
       {
         "wordIndex": 22,
+        "notionId": "gp201",
         "wordCount": 2,
         "token": "ca să",
         "replacement": "să",
@@ -3097,6 +3300,7 @@
       },
       {
         "wordIndex": 30,
+        "notionId": "gp202",
         "wordCount": 5,
         "token": "La un anumit moment dat,",
         "replacement": "La un moment dat,",
@@ -3119,6 +3323,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "gp203",
         "wordCount": 3,
         "token": "alcoolemie în sânge",
         "replacement": "alcoolemie",
@@ -3132,6 +3337,7 @@
       },
       {
         "wordIndex": 21,
+        "notionId": "sp_nam_n-am",
         "wordCount": 1,
         "token": "nam",
         "replacement": "n-am",
@@ -3145,6 +3351,7 @@
       },
       {
         "wordIndex": 33,
+        "notionId": "sp_s-a_sa",
         "wordCount": 1,
         "token": "s-a",
         "replacement": "sa",
@@ -3158,6 +3365,7 @@
       },
       {
         "wordIndex": 47,
+        "notionId": "gp110",
         "wordCount": 1,
         "token": "căciule",
         "replacement": "căciuli",
@@ -3180,6 +3388,7 @@
     "mistakes": [
       {
         "wordIndex": 1,
+        "notionId": "sp_sau_s-au",
         "wordCount": 1,
         "token": "sau",
         "replacement": "s-au",
@@ -3193,6 +3402,7 @@
       },
       {
         "wordIndex": 11,
+        "notionId": "sp_la_l-a",
         "wordCount": 1,
         "token": "la",
         "replacement": "l-a",
@@ -3206,6 +3416,7 @@
       },
       {
         "wordIndex": 21,
+        "notionId": "sp_ia_i-a",
         "wordCount": 1,
         "token": "ia",
         "replacement": "i-a",
@@ -3219,6 +3430,7 @@
       },
       {
         "wordIndex": 32,
+        "notionId": "sp_iau_i-au",
         "wordCount": 1,
         "token": "iau",
         "replacement": "i-au",
@@ -3241,6 +3453,7 @@
     "mistakes": [
       {
         "wordIndex": 2,
+        "notionId": "sp_mai_m-ai",
         "wordCount": 1,
         "token": "mai",
         "replacement": "m-ai",
@@ -3254,6 +3467,7 @@
       },
       {
         "wordIndex": 12,
+        "notionId": "sp_va_v-a",
         "wordCount": 1,
         "token": "va",
         "replacement": "v-a",
@@ -3267,6 +3481,7 @@
       },
       {
         "wordIndex": 21,
+        "notionId": "sp_Nai_N-ai",
         "wordCount": 1,
         "token": "Nai",
         "replacement": "N-ai",
@@ -3280,6 +3495,7 @@
       },
       {
         "wordIndex": 31,
+        "notionId": "sp_cai_c-ai",
         "wordCount": 1,
         "token": "cai",
         "replacement": "c-ai",
@@ -3302,6 +3518,7 @@
     "mistakes": [
       {
         "wordIndex": 0,
+        "notionId": "sp_Neam_Ne-am",
         "wordCount": 1,
         "token": "Neam",
         "replacement": "Ne-am",
@@ -3315,6 +3532,7 @@
       },
       {
         "wordIndex": 12,
+        "notionId": "sp_ceai_ce-ai",
         "wordCount": 1,
         "token": "ceai",
         "replacement": "ce-ai",
@@ -3328,6 +3546,7 @@
       },
       {
         "wordIndex": 22,
+        "notionId": "sp_al_a-l",
         "wordCount": 1,
         "token": "al",
         "replacement": "a-l",
@@ -3341,6 +3560,7 @@
       },
       {
         "wordIndex": 37,
+        "notionId": "sp_ai_a-i",
         "wordCount": 1,
         "token": "ai",
         "replacement": "a-i",
@@ -3363,6 +3583,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "sp_a%C8%9Bi_a-%C8%9Bi",
         "wordCount": 1,
         "token": "ați",
         "replacement": "a-ți",
@@ -3376,6 +3597,7 @@
       },
       {
         "wordIndex": 12,
+        "notionId": "sp_s%C4%83i_s%C4%83-i",
         "wordCount": 1,
         "token": "săi",
         "replacement": "să-i",
@@ -3389,6 +3611,7 @@
       },
       {
         "wordIndex": 23,
+        "notionId": "sp_c%C4%83i_c%C4%83-i",
         "wordCount": 1,
         "token": "căi",
         "replacement": "că-i",
@@ -3402,6 +3625,7 @@
       },
       {
         "wordIndex": 33,
+        "notionId": "sp_cea_ce-a",
         "wordCount": 1,
         "token": "cea",
         "replacement": "ce-a",
@@ -3424,6 +3648,7 @@
     "mistakes": [
       {
         "wordIndex": 2,
+        "notionId": "sp_cel_ce-l",
         "wordCount": 1,
         "token": "cel",
         "replacement": "ce-l",
@@ -3437,6 +3662,7 @@
       },
       {
         "wordIndex": 14,
+        "notionId": "sp_dea_de-a",
         "wordCount": 1,
         "token": "dea",
         "replacement": "de-a",
@@ -3450,6 +3676,7 @@
       },
       {
         "wordIndex": 25,
+        "notionId": "sp_intro_%C3%AEntr-o",
         "wordCount": 1,
         "token": "intro",
         "replacement": "într-o",
@@ -3463,6 +3690,7 @@
       },
       {
         "wordIndex": 33,
+        "notionId": "sp_intrun_%C3%AEntr-un",
         "wordCount": 1,
         "token": "intrun",
         "replacement": "într-un",
@@ -3485,6 +3713,7 @@
     "mistakes": [
       {
         "wordIndex": 4,
+        "notionId": "sp_dintro_dintr-o",
         "wordCount": 1,
         "token": "dintro",
         "replacement": "dintr-o",
@@ -3498,6 +3727,7 @@
       },
       {
         "wordIndex": 11,
+        "notionId": "sp_printro_printr-o",
         "wordCount": 1,
         "token": "printro",
         "replacement": "printr-o",
@@ -3511,6 +3741,7 @@
       },
       {
         "wordIndex": 21,
+        "notionId": "sp_%C8%99ia_%C8%99i-a",
         "wordCount": 1,
         "token": "șia",
         "replacement": "și-a",
@@ -3524,6 +3755,7 @@
       },
       {
         "wordIndex": 29,
+        "notionId": "sp_%E2%80%9E%C8%9Aia_%E2%80%9E%C8%9Ai-a",
         "wordCount": 1,
         "token": "„Ția",
         "replacement": "„Ți-a",
@@ -3546,6 +3778,7 @@
     "mistakes": [
       {
         "wordIndex": 2,
+        "notionId": "gp5",
         "wordCount": 2,
         "token": "va scade",
         "replacement": "va scădea",
@@ -3559,6 +3792,7 @@
       },
       {
         "wordIndex": 9,
+        "notionId": "gp67",
         "wordCount": 1,
         "token": "Întradevăr,",
         "replacement": "Într-adevăr,",
@@ -3572,6 +3806,7 @@
       },
       {
         "wordIndex": 17,
+        "notionId": "gp99",
         "wordCount": 1,
         "token": "Deasemenea,",
         "replacement": "De asemenea,",
@@ -3585,6 +3820,7 @@
       },
       {
         "wordIndex": 26,
+        "notionId": "gp140",
         "wordCount": 1,
         "token": "Defapt,",
         "replacement": "De fapt,",

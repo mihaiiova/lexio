@@ -66,5 +66,8 @@ via `serviceAccountJsonPlainText`.
 1. Push to `staging` — the **Deploy staging to test** workflow should upload a
    signed Android AAB to the Play internal-testing track and a signed IPA to
    TestFlight.
-2. Push to `master` — the **Deploy to production** workflow should upload to the
-   Play production track and to App Store Connect.
+2. Merge the tested release into `master`, then manually run **Deploy to
+   production** from GitHub Actions on `master` with platform `android` for
+   Play production or `ios` for App Store Connect. The platforms do not upload
+   together. Check Play Console → Publishing overview for changes requiring
+   submission for review.

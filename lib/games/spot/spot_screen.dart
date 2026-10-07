@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../analytics/game_session_analytics.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_button.dart';
 import '../../design/components/lexio_feedback.dart';
@@ -11,6 +10,7 @@ import '../../design/components/lexio_feedback_screen.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
 import '../../progress/user_progress.dart';
+import '../../content/content_runtime.dart';
 import 'spot_content.dart';
 import 'spot_game.dart';
 import 'widgets/spot_summary.dart';
@@ -37,7 +37,6 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   Timer? _timer;
   ProgressRepository? _progress;
   bool _hasSavedSession = false;
-  final GameSessionAnalytics _session = GameSessionAnalytics('spot');
 
   @override
   void initState() {
@@ -49,7 +48,6 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       _progress = widget.progressRepository;
       _isLoading = false;
       if (texts.isNotEmpty) {
-        _session.start();
         _startTimer();
       }
     } else {
@@ -62,7 +60,6 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     unawaited(_progress?.flush());
     WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
-    _session.dispose();
     super.dispose();
   }
 
@@ -70,12 +67,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _onResume();
-      _session.markResumed();
     } else if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
       unawaited(_progress?.flush());
-      _session.markBackgrounded();
     }
   }
 
@@ -95,6 +90,7 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   Future<void> _init() async {
     try {
+      await ContentRuntime.activatePending();
       await SpotContent.load();
       final progress =
           widget.progressRepository ?? await ProgressRepository.load();
@@ -105,7 +101,6 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         _progress = progress;
         _isLoading = false;
       });
-      _session.start();
       _startTimer();
     } catch (e) {
       debugPrint('SpotScreen: failed to load content: $e');
@@ -175,7 +170,9 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     if (_state!.isFinished) _finish(_state!);
   }
 
-  void _handlePlayAgain() {
+  Future<void> _handlePlayAgain() async {
+    await ContentRuntime.activatePending();
+    if (!mounted) return;
     _timer?.cancel();
     final texts =
         widget.texts ??
@@ -187,7 +184,6 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
       _hasSavedSession = false;
     });
-    _session.start();
     _startTimer();
   }
 
@@ -198,7 +194,6 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   void _finish(SpotGameState state) {
     _saveSessionProgress(state);
-    _session.complete(state.score);
   }
 
   void _saveSessionProgress(SpotGameState state) {

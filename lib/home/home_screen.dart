@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../analytics/analytics_service.dart';
 import '../design/animations.dart';
 import '../design/colors.dart';
 import '../design/components/lexio_game_card.dart';
@@ -82,8 +81,19 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildHeader(),
               const SizedBox(height: LexioSpacing.sectionGap),
               _buildGameCard(
+                title: 'Găsește greșeala',
+                semanticLabel: 'Joc 01: Găsește greșeala',
+                accentColor: LexioColors.accent,
+                mutedColor: LexioColors.accentMuted,
+                gameId: 'spot',
+                screen:
+                    widget.spotScreenBuilder?.call() ??
+                    SpotScreen(progressRepository: widget.progressRepository),
+              ),
+              const SizedBox(height: LexioSpacing.itemGap),
+              _buildGameCard(
                 title: 'Corect sau greșit?',
-                semanticLabel: 'Joc 01: Corect sau greșit?',
+                semanticLabel: 'Joc 02: Corect sau greșit?',
                 accentColor: LexioColors.primary,
                 mutedColor: LexioColors.primaryMuted,
                 gameId: 'grammar',
@@ -94,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
                 title: 'Ce înseamnă?',
-                semanticLabel: 'Joc 02: Ce înseamnă?',
+                semanticLabel: 'Joc 03: Ce înseamnă?',
                 accentColor: LexioColors.secondary,
                 mutedColor: LexioColors.secondaryMuted,
                 gameId: 'vocabulary',
@@ -107,24 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
                 title: 'Vorba vine',
-                semanticLabel: 'Joc 03: Vorba vine',
+                semanticLabel: 'Joc 04: Vorba vine',
                 accentColor: LexioColors.teal,
                 mutedColor: LexioColors.tealMuted,
                 gameId: 'idioms',
                 screen:
                     widget.idiomsScreenBuilder?.call() ??
                     IdiomsScreen(progressRepository: widget.progressRepository),
-              ),
-              const SizedBox(height: LexioSpacing.itemGap),
-              _buildGameCard(
-                title: 'Găsește greșeala',
-                semanticLabel: 'Joc 04: Găsește greșeala',
-                accentColor: LexioColors.accent,
-                mutedColor: LexioColors.accentMuted,
-                gameId: 'spot',
-                screen:
-                    widget.spotScreenBuilder?.call() ??
-                    SpotScreen(progressRepository: widget.progressRepository),
               ),
               const SizedBox(height: LexioSpacing.xxl),
               _buildLegalFooter(context),
@@ -150,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
       mutedColor: mutedColor,
       discovered: _discoveredFor(gameId),
       total: _totalFor(gameId),
-      onTap: () => _openGame(context, gameId, screen),
+      onTap: () => _openGame(context, screen),
     );
   }
 
@@ -177,8 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _openGame(BuildContext context, String gameId, Widget screen) {
-    unawaited(AnalyticsService.logGameOpened(gameId));
+  void _openGame(BuildContext context, Widget screen) {
     _open(context, screen);
   }
 

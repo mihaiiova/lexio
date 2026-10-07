@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:lexio/analytics/analytics_service.dart';
 import 'package:lexio/app/app.dart';
 
 Future<void> _shot(
@@ -42,7 +41,6 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('capture app screenshots', (tester) async {
-    await AnalyticsService.initialize();
     await tester.pumpWidget(const LexioApp());
     await tester.pumpAndSettle();
 

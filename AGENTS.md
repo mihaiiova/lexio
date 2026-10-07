@@ -126,4 +126,4 @@ flutter test             # Run tests
 - Hardcode any design values
 - Add comments that explain "what" — only "why" if non-obvious
 - Introduce state management libraries
-- Add backend calls, auth, databases, or APIs
+- Add backend calls, auth, databases, or APIs (read-only HTTPS fetches of static content bundles are allowed)

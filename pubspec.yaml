@@ -11,11 +11,10 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  cupertino_icons: ^1.0.8
+  cupertino_icons: ^2.0.0
   shared_preferences: ^2.5.4
   url_launcher: ^6.3.1
-  firebase_core: ^4.13.0
-  firebase_analytics: ^12.4.6
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:

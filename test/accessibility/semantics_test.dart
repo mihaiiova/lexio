@@ -46,7 +46,7 @@ void main() {
 
     expect(find.text('Politica de confidențialitate'), findsOneWidget);
     expect(find.text('Ce date colectăm'), findsOneWidget);
-    expect(find.textContaining('Firebase Analytics'), findsWidgets);
+    expect(find.textContaining('Nu colectăm'), findsWidgets);
   });
 
   testWidgets('App title text is present', (tester) async {
@@ -61,11 +61,11 @@ void main() {
     await tester.pumpWidget(const LexioApp());
     await tester.pumpAndSettle();
 
-    expect(_hasLabel(tester, 'Joc 01: Corect sau greșit?'), isTrue);
-    expect(_hasLabel(tester, 'Joc 02: Ce înseamnă?'), isTrue);
-    expect(_hasLabel(tester, 'Joc 03: Vorba vine'), isTrue);
-    expect(_hasLabel(tester, 'Joc 04: Găsește greșeala'), isTrue);
-    expect(_hasButtonLabel(tester, 'Joc 01: Corect sau greșit?'), isTrue);
+    expect(_hasLabel(tester, 'Joc 01: Găsește greșeala'), isTrue);
+    expect(_hasLabel(tester, 'Joc 02: Corect sau greșit?'), isTrue);
+    expect(_hasLabel(tester, 'Joc 03: Ce înseamnă?'), isTrue);
+    expect(_hasLabel(tester, 'Joc 04: Vorba vine'), isTrue);
+    expect(_hasButtonLabel(tester, 'Joc 01: Găsește greșeala'), isTrue);
 
     handle.dispose();
   });
@@ -198,9 +198,9 @@ String _accessibleName(SemanticsData data) =>
     data.label.isNotEmpty ? data.label : data.tooltip;
 
 bool _hasLabel(WidgetTester tester, String text) {
-  return _allSemantics(tester).any(
-    (data) => _accessibleName(data).contains(text),
-  );
+  return _allSemantics(
+    tester,
+  ).any((data) => _accessibleName(data).contains(text));
 }
 
 bool _hasButtonLabel(WidgetTester tester, String text) {

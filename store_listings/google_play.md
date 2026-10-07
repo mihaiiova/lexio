@@ -27,7 +27,7 @@ Un test contra cronometru: ai un text și 60 de secunde să identifici greșelil
 ### Caracteristici
 
 - Design tipografic curat: textul în prim-plan, fonturi premium, spațiere generoasă
-- Jocuri offline: toate exercițiile și fonturile sunt incluse
+- Jocuri offline: toate exercițiile și fonturile sunt incluse (conținutul poate fi actualizat automat când ești online, fără cont)
 - Fără conturi, fără rețele sociale: progresul rămâne pe dispozitivul tău
 - Fără reclame, fără microtranzacții: o experiență completă și gratuită
 - Exerciții cu explicații și referințe către DOOM
@@ -50,21 +50,21 @@ Gratuit
 ## Publicitate
 Nu conține reclame
 
-## Target demografic
-12+
+## Public țintă
+Public mixt, inclusiv utilizatori sub 13 ani
 
 ## Politica de confidențialitate
-Politica este disponibilă în aplicație. Pentru publicarea în Google Play trebuie furnizat și un URL public.
+Politica este disponibilă în aplicație și la https://didactiv.ro/confidentialitate/slove/.
 
 ## Secțiunea Data Safety
 
 | Întrebare | Răspuns |
 |---|---|
-| Partajează date cu terți? | Datele sunt procesate de Google Firebase Analytics pentru analiză |
-| Colectează date? | Da — activitatea în aplicație, identificator al instalării și date tehnice |
-| Criptează datele în tranzit? | Da |
+| Partajează date cu terți? | Nu |
+| Colectează date? | Nu — progresul și utilizarea jocurilor rămân pe dispozitiv |
+| Criptează datele în tranzit? | Nu se aplică — aplicația nu transmite date de utilizare |
 | Utilizatorul poate șterge datele? | Nu se aplică — aplicația nu are conturi sau date de profil |
-| Colectează date de localizare? | Regiune aproximativă derivată de Firebase |
+| Colectează date de localizare? | Nu |
 | Colectează date personale? | Nu |
 | Colectează date financiare? | Nu |
 | Colectează date de sănătate? | Nu |
@@ -74,8 +74,8 @@ Politica este disponibilă în aplicație. Pentru publicarea în Google Play tre
 | Colectează istoric de navigare? | Nu |
 | Colectează contacte? | Nu |
 | Colectează date de activitate fizică? | Nu |
-| Colectează date de identificare a dispozitivului? | Da — identificator al instalării, fără identificator publicitar |
-| Colectează date de performanță a aplicației? | Da — date tehnice furnizate de Firebase Analytics |
+| Colectează date de identificare a dispozitivului? | Nu |
+| Colectează date de performanță a aplicației? | Nu |
 
 ## Clasificare conținut
 
@@ -101,7 +101,7 @@ Politica este disponibilă în aplicație. Pentru publicarea în Google Play tre
 
 | Câmp | Detalii |
 |---|---|
-| Email dezvoltator | De completat direct în Google Play Console |
+| Email dezvoltator | contact@didactiv.ro |
 | Adresă website | De publicat la un URL dedicat Slove înainte de trimiterea în Google Play |
 | Adresă fizică | — (creator independent, nu e necesară publicarea) |
 
@@ -133,9 +133,14 @@ incluse în APK/AAB.
 Linkurile externe se deschid în browserul sistemului (către dexonline.ro
 pentru referințe DOOM). Nu există WebView-uri în aplicație.
 
-Progresul de învățare este local. Firebase Analytics înregistrează deschiderea
-unui joc, finalizarea lui (scor și durată) și abandonarea, împreună cu
-identificatorul fix al jocului și date tehnice despre instalare, aplicație și
-dispozitiv. Nu se colectează răspunsuri, texte introduse sau date personale.
+Progresul de învățare și utilizarea jocurilor sunt locale. Aplicația nu
+transmite răspunsuri, texte introduse, scoruri, progres, identificatori ai
+dispozitivului sau date personale.
 
 Nu sunt declarate permisiuni speciale. Linkurile externe (DOOM) se deschid în browserul sistemului fără permisiuni suplimentare.
+
+Aplicația poate descărca o versiune mai nouă a conținutului lingvistic dintr-un
+serviciu static (Cloudflare Pages) pentru a corecta sau adăuga exerciții fără o
+nouă lansare. Descărcarea este strict unidirecțională: aplicația primește
+conținut și nu trimite progres, răspunsuri sau date personale; nu este necesar
+un cont și nu se afișează o solicitare de consimțământ suplimentar.

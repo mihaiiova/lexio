@@ -26,7 +26,7 @@ Cele patru jocuri te provoacă în moduri diferite:
 ### Ce face Slove special
 
 - **Design tipografic.** Interfața pune textul în prim-plan, cu fonturi atent alese și spațiere generoasă. Fără aglomerație vizuală, fără distrageri.
-- **Jocuri offline.** Toate exercițiile și fonturile sunt incluse în aplicație. Poți juca fără conexiune la internet.
+- **Jocuri offline.** Toate exercițiile și fonturile sunt incluse în aplicație, astfel încât poți juca fără conexiune la internet. Conținutul poate fi actualizat automat când ești online (fără cont și fără a trimite datele tale).
 - **Fără conturi, fără rețele sociale.** Niciun fel de autentificare. Progresul tău rămâne pe dispozitivul tău.
 - **Fără reclame, fără achiziții în aplicație.** O experiență completă, fără microtranzacții sau conținut blocat.
 - **Conținut atent alcătuit.** Exercițiile includ explicații și referințe către DOOM și surse normative actuale.
@@ -57,12 +57,14 @@ Română (intreaga aplicație este în limba română)
 ## Confidențialitate
 Politica de confidențialitate este disponibilă în aplicație. Pentru publicarea în App Store trebuie furnizat și un URL public.
 
-Slove folosește Firebase Analytics, fără nume sau cont, pentru a înregistra ce joc este deschis, finalizat (scor și durată) sau abandonat. Firebase poate procesa un identificator al instalării și date tehnice despre aplicație și dispozitiv. Răspunsurile, textele introduse și progresul de învățare rămân exclusiv pe dispozitiv.
+Slove nu urmărește utilizarea, nu folosește reclame, conturi sau identificatori de publicitate. Răspunsurile, scorurile, textele introduse și progresul de învățare rămân exclusiv pe dispozitiv.
+
+Aplicația poate descărca o versiune mai nouă a conținutului lingvistic dintr-un serviciu static (Cloudflare Pages). Descărcarea este unidirecțională — primește conținut, nu trimite progres, răspunsuri sau date personale — și nu necesită cont sau consimțământ suplimentar.
 
 ### Etichetele App Privacy
 - **Date asociate cu tine:** Niciuna — aplicația nu are conturi
 - **Date utilizate pentru urmărirea ta:** Niciuna
-- **Date neasociate cu tine:** Interacțiuni cu produsul, identificator al dispozitivului/instalării și date tehnice de diagnostic
+- **Date necolectate:** Nu sunt colectate date despre utilizarea produsului, dispozitiv sau diagnostic
 
 ## Website
 De publicat la un URL dedicat Slove înainte de trimiterea în App Store.

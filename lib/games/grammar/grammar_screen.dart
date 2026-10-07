@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../analytics/game_session_analytics.dart';
 import '../../design/colors.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
@@ -12,6 +11,7 @@ import '../../design/components/lexio_answer_button.dart';
 import '../../design/components/lexio_feedback.dart';
 import '../../design/components/lexio_feedback_screen.dart';
 import '../../progress/user_progress.dart';
+import '../../content/content_runtime.dart';
 import 'grammar_content.dart';
 import 'grammar_game.dart';
 import 'widgets/grammar_summary.dart';
@@ -42,7 +42,6 @@ class _GrammarScreenState extends State<GrammarScreen>
   bool _showCorrectFlash = false;
   Key _flashKey = UniqueKey();
   ProgressRepository? _progress;
-  final GameSessionAnalytics _session = GameSessionAnalytics('grammar');
 
   @override
   void initState() {
@@ -53,7 +52,6 @@ class _GrammarScreenState extends State<GrammarScreen>
       _state = GrammarGameState(exercises: exercises);
       _progress = widget.progressRepository;
       _isLoading = false;
-      if (exercises.isNotEmpty) _session.start();
     } else {
       _init();
     }
@@ -63,24 +61,21 @@ class _GrammarScreenState extends State<GrammarScreen>
   void dispose() {
     unawaited(_progress?.flush());
     WidgetsBinding.instance.removeObserver(this);
-    _session.dispose();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _session.markResumed();
-    } else if (state == AppLifecycleState.paused ||
+    if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
       unawaited(_progress?.flush());
-      _session.markBackgrounded();
     }
   }
 
   Future<void> _init() async {
     try {
+      await ContentRuntime.activatePending();
       await GrammarContent.load();
       final progress =
           widget.progressRepository ?? await ProgressRepository.load();
@@ -94,7 +89,6 @@ class _GrammarScreenState extends State<GrammarScreen>
         _progress = progress;
         _isLoading = false;
       });
-      _session.start();
     } catch (e) {
       debugPrint('GrammarScreen: failed to load content: $e');
       if (!mounted) return;
@@ -144,16 +138,15 @@ class _GrammarScreenState extends State<GrammarScreen>
       _showingExplanation = false;
       _showCorrectFlash = false;
     });
-    if (updated.isFinished) {
-      _session.complete(updated.correctCount);
-    }
   }
 
   void _next() {
     _advance();
   }
 
-  void _playAgain() {
+  Future<void> _playAgain() async {
+    await ContentRuntime.activatePending();
+    if (!mounted) return;
     final suppliedExercises = widget.exercises;
     final exercises =
         suppliedExercises ??
@@ -168,7 +161,6 @@ class _GrammarScreenState extends State<GrammarScreen>
       _showCorrectFlash = false;
       _flashKey = UniqueKey();
     });
-    _session.start();
   }
 
   Widget _buildEmptyScreen() {

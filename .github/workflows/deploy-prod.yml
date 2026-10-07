@@ -1,8 +1,15 @@
 name: Deploy to production
 
 on:
-  push:
-    branches: [master]
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Mobile platform to release
+        required: true
+        type: choice
+        options:
+          - android
+          - ios
 
 permissions:
   contents: read
@@ -13,6 +20,7 @@ concurrency:
 
 jobs:
   analyze-and-test:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,6 +33,7 @@ jobs:
       - run: flutter test
 
   android:
+    if: inputs.platform == 'android'
     needs: analyze-and-test
     runs-on: ubuntu-latest
     environment: Prod
@@ -60,7 +69,9 @@ jobs:
       - run: flutter pub get
 
       - name: Build AAB
-        run: flutter build appbundle --release --build-number=$(date +%s)
+        env:
+          CONTENT_PAGES_URL: ${{ vars.CONTENT_PAGES_URL }}
+        run: flutter build appbundle --release --build-number=$(date +%s) --dart-define="CONTENT_BASE_URL=$CONTENT_PAGES_URL"
 
       - name: Upload to Play production
         uses: r0adkll/upload-google-play@v1
@@ -73,6 +84,7 @@ jobs:
           changesNotSentForReview: true
 
   ios:
+    if: inputs.platform == 'ios'
     needs: analyze-and-test
     runs-on: macos-latest
     environment: Prod
@@ -172,7 +184,9 @@ jobs:
           EOF
 
       - name: Build IPA
-        run: flutter build ipa --release --build-number=${{ github.run_id }} --export-options-plist=ios/Runner/ExportOptions.plist
+        env:
+          CONTENT_PAGES_URL: ${{ vars.CONTENT_PAGES_URL }}
+        run: flutter build ipa --release --build-number=${{ github.run_id }} --dart-define="CONTENT_BASE_URL=$CONTENT_PAGES_URL" --export-options-plist=ios/Runner/ExportOptions.plist
 
       - name: Upload to App Store Connect
         env:

@@ -13,6 +13,7 @@ final class SpotMistake {
   final String explanation;
   final String category;
   final String topic;
+  final String? notionIdOverride;
   final String? doomWord;
   final String? doomDefinition;
   final String? hyphenationPairId;
@@ -26,6 +27,7 @@ final class SpotMistake {
     required this.explanation,
     required this.category,
     required this.topic,
+    this.notionIdOverride,
     this.doomWord,
     this.doomDefinition,
     this.hyphenationPairId,
@@ -33,6 +35,8 @@ final class SpotMistake {
   });
 
   String get notionId {
+    final explicit = notionIdOverride;
+    if (explicit != null) return explicit;
     if (commonErrorPairIndex != null) {
       return 'gp$commonErrorPairIndex';
     }
@@ -53,6 +57,7 @@ final class SpotMistake {
       explanation: json['explanation'] as String,
       category: json['category'] as String,
       topic: json['topic'] as String,
+      notionIdOverride: json['notionId'] as String?,
       doomWord: json['doomWord'] as String?,
       doomDefinition: json['doomDefinition'] as String?,
       hyphenationPairId: json['hyphenationPairId'] as String?,
@@ -63,6 +68,7 @@ final class SpotMistake {
   Map<String, dynamic> toJson() => {
     'wordIndex': wordIndex,
     'wordCount': wordCount,
+    'notionId': notionId,
     'token': token,
     'replacement': replacement,
     'explanation': explanation,
@@ -162,10 +168,18 @@ final class SpotContent {
       'lib/content/spot_texts.json',
     );
     final jsonList = json.decode(jsonString) as List<dynamic>;
-    _cached = jsonList
+    _cached = parse(jsonList);
+    return _cached!;
+  }
+
+  static List<SpotText> parse(List<dynamic> jsonList) {
+    return jsonList
         .map((item) => SpotText.fromJson(item as Map<String, dynamic>))
         .toList();
-    return _cached!;
+  }
+
+  static void seed(List<SpotText> texts) {
+    _cached = List<SpotText>.from(texts);
   }
 
   static Set<String> distinctNotionIds() =>

@@ -31,7 +31,6 @@
 - [x] Pin Flutter SDK version and verify release builds
 - [x] Spot full-flow integration test coverage
 - [x] Refresh project documentation (README, ROADMAP, release report)
-- [ ] Check Firebase Analytics events — [#33](https://github.com/mihaiiova/lexio/issues/33)
 - [ ] Review "Confidențialitate" footer wording — [#32](https://github.com/mihaiiova/lexio/issues/32)
 - [ ] Smoke-test on real devices — [#25](https://github.com/mihaiiova/lexio/issues/25)
 - [ ] Test signed TestFlight and Play Store builds — [#29](https://github.com/mihaiiova/lexio/issues/29)
@@ -43,6 +42,7 @@
 
 ## v2.0 — Content Expansion
 
+- Offline-first remote content bundles — [#52](https://github.com/mihaiiova/lexio/issues/52)
 - [ ] Expand vocabulary to 200+ exercises
 - [ ] Expand idioms to 100+ expressions
 - [ ] Add Spot texts with new error categories
@@ -67,7 +67,9 @@
 These are explicitly out of scope:
 
 - Accounts / authentication
-- Cloud sync / backend (beyond simple progress export)
+- Cloud progress sync / remote progress storage (progress stays local; a
+  static content CDN is used only to deliver content, never to receive data)
+- Backend APIs, databases, or live per-exercise queries
 - Monetization / payments
 - Advertising and cross-app tracking
 - Social features (beyond simple sharing)
