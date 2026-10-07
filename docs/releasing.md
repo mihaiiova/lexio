@@ -144,8 +144,9 @@ etc.) before the first upload.
 1. Bump the `X.Y.Z` version in `pubspec.yaml` (build number is automatic).
 2. Merge `staging` → `master`. In GitHub Actions → **Deploy to production**,
    click **Run workflow**, choose `master` and select one platform:
-   - **android**: uploads the AAB to the Play production track. Check Play
-     Console → Publishing overview and send pending changes for review.
+   - **android**: uploads the AAB as a draft on the Play production track.
+     In Play Console, complete the release and submit pending changes for review.
+     CI does not publish it automatically.
    - **ios**: uploads the IPA to App Store Connect. Then submit the build for
      review there. Optionally promote it to TestFlight external testers.
 

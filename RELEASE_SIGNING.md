@@ -69,5 +69,5 @@ via `serviceAccountJsonPlainText`.
 2. Merge the tested release into `master`, then manually run **Deploy to
    production** from GitHub Actions on `master` with platform `android` for
    Play production or `ios` for App Store Connect. The platforms do not upload
-   together. Check Play Console → Publishing overview for changes requiring
-   submission for review.
+   together. The Play production upload creates a draft: finish the release
+   and submit it for review in Play Console.
