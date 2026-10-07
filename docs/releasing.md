@@ -29,12 +29,13 @@ Cloudflare Pages bundle while staying fully usable offline.
 1. Edit the canonical JSON files and commit them on a feature branch.
 2. Bump and regenerate the bundle: `python3 scripts/generate_content_bundle.py
    --bump` (the bumped `manifest.json` and immutable versioned snapshot are
-   committed for review). The production workflow injects the Pages base URL
+   committed for review). The content deployment workflow injects the Pages base URL
    when it publishes, so the committed manifest may have an empty `bundleUrl`.
 3. Open a PR; CI validates content and verifies the generated bundle is in sync.
-4. After merge to `master`, the deploy workflow publishes the generated static
-   files (`manifest.json`, `content_bundle.json`, and the versioned snapshot)
-   to Cloudflare Pages. Cloudflare credentials live only in GitHub Actions
+4. After merge to `master`, manually run **Deploy exercise content** from
+   GitHub Actions on `master`. It publishes the generated static files
+   (`manifest.json`, `content_bundle.json`, and the versioned snapshot) to
+   Cloudflare Pages. Cloudflare credentials live only in GitHub Actions
    secrets. To roll back, restore the known-good canonical JSON while retaining
    the current manifest version, then run `generate_content_bundle.py --bump`
    and publish the newly numbered snapshot. Rollbacks must use a higher
@@ -67,29 +68,27 @@ ever edit the `X.Y.Z` part; leave `+N` alone.
 
 ## Branch-driven workflow
 
-Two long-lived branches drive releases:
+Two long-lived branches hold release candidates:
 
 | Branch | Purpose | Deploys to |
 |---|---|---|
 | `staging` | test builds for you and your testers | TestFlight (internal testers) + Play internal testing |
-| `master` | production | TestFlight + App Store Connect, Play production |
+| `master` | production candidate | Manually selected Play production or App Store Connect upload |
 
 Everyday flow:
 
 ```text
 feature/xxx ──PR──▶ staging ──push──▶ test builds go out automatically
                         │
-                        └──merge──▶ master ──push──▶ production goes out automatically
+                        └──merge──▶ master ──manual dispatch──▶ one production platform
 ```
 
 1. Work on a feature branch; open a PR into `staging`.
 2. Merge to `staging` → `deploy-staging.yml` runs and ships test builds to
    TestFlight and Play internal testing automatically.
-3. When happy, merge `staging` into `master` (push to `master`) →
-   `deploy-prod.yml` runs and ships to production automatically.
-
-> **Note:** pushing directly to `master` deploys to production — there is no
-> manual approval gate. Treat `master` as the live release.
+3. When happy, merge `staging` into `master`. From GitHub Actions, manually
+   run `deploy-prod.yml` on `master` and select `android` or `ios`.
+   Pushing to `master` alone does not publish mobile builds.
 
 ## CI workflows
 
@@ -97,7 +96,8 @@ feature/xxx ──PR──▶ staging ──push──▶ test builds go out aut
 |---|---|---|
 | `ci.yml` | push to feature branches, and all PRs | analyze + unit/widget tests + unsigned builds (sanity gate) |
 | `deploy-staging.yml` | push to `staging` | signed Android AAB → Play internal testing; signed IPA → TestFlight |
-| `deploy-prod.yml` | push to `master` | Cloudflare Pages content publish; signed Android AAB → Play production; signed IPA → App Store Connect |
+| `deploy-prod.yml` | manual dispatch on `master` | selected platform only: signed Android AAB → Play production, or signed IPA → App Store Connect |
+| `deploy-content.yml` | manual dispatch on `master` | exercise-content bundle → Cloudflare Pages |
 
 Signing secrets are configured per `RELEASE_SIGNING.md`; never commit them.
 
@@ -142,21 +142,19 @@ etc.) before the first upload.
 ## Shipping a full production release
 
 1. Bump the `X.Y.Z` version in `pubspec.yaml` (build number is automatic).
-2. Merge `staging` → `master` (or push to `master`). `deploy-prod.yml` builds
-   signed artifacts and:
-   - **Android**: uploads the AAB to the Play production track — live after
-     Google's automatic review.
-   - **iOS**: uploads the IPA to App Store Connect. Then, in App Store Connect,
-     click **Submit for Review** (the one remaining manual step — Apple requires
-     a human to submit and always reviews). Optionally promote to TestFlight
-     external testers at the same time.
+2. Merge `staging` → `master`. In GitHub Actions → **Deploy to production**,
+   click **Run workflow**, choose `master` and select one platform:
+   - **android**: uploads the AAB to the Play production track. Check Play
+     Console → Publishing overview and send pending changes for review.
+   - **ios**: uploads the IPA to App Store Connect. Then submit the build for
+     review there. Optionally promote it to TestFlight external testers.
 
 ## Store review notes
 
 - **App Store** reviews every production submission. Internal TestFlight builds
   skip review; external beta and production builds are reviewed.
-- **Google Play** publishes production updates without a manual review gate, but
-  the app must remain policy-compliant.
+- **Google Play** may require submitting pending changes for review in Play
+  Console after the CI upload; the app must remain policy-compliant.
 - Both stores require the version string and privacy disclosures (in
   `store_listings/`) to stay accurate — update them whenever data collection
   changes.
@@ -168,7 +166,9 @@ etc.) before the first upload.
   exist before Android uploads can run.
 - The `CLOUDFLARE_API_TOKEN` secret and `CLOUDFLARE_ACCOUNT_ID`,
   `CLOUDFLARE_PAGES_PROJECT`, and `CONTENT_PAGES_URL` repository variables must
-  be configured before production content publishing runs.
+  be configured only before the separate exercise-content deployment runs.
+  Mobile releases use bundled content without them; optionally set
+  `CONTENT_PAGES_URL` to enable remote content refresh in mobile builds.
 
 ## Related docs
 
