@@ -80,7 +80,7 @@ jobs:
           packageName: com.mihaiiova.lexio
           releaseFiles: build/app/outputs/bundle/release/*.aab
           track: production
-          status: completed
+          status: draft
 
   ios:
     if: inputs.platform == 'ios'
