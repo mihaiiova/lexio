@@ -81,7 +81,6 @@ jobs:
           releaseFiles: build/app/outputs/bundle/release/*.aab
           track: production
           status: completed
-          changesNotSentForReview: true
 
   ios:
     if: inputs.platform == 'ios'
