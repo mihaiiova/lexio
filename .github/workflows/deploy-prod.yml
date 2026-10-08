@@ -36,6 +36,9 @@ jobs:
     if: inputs.platform == 'android'
     needs: analyze-and-test
     runs-on: ubuntu-latest
+    concurrency:
+      group: play-version-code
+      cancel-in-progress: false
     environment: Prod
     steps:
       - uses: actions/checkout@v4
@@ -71,7 +74,7 @@ jobs:
       - name: Build AAB
         env:
           CONTENT_PAGES_URL: ${{ vars.CONTENT_PAGES_URL }}
-        run: flutter build appbundle --release --build-number=$(date +%s) --dart-define="CONTENT_BASE_URL=$CONTENT_PAGES_URL"
+        run: flutter build appbundle --release --build-number="$(bash scripts/android_version_code.sh)" --dart-define="CONTENT_BASE_URL=$CONTENT_PAGES_URL"
 
       - name: Upload to Play production
         uses: r0adkll/upload-google-play@v1

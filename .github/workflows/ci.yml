@@ -18,6 +18,8 @@ jobs:
       - run: flutter analyze
       - name: Run unit and widget tests
         run: flutter test
+      - name: Check Android version-code calculation
+        run: bash scripts/test_android_version_code.sh
       - name: Validate content
         run: python3 scripts/validate_content.py
       - name: Verify content bundle is in sync
