@@ -27,6 +27,9 @@ jobs:
   android:
     needs: analyze-and-test
     runs-on: ubuntu-latest
+    concurrency:
+      group: play-version-code
+      cancel-in-progress: false
     environment: Prod
     steps:
       - uses: actions/checkout@v4
@@ -60,7 +63,7 @@ jobs:
       - run: flutter pub get
 
       - name: Build AAB
-        run: flutter build appbundle --release --build-number=$(date +%s)
+        run: flutter build appbundle --release --build-number="$(bash scripts/android_version_code.sh)"
 
       - name: Upload to Play internal testing
         uses: r0adkll/upload-google-play@v1
