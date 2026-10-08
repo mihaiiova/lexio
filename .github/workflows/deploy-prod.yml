@@ -1,8 +1,15 @@
 name: Deploy to production
 
 on:
-  push:
-    branches: [master]
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Mobile platform to release
+        required: true
+        type: choice
+        options:
+          - android
+          - ios
 
 permissions:
   contents: read
@@ -13,6 +20,7 @@ concurrency:
 
 jobs:
   analyze-and-test:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,30 +32,13 @@ jobs:
       - run: flutter analyze
       - run: flutter test
 
-  content-pages:
-    needs: analyze-and-test
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    env:
-      CONTENT_PAGES_URL: ${{ vars.CONTENT_PAGES_URL }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Generate production content manifest
-        run: |
-          test -n "$CONTENT_PAGES_URL"
-          python3 scripts/generate_content_bundle.py --base-url "$CONTENT_PAGES_URL"
-      - name: Publish content to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
-          directory: content_public
-
   android:
+    if: inputs.platform == 'android'
     needs: analyze-and-test
     runs-on: ubuntu-latest
+    concurrency:
+      group: play-version-code
+      cancel-in-progress: false
     environment: Prod
     steps:
       - uses: actions/checkout@v4
@@ -81,7 +72,9 @@ jobs:
       - run: flutter pub get
 
       - name: Build AAB
-        run: flutter build appbundle --release --build-number=$(date +%s) --dart-define=CONTENT_BASE_URL=${{ vars.CONTENT_PAGES_URL }}
+        env:
+          CONTENT_PAGES_URL: ${{ vars.CONTENT_PAGES_URL }}
+        run: flutter build appbundle --release --build-number="$(bash scripts/android_version_code.sh)" --dart-define="CONTENT_BASE_URL=$CONTENT_PAGES_URL"
 
       - name: Upload to Play production
         uses: r0adkll/upload-google-play@v1
@@ -90,10 +83,10 @@ jobs:
           packageName: com.mihaiiova.lexio
           releaseFiles: build/app/outputs/bundle/release/*.aab
           track: production
-          status: completed
-          changesNotSentForReview: true
+          status: draft
 
   ios:
+    if: inputs.platform == 'ios'
     needs: analyze-and-test
     runs-on: macos-latest
     environment: Prod
@@ -193,7 +186,9 @@ jobs:
           EOF
 
       - name: Build IPA
-        run: flutter build ipa --release --build-number=${{ github.run_id }} --dart-define=CONTENT_BASE_URL=${{ vars.CONTENT_PAGES_URL }} --export-options-plist=ios/Runner/ExportOptions.plist
+        env:
+          CONTENT_PAGES_URL: ${{ vars.CONTENT_PAGES_URL }}
+        run: flutter build ipa --release --build-number=${{ github.run_id }} --dart-define="CONTENT_BASE_URL=$CONTENT_PAGES_URL" --export-options-plist=ios/Runner/ExportOptions.plist
 
       - name: Upload to App Store Connect
         env:
