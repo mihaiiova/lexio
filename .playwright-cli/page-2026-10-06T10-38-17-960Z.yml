@@ -1,0 +1,93 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link "Slove — pagina principală" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e5]: Slove
+  - main [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - heading "Joacă-te cu limba română." [level=1] [ref=e9]
+        - paragraph [ref=e10]: Patru jocuri scurte pentru a testa și exersa limba română, într-un ritm al tău.
+        - generic "Disponibilitate aplicație" [ref=e11]:
+          - generic [ref=e12]: App Store · În curând
+          - generic [ref=e13]: Google Play · În curând
+          - generic [ref=e14]: Linkurile către magazine vor fi adăugate când aplicația va fi disponibilă.
+      - img "Ecranul principal Slove cu lista de jocuri" [ref=e19]
+    - region "Un exercițiu scurt poate fi suficient." [ref=e20]:
+      - heading "Un exercițiu scurt poate fi suficient." [level=2] [ref=e22]
+      - generic [ref=e23]:
+        - paragraph [ref=e24]: Slove aduce gramatica, vocabularul, expresiile și atenția la detalii într-o formă simplă. Alege un joc, răspunde, apoi continuă când ai chef.
+        - paragraph [ref=e25]: Pentru oricine vrea să se apropie de limba română — fără presiune și fără cont.
+    - region "Jocurile Slove" [ref=e26]:
+      - heading "Jocurile Slove" [level=2] [ref=e28]
+      - generic [ref=e29]:
+        - article [ref=e30]:
+          - generic [ref=e31]: "01"
+          - heading "Găsește greșeala" [level=3] [ref=e32]
+          - paragraph [ref=e33]: Caută greșelile dintr-un text înainte să expire cele 60 de secunde.
+        - article [ref=e34]:
+          - generic [ref=e35]: "02"
+          - heading "Corect sau greșit?" [level=3] [ref=e36]
+          - paragraph [ref=e37]: Alege varianta corectă și verifică-ți intuiția gramaticală.
+        - article [ref=e38]:
+          - generic [ref=e39]: "03"
+          - heading "Ce înseamnă?" [level=3] [ref=e40]
+          - paragraph [ref=e41]: Găsește definiția potrivită pentru un cuvânt și descoperă sensuri noi.
+        - article [ref=e42]:
+          - generic [ref=e43]: "04"
+          - heading "Vorba vine" [level=3] [ref=e44]
+          - paragraph [ref=e45]: Descoperă sensul expresiilor românești în contexte ușor de recunoscut.
+    - region "Textul este în centru." [ref=e46]:
+      - heading "Textul este în centru." [level=2] [ref=e48]
+      - generic [ref=e49]:
+        - figure "Găsește greșeala" [ref=e50]:
+          - img "Ecran Slove pentru jocul Găsește greșeala" [ref=e54]
+          - generic [ref=e55]: Găsește greșeala
+        - figure "Corect sau greșit?" [ref=e56]:
+          - img "Ecran Slove pentru jocul Corect sau greșit?" [ref=e60]
+          - generic [ref=e61]: Corect sau greșit?
+        - figure "Ce înseamnă?" [ref=e62]:
+          - img "Ecran Slove pentru jocul Ce înseamnă?" [ref=e66]
+          - generic [ref=e67]: Ce înseamnă?
+        - figure "Vorba vine" [ref=e68]:
+          - img "Ecran Slove pentru jocul Vorba vine" [ref=e72]
+          - generic [ref=e73]: Vorba vine
+    - region "Fără cont. Fără presiune." [ref=e74]:
+      - heading "Fără cont. Fără presiune." [level=2] [ref=e76]
+      - generic [ref=e77]:
+        - paragraph [ref=e78]: Nu ai nevoie de cont pentru a începe. Progresul de învățare rămâne pe dispozitivul tău. Nu urmărim utilizarea jocurilor și nu afișăm reclame.
+        - paragraph [ref=e79]: Exercițiile sunt incluse în aplicație și funcționează offline. Când ești online, aplicația poate descărca actualizări de conținut dintr-un serviciu static, fără a trimite răspunsurile, scorurile sau progresul tău.
+    - region "Întrebări frecvente" [ref=e80]:
+      - heading "Întrebări frecvente" [level=2] [ref=e81]
+      - generic [ref=e82]:
+        - generic [ref=e83]:
+          - term [ref=e84]: Pot juca fără internet?
+          - definition [ref=e85]: Da. Jocurile și exercițiile incluse în aplicație funcționează offline. Actualizările de conținut se descarcă doar când ai conexiune.
+        - generic [ref=e86]:
+          - term [ref=e87]: Am nevoie de cont?
+          - definition [ref=e88]: Nu. Poți începe imediat, iar progresul de învățare rămâne pe dispozitivul tău.
+        - generic [ref=e89]:
+          - term [ref=e90]: Colectați răspunsuri sau date despre jocuri?
+          - definition [ref=e91]:
+            - text: Nu trimitem răspunsurile, scorurile sau progresul tău. Pentru a verifica actualizările, furnizorul de găzduire poate procesa informațiile tehnice obișnuite ale conexiunii, precum adresa IP.
+            - link "Citește politica de confidențialitate" [ref=e92] [cursor=pointer]:
+              - /url: /confidentialitate/slove/
+            - text: .
+        - generic [ref=e93]:
+          - term [ref=e94]: Cum semnalez o problemă sau o greșeală?
+          - definition [ref=e95]:
+            - text: Scrie-ne la
+            - link "contact@didactiv.ro" [ref=e96] [cursor=pointer]:
+              - /url: mailto:contact@didactiv.ro
+            - text: . Spune-ne ce joc foloseai și ce nu a mers; nu trimite date personale sensibile.
+  - contentinfo [ref=e97]:
+    - generic [ref=e98]:
+      - paragraph [ref=e99]:
+        - strong [ref=e100]: Didactiv
+        - text: — aplicații educative simple și atente.
+      - navigation "Linkuri legale" [ref=e101]:
+        - link "Confidențialitate Slove" [ref=e102] [cursor=pointer]:
+          - /url: /confidentialitate/slove/
+        - link "Termeni de utilizare" [ref=e103] [cursor=pointer]:
+          - /url: /termeni/
+      - paragraph [ref=e104]: © 2026 Didactiv
