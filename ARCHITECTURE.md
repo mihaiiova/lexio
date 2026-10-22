@@ -123,4 +123,10 @@ Fields vary by game type but follow the same array-of-objects pattern.
 - **No state management library** — simple StatefulWidget + setState
 - **No code generation** — manual fromJson/toJson
 - **No backend/database** — content refreshes from static files; progress stays local
+
+  **Narrow exception (issue #60):** a first-party Cloudflare Worker + D1
+  ingests consent-gated analytics. It stores only bounded, non-linkable-over-
+  time event identifiers and outcomes (no raw content), deletes an
+  installation's linked records on an authenticated request, and purges linked
+  records after 90 days into non-linkable aggregates. See `worker/README.md`.
 - **Content is offline-first** — bundled baseline plus an optional static bundle

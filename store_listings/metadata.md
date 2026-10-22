@@ -37,7 +37,7 @@
 | In-app purchases | Nu |
 | Advertising | Nu |
 | Account required | Nu |
-| Data collection | Nu — utilizarea și progresul rămân locale |
+| Data collection | Opțional — analiză anonimă dezactivată implicit; utilizarea și progresul rămân locale |
 | Unrestricted web access | Nu (doar linkuri DOOM) |
 | Gambling / simulated gambling | Nu |
 | Alcohol / tobacco / drug references | Nu |
@@ -47,7 +47,7 @@
 | Mature / suggestive themes | Nu |
 | Health / fitness data | Nu |
 | Location data | Nu |
-| User data transmitted | Nimic — aplicația nu transmite date de utilizare sau identificatori |
+| User data transmitted | Opțional — doar dacă analiza anonimă este activată, semnale limitate (identificator anonim de instalare, joc, exercițiu, corect/greșit) |
 | Encryption | Nu se aplică datelor de utilizare; linkurile DOOM folosesc HTTPS |
 | Children under 13 | Aplicația poate fi folosită de copii sub 13 ani |
 
@@ -55,15 +55,15 @@
 
 - **Data Linked to You**: None
 - **Data Used to Track You**: None
-- **Data Not Linked to You**: None
+- **Data Not Linked to You**: Optional anonymous analytics — installation id, game, exercise id/index, correct/wrong outcome (only after opt-in; off by default; no raw content or answers)
 
 ## Data Safety (Google Play)
 
-- **Data collected**: None
+- **Data collected**: Optional anonymous analytics (opt-in, off by default)
 - **Data shared**: None
-- **Data encrypted in transit**: Not applicable to app data
-- **Data can be deleted**: N/A (no user accounts)
-- **Data safety label**: No data collected
+- **Data encrypted in transit**: HTTPS for the optional analytics endpoint and DOOM links
+- **Data can be deleted**: Yes — from in-app Setări, the installation's linked records are deleted
+- **Data safety label**: Optional anonymous analytics, user can delete
 
 ## Export Compliance
 

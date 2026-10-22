@@ -57,14 +57,16 @@ Română (intreaga aplicație este în limba română)
 ## Confidențialitate
 Politica de confidențialitate este disponibilă în aplicație. Pentru publicarea în App Store trebuie furnizat și un URL public.
 
-Slove nu urmărește utilizarea, nu folosește reclame, conturi sau identificatori de publicitate. Răspunsurile, scorurile, textele introduse și progresul de învățare rămân exclusiv pe dispozitiv.
+Slove nu folosește reclame, conturi sau identificatori de publicitate și, în mod implicit, nu urmărește utilizarea. Răspunsurile, scorurile, textele introduse și progresul de învățare rămân exclusiv pe dispozitiv.
 
-Aplicația poate descărca o versiune mai nouă a conținutului lingvistic dintr-un serviciu static (Cloudflare Pages). Descărcarea este unidirecțională — primește conținut, nu trimite progres, răspunsuri sau date personale — și nu necesită cont sau consimțământ suplimentar.
+Analiza anonimă este opțională și dezactivată implicit. Dacă este activată de părinte sau tutore, pe proprie răspundere, aplicația trimite numai semnale limitate (identificator anonim de instalare, joc, exercițiu și corect/greșit) către infrastructura noastră proprie, fără textele exercițiilor sau răspunsurile. Utilizatorul poate dezactiva oricând analiza și poate șterge datele legate de această instalare din Setări.
+
+Aplicația poate descărca o versiune mai nouă a conținutului lingvistic dintr-un serviciu static (Cloudflare Pages). Descărcarea este unidirecțională — primește conținut, nu trimite progres, răspunsuri sau date personale — și nu necesită cont.
 
 ### Etichetele App Privacy
 - **Date asociate cu tine:** Niciuna — aplicația nu are conturi
 - **Date utilizate pentru urmărirea ta:** Niciuna
-- **Date necolectate:** Nu sunt colectate date despre utilizarea produsului, dispozitiv sau diagnostic
+- **Date necolectate:** Analiză anonimă opțională (identificator de instalare, joc, exercițiu, corect/greșit); dezactivată implicit, fără texte sau răspunsuri
 
 ## Website
 De publicat la un URL dedicat Slove înainte de trimiterea în App Store.
