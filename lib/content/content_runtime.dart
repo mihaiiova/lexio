@@ -14,6 +14,13 @@ final class ContentRuntime {
     await _service?.activatePending();
   }
 
+  /// Identifies the active content snapshot for analytics attribution.
+  ///
+  /// Returns `bundled` when no remote content service is installed or when
+  /// the bundled assets are the active snapshot.
+  static String get activeContentVersion =>
+      _service?.activeContentVersion ?? 'bundled';
+
   static void reset() {
     _service = null;
   }

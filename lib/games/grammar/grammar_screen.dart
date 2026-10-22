@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../analytics/analytics_event.dart';
+import '../../analytics/analytics_repository.dart';
 import '../../design/colors.dart';
 import '../../design/spacing.dart';
 import '../../design/typography.dart';
@@ -23,10 +25,12 @@ class GrammarScreen extends StatefulWidget {
     super.key,
     this.exercises,
     this.progressRepository,
+    this.analytics,
   });
 
   final List<GrammarExercise>? exercises;
   final ProgressRepository? progressRepository;
+  final AnalyticsRepository? analytics;
 
   @override
   State<GrammarScreen> createState() => _GrammarScreenState();
@@ -42,16 +46,20 @@ class _GrammarScreenState extends State<GrammarScreen>
   bool _showCorrectFlash = false;
   Key _flashKey = UniqueKey();
   ProgressRepository? _progress;
+  AnalyticsRepository? _analytics;
+  bool _roundEnded = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _analytics = widget.analytics;
     final exercises = widget.exercises;
     if (exercises != null) {
       _state = GrammarGameState(exercises: exercises);
       _progress = widget.progressRepository;
       _isLoading = false;
+      unawaited(_startRoundAnalytics());
     } else {
       _init();
     }
@@ -89,6 +97,7 @@ class _GrammarScreenState extends State<GrammarScreen>
         _progress = progress;
         _isLoading = false;
       });
+      unawaited(_startRoundAnalytics());
     } catch (e) {
       debugPrint('GrammarScreen: failed to load content: $e');
       if (!mounted) return;
@@ -110,6 +119,9 @@ class _GrammarScreenState extends State<GrammarScreen>
       HapticFeedback.heavyImpact();
     }
     final exercise = updated.currentExercise;
+    unawaited(
+      _itemAnswered(exercise, updated.currentIndex, isRight),
+    );
     _progress?.recordAnswer(
       gameId: 'grammar',
       notionId: exercise.notionId,
@@ -138,13 +150,80 @@ class _GrammarScreenState extends State<GrammarScreen>
       _showingExplanation = false;
       _showCorrectFlash = false;
     });
+    if (updated.isFinished) {
+      unawaited(_finishRound(AnalyticsRoundEndReason.completed));
+    } else {
+      unawaited(_itemShown(updated.currentExercise, updated.currentIndex));
+    }
   }
 
   void _next() {
     _advance();
   }
 
+  Future<void> _startRoundAnalytics() async {
+    _roundEnded = false;
+    final analytics = _analytics;
+    if (analytics == null) return;
+    try {
+      await analytics.reconcileInterruptedRound(gameId: 'grammar');
+      await analytics.startRound(
+        gameId: 'grammar',
+        contentVersion: ContentRuntime.activeContentVersion,
+      );
+      final state = _state;
+      if (state == null || state.exercises.isEmpty) return;
+      await analytics.itemShown(
+        itemId: state.currentExercise.notionId,
+        itemIndex: state.currentIndex,
+      );
+    } catch (_) {
+      // Analytics must never block or break gameplay.
+    }
+  }
+
+  Future<void> _itemShown(GrammarExercise exercise, int index) async {
+    final analytics = _analytics;
+    if (analytics == null) return;
+    try {
+      await analytics.itemShown(itemId: exercise.notionId, itemIndex: index);
+    } catch (_) {
+      // Analytics must never block or break gameplay.
+    }
+  }
+
+  Future<void> _itemAnswered(
+    GrammarExercise exercise,
+    int index,
+    bool isRight,
+  ) async {
+    final analytics = _analytics;
+    if (analytics == null) return;
+    try {
+      await analytics.itemAnswered(
+        itemId: exercise.notionId,
+        itemIndex: index,
+        outcome: isRight ? AnalyticsOutcome.correct : AnalyticsOutcome.wrong,
+      );
+    } catch (_) {
+      // Analytics must never block or break gameplay.
+    }
+  }
+
+  Future<void> _finishRound(AnalyticsRoundEndReason reason) async {
+    if (_roundEnded) return;
+    _roundEnded = true;
+    final analytics = _analytics;
+    if (analytics == null) return;
+    try {
+      await analytics.endRound(reason: reason);
+    } catch (_) {
+      // Analytics must never block or break gameplay.
+    }
+  }
+
   Future<void> _playAgain() async {
+    await _finishRound(AnalyticsRoundEndReason.restart);
     await ContentRuntime.activatePending();
     if (!mounted) return;
     final suppliedExercises = widget.exercises;
@@ -161,6 +240,7 @@ class _GrammarScreenState extends State<GrammarScreen>
       _showCorrectFlash = false;
       _flashKey = UniqueKey();
     });
+    await _startRoundAnalytics();
   }
 
   Widget _buildEmptyScreen() {
@@ -239,15 +319,22 @@ class _GrammarScreenState extends State<GrammarScreen>
       );
     }
 
-    return Scaffold(
-      backgroundColor: LexioColors.surface,
-      appBar: AppBar(
-        leading: const BackButton(),
-        title: _buildProgressBar(state),
-        titleSpacing: 0,
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          unawaited(_finishRound(AnalyticsRoundEndReason.userBack));
+        }
+      },
+      child: Scaffold(
         backgroundColor: LexioColors.surface,
+        appBar: AppBar(
+          leading: const BackButton(),
+          title: _buildProgressBar(state),
+          titleSpacing: 0,
+          backgroundColor: LexioColors.surface,
+        ),
+        body: _buildBody(),
       ),
-      body: _buildBody(),
     );
   }
 

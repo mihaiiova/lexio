@@ -136,12 +136,20 @@ final class ContentBundleService {
 
   ContentBundle? _active;
   ContentBundle? _pending;
+  int? _activeVersion;
+  int? _pendingVersion;
 
   ContentBundle get activeBundle => _active!;
   ContentBundle? get pendingBundle => _pending;
 
+  /// Human-readable version of the active snapshot (`bundled` when the
+  /// bundled assets are active).
+  String get activeContentVersion => _activeVersion?.toString() ?? 'bundled';
+
   Future<ContentBundle> start() async {
-    _active = await _loadCachedOrBundled();
+    final (bundle, version) = await _loadCachedOrBundled();
+    _active = bundle;
+    _activeVersion = version;
     _active!.apply();
     return _active!;
   }
@@ -176,6 +184,7 @@ final class ContentBundleService {
         CachedContent(version: manifest.contentVersion, bundle: bundleRaw),
       );
       _pending = bundle;
+      _pendingVersion = manifest.contentVersion;
       return bundle;
     } catch (_) {
       // Failed, malformed, or incompatible update: leave the active snapshot
@@ -188,21 +197,23 @@ final class ContentBundleService {
     final pending = _pending;
     if (pending != null) {
       _active = pending;
+      _activeVersion = _pendingVersion;
       _pending = null;
+      _pendingVersion = null;
       pending.apply();
     }
     return _active!;
   }
 
-  Future<ContentBundle> _loadCachedOrBundled() async {
+  Future<(ContentBundle, int?)> _loadCachedOrBundled() async {
     try {
       final cached = await cache.read();
       if (cached != null) {
-        return ContentBundle.fromString(cached.bundle);
+        return (ContentBundle.fromString(cached.bundle), cached.version);
       }
     } catch (_) {
       // Corrupt cache: fall through to bundled content.
     }
-    return ContentBundle.loadBundled();
+    return (await ContentBundle.loadBundled(), null);
   }
 }
