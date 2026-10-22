@@ -357,7 +357,7 @@ final class AnalyticsRepository {
     final events = _queue.drain();
     if (events.isEmpty) return;
     try {
-      await _transport.sendEvents(events);
+      await _transport.sendEvents(events, deletionSecret: _consent.deletionSecret);
     } catch (_) {
       for (final event in events) {
         _queue.add(event);

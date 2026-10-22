@@ -244,7 +244,7 @@ final class _FakeTransport implements AnalyticsTransport {
       sentBatches.expand((batch) => batch).toList();
 
   @override
-  Future<void> sendEvents(List<AnalyticsEvent> events) async {
+  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {
     sentBatches.add(events);
   }
 

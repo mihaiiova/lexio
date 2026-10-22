@@ -419,7 +419,7 @@ final class _FakeTransport implements AnalyticsTransport {
   int deleteFailures = 0;
 
   @override
-  Future<void> sendEvents(List<AnalyticsEvent> events) async {
+  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {
     if (sendFailures > 0) {
       sendFailures--;
       throw Exception('send failed');

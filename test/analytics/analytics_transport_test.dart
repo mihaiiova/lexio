@@ -59,6 +59,24 @@ void main() {
       expect(transport.sendEvents([_event()]), throwsException);
     });
 
+    test('includes the deletion secret for first registration', () async {
+      late http.Request captured;
+      final client = MockClient((request) async {
+        captured = request;
+        return http.Response('{"ok":true}', 202);
+      });
+
+      final transport = HttpAnalyticsTransport(
+        baseUrl: 'https://analytics.example',
+        client: client,
+      );
+      await transport.sendEvents([_event()], deletionSecret: 'secret_1');
+
+      final body = jsonDecode(captured.body) as Map<String, dynamic>;
+      expect(body['deletionSecret'], 'secret_1');
+      expect(body['events'], hasLength(1));
+    });
+
     test('posts an authenticated deletion request', () async {
       late http.Request captured;
       final client = MockClient((request) async {

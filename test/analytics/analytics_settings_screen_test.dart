@@ -100,7 +100,7 @@ final class _FakeTransport implements AnalyticsTransport {
   final List<Map<String, String>> deletions = [];
 
   @override
-  Future<void> sendEvents(List<AnalyticsEvent> events) async {}
+  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {}
 
   @override
   Future<void> requestDeletion({

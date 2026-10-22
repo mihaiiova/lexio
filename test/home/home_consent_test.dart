@@ -134,7 +134,7 @@ Future<AnalyticsRepository> _undecidedRepo() {
 
 final class _FakeTransport implements AnalyticsTransport {
   @override
-  Future<void> sendEvents(List<AnalyticsEvent> events) async {}
+  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {}
 
   @override
   Future<void> requestDeletion({

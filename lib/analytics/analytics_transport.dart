@@ -8,7 +8,7 @@ import 'analytics_event.dart';
 
 /// Sends bounded event batches and authenticated deletion requests.
 abstract class AnalyticsTransport {
-  Future<void> sendEvents(List<AnalyticsEvent> events);
+  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret});
 
   Future<void> requestDeletion({
     required String installationId,
@@ -34,7 +34,7 @@ final class HttpAnalyticsTransport implements AnalyticsTransport {
   final Duration timeout;
 
   @override
-  Future<void> sendEvents(List<AnalyticsEvent> events) async {
+  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {
     if (_baseUrl.isEmpty) {
       debugPrint(
         'AnalyticsTransport: ANALYTICS_ENDPOINT is unset; events are not sent.',
@@ -47,6 +47,7 @@ final class HttpAnalyticsTransport implements AnalyticsTransport {
           Uri.parse('$_baseUrl/v1/events'),
           headers: const {'content-type': 'application/json'},
           body: jsonEncode({
+            'deletionSecret': ?deletionSecret,
             'events': events.map((event) => event.toJson()).toList(),
           }),
         )
