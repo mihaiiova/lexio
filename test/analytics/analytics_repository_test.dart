@@ -317,6 +317,29 @@ void main() {
       expect(events.last.itemIndex, 0);
     });
 
+    test('endRound supports restart without marking the shown item wrong', () async {
+      final transport = _FakeTransport();
+      final repo = await AnalyticsRepository.load(
+        storage: _MemoryConsentStorage(),
+        pendingRoundStorage: _MemoryPendingRoundStorage(),
+        transport: transport,
+        random: Random(1),
+      );
+
+      await repo.enable();
+      await repo.startRound(gameId: 'grammar', contentVersion: 'bundled');
+      await repo.itemShown(itemId: 'n1', itemIndex: 0);
+      await repo.endRound(reason: AnalyticsRoundEndReason.restart);
+      await repo.flush();
+
+      final events = transport.sentBatches.expand((batch) => batch).toList();
+      expect(events.last.kind, AnalyticsEventKind.roundEnded);
+      expect(events.last.reason, AnalyticsRoundEndReason.restart);
+      expect(events.last.itemId, 'n1');
+      expect(events.last.itemIndex, 0);
+      expect(events.last.outcome, isNull);
+    });
+
     test('session methods no-op without consent', () async {
       final transport = _FakeTransport();
       final repo = await AnalyticsRepository.load(
