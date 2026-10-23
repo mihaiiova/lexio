@@ -157,14 +157,30 @@ characters, anything else is 400. Default window: the 7 UTC days ending at the
 start of tomorrow. Windows are at most 31 days, cannot start before the UTC day of
 the 90-day horizon or end after tomorrow, and rows outside the logical 90-day
 horizon (event or receipt time) are excluded even before the purge runs. More
-than 5000 matching events, or a body over 256000 bytes, returns 422 (narrow the
+than 5000 matching events, 500 distinct item/version groups, 500 distinct ending
+position/reason groups, or a body over 256000 bytes returns 422 (narrow the
 filters). Deleted installations disappear immediately. Credential rows are never
 read.
 
 Per session the report shows status, missing start, and `lastItem`/`lastIndex`
 with `lastItemEvidence`: `terminal` comes from the `round_ended` item; otherwise
 `observed` is the highest observed round index in the window (ties by item ID).
-Event order at equal timestamps is not used. `left` counts items departed without
+Event order at equal timestamps is not used. Per-game `summary.byItem` combines
+item counts across all matching sessions and installations by content version and
+exercise ID (not round position). `summary.endedAt` groups round endings by
+version, terminal item ID/index and reason; a missing terminal item is explicitly
+unknown, never guessed from the highest observed index. These summaries cover
+the full filtered window, independently of the 25-row session page, and are also
+scoped by the installation filter when present. They have no raw text or selected
+positions and are available only to the authenticated owner.
+
+For example, two opted-in installations that both answer exercise `g1`, version
+`v1`, once correctly and once incorrectly produce one item row with `shown: 2`,
+`resolved: 2`, `correct: 1`, `wrong: 1`. If their rounds end at indexes 0 and 2,
+there are two ending-position rows with count 1 each. Changing the session page
+does not change these totals; filtering to one installation restricts them.
+
+`left` counts items departed without
 resolution, proven by a higher shown index, the round end, or a terminal
 `unresolved` state (even when the item was shown before the window, without
 adding a shown count). The current item with no later evidence is

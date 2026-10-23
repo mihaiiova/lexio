@@ -77,6 +77,56 @@ it('summarizes retained four-game sessions with separate units, filters and stab
   }
 });
 
+it('aggregates item outcomes and terminal positions across installations independently of pagination', async () => {
+  const jwt = await token();
+  const timestamp = `${dateOf(1)}T12:00:00.000Z`;
+  let n = 0;
+  async function event(installation: string, session: string, kind: string, extra: Record<string, unknown> = {}) {
+    const e = {version: 'v1', item: 'shared', index: 0, outcome: null, reason: null, state: null, ...extra};
+    await env.DB.prepare(`INSERT INTO events(event_id, installation_id, session_id, game_id, content_version, timestamp_utc, kind, item_id, item_index, outcome, reason, item_state) VALUES (?, ?, ?, 'grammar', ?, ?, ?, ?, ?, ?, ?, ?)`)
+      .bind(`population-${n++}`, installation, session, e.version, timestamp, kind, e.item, e.index, e.outcome, e.reason, e.state).run();
+  }
+  for (const [installation, session, index, outcome] of [['install-a', 'a', 0, 'correct'], ['install-b', 'b', 2, 'wrong']] as const) {
+    await event(installation, session, 'round_started', {item: null, index: null});
+    await event(installation, session, 'item_shown', {index});
+    await event(installation, session, 'item_answered', {index, outcome});
+    await event(installation, session, 'item_resolved', {index});
+    await event(installation, session, 'round_ended', {index, reason: 'completed', state: 'resolved'});
+  }
+  await event('install-c', 'c', 'item_shown', {index: 1});
+  await event('install-c', 'c', 'round_ended', {index: 1, reason: 'user_back', state: 'unresolved'});
+  await event('install-d', 'd', 'item_shown', {version: 'v2', index: 1});
+  const first = await (await get('/api/recent?limit=1', jwt)).json() as any;
+  expect(first.sessions).toHaveLength(1);
+  expect(first.summary.grammar.byItem).toEqual(expect.arrayContaining([
+    expect.objectContaining({id: 'shared', version: 'v1', shown: 3, resolved: 2, left: 1, openUnresolved: 0, correct: 1, wrong: 1}),
+    expect.objectContaining({id: 'shared', version: 'v2', shown: 1, resolved: 0, left: 0, openUnresolved: 1}),
+  ]));
+  expect(first.summary.grammar.endedAt).toEqual(expect.arrayContaining([
+    {version: 'v1', itemId: 'shared', itemIndex: 0, reason: 'completed', count: 1},
+    {version: 'v1', itemId: 'shared', itemIndex: 2, reason: 'completed', count: 1},
+    {version: 'v1', itemId: 'shared', itemIndex: 1, reason: 'user_back', count: 1},
+  ]));
+  expect(first.summary.grammar.endedAt).toHaveLength(3);
+  const next = await (await get(`/api/recent?limit=1&cursor=${encodeURIComponent(first.nextCursor)}`, jwt)).json() as any;
+  expect(next.summary).toEqual(first.summary);
+  const one = await (await get('/api/recent?installation=install-b', jwt)).json() as any;
+  expect(one.summary.grammar.byItem).toEqual([
+    expect.objectContaining({id: 'shared', version: 'v1', shown: 1, resolved: 1, correct: 0, wrong: 1}),
+  ]);
+});
+
+it.each(['item_shown', 'round_ended'])('bounds %s population groups before returning a report', async (kind) => {
+  await env.DB.prepare(`WITH RECURSIVE n(i) AS (SELECT 1 UNION ALL SELECT i + 1 FROM n WHERE i < 501)
+    INSERT INTO events(event_id, installation_id, session_id, game_id, content_version, timestamp_utc, kind, item_id, item_index, reason, item_state)
+    SELECT 'group-' || i, 'inst-groups', 'round-' || i, 'grammar', 'v1', ?, ?,
+      CASE WHEN ? = 'item_shown' THEN 'item-' || i ELSE 'shared' END, i, ?, ? FROM n`)
+    .bind(`${dateOf(1)}T12:00:00.000Z`, kind, kind, kind === 'round_ended' ? 'user_back' : null, kind === 'round_ended' ? 'unresolved' : null).run();
+  const response = await get('/api/recent?limit=1', await token());
+  expect(response.status).toBe(422);
+  expect(await response.text()).not.toContain('inst-groups');
+});
+
 it('expires linked rows logically, honors deletion and labels missing starts and recovered interruptions', async () => {
   const jwt = await token();
   const now = Date.now();

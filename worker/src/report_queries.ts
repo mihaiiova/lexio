@@ -26,6 +26,13 @@ interface EventRow {
 }
 function counters() { return {started: 0, completed: 0, ended: 0, inProgress: 0, missingStart: 0, shown: 0, resolved: 0, left: 0, openUnresolved: 0, correct: 0, wrong: 0, attempts: 0, discoveries: 0, distinctWrong: 0}; }
 type Counters = ReturnType<typeof counters>;
+function itemCounters() {
+  return {shown: 0, resolved: 0, left: 0, openUnresolved: 0, correct: 0, wrong: 0, attempts: 0, discoveries: 0, distinctWrong: 0};
+}
+type ItemTotal = ReturnType<typeof itemCounters> & {id: string; version: string};
+interface EndingTotal {version: string; itemId: string | null; itemIndex: number | null; reason: string; count: number}
+type Summary = Counters & {endedByReason: Record<string, number>; byItem: ItemTotal[]; endedAt: EndingTotal[]};
+const maxSummaryGroups = 500;
 interface Item {
   id: string; index: number; terminalState: string | null; shown: number; resolved: number; left: number; openUnresolved: number;
   correct: number; wrong: number; attempts: number; discoveries: number; distinctWrong: number;
@@ -100,7 +107,9 @@ export async function recentReport(url: URL, env: Env): Promise<unknown> {
       }
     }
   }
-  const summary: Record<string, Counters & {endedByReason: Record<string, number>}> = {};
+  const summary: Record<string, Summary> = {};
+  const itemTotals = new Map<string, ItemTotal>();
+  const endingTotals = new Map<string, EndingTotal>();
   const sessions: Session[] = [];
   for (const {s, ended, terminal} of rounds.values()) {
     sessions.push(s);
@@ -121,9 +130,31 @@ export async function recentReport(url: URL, env: Env): Promise<unknown> {
     s.lastItem = latest?.id ?? null;
     s.lastIndex = latest?.index ?? null;
     s.lastItemEvidence = terminal ? 'terminal' : latest ? 'observed' : null;
-    const total = summary[s.game] ??= {...counters(), endedByReason: {}};
+    const total = summary[s.game] ??= {...counters(), endedByReason: {}, byItem: [], endedAt: []};
     for (const key of Object.keys(s.metrics) as (keyof Counters)[]) total[key] += s.metrics[key];
-    if (s.status !== 'in_progress') total.endedByReason[s.status] = (total.endedByReason[s.status] ?? 0) + 1;
+    for (const item of s.items) {
+      const key = JSON.stringify([s.game, s.version, item.id]);
+      let aggregate = itemTotals.get(key);
+      if (!aggregate) {
+        if (itemTotals.size >= maxSummaryGroups) throw new QueryError(422);
+        aggregate = {...itemCounters(), id: item.id, version: s.version};
+        itemTotals.set(key, aggregate);
+        total.byItem.push(aggregate);
+      }
+      for (const metric of Object.keys(itemCounters()) as (keyof ReturnType<typeof itemCounters>)[]) aggregate[metric] += item[metric];
+    }
+    if (ended) {
+      total.endedByReason[s.status] = (total.endedByReason[s.status] ?? 0) + 1;
+      const key = JSON.stringify([s.game, s.version, terminal?.id ?? null, terminal?.index ?? null, s.status]);
+      let aggregate = endingTotals.get(key);
+      if (!aggregate) {
+        if (endingTotals.size >= maxSummaryGroups) throw new QueryError(422);
+        aggregate = {version: s.version, itemId: terminal?.id ?? null, itemIndex: terminal?.index ?? null, reason: s.status, count: 0};
+        endingTotals.set(key, aggregate);
+        total.endedAt.push(aggregate);
+      }
+      aggregate.count++;
+    }
   }
   const sorted = sessions.sort((a,b) => sessionKey(a) < sessionKey(b) ? 1 : sessionKey(a) > sessionKey(b) ? -1 : 0);
   const eligible = cursor === null ? sorted : sorted.filter(s => sessionKey(s) < cursor!);

@@ -75,6 +75,20 @@ async function load(history = false, following = false) {
     for (const [game,m] of Object.entries(data.summary)) {
       const block = add(recent,'article',''); add(block,'h3',names[game] || 'Joc necunoscut'); metrics(block,m,game);
       for (const [reason,count] of Object.entries(m.endedByReason || {})) add(block,'p',(reasons[reason] || reasons.unknown) + ': ' + count);
+      const totals = add(block,'details','');
+      add(totals,'summary','Totaluri pe item — toate sesiunile filtrate');
+      for (const item of m.byItem || []) {
+        const row = add(totals,'section','');
+        add(row,'h4','Item: ' + item.id + ' · Versiune: ' + item.version);
+        metrics(row,item,game);
+      }
+      const endings = add(block,'details','');
+      add(endings,'summary','Unde se încheie rundele — toate sesiunile filtrate');
+      for (const ending of m.endedAt || []) {
+        add(endings,'p','Item: ' + (ending.itemId === null ? 'necunoscut' : ending.itemId) +
+          ' · Versiune: ' + ending.version + ' · Index: ' + (ending.itemIndex === null ? 'necunoscut' : ending.itemIndex) +
+          ' · ' + (reasons[ending.reason] || reasons.unknown) + ': ' + ending.count);
+      }
     }
     if (!data.sessions.length) add(recent,'p','Nu există sesiuni în interval.');
     for (const s of data.sessions) {

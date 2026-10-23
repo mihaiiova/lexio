@@ -68,6 +68,20 @@ test('pagination keeps filters and labels terminal-only unresolved items honestl
   expect(urls.at(-1)?.searchParams.get('game')).toBe('grammar');
   await expect(page.getByRole('button',{name:'Pagina următoare'})).toBeHidden();
 });
+test('population item totals and ending locations do not require paging through sessions', async ({page}) => {
+  await page.route('**/api/recent*', route => route.fulfill({json:{summary:{grammar:{...metrics,endedByReason:{user_back:2},
+    byItem:[{id:malicious,version:'v1',shown:3,resolved:1,left:2,openUnresolved:0,correct:1,wrong:0}],
+    endedAt:[{version:'v1',itemId:malicious,itemIndex:2,reason:'user_back',count:2}]}},sessions:[],nextCursor:null}}));
+  await page.goto('/private/report/');
+  await page.getByText('Totaluri pe item — toate sesiunile filtrate', {exact:true}).click();
+  await expect(page.getByRole('heading', {name:`Item: ${malicious} · Versiune: v1`})).toBeVisible();
+  await expect(page.getByText('Exerciții afișate: 3', {exact:true})).toBeVisible();
+  await page.getByText('Unde se încheie rundele — toate sesiunile filtrate', {exact:true}).click();
+  await expect(page.getByText(`Item: ${malicious} · Versiune: v1 · Index: 2 · Ieșire voluntară: 2`, {exact:true})).toBeVisible();
+  expect(await page.evaluate(() => (window as any).injected)).toBeUndefined();
+  await expect(page.locator('img')).toHaveCount(0);
+});
+
 test('history stays unpublished without a committed purge', async ({page}) => {
   await page.route('**/api/recent*', r => r.fulfill({json:{summary:{},sessions:[],nextCursor:null}}));
   await page.route('**/api/history', r => r.fulfill({json:{published:false,partial:true,buckets:[],weeks:[]}}));
