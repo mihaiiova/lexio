@@ -236,66 +236,25 @@ async function handleDelete(request: Request, env: Env): Promise<Response> {
   return jsonResponse({ deleted: true }, 200);
 }
 
-async function upsertAggregate(
-  env: Env,
-  bucket: string,
-  gameId: string,
-  kind: string,
-  count: number,
-): Promise<void> {
-  await env.DB.prepare(
-    `INSERT INTO aggregates (bucket, game_id, kind, count)
-     VALUES (?, ?, ?, ?)
-     ON CONFLICT(bucket, game_id, kind)
-     DO UPDATE SET count = count + excluded.count`,
-  )
-    .bind(bucket, gameId, kind, count)
-    .run();
-}
-
 export async function purgeExpired(env: Env): Promise<number> {
-  const cutoff = new Date(Date.now() - RETENTION_DAYS * 24 * 60 * 60 * 1000);
-  const cutoffIso = cutoff.toISOString();
-
-  const dayRows = await env.DB.prepare(
-    `SELECT game_id, kind, substr(timestamp_utc, 1, 10) AS day, COUNT(*) AS count, COUNT(DISTINCT installation_id) AS installations
-     FROM events
-     WHERE timestamp_utc < ?
-     GROUP BY game_id, kind, day`,
-  )
-    .bind(cutoffIso)
-    .all();
-
-  for (const row of dayRows.results) {
-    const count = Number(row.count);
-    if (Number(row.installations) >= MIN_AGGREGATE_INSTALLATIONS) {
-      await upsertAggregate(env, `day:${row.day}`, String(row.game_id), String(row.kind), count);
-    }
-  }
-
-  const weekRows = await env.DB.prepare(
-    `SELECT game_id, kind, strftime('%Y-W%W', timestamp_utc) AS week, COUNT(*) AS count, COUNT(DISTINCT installation_id) AS installations
-     FROM events
-     WHERE timestamp_utc < ?
-     GROUP BY game_id, kind, week`,
-  )
-    .bind(cutoffIso)
-    .all();
-
-  for (const row of weekRows.results) {
-    const count = Number(row.count);
-    if (Number(row.installations) >= MIN_AGGREGATE_INSTALLATIONS) {
-      await upsertAggregate(env, `week:${row.week}`, String(row.game_id), String(row.kind), count);
-    }
-  }
-
-  const deleted = await env.DB.prepare(
-    'DELETE FROM events WHERE timestamp_utc < ?',
-  )
-    .bind(cutoffIso)
-    .run();
-
-  return deleted.meta.changes;
+  const cutoff = new Date(Date.now() - RETENTION_DAYS * 86400000).toISOString();
+  const statements = [
+    ["'day:' || substr(timestamp_utc, 1, 10)", 'day'],
+    ["'week:' || strftime('%Y-W%W', timestamp_utc)", 'week'],
+  ].map(([bucket]) => env.DB.prepare(`
+    INSERT INTO aggregates (bucket, game_id, kind, count)
+    SELECT ${bucket}, game_id, kind, COUNT(*) FROM events
+    WHERE timestamp_utc < ? OR created_at < ?
+    GROUP BY 1, game_id, kind
+    HAVING COUNT(DISTINCT installation_id) >= ?
+    ON CONFLICT(bucket, game_id, kind) DO UPDATE SET count = count + excluded.count
+  `).bind(cutoff, cutoff, MIN_AGGREGATE_INSTALLATIONS));
+  // D1 batch is one transaction: a failure rolls back both counting and removal.
+  const results = await env.DB.batch([
+    ...statements,
+    env.DB.prepare('DELETE FROM events WHERE timestamp_utc < ? OR created_at < ?').bind(cutoff, cutoff),
+  ]);
+  return results[2].meta.changes;
 }
 
 export default {

@@ -252,6 +252,24 @@ describe('scheduled purge', () => {
     expect(await env.DB.prepare('SELECT COUNT(*) AS count FROM aggregates').first()).toMatchObject({count: 0});
   });
 
+  it('rolls back aggregates when deletion fails and retries without double counting', async () => {
+    const old = new Date(Date.now() - 100 * DAY_MS).toISOString();
+    for (let i = 0; i < 6; i++) {
+      await insertEvent(`atomic_${i}`, old);
+      await env.DB.prepare('UPDATE events SET installation_id = ? WHERE event_id = ?').bind(`inst_${i}`, `atomic_${i}`).run();
+    }
+    await env.DB.prepare("CREATE TRIGGER fail_purge BEFORE DELETE ON events BEGIN SELECT RAISE(ABORT, 'forced failure'); END").run();
+    try {
+      await expect(worker.scheduled({} as ScheduledEvent, env)).rejects.toThrow();
+      expect(await env.DB.prepare('SELECT COUNT(*) AS count FROM aggregates').first()).toMatchObject({count: 0});
+    } finally {
+      await env.DB.prepare('DROP TRIGGER fail_purge').run();
+    }
+    await Promise.all([worker.scheduled({} as ScheduledEvent, env), worker.scheduled({} as ScheduledEvent, env)]);
+    const counts = await env.DB.prepare('SELECT count FROM aggregates').all();
+    expect(counts.results.map(row => row.count)).toEqual([6, 6]);
+  });
+
   it('purges old linked events into non-linkable aggregates', async () => {
     const oldDay = new Date(Date.now() - 100 * DAY_MS).toISOString().slice(0, 10);
     for (let i = 0; i < 6; i++) {
