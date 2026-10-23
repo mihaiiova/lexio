@@ -106,7 +106,7 @@ class _IdiomsScreenState extends State<IdiomsScreen>
 
   void _answer(int optionIndex) {
     final state = _state;
-    if (state == null || state.hasAnswered) return;
+    if (state == null || state.hasAnswered || _roundEnded) return;
 
     final updated = state.answer(optionIndex);
     if (identical(updated, state)) return;
@@ -129,7 +129,7 @@ class _IdiomsScreenState extends State<IdiomsScreen>
       HapticFeedback.lightImpact();
       setState(() => _state = updated);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
+        if (!mounted || _roundEnded) return;
         final next = updated.next();
         setState(() => _state = next);
         _afterAdvance();
@@ -142,7 +142,7 @@ class _IdiomsScreenState extends State<IdiomsScreen>
 
   void _next() {
     final state = _state;
-    if (state == null) return;
+    if (state == null || _roundEnded) return;
     final next = state.next();
     setState(() => _state = next);
     _afterAdvance();
@@ -173,8 +173,9 @@ class _IdiomsScreenState extends State<IdiomsScreen>
   }
 
   void _endRound(AnalyticsRoundEndReason reason) {
-    if (!_roundStarted || _roundEnded) return;
+    if (_roundEnded) return;
     _roundEnded = true;
+    if (!_roundStarted) return;
     unawaited(widget.analytics?.endRound(reason: reason));
   }
 
@@ -194,8 +195,9 @@ class _IdiomsScreenState extends State<IdiomsScreen>
       if (!mounted ||
           _roundEnded ||
           _state!.isFinished ||
-          _state!.currentIndex != index)
+          _state!.currentIndex != index) {
         return;
+      }
       if (start) {
         _roundStarted = true;
         unawaited(

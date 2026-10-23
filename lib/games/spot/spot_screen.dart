@@ -97,8 +97,9 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     if (state == null ||
         state.isFinished ||
         state.texts.isEmpty ||
-        widget.mode != SpotGameMode.timed)
+        widget.mode != SpotGameMode.timed) {
       return;
+    }
     final updated = state.checkTimerExpiry(now: _now());
     if (identical(updated, state)) return;
     setState(() => _state = updated);
@@ -143,8 +144,9 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     _timer?.cancel();
     if (_state == null ||
         _state!.texts.isEmpty ||
-        widget.mode != SpotGameMode.timed)
+        widget.mode != SpotGameMode.timed) {
       return;
+    }
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _checkTimer());
   }
 
@@ -152,10 +154,10 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     if (_state == null ||
         _state!.isChecking ||
         _state!.isFinished ||
-        _state!.allMistakesFoundInCurrentText ||
         _roundEnded ||
-        _renderedIndex != _state!.currentTextIndex)
+        _renderedIndex != _state!.currentTextIndex) {
       return;
+    }
     if (widget.mode == SpotGameMode.timed &&
         _state!.remainingSecondsAt(_now()) == 0) {
       _checkTimer();
@@ -205,7 +207,14 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       _state = _state!.nextText(now: _now());
     });
     if (_state!.isFinished) {
-      _finish(_state!);
+      _finish(
+        _state!,
+        reason:
+            widget.mode == SpotGameMode.timed &&
+                _state!.remainingSecondsAt(_now()) == 0
+            ? AnalyticsRoundEndReason.timeout
+            : AnalyticsRoundEndReason.completed,
+      );
     } else {
       _scheduleShown();
     }
@@ -312,8 +321,9 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   }
 
   void _endRound(AnalyticsRoundEndReason reason) {
-    if (!_roundStarted || _roundEnded) return;
+    if (_roundEnded) return;
     _roundEnded = true;
+    if (!_roundStarted) return;
     unawaited(widget.analytics?.endRound(reason: reason));
   }
 
@@ -326,8 +336,9 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
           _roundEnded ||
           _state!.isFinished ||
           !identical(_state!.texts, state.texts) ||
-          _state!.currentTextIndex != index)
+          _state!.currentTextIndex != index) {
         return;
+      }
       _renderedIndex = index;
       if (start) {
         _roundStarted = true;
@@ -559,7 +570,9 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       }
 
       final tappable =
-          !state.isChecking && !state.allMistakesFoundInCurrentText;
+          !state.isChecking &&
+          (!state.isFoundMistakeWord(i) ||
+              !state.allMistakesFoundInCurrentText);
 
       builders.add(
         TextToken(

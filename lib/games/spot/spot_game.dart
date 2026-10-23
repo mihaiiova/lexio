@@ -222,8 +222,9 @@ final class SpotGameState {
   SpotGameState checkTimerExpiry({DateTime? now}) {
     if (isFinished ||
         texts.isEmpty ||
-        remainingSecondsAt(now ?? DateTime.now()) > 0)
+        remainingSecondsAt(now ?? DateTime.now()) > 0) {
       return this;
+    }
     if (isLastText) {
       return _copyWith(isFinished: true, frozenRemainingSeconds: 0);
     }

@@ -426,8 +426,9 @@ final class AnalyticsRepository {
         pending.lastShownItemId != itemId ||
         pending.lastShownItemIndex != itemIndex ||
         wordPosition < 0 ||
-        (newlyCorrect && isWrong))
+        (newlyCorrect && isWrong)) {
       return;
+    }
     final key = '$itemIndex:$wordPosition';
     final distinctWrong = isWrong && !pending.spotWrongPositions.contains(key);
     final resolves = resolvesItem && !pending.itemResolved;
@@ -466,8 +467,9 @@ final class AnalyticsRepository {
             pending.itemResolved ||
             pending.gameId != 'spot' ||
             pending.lastShownItemId != itemId ||
-            pending.lastShownItemIndex != itemIndex)
+            pending.lastShownItemIndex != itemIndex) {
           return;
+        }
         _pendingRound = pending.copyWith(
           itemResolved: true,
           lastActivityAtUtc: _clock().toUtc(),

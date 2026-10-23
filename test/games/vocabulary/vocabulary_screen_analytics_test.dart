@@ -57,17 +57,39 @@ void main() {
     },
   );
   for (final game in ['vocabulary', 'idioms']) {
-    Widget screen(AnalyticsRepository repo, {bool empty = false}) =>
-        game == 'vocabulary'
+    Widget screen(
+      AnalyticsRepository repo, {
+      bool empty = false,
+      bool two = false,
+    }) => game == 'vocabulary'
         ? VocabularyScreen(
-            exercises: empty ? const [] : const [exercise],
+            exercises: empty
+                ? const []
+                : [
+                    exercise,
+                    if (two)
+                      const VocabularyExercise(
+                        id: 'variant_b',
+                        notionIdOverride: 'shared',
+                        word: 'greu',
+                        partOfSpeech: 'adjectiv',
+                        definition: 'dificil',
+                        example: 'Este greu.',
+                        options: ['dificil', 'ușor'],
+                        correctOptionIndex: 0,
+                        explanation: 'Explicație',
+                        category: 'test',
+                        synonyms: [],
+                        difficulty: 1,
+                      ),
+                  ],
             analytics: repo,
           )
         : IdiomsScreen(
             exercises: empty
                 ? const []
-                : const [
-                    IdiomExercise(
+                : [
+                    const IdiomExercise(
                       id: 'variant_a',
                       notionIdOverride: 'shared',
                       expression: 'greu',
@@ -79,9 +101,103 @@ void main() {
                       category: 'test',
                       difficulty: 1,
                     ),
+                    if (two)
+                      const IdiomExercise(
+                        id: 'variant_b',
+                        notionIdOverride: 'shared',
+                        expression: 'greu',
+                        meaning: 'dificil',
+                        example: 'Este greu.',
+                        highlightedText: 'greu',
+                        options: ['dificil', 'ușor'],
+                        correctOptionIndex: 0,
+                        category: 'test',
+                        difficulty: 1,
+                      ),
                   ],
             analytics: repo,
           );
+
+    testWidgets(
+      '$game each rendered variant has one exposure, and interrupted answers are recovered coherently',
+      (tester) async {
+        final transport = RecordingAnalyticsTransport();
+        final storage = MemoryAnalyticsStorage();
+        final queue = MemoryAnalyticsStorage();
+        final repo = await analyticsRepository(
+          transport,
+          storage: storage,
+          queue: queue,
+        );
+        await tester.pumpWidget(
+          MaterialApp(theme: LexioTheme.light, home: screen(repo, two: true)),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('dificil'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('ușor'));
+        await tester.pumpAndSettle();
+        await repo.flush();
+        expect(
+          transport.events
+              .where((e) => e.kind == AnalyticsEventKind.itemShown)
+              .map((e) => e.itemId),
+          ['variant_a', 'variant_b'],
+        );
+        expect(
+          transport.events
+              .where((e) => e.kind == AnalyticsEventKind.itemAnswered)
+              .map((e) => e.outcome),
+          [AnalyticsOutcome.correct, AnalyticsOutcome.wrong],
+        );
+        await tester.pumpWidget(const SizedBox());
+        final recovered = await analyticsRepository(
+          transport,
+          storage: storage,
+          queue: queue,
+        );
+        await recovered.reconcileInterruptedRound();
+        await recovered.flush();
+        expect(
+          transport.events.last.reason,
+          AnalyticsRoundEndReason.inferredInterruption,
+        );
+        expect(transport.events.last.itemId, 'variant_b');
+        expect(transport.events.last.itemIndex, 1);
+        expect(transport.events.last.itemState, AnalyticsItemState.resolved);
+      },
+    );
+
+    testWidgets(
+      '$game popped before exposure callback never starts analytics',
+      (tester) async {
+        final transport = RecordingAnalyticsTransport();
+        final repo = await analyticsRepository(transport);
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Builder(
+              builder: (context) => TextButton(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) {
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => Navigator.of(context).pop(),
+                      );
+                      return screen(repo);
+                    },
+                  ),
+                ),
+                child: const Text('start'),
+              ),
+            ),
+          ),
+        );
+        await tester.tap(find.text('start'));
+        await tester.pumpAndSettle();
+        await repo.flush();
+        expect(transport.events, isEmpty);
+      },
+    );
 
     testWidgets(
       '$game wrong answer, rebuild, back and replay preserve lifecycle under active storage delay',

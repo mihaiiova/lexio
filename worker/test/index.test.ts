@@ -321,10 +321,47 @@ describe('scheduled purge', () => {
     await Promise.all([worker.scheduled({} as ScheduledEvent, env), worker.scheduled({} as ScheduledEvent, env)]);
     const rows = await env.DB.prepare("SELECT count, attempts, correct_discoveries, distinct_wrong_positions FROM aggregates WHERE scope = 'item'").all();
     expect(rows.results).toEqual([
-      {count: 6, attempts: 6, correct_discoveries: 2, distinct_wrong_positions: 4},
-      {count: 6, attempts: 6, correct_discoveries: 2, distinct_wrong_positions: 4},
+      {count: 6, attempts: 6, correct_discoveries: null, distinct_wrong_positions: null},
+      {count: 6, attempts: 6, correct_discoveries: null, distinct_wrong_positions: null},
     ]);
     expect(await env.DB.prepare('SELECT COUNT(*) AS n FROM events').first()).toMatchObject({n: 0});
+  });
+
+  it('requires five positive installations for each counter and keeps suppression through upserts', async () => {
+    const old = new Date(Date.now() - 100 * DAY_MS).toISOString();
+    const insert = async (id: string, installation: string, discovery: number, wrong: number) => {
+      await insertEvent(id, old, 'spot_attempt', 'spot');
+      await env.DB.prepare("UPDATE events SET installation_id = ?, attempt_delta = 1, correct_discovery_delta = ?, distinct_wrong_delta = ? WHERE event_id = ?")
+        .bind(installation, discovery, wrong, id).run();
+    };
+    for (let i = 0; i < 6; i++) {
+      await insert(`qualified_discovery_${i}`, `inst_${i}`, 1, 0);
+      await insert(`qualified_repeat_${i}`, `inst_${i}`, 1, 0);
+      if (i < 5) await insert(`qualified_wrong_${i}`, `inst_${i}`, 0, 1);
+    }
+    await worker.scheduled({} as ScheduledEvent, env);
+    let rows = await env.DB.prepare("SELECT attempts, correct_discoveries, distinct_wrong_positions FROM aggregates WHERE scope = 'item'").all();
+    expect(rows.results).toEqual([
+      {attempts: 17, correct_discoveries: 12, distinct_wrong_positions: 5},
+      {attempts: 17, correct_discoveries: 12, distinct_wrong_positions: 5},
+    ]);
+    // Six eligible installations, but repeated discoveries from just one do not qualify.
+    for (let i = 0; i < 6; i++) await insert(`later_${i}`, `inst_${i}`, 0, 0);
+    for (let i = 0; i < 8; i++) await insert(`one_contributor_${i}`, 'inst_0', 1, 0);
+    await worker.scheduled({} as ScheduledEvent, env);
+    rows = await env.DB.prepare("SELECT attempts, correct_discoveries, distinct_wrong_positions FROM aggregates WHERE scope = 'item'").all();
+    expect(rows.results).toEqual([
+      {attempts: 31, correct_discoveries: null, distinct_wrong_positions: null},
+      {attempts: 31, correct_discoveries: null, distinct_wrong_positions: null},
+    ]);
+    // Later eligible numerators must not convert an incomplete retained total into an exact one.
+    for (let i = 0; i < 5; i++) await insert(`final_${i}`, `inst_${i}`, 1, 0);
+    await Promise.all([worker.scheduled({} as ScheduledEvent, env), worker.scheduled({} as ScheduledEvent, env)]);
+    rows = await env.DB.prepare("SELECT attempts, correct_discoveries, distinct_wrong_positions FROM aggregates WHERE scope = 'item'").all();
+    expect(rows.results).toEqual([
+      {attempts: 36, correct_discoveries: null, distinct_wrong_positions: null},
+      {attempts: 36, correct_discoveries: null, distinct_wrong_positions: null},
+    ]);
   });
 
   it('suppresses many events from only one installation', async () => {

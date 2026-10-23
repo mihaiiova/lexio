@@ -239,6 +239,7 @@ async function handleDelete(request: Request, env: Env): Promise<Response> {
 export async function purgeExpired(env: Env): Promise<number> {
   const cutoff = new Date(Date.now() - RETENTION_DAYS * 86400000).toISOString();
   const dimensions = 'bucket, scope, game_id, kind, content_version, item_id, item_index, outcome, reason, item_state';
+  // Nullable counter addition preserves suppression across later purge contributions.
   const statements = [
     "'day:' || substr(timestamp_utc, 1, 10)",
     "'week:' || strftime('%Y-W%W', timestamp_utc)",
@@ -250,8 +251,12 @@ export async function purgeExpired(env: Env): Promise<number> {
       INSERT INTO aggregates (${dimensions}, count, attempts, correct_discoveries, distinct_wrong_positions)
       SELECT ${bucket}, '${scope}', game_id, kind, ${itemDimensions},
         COALESCE(outcome, ''), COALESCE(reason, ''), COALESCE(item_state, ''), COUNT(*),
-        COALESCE(SUM(attempt_delta), 0), COALESCE(SUM(correct_discovery_delta), 0),
-        COALESCE(SUM(distinct_wrong_delta), 0) FROM events
+        CASE WHEN COUNT(DISTINCT CASE WHEN attempt_delta > 0 THEN installation_id END) >= ${MIN_AGGREGATE_INSTALLATIONS}
+          THEN SUM(attempt_delta) ELSE NULL END,
+        CASE WHEN COUNT(DISTINCT CASE WHEN correct_discovery_delta > 0 THEN installation_id END) >= ${MIN_AGGREGATE_INSTALLATIONS}
+          THEN SUM(correct_discovery_delta) ELSE NULL END,
+        CASE WHEN COUNT(DISTINCT CASE WHEN distinct_wrong_delta > 0 THEN installation_id END) >= ${MIN_AGGREGATE_INSTALLATIONS}
+          THEN SUM(distinct_wrong_delta) ELSE NULL END FROM events
       WHERE timestamp_utc <= ? OR created_at <= ?
       GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       HAVING COUNT(DISTINCT installation_id) >= ?

@@ -6,6 +6,41 @@ import 'package:lexio/analytics/analytics_event.dart';
 import '../support/analytics_fakes.dart';
 
 void main() {
+  test('Dart schema accepts only bounded Spot deltas and known game ids', () {
+    final base = AnalyticsEvent(
+      eventId: 'event',
+      sessionId: 'session',
+      installationId: 'installation',
+      gameId: 'spot',
+      contentVersion: '1',
+      timestampUtc: DateTime.utc(2026),
+      kind: AnalyticsEventKind.spotAttempt,
+      itemId: 'text',
+      itemIndex: 0,
+      attemptDelta: 1,
+      correctDiscoveryDelta: 0,
+      distinctWrongDelta: 1,
+    ).toJson();
+    expect(AnalyticsEvent.fromJson(base).toJson(), base);
+    for (final change in <Map<String, dynamic>>[
+      {'gameId': 'unknown'},
+      {'gameId': 'grammar'},
+      {'attemptDelta': 2},
+      {'correctDiscoveryDelta': 1},
+      {'distinctWrongDelta': -1},
+      {'itemIndex': 10001},
+      {'wordPosition': 3},
+      {'rawAnswer': 'private'},
+      {'kind': 'item_answered', 'outcome': 'wrong'},
+      {'kind': 'item_shown'},
+    ]) {
+      expect(
+        () => AnalyticsEvent.fromJson({...base, ...change}),
+        throwsFormatException,
+      );
+    }
+  });
+
   test(
     'Spot attempts are bounded deltas, distinct positions stay local, recovery is coherent',
     () async {
