@@ -59,11 +59,30 @@ async function readBoundedBody(
   if (contentLength > MAX_PAYLOAD_BYTES) {
     return { ok: false, response: jsonResponse({ error: 'payload too large' }, 413) };
   }
-  const text = await request.text();
-  if (new TextEncoder().encode(text).byteLength > MAX_PAYLOAD_BYTES) {
-    return { ok: false, response: jsonResponse({ error: 'payload too large' }, 413) };
+  const reader = request.body?.getReader();
+  if (!reader) return {ok: true, text: ''};
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_PAYLOAD_BYTES) {
+        await reader.cancel();
+        return {ok: false, response: jsonResponse({error: 'payload too large'}, 413)};
+      }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+    return {ok: true, text: new TextDecoder('utf-8', {fatal: true, ignoreBOM: false}).decode(bytes)};
+  } catch {
+    return {ok: false, response: jsonResponse({error: 'invalid body'}, 400)};
+  } finally {
+    reader.releaseLock();
   }
-  return { ok: true, text };
 }
 
 async function sha256Hex(value: string): Promise<string> {

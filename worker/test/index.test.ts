@@ -1,3 +1,4 @@
+import worker from '../src/index';
 import { SELF, env } from 'cloudflare:test';
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
@@ -102,6 +103,23 @@ describe('POST /v1/events', () => {
       {timestampUtc: new Date(Date.now() - 91 * DAY_MS).toISOString()},
       {kind: 'round_ended', reason: 'user_back', itemId: 'ex_1', itemIndex: 0},
     ]) expect((await postEvents({events: [makeEvent(change)]})).status).toBe(400);
+  });
+
+  it('cancels oversized chunked bodies before buffering the entire stream', async () => {
+    let chunks = 0;
+    let cancelled = false;
+    const stream = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        chunks++;
+        controller.enqueue(new Uint8Array(30000));
+        if (chunks === 20) controller.close();
+      },
+      cancel() { cancelled = true; },
+    });
+    const response = await worker.fetch(new Request('https://example.com/v1/events', {method: 'POST', body: stream}), env);
+    expect(response.status).toBe(413);
+    expect(cancelled).toBe(true);
+    expect(chunks).toBeLessThan(6);
   });
 
   it('rejects malformed JSON', async () => {
