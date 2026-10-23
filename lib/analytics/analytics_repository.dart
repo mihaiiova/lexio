@@ -113,15 +113,21 @@ final class AnalyticsRepository {
   /// Enables collection with a fresh installation identity and deletion secret.
   Future<void> enable() async {
     final identity = AnalyticsIdentity.generate(random: _random);
-    _consent = ConsentState(
+    if (_consentStorage == null || needsDeletion || _consent.enabled) return;
+    final next = ConsentState(
       enabled: true,
       installationId: identity.installationId,
       deletionSecret: identity.deletionSecret,
     );
-    _consentWasPersisted = true;
-    _pendingRound = null;
-    await _clearPendingRoundStorage();
-    await _persistConsent();
+    try {
+      await _consentStorage.write(encodeConsentState(next));
+      _consent = next;
+      _consentWasPersisted = true;
+      _pendingRound = null;
+      await _clearPendingRoundStorage();
+    } catch (_) {
+      _consent = ConsentState.disabled;
+    }
   }
 
   /// Records a first-launch decline without any identity to delete.

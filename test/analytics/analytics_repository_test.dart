@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -40,6 +41,18 @@ void main() {
 
       expect(repo.isConsentEnabled, isFalse);
       expect(repo.isConsentUndecided, isFalse);
+    });
+
+    test('enable stays off until durable storage succeeds', () async {
+      final storage = _MemoryConsentStorage()..writeGate = Completer<void>();
+      final repo = await AnalyticsRepository.load(storage: storage,
+        pendingRoundStorage: _MemoryPendingRoundStorage(), transport: _FakeTransport());
+      final enabling = repo.enable();
+      await Future<void>.delayed(Duration.zero);
+      expect(repo.isConsentEnabled, isFalse);
+      storage.writeGate!.completeError(StateError('disk unavailable'));
+      await enabling;
+      expect(repo.isConsentEnabled, isFalse);
     });
 
     test('enable creates and persists a fresh identity', () async {
@@ -379,6 +392,7 @@ AnalyticsEvent _event(String id) {
 final class _MemoryConsentStorage implements ConsentStorage {
   String? value;
   int readFailures = 0;
+  Completer<void>? writeGate;
 
   @override
   Future<String?> read() async {
@@ -391,6 +405,7 @@ final class _MemoryConsentStorage implements ConsentStorage {
 
   @override
   Future<void> write(String updated) async {
+    await writeGate?.future;
     value = updated;
   }
 }
