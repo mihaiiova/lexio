@@ -83,8 +83,9 @@
 Slove este o aplicație educațională cu patru jocuri de limbă română.
 Nu necesită cont sau autentificare. Jocurile funcționează offline.
 
-Toate exercițiile, rezultatele și progresul sunt stocate local pe dispozitiv.
-Aplicația nu transmite date de utilizare sau identificatori.
+Exercițiile și progresul complet sunt stocate local pe dispozitiv. Analiza
+opțională, implicit oprită, transmite doar după activarea de către tutore
+evenimentele pseudonime de instalare și rezultatele limitate descrise mai sus.
 
 Linkurile externe se deschid doar în browserul sistemului și trimit către
 Dicționarul Ortografic, Ortoepic și Morfologic al Limbii Române (DOOM) —

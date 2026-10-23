@@ -65,7 +65,7 @@ lib/
 - **Minimalist**: Only essential UI chrome
 - **Calm**: Gentle colors, subtle animations
 - **Premium**: Clean cards, consistent spacing, refined details
-- **Fast**: Local content and progress with no usage tracking
+- **Fast**: Local content and progress; optional analytics never blocks play
 
 ## Architecture Decisions
 
