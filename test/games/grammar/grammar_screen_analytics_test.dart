@@ -21,6 +21,26 @@ import '../../../lib/games/grammar/grammar_content.dart';
 import '../../../lib/games/grammar/grammar_screen.dart';
 
 void main() {
+  testWidgets('empty content never starts a round', (tester) async {
+    final transport = _FakeTransport();
+    final repo = await _enabledRepo(transport);
+    await tester.pumpWidget(MaterialApp(home: GrammarScreen(exercises: const [], analytics: repo)));
+    await tester.pumpAndSettle();
+    await repo.flush();
+    expect(transport.allEvents, isEmpty);
+  });
+
+  testWidgets('variants use exercise ids rather than shared notions', (tester) async {
+    final transport = _FakeTransport();
+    final repo = await _enabledRepo(transport);
+    await tester.pumpWidget(MaterialApp(home: GrammarScreen(
+      exercises: [_exercise(id: 'variant_a', notionId: 'shared')], analytics: repo)));
+    await tester.pumpAndSettle();
+    await repo.flush();
+    expect(transport.allEvents.last.itemId, 'variant_a');
+    expect(transport.allEvents.first.contentVersion, '1');
+  });
+
   testWidgets('emits round_started and item_shown for a consented round', (
     tester,
   ) async {
@@ -42,7 +62,7 @@ void main() {
       AnalyticsEventKind.itemShown,
     ]);
     expect(transport.allEvents.first.gameId, 'grammar');
-    expect(transport.allEvents.last.itemId, _exercise().notionId);
+    expect(transport.allEvents.last.itemId, _exercise().id);
     expect(transport.allEvents.last.itemIndex, 0);
   });
 
@@ -74,6 +94,7 @@ void main() {
       AnalyticsEventKind.roundStarted,
       AnalyticsEventKind.itemShown,
       AnalyticsEventKind.itemAnswered,
+      AnalyticsEventKind.itemResolved,
       AnalyticsEventKind.roundEnded,
     ]);
     expect(events[2].outcome, AnalyticsOutcome.correct);
@@ -222,9 +243,10 @@ Future<AnalyticsRepository> _enabledRepo(_FakeTransport transport) async {
   return repo;
 }
 
-GrammarExercise _exercise({String id = 'one', bool isCorrect = false}) {
+GrammarExercise _exercise({String id = 'one', bool isCorrect = false, String? notionId}) {
   return GrammarExercise(
     id: id,
+    notionIdOverride: notionId,
     sentence: 'Copiii au plecat la școală.',
     category: 'test',
     topic: 'test',

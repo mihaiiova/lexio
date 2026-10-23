@@ -1,4 +1,5 @@
 import 'content_bundle_service.dart';
+import 'content_version.dart';
 
 /// Coordinates the app-wide content snapshot at round boundaries.
 final class ContentRuntime {
@@ -16,10 +17,9 @@ final class ContentRuntime {
 
   /// Identifies the active content snapshot for analytics attribution.
   ///
-  /// Returns `bundled` when no remote content service is installed or when
-  /// the bundled assets are the active snapshot.
+  /// Bundled revisions use the same generated manifest version as remote content.
   static String get activeContentVersion =>
-      _service?.activeContentVersion ?? 'bundled';
+      _service?.activeContentVersion ?? bundledContentVersion;
 
   static void reset() {
     _service = null;

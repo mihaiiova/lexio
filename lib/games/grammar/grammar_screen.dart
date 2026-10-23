@@ -59,7 +59,7 @@ class _GrammarScreenState extends State<GrammarScreen>
       _state = GrammarGameState(exercises: exercises);
       _progress = widget.progressRepository;
       _isLoading = false;
-      unawaited(_startRoundAnalytics());
+      _scheduleRoundAnalytics();
     } else {
       _init();
     }
@@ -97,7 +97,7 @@ class _GrammarScreenState extends State<GrammarScreen>
         _progress = progress;
         _isLoading = false;
       });
-      unawaited(_startRoundAnalytics());
+      _scheduleRoundAnalytics();
     } catch (e) {
       debugPrint('GrammarScreen: failed to load content: $e');
       if (!mounted) return;
@@ -161,22 +161,26 @@ class _GrammarScreenState extends State<GrammarScreen>
     _advance();
   }
 
-  Future<void> _startRoundAnalytics() async {
+  void _scheduleRoundAnalytics() {
     _roundEnded = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && !_roundEnded) unawaited(_startRoundAnalytics());
+    });
+  }
+
+  Future<void> _startRoundAnalytics() async {
     final analytics = _analytics;
-    if (analytics == null) return;
+    final state = _state;
+    if (analytics == null || state == null || state.exercises.isEmpty) return;
     try {
-      await analytics.reconcileInterruptedRound(gameId: 'grammar');
-      await analytics.startRound(
-        gameId: 'grammar',
-        contentVersion: ContentRuntime.activeContentVersion,
-      );
-      final state = _state;
-      if (state == null || state.exercises.isEmpty) return;
-      await analytics.itemShown(
-        itemId: state.currentExercise.notionId,
-        itemIndex: state.currentIndex,
-      );
+      // Submit both actions before yielding, so a fast answer/back cannot
+      // overtake the first exposure while persistence is in flight.
+      await Future.wait([
+        analytics.startRound(gameId: 'grammar',
+          contentVersion: ContentRuntime.activeContentVersion),
+        analytics.itemShown(itemId: state.currentExercise.id,
+          itemIndex: state.currentIndex),
+      ]);
     } catch (_) {
       // Analytics must never block or break gameplay.
     }
@@ -186,7 +190,7 @@ class _GrammarScreenState extends State<GrammarScreen>
     final analytics = _analytics;
     if (analytics == null) return;
     try {
-      await analytics.itemShown(itemId: exercise.notionId, itemIndex: index);
+      await analytics.itemShown(itemId: exercise.id, itemIndex: index);
     } catch (_) {
       // Analytics must never block or break gameplay.
     }
@@ -201,7 +205,7 @@ class _GrammarScreenState extends State<GrammarScreen>
     if (analytics == null) return;
     try {
       await analytics.itemAnswered(
-        itemId: exercise.notionId,
+        itemId: exercise.id,
         itemIndex: index,
         outcome: isRight ? AnalyticsOutcome.correct : AnalyticsOutcome.wrong,
       );
@@ -240,7 +244,7 @@ class _GrammarScreenState extends State<GrammarScreen>
       _showCorrectFlash = false;
       _flashKey = UniqueKey();
     });
-    await _startRoundAnalytics();
+    _scheduleRoundAnalytics();
   }
 
   Widget _buildEmptyScreen() {

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'content_bundle.dart';
+import 'content_version.dart';
 
 /// A parsed, versioned manifest that points at a remote content bundle.
 final class ContentManifest {
@@ -142,9 +143,8 @@ final class ContentBundleService {
   ContentBundle get activeBundle => _active!;
   ContentBundle? get pendingBundle => _pending;
 
-  /// Human-readable version of the active snapshot (`bundled` when the
-  /// bundled assets are active).
-  String get activeContentVersion => _activeVersion?.toString() ?? 'bundled';
+  /// Manifest version of the active snapshot, including bundled revisions.
+  String get activeContentVersion => _activeVersion?.toString() ?? bundledContentVersion;
 
   Future<ContentBundle> start() async {
     final (bundle, version) = await _loadCachedOrBundled();
