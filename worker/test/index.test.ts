@@ -30,12 +30,19 @@ const DDL = [
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
   )`,
   `CREATE TABLE IF NOT EXISTS aggregates (
-    bucket TEXT NOT NULL,
-    game_id TEXT NOT NULL,
-    kind TEXT NOT NULL,
-    count INTEGER NOT NULL,
-    PRIMARY KEY (bucket, game_id, kind)
-  )`,
+  bucket TEXT NOT NULL,
+  scope TEXT NOT NULL,
+  game_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  content_version TEXT NOT NULL,
+  item_id TEXT NOT NULL,
+  item_index INTEGER NOT NULL,
+  outcome TEXT NOT NULL,
+  reason TEXT NOT NULL,
+  item_state TEXT NOT NULL,
+  count INTEGER NOT NULL,
+  PRIMARY KEY (bucket, scope, game_id, kind, content_version, item_id, item_index, outcome, reason, item_state)
+)`, 
 ];
 
 let eventCounter = 0;
@@ -266,7 +273,7 @@ describe('scheduled purge', () => {
       await env.DB.prepare('DROP TRIGGER fail_purge').run();
     }
     await Promise.all([worker.scheduled({} as ScheduledEvent, env), worker.scheduled({} as ScheduledEvent, env)]);
-    const counts = await env.DB.prepare('SELECT count FROM aggregates').all();
+    const counts = await env.DB.prepare("SELECT count FROM aggregates WHERE scope = 'overall'").all();
     expect(counts.results.map(row => row.count)).toEqual([6, 6]);
   });
 
@@ -279,6 +286,22 @@ describe('scheduled purge', () => {
     await SELF.fetch('https://example.com/v1/delete', {method: 'POST', body: JSON.stringify({installationId: 'recent_revoked', deletionSecret: 'r'.repeat(64)})});
     await worker.scheduled({} as ScheduledEvent, env);
     expect((await env.DB.prepare('SELECT installation_id FROM installations').all()).results).toEqual([{installation_id: 'recent_revoked'}]);
+  });
+
+  it('retains useful item/outcome dimensions only for cells with five installations', async () => {
+    const old = new Date(Date.now() - 100 * DAY_MS).toISOString();
+    for (let i = 0; i < 6; i++) {
+      await insertEvent(`metric_${i}`, old, 'item_answered');
+      await env.DB.prepare("UPDATE events SET installation_id = ?, outcome = 'wrong' WHERE event_id = ?").bind(`inst_${i}`, `metric_${i}`).run();
+    }
+    await insertEvent('sparse_correct', old, 'item_answered');
+    await env.DB.prepare("UPDATE events SET outcome = 'correct' WHERE event_id = 'sparse_correct'").run();
+    await worker.scheduled({} as ScheduledEvent, env);
+    const rows = await env.DB.prepare("SELECT item_id, item_index, content_version, outcome, count FROM aggregates WHERE scope = 'item'").all();
+    expect(rows.results).toEqual([
+      {item_id: 'n1', item_index: 0, content_version: 'bundled', outcome: 'wrong', count: 6},
+      {item_id: 'n1', item_index: 0, content_version: 'bundled', outcome: 'wrong', count: 6},
+    ]);
   });
 
   it('purges old linked events into non-linkable aggregates', async () => {

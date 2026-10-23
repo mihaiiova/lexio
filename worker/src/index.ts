@@ -238,17 +238,24 @@ async function handleDelete(request: Request, env: Env): Promise<Response> {
 
 export async function purgeExpired(env: Env): Promise<number> {
   const cutoff = new Date(Date.now() - RETENTION_DAYS * 86400000).toISOString();
+  const dimensions = 'bucket, scope, game_id, kind, content_version, item_id, item_index, outcome, reason, item_state';
   const statements = [
-    ["'day:' || substr(timestamp_utc, 1, 10)", 'day'],
-    ["'week:' || strftime('%Y-W%W', timestamp_utc)", 'week'],
-  ].map(([bucket]) => env.DB.prepare(`
-    INSERT INTO aggregates (bucket, game_id, kind, count)
-    SELECT ${bucket}, game_id, kind, COUNT(*) FROM events
-    WHERE timestamp_utc < ? OR created_at < ?
-    GROUP BY 1, game_id, kind
-    HAVING COUNT(DISTINCT installation_id) >= ?
-    ON CONFLICT(bucket, game_id, kind) DO UPDATE SET count = count + excluded.count
-  `).bind(cutoff, cutoff, MIN_AGGREGATE_INSTALLATIONS));
+    "'day:' || substr(timestamp_utc, 1, 10)",
+    "'week:' || strftime('%Y-W%W', timestamp_utc)",
+  ].flatMap(bucket => ['overall', 'item'].map(scope => {
+    const itemDimensions = scope === 'item'
+      ? "content_version, COALESCE(item_id, ''), COALESCE(item_index, -1)"
+      : "'', '', -1";
+    return env.DB.prepare(`
+      INSERT INTO aggregates (${dimensions}, count)
+      SELECT ${bucket}, '${scope}', game_id, kind, ${itemDimensions},
+        COALESCE(outcome, ''), COALESCE(reason, ''), COALESCE(item_state, ''), COUNT(*) FROM events
+      WHERE timestamp_utc < ? OR created_at < ?
+      GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+      HAVING COUNT(DISTINCT installation_id) >= ?
+      ON CONFLICT(${dimensions}) DO UPDATE SET count = count + excluded.count
+    `).bind(cutoff, cutoff, MIN_AGGREGATE_INSTALLATIONS);
+  }));
   // D1 batch is one transaction: a failure rolls back both counting and removal.
   const results = await env.DB.batch([
     ...statements,
@@ -259,7 +266,7 @@ export async function purgeExpired(env: Env): Promise<number> {
         (SELECT 1 FROM events WHERE events.installation_id = installations.installation_id))`)
       .bind(new Date(Date.now() - 91 * 86400000).toISOString(), cutoff),
   ]);
-  return results[2].meta.changes;
+  return results[4].meta.changes;
 }
 
 export default {
