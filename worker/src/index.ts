@@ -133,8 +133,8 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
     env.DB.prepare(
       `INSERT OR IGNORE INTO events
         (event_id, session_id, installation_id, game_id, content_version,
-         item_id, item_index, timestamp_utc, kind, outcome, reason)
-       SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+         item_id, item_index, timestamp_utc, kind, outcome, reason, item_state)
+       SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
        WHERE EXISTS (SELECT 1 FROM installations WHERE installation_id = ? AND deletion_secret_hash = ? AND revoked_at IS NULL)`,
     ).bind(
       event.eventId,
@@ -148,6 +148,7 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
       event.kind,
       event.outcome,
       event.reason,
+      event.itemState,
       installationId, hash,
     ),
   );

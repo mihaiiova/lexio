@@ -38,3 +38,4 @@ CREATE TABLE IF NOT EXISTS aggregates (
 ALTER TABLE installations ADD COLUMN revoked_at TEXT;
 ALTER TABLE installations ADD COLUMN last_seen_at TEXT;
 UPDATE installations SET last_seen_at = created_at;
+ALTER TABLE events ADD COLUMN item_state TEXT;

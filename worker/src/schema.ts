@@ -5,7 +5,7 @@
 // payload fields.
 
 export const SCHEMA_VERSION = 1;
-export const MAX_PAYLOAD_BYTES = 256 * 1024;
+export const MAX_PAYLOAD_BYTES = 60_000;
 export const MAX_EVENTS_PER_BATCH = 100;
 export const MAX_ID_LENGTH = 128;
 export const MAX_GAME_ID_LENGTH = 64;
@@ -15,6 +15,7 @@ export const EVENT_KINDS = [
   'round_started',
   'item_shown',
   'item_answered',
+  'item_resolved',
   'round_ended',
 ] as const;
 export type EventKind = (typeof EVENT_KINDS)[number];
@@ -43,6 +44,7 @@ export interface AnalyticsEvent {
   kind: EventKind;
   outcome: Outcome | null;
   reason: RoundEndReason | null;
+  itemState: 'resolved' | 'unresolved' | null;
 }
 
 export type ValidationResult =
@@ -62,13 +64,16 @@ function isNonEmptyString(value: unknown, maxLength: number): value is string {
 }
 
 function isBoundedInt(value: unknown): value is number {
-  return typeof value === 'number' && Number.isInteger(value) && value >= 0;
+  return typeof value === 'number' && Number.isInteger(value) && value >= 0 && value <= 10000;
 }
 
 function isIsoUtcTimestamp(value: unknown): value is string {
-  if (typeof value !== 'string') return false;
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}(?:\d{3})?Z$/.test(value)) return false;
   const parsed = Date.parse(value);
-  return !Number.isNaN(parsed);
+  if (!Number.isFinite(parsed)) return false;
+  const canonical = value.slice(0, 23) + 'Z';
+  return new Date(parsed).toISOString() === canonical &&
+    parsed >= Date.now() - 90 * 86400000 && parsed <= Date.now() + 5 * 60000;
 }
 
 export function validateEvent(raw: unknown): ValidationResult {
@@ -76,6 +81,8 @@ export function validateEvent(raw: unknown): ValidationResult {
     return { ok: false, error: 'event must be an object' };
   }
 
+  const fields = ['v', 'eventId', 'sessionId', 'installationId', 'gameId', 'contentVersion', 'timestampUtc', 'kind', 'itemId', 'itemIndex', 'outcome', 'reason', 'itemState'];
+  if (Object.keys(raw).some(key => !fields.includes(key))) return {ok: false, error: 'unknown field'};
   if (raw.v !== SCHEMA_VERSION) {
     return { ok: false, error: 'unsupported schema version' };
   }
@@ -104,7 +111,7 @@ export function validateEvent(raw: unknown): ValidationResult {
   if (!isNonEmptyString(raw.installationId, MAX_ID_LENGTH)) {
     return { ok: false, error: 'installationId must be 1..128 characters' };
   }
-  if (!isNonEmptyString(raw.gameId, MAX_GAME_ID_LENGTH)) {
+  if (raw.gameId !== 'grammar') {
     return { ok: false, error: 'gameId must be 1..64 characters' };
   }
   if (!isNonEmptyString(raw.contentVersion, MAX_CONTENT_VERSION_LENGTH)) {
@@ -146,11 +153,17 @@ export function validateEvent(raw: unknown): ValidationResult {
   const outcome = (raw.outcome as Outcome | null) ?? null;
   const reason = (raw.reason as RoundEndReason | null) ?? null;
 
+  const itemState = raw.itemState ?? null;
+  if (itemState !== null && itemState !== 'resolved' && itemState !== 'unresolved') return {ok: false, error: 'invalid itemState'};
+  if ((itemId === null) !== (itemIndex === null)) return {ok: false, error: 'incomplete item'};
+  if (kind !== 'round_ended' && itemState !== null) return {ok: false, error: 'nonterminal itemState'};
+  if (kind === 'round_ended' && ((itemId === null) !== (itemState === null))) return {ok: false, error: 'terminal itemState required with item'};
+
   if (kind === 'round_started') {
     if (itemId !== null || itemIndex !== null || outcome !== null || reason !== null) {
       return { ok: false, error: 'round_started must not carry item or outcome fields' };
     }
-  } else if (kind === 'item_shown') {
+  } else if ((kind === 'item_shown' || kind === 'item_resolved')) {
     if (itemId === null || itemIndex === null || outcome !== null || reason !== null) {
       return { ok: false, error: 'item_shown requires itemId and itemIndex only' };
     }
@@ -179,6 +192,7 @@ export function validateEvent(raw: unknown): ValidationResult {
       kind,
       outcome,
       reason,
+      itemState,
     },
   };
 }

@@ -16,6 +16,7 @@ const DDL = [
     kind TEXT NOT NULL,
     outcome TEXT,
     reason TEXT,
+    item_state TEXT,
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
   )`,
   `CREATE INDEX IF NOT EXISTS idx_events_installation ON events(installation_id, created_at)`,
@@ -84,6 +85,23 @@ describe('POST /v1/events', () => {
     expect((await postEvents({deletionSecret, events: [makeEvent()]})).status).toBe(202);
     expect((await postEvents({deletionSecret: 'b'.repeat(64), events: [makeEvent()]})).status).toBe(401);
     expect((await postEvents({deletionSecret, events: [makeEvent(), makeEvent({installationId: 'other'})]})).status).toBe(400);
+  });
+
+  it('accepts resolved lifecycle and preserves the first terminal event on replay', async () => {
+    const terminal = makeEvent({eventId: 's_terminal', sessionId: 's_terminal', kind: 'round_ended', reason: 'user_back', itemId: 'ex_1', itemIndex: 0, itemState: 'unresolved'});
+    expect((await postEvents({events: [makeEvent({kind: 'item_resolved', itemId: 'ex_1', itemIndex: 0, itemState: null}), terminal]})).status).toBe(202);
+    expect((await postEvents({events: [{...terminal, reason: 'inferred_interruption'}]})).status).toBe(202);
+    expect((await env.DB.prepare('SELECT reason, item_state FROM events WHERE event_id = ?').bind('s_terminal').first())).toMatchObject({reason: 'user_back', item_state: 'unresolved'});
+  });
+
+  it('rejects unknown fields, games, positions, invalid UTC and out-of-window timestamps', async () => {
+    for (const change of [
+      {rawAnswer: 'private'}, {gameId: 'unknown'}, {itemIndex: 10001},
+      {timestampUtc: '2026-01-01'}, {timestampUtc: '2026-02-30T00:00:00.000Z'},
+      {timestampUtc: new Date(Date.now() + 6 * 60 * 1000).toISOString()},
+      {timestampUtc: new Date(Date.now() - 91 * DAY_MS).toISOString()},
+      {kind: 'round_ended', reason: 'user_back', itemId: 'ex_1', itemIndex: 0},
+    ]) expect((await postEvents({events: [makeEvent(change)]})).status).toBe(400);
   });
 
   it('rejects malformed JSON', async () => {
