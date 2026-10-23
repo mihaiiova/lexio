@@ -131,6 +131,11 @@ flutter test             # Run tests
   **Narrow exception (issue #60):** the app may run a first-party, consent-gated
   analytics collector. It uses an HTTPS endpoint only when the user explicitly
   opts in, sends bounded schema-validated events (no raw content or answers),
-  and never blocks offline play. There are no accounts, auth, or vendor SDKs;
-  the deletion path is authenticated by a per-installation secret, not a random
-  id alone.
+  and never blocks offline play. There are no player accounts, app auth, or vendor
+  SDKs; the deletion path is authenticated by a per-installation secret, not a
+  random id alone.
+
+  **Narrow exception (issue #62):** the Worker (not the app) serves an owner-only
+  read report behind Cloudflare Access JWT verification and an owner allowlist.
+  This is not a player account system; do not extend it to the app or add other
+  readers.

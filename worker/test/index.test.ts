@@ -41,9 +41,40 @@ beforeEach(async () => {
   await env.DB.prepare('DELETE FROM events').run();
   await env.DB.prepare('DELETE FROM installations').run();
   await env.DB.prepare('DELETE FROM aggregates').run();
+  await env.DB.prepare('DELETE FROM purge_marker').run();
 });
 
 describe('POST /v1/events', () => {
+  it('does not append a delayed ingestion to history finalized by an intervening purge', async () => {
+    const started = Date.now();
+    const event = makeEvent({timestampUtc: new Date(started - 89 * DAY_MS).toISOString()});
+    const database = new Proxy(env.DB, {
+      get(target, key) {
+        if (key === 'batch') {
+          return async (statements: D1PreparedStatement[]) => {
+            vi.setSystemTime(started + 2 * DAY_MS);
+            await worker.scheduled({} as ScheduledEvent, env);
+            return target.batch(statements);
+          };
+        }
+        const value = Reflect.get(target, key, target);
+        return typeof value === 'function' ? value.bind(target) : value;
+      },
+    });
+    vi.useFakeTimers({toFake: ['Date']});
+    vi.setSystemTime(started);
+    try {
+      const response = await worker.fetch(new Request('https://example.com/v1/events', {
+        method: 'POST',
+        body: JSON.stringify({deletionSecret: 'a'.repeat(64), events: [event]}),
+      }), {...env, DB: database});
+      expect(response.status).toBe(202);
+      expect(await env.DB.prepare('SELECT COUNT(*) AS n FROM events WHERE event_id = ?').bind(event.eventId).first()).toMatchObject({n: 0});
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('accepts four games and Spot deltas idempotently without raw word positions', async () => {
     for (const gameId of ['grammar', 'vocabulary', 'idioms', 'spot']) {
       expect((await postEvents({events: [makeEvent({gameId})]})).status).toBe(202);

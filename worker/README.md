@@ -1,7 +1,8 @@
 # Slove Analytics Worker
 
-First-party Worker + D1 for issues #60 and #61. Guardian opt-in is self-declared, default
-off, per installation rather than per person. No accounts or vendor SDKs.
+First-party Worker + D1 for issues #60, #61 and #62. Guardian opt-in is self-declared, default
+off, per installation rather than per person. No player accounts or vendor SDKs; the
+only authenticated reader is the owner, through Cloudflare Access (see below).
 Installation-linked data is **pseudonymous**, not irreversibly anonymous.
 
 ## Contract (unreleased schema v1)
@@ -90,7 +91,8 @@ The client treats non-2xx as delivery failure and keeps its bounded retry queue.
 events. Legitimate retries and never-registered identities return **200**;
 wrong credentials return 401. A never-registered deletion reserves that random
 identity with the presented credential. Deletion acknowledgment is independent
-of subsequent durable client cleanup. There is no public read/report endpoint.
+of subsequent durable client cleanup. There is no public read/report endpoint;
+the owner-only report is described below.
 
 ## Retention and deletion limits
 
@@ -116,20 +118,125 @@ hashes enter aggregates. Sparse cells are discarded, not held indefinitely;
 counts are privacy-suppressed and may undercount across purge boundaries.
 Deletion removes still-linked events, not previously unlinked aggregate totals.
 Migration 0004 discards earlier unreleased aggregates that used an unsafe
-single-installation threshold. Aggregates have no public query surface; future
-report design (#62) must review differencing across overlapping cells.
+single-installation threshold. Aggregates have no public query surface. The
+same purge batch also advances the singleton `purge_marker.cutoff` (migration
+0006); a failed or rolled-back purge leaves it unchanged.
+
+## Private owner report (#62)
+
+Every `/private` and `/private/*` request (page, script, API and unknown paths)
+is verified before any database access. The Worker requires the
+`Cf-Access-Jwt-Assertion` header, verifies its RS256 signature against
+`<ACCESS_ISSUER>/cdn-cgi/access/certs` (public keys only, cached at most 5
+minutes), and checks issuer, audience, `exp` and an `email` on the owner
+allowlist. Missing/invalid configuration, claims, algorithms, keys or JWKS
+fetches all return 403. All responses are `private, no-store` with a strict
+CSP, `nosniff` and `no-referrer`; the page renders text only (no `innerHTML`).
+
+| Route (GET only) | Content |
+|---|---|
+| `/private/report/` | Romanian report page |
+| `/private/report/app.js` | Its script |
+| `/private/report/api/recent` | Linked recent sessions |
+| `/private/report/api/history` | Fixed unlinked weekly history |
+
+Configuration (placeholders only; no real endpoint is provisioned here):
+
+```jsonc
+"vars": {
+  "ACCESS_ISSUER": "https://<team-name>.cloudflareaccess.com", // https, *.cloudflareaccess.com only
+  "ACCESS_AUDIENCE": "<Access application AUD tag>",           // 1–256 characters
+  "ACCESS_OWNER_EMAILS": "owner@example.com"                   // comma-separated, at most 10
+}
+```
+
+**Recent** accepts only `from`/`to` (`YYYY-MM-DD`, UTC, `from` inclusive, `to`
+exclusive), `game` (four game IDs), `version` (≤64), `installation` (≤128),
+`limit` (1–25, default 25) and an opaque `cursor`; each at most once, query ≤2048
+characters, anything else is 400. Default window: the 7 UTC days ending at the
+start of tomorrow. Windows are at most 31 days, cannot start before the UTC day of
+the 90-day horizon or end after tomorrow, and rows outside the logical 90-day
+horizon (event or receipt time) are excluded even before the purge runs. More
+than 5000 matching events, 500 distinct item/version groups, 500 distinct ending
+position/reason groups, or a body over 256000 bytes returns 422 (narrow the
+filters). Deleted installations disappear immediately. Credential rows are never
+read.
+
+Per session the report shows status, missing start, and `lastItem`/`lastIndex`
+with `lastItemEvidence`: `terminal` comes from the `round_ended` item; otherwise
+`observed` is the highest observed round index in the window (ties by item ID).
+Event order at equal timestamps is not used. Per-game `summary.byItem` combines
+item counts across all matching sessions and installations by content version and
+exercise ID (not round position). `summary.endedAt` groups round endings by
+version, terminal item ID/index and reason; a missing terminal item is explicitly
+unknown, never guessed from the highest observed index. These summaries cover
+the full filtered window, independently of the 25-row session page, and are also
+scoped by the installation filter when present. They have no raw text or selected
+positions and are available only to the authenticated owner.
+
+For example, two opted-in installations that both answer exercise `g1`, version
+`v1`, once correctly and once incorrectly produce one item row with `shown: 2`,
+`resolved: 2`, `correct: 1`, `wrong: 1`. If their rounds end at indexes 0 and 2,
+there are two ending-position rows with count 1 each. Changing the session page
+does not change these totals; filtering to one installation restricts them.
+
+`left` counts items departed without
+resolution, proven by a higher shown index, the round end, or a terminal
+`unresolved` state (even when the item was shown before the window, without
+adding a shown count). The current item with no later evidence is
+`openUnresolved` (unknown), not left. Unresolved is never wrong.
+
+**History** accepts no parameters. It publishes nothing until a scheduled purge
+has committed a `purge_marker`. Then it lists the 52 `week:%Y-W%W` buckets that
+end before the UTC day preceding that cutoff (an extra conservative publication
+buffer). Conditional event inserts check the committed cutoff inside the same D1
+transaction as registration/ingestion, so even a request validated before a purge
+cannot append timestamps at or before its publication boundary afterward. Events
+that expire during a delayed request are acknowledged but not retained. Later
+cron runs cannot change a published week. Only overall cells are summed per week
+and game; day, item, version and installation cells are never exposed. Every value
+is partial; suppressed counters remain null.
+
+## Operations
+
+- **Access:** create a self-hosted Access application covering the Worker
+  hostname with path `/private` and `/private/*`. Use an Allow policy limited to
+  the owner identities plus MFA, a short session duration, and no service-token
+  or bypass policy. Keep `ACCESS_OWNER_EMAILS` in sync with it; the Worker
+  re-checks the allowlist as a second barrier. Block or disable the
+  `workers.dev` route so the report is reachable only behind Access.
+- **Rotation:** Access rotates its signing keys; the Worker refetches the JWKS
+  after at most 5 minutes or on an unknown `kid` when its 30-second refetch cooldown
+  permits; otherwise the request is denied. Rotating the Access application
+  (new AUD tag) requires updating `ACCESS_AUDIENCE` in the same change. To revoke
+  an owner, remove them from the Access policy and the allowlist and revoke their
+  active Access sessions. No token, cookie or owner identity is stored.
+- **Retention jobs:** the daily `0 3 * * *` cron purges and aggregates. Monitor
+  it with Workers cron/trigger logs or alerts. A stale `purge_marker.cutoff`
+  (more than about two days behind `now - 90 days`) means purges are failing:
+  linked data is being kept too long and history stops advancing.
+- **Rollback:** redeploy the previous Worker version. Migration 0006 is
+  additive. Earlier code ignores `purge_marker`; do not drop it while this code
+  can still be deployed. Removing the Access vars closes the report (403).
 
 ## Checks
 
 ```bash
 npm ci
-npm run check       # tsc --noEmit + Worker/D1 handler tests
+npx playwright install chromium   # once; CI uses --with-deps
+npm run check       # tsc --noEmit + Worker/D1 handler tests + Chromium report UI tests
 npm run db:migrate  # local D1 only
 ```
 
-Tests apply the actual migrations. `schema.sql` is a one-time fresh bootstrap
-mirror of those migrations, not an idempotent reapplication script. CI runs the
-Worker check independently of Flutter checks. No dependencies were added.
+Tests apply the actual migrations and verify real RS256 tokens against a mocked
+JWKS, without bypassing verification. The UI suite serves the real page/script
+from an isolated local fixture host with mocked API responses. `schema.sql` is a
+one-time fresh bootstrap mirror of those migrations, not an idempotent
+reapplication script. CI runs the Worker check independently of Flutter checks.
+
+Dependencies: `jose` (pinned 6.1.3) for standards-compliant JWT/JWKS verification
+instead of hand-written crypto. `@playwright/test` (pinned 1.58.2, dev only)
+runs the browser tests.
 
 ## Closed deployment gate — no deployment authorized
 
@@ -157,5 +264,13 @@ References retrieved during implementation:
 - https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/ (per-location limits)
 - https://developers.cloudflare.com/workers/best-practices/workers-best-practices/
 
-Owner reporting/private queries (#62), production deployment and store-console
-changes remain out of scope.
+Report pre-release checklist (manual, not done here): provision the Access
+application and policy; confirm unauthenticated, non-owner and expired-session
+requests to every `/private` path are denied at the edge and by the Worker;
+log in as the owner and check the page, filters, drilldown and history against
+known local data; verify responses are not cached; review that the privacy
+policy and store data-safety answers describe owner access to installation-linked
+records. Production deployment and store-console changes remain out of scope.
+
+Additional reference: https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/
+(Access JWT validation).
