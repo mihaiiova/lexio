@@ -22,8 +22,10 @@ Nullable fields are sent as null by the client. Kinds are `round_started`,
 A terminal shown item has state `resolved`/`unresolved`; an unanswered item is
 not wrong. Grammar item IDs identify rendered exercise variants, not notions.
 
-UTC timestamps must be canonical `YYYY-MM-DDTHH:mm:ss.sss[sss]Z`, no older than
-90 days and no more than 5 minutes ahead of receipt. Bad device clocks therefore
+UTC timestamps must be canonical `YYYY-MM-DDTHH:mm:ss.sss[sss]Z`; validation
+and storage normalize to milliseconds. A single server-time snapshot per batch
+requires timestamps strictly newer than the 90-day horizon and not in the future.
+Bad device clocks therefore
 lose delivery rather than widening retention. Bodies are streamed and cancelled
 above **60000 actual UTF-8 bytes**, with at most 100 events. Registration and
 conditional event inserts are transactional; wrong secrets cannot append data,
@@ -43,12 +45,14 @@ of subsequent durable client cleanup. There is no public read/report endpoint.
 
 Daily scheduled purge removes linked events after the earlier of event time or
 server receipt time plus 90 days (daily scheduling can add up to one day; monitor
-cron failures). Future client dates cannot extend receipt-based retention.
+cron failures). Events at the horizon expire; future client dates are rejected.
 Inactive identity credential rows expire after 90 days without ingestion, once
 no linked events remain. Revocation records (installation ID + credential hash
-and dates) remain for **91 days from first deletion**, without refresh on retry,
-then expire. This bounded anti-replay exception is not an indefinite registry.
-Original event replays are then too old to ingest. Deliberately forged fresh
+and dates) expire at **90 days from first deletion**, without refresh on retry,
+using the same daily purge cadence. There is no extra credential-retention day
+or indefinite inactive identity registry. With strict no-future acceptance and
+exclusive ingestion horizon, original event replays are already stale at
+tombstone expiry (including the exact boundary). Deliberately forged fresh
 events reusing an expired identity cannot be distinguished from a new registration;
 this protocol is not authentication of a person or proof of guardian consent.
 

@@ -130,9 +130,10 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
     return jsonResponse({ error: 'too many events in batch' }, 413);
   }
 
+  const now = Date.now();
   const events: AnalyticsEvent[] = [];
   for (const raw of parsed.events) {
-    const result = validateEvent(raw);
+    const result = validateEvent(raw, now);
     if (!result.ok) {
       return jsonResponse({ error: `invalid event: ${result.error}` }, 400);
     }
@@ -173,7 +174,7 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
       VALUES (?, ?, ?)
       ON CONFLICT(installation_id) DO UPDATE SET last_seen_at = excluded.last_seen_at
       WHERE deletion_secret_hash = excluded.deletion_secret_hash AND revoked_at IS NULL`)
-      .bind(installationId, hash, new Date().toISOString()),
+      .bind(installationId, hash, new Date(now).toISOString()),
     ...statements,
   ]);
   const installation = await env.DB.prepare('SELECT deletion_secret_hash, revoked_at FROM installations WHERE installation_id = ?').bind(installationId).first();
@@ -246,7 +247,7 @@ export async function purgeExpired(env: Env): Promise<number> {
       INSERT INTO aggregates (${dimensions}, count)
       SELECT ${bucket}, '${scope}', game_id, kind, ${itemDimensions},
         COALESCE(outcome, ''), COALESCE(reason, ''), COALESCE(item_state, ''), COUNT(*) FROM events
-      WHERE timestamp_utc < ? OR created_at < ?
+      WHERE timestamp_utc <= ? OR created_at <= ?
       GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       HAVING COUNT(DISTINCT installation_id) >= ?
       ON CONFLICT(${dimensions}) DO UPDATE SET count = count + excluded.count
@@ -255,12 +256,12 @@ export async function purgeExpired(env: Env): Promise<number> {
   // D1 batch is one transaction: a failure rolls back both counting and removal.
   const results = await env.DB.batch([
     ...statements,
-    env.DB.prepare('DELETE FROM events WHERE timestamp_utc < ? OR created_at < ?').bind(cutoff, cutoff),
+    env.DB.prepare('DELETE FROM events WHERE timestamp_utc <= ? OR created_at <= ?').bind(cutoff, cutoff),
     env.DB.prepare(`DELETE FROM installations WHERE
-      (revoked_at IS NOT NULL AND revoked_at < ?) OR
-      (revoked_at IS NULL AND COALESCE(last_seen_at, created_at) < ? AND NOT EXISTS
+      (revoked_at IS NOT NULL AND revoked_at <= ?) OR
+      (revoked_at IS NULL AND COALESCE(last_seen_at, created_at) <= ? AND NOT EXISTS
         (SELECT 1 FROM events WHERE events.installation_id = installations.installation_id))`)
-      .bind(new Date(Date.now() - 91 * 86400000).toISOString(), cutoff),
+      .bind(cutoff, cutoff),
   ]);
   return results[4].meta.changes;
 }

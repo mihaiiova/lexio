@@ -102,7 +102,8 @@ class _AnalyticsConsentDialogState extends State<AnalyticsConsentDialog> {
               const SizedBox(height: LexioSpacing.sm),
               Text(
                 'Datele sunt legate de un identificator aleatoriu al instalării '
-                'cel mult 90 de zile; apoi pot rămâne totaluri fără această legătură. '
+                'cu termen de păstrare de 90 de zile și eliminare zilnică; '
+                'defecțiunile pot întârzia ștergerea. Apoi pot rămâne totaluri fără această legătură. '
                 'Poți opri colectarea și cere ștergerea din Setări. '
                 'Jocul rămâne disponibil fără acord sau internet.',
                 style: LexioTextStyles.bodySmall.copyWith(

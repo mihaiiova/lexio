@@ -67,16 +67,16 @@ function isBoundedInt(value: unknown): value is number {
   return typeof value === 'number' && Number.isInteger(value) && value >= 0 && value <= 10000;
 }
 
-function isIsoUtcTimestamp(value: unknown): value is string {
+function isIsoUtcTimestamp(value: unknown, now: number): value is string {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}(?:\d{3})?Z$/.test(value)) return false;
   const parsed = Date.parse(value);
   if (!Number.isFinite(parsed)) return false;
   const canonical = value.slice(0, 23) + 'Z';
   return new Date(parsed).toISOString() === canonical &&
-    parsed >= Date.now() - 90 * 86400000 && parsed <= Date.now() + 5 * 60000;
+    parsed > now - 90 * 86400000 && parsed <= now;
 }
 
-export function validateEvent(raw: unknown): ValidationResult {
+export function validateEvent(raw: unknown, now = Date.now()): ValidationResult {
   if (!isRecord(raw)) {
     return { ok: false, error: 'event must be an object' };
   }
@@ -117,7 +117,7 @@ export function validateEvent(raw: unknown): ValidationResult {
   if (!isNonEmptyString(raw.contentVersion, MAX_CONTENT_VERSION_LENGTH)) {
     return { ok: false, error: 'contentVersion must be 1..64 characters' };
   }
-  if (!isIsoUtcTimestamp(raw.timestampUtc)) {
+  if (!isIsoUtcTimestamp(raw.timestampUtc, now)) {
     return { ok: false, error: 'timestampUtc must be an ISO-8601 timestamp' };
   }
 
@@ -188,7 +188,8 @@ export function validateEvent(raw: unknown): ValidationResult {
       contentVersion: raw.contentVersion as string,
       itemId,
       itemIndex,
-      timestampUtc: raw.timestampUtc as string,
+      // Persist the same millisecond precision used for validation and expiry.
+      timestampUtc: new Date(Date.parse(raw.timestampUtc as string)).toISOString(),
       kind,
       outcome,
       reason,

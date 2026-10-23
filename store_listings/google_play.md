@@ -65,7 +65,7 @@ Politica este disponibilă în aplicație și la https://didactiv.ro/confidentia
 | Criptează datele în tranzit? | Da — analiza pseudonimă și linkurile DOOM folosesc HTTPS |
 | Utilizatorul poate șterge datele? | Da — din secțiunea Setări, datele legate de această instalare pot fi șterse |
 | Colectează date de localizare? | Nu |
-| Colectează date personale? | Nu |
+| Colectează date personale? | Clasificare în așteptarea revizuirii — date OPȚIONALE PSEUDONIME ale instalării; nu declara „Nu” înainte de verificarea categoriilor Google Play |
 | Colectează date financiare? | Nu |
 | Colectează date de sănătate? | Nu |
 | Colectează mesaje sau emailuri? | Nu |
@@ -74,7 +74,7 @@ Politica este disponibilă în aplicație și la https://didactiv.ro/confidentia
 | Colectează istoric de navigare? | Nu |
 | Colectează contacte? | Nu |
 | Colectează date de activitate fizică? | Nu |
-| Colectează date de identificare a dispozitivului? | Nu (doar un identificator de instalare generat aleatoriu, numai la activare) |
+| Colectează date de identificare a dispozitivului? | Clasificare în așteptarea revizuirii — identificator aleatoriu persistent al instalării, OPȚIONAL și PSEUDONIM; verificare necesară pentru „Device or other IDs” înainte de trimitere |
 | Colectează date de performanță a aplicației? | Nu |
 
 ## Clasificare conținut
@@ -147,6 +147,6 @@ un cont. Consimțământul este cerut doar pentru analiza pseudonimă opțional�
 
 ## Revizuire obligatorie înainte de lansare (#60)
 
-Datele legate de instalare sunt pseudonime, nu complet anonime. Evenimentele sunt păstrate 90 de zile, apoi eliminate prin operațiunea zilnică (până la o zi suplimentară; monitorizare obligatorie). Credențialele inactive expiră după 90 de zile fără trimitere, fără evenimente rămase. Ștergerea elimină datele încă legate; o înregistrare minimă de revocare rămâne 91 de zile pentru blocarea retransmiterilor. Totalurile deja separate de instalare, cu minimum cinci instalări distincte per grup, nu pot fi retrase ulterior. Detalii și limite: [politica de confidențialitate](privacy_policy.md).
+Datele legate de instalare sunt pseudonime, nu complet anonime. Evenimentele sunt păstrate 90 de zile, apoi eliminate prin operațiunea zilnică (până la o zi suplimentară; monitorizare obligatorie). Credențialele inactive expiră după 90 de zile fără trimitere, fără evenimente rămase. Ștergerea elimină datele încă legate; o înregistrare minimă de revocare expiră la 90 de zile de la prima cerere, fără prelungire la repetare, și este eliminată prin aceeași operațiune zilnică (defecțiunile pot întârzia ștergerea). Serverul respinge datele din viitor și pe cele vechi de cel puțin 90 de zile; nu există o excepție suplimentară de păstrare a credențialelor. Totalurile deja separate de instalare, cu minimum cinci instalări distincte per grup, nu pot fi retrase ulterior. Detalii și limite: [politica de confidențialitate](privacy_policy.md).
 
 Acestea sunt texte propuse, nu declarații deja aprobate sau modificate în console. Confirmarea tutorelui este autodeclarată. Sunt obligatorii aprobarea manuală juridică/de confidențialitate pentru copii și a politicilor magazinelor, clasificarea exactă App Privacy/Data Safety, publicarea politicii canonice și testele manuale acord/offline/ștergere. Nicio aprobare manuală nu este afirmată aici.

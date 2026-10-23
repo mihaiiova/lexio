@@ -1,6 +1,6 @@
 import worker from '../src/index';
 import { SELF, env, applyD1Migrations } from 'cloudflare:test';
-import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -227,6 +227,61 @@ describe('scheduled purge', () => {
       .bind(eventId, gameId, timestampUtc, kind)
       .run();
   }
+
+  it('normalizes timestamp precision and enforces exact ingestion horizon', async () => {
+    const now = Date.parse('2026-05-01T12:00:00.123Z');
+    vi.useFakeTimers({toFake: ['Date']});
+    vi.setSystemTime(now);
+    try {
+      for (const [timestampUtc, status] of [
+        [new Date(now - 90 * DAY_MS - 1).toISOString(), 400],
+        [new Date(now - 90 * DAY_MS).toISOString(), 400],
+        [new Date(now - 90 * DAY_MS + 1).toISOString(), 202],
+        ['2026-05-01T12:00:00.123000Z', 202],
+        ['2026-05-01T12:00:00.124000Z', 400],
+      ] as const) {
+        const response = await worker.fetch(new Request('https://example.com/v1/events', {
+          method: 'POST', body: JSON.stringify({deletionSecret: 'a'.repeat(64), events: [makeEvent({timestampUtc})]}),
+        }), env);
+        expect(response.status).toBe(status);
+      }
+      expect((await env.DB.prepare('SELECT timestamp_utc FROM events ORDER BY timestamp_utc').all()).results)
+        .toEqual([{timestamp_utc: '2026-01-31T12:00:00.124Z'}, {timestamp_utc: '2026-05-01T12:00:00.123Z'}]);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('expires tombstones at 90 days without permitting original-payload replay', async () => {
+    const now = Date.now();
+    vi.useFakeTimers({toFake: ['Date']});
+    vi.setSystemTime(now);
+    const submit = (event: Record<string, unknown>) => worker.fetch(new Request('https://example.com/v1/events', {
+      method: 'POST', body: JSON.stringify({deletionSecret: 'a'.repeat(64), events: [event]}),
+    }), env);
+    try {
+      const original = makeEvent({timestampUtc: new Date(now).toISOString()});
+      expect((await submit(original)).status).toBe(202);
+      for (const ahead of [1, 4 * 60 * 1000]) {
+        expect((await submit(makeEvent({timestampUtc: new Date(now + ahead).toISOString()}))).status).toBe(400);
+      }
+      expect((await worker.fetch(new Request('https://example.com/v1/delete', {
+        method: 'POST', body: JSON.stringify({installationId: 'inst_1', deletionSecret: 'a'.repeat(64)}),
+      }), env)).status).toBe(200);
+      vi.setSystemTime(now + 90 * DAY_MS - 1);
+      await worker.scheduled({} as ScheduledEvent, env);
+      expect((await submit(original)).status).toBe(410);
+      vi.setSystemTime(now + 90 * DAY_MS);
+      await worker.scheduled({} as ScheduledEvent, env);
+      expect(await env.DB.prepare('SELECT installation_id FROM installations').first()).toBeNull();
+      expect((await submit(original)).status).toBe(400);
+      vi.setSystemTime(now + 90 * DAY_MS + 1);
+      expect((await submit(original)).status).toBe(400);
+      expect(await env.DB.prepare('SELECT installation_id FROM installations').first()).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 
   it('suppresses many events from only one installation', async () => {
     const old = new Date(Date.now() - 100 * DAY_MS).toISOString();
