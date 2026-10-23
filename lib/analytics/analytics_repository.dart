@@ -38,6 +38,7 @@ final class AnalyticsRepository {
   final Random _random;
   final DateTime Function() _clock;
   bool _snapshotDurable = false;
+  int _snapshotRevision = 0;
   final AnalyticsEventQueue _queue = AnalyticsEventQueue();
 
   ConsentState _consent;
@@ -295,6 +296,7 @@ final class AnalyticsRepository {
   Future<void> _persistQueue() {
     _snapshotDurable = false;
     final generation = _generation;
+    final revision = ++_snapshotRevision;
     _queueWrites = _queueWrites.then((_) async {
       try {
         if (_queueStorage == null) return;
@@ -305,7 +307,9 @@ final class AnalyticsRepository {
             'pendingRound': _pendingRound?.toJson(),
           }),
         );
-        if (generation == _generation) _snapshotDurable = true;
+        if (generation == _generation && revision == _snapshotRevision) {
+          _snapshotDurable = true;
+        }
       } catch (_) {
         _snapshotDurable = false;
         // No send until the complete snapshot is durable. Total I/O failure
@@ -455,7 +459,7 @@ final class AnalyticsRepository {
   }) {
     final pending = _pendingRound;
     return AnalyticsEvent(
-      // One terminal identity survives a crash between queue and pending writes.
+      // Legacy terminal retries and snapshot replays share one identity.
       eventId: kind == AnalyticsEventKind.roundEnded
           ? sessionId
           : _randomToken(),

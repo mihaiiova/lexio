@@ -221,6 +221,69 @@ void main() {
       },
     );
 
+    test(
+      'crash between answer and resolution delivery preserves both IDs',
+      () async {
+        final consent = _MemoryConsentStorage();
+        final queue = _MemoryConsentStorage();
+        final offline = _FakeTransport()..sendFailures = 10000;
+        final repo = await AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: offline,
+        );
+        await repo.enable();
+        await repo.startRound(gameId: 'grammar', contentVersion: '1');
+        // 99 preceding events place the pair across the 100-event send boundary.
+        for (var i = 0; i < 98; i++) {
+          await repo.itemShown(itemId: 'item_$i', itemIndex: i);
+        }
+        await repo.itemAnswered(
+          itemId: 'item_97',
+          itemIndex: 97,
+          outcome: AnalyticsOutcome.wrong,
+        );
+        await repo.flush();
+        final server = _FakeTransport();
+        final sender = await AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: server,
+        );
+        await sender.flush();
+        final sent = server.sentBatches.expand((b) => b).toList();
+        expect(sent.last.kind, AnalyticsEventKind.itemAnswered);
+        final snapshot = queue.value;
+        final replayIds = <String>[];
+        for (var attempt = 0; attempt < 2; attempt++) {
+          final interruptedQueue = _MemoryConsentStorage()..value = snapshot;
+          final recovered = await AnalyticsRepository.load(
+            storage: consent,
+            queueStorage: interruptedQueue,
+            pendingRoundStorage: _MemoryPendingRoundStorage(),
+            transport: server,
+          );
+          await recovered.itemShown(itemId: 'next', itemIndex: 98);
+          await recovered.reconcileInterruptedRound();
+          await recovered.flush();
+          final resolutions = server.sentBatches
+              .expand((b) => b)
+              .where((e) => e.kind == AnalyticsEventKind.itemResolved)
+              .toList();
+          replayIds.add(resolutions.last.eventId);
+        }
+        expect(replayIds.toSet(), hasLength(1));
+        final answers = server.sentBatches
+            .expand((b) => b)
+            .where((e) => e.kind == AnalyticsEventKind.itemAnswered)
+            .toList();
+        expect(answers, hasLength(1));
+        expect(answers.single.outcome, AnalyticsOutcome.wrong);
+      },
+    );
+
     test('defaults to off and undecided when storage is empty', () async {
       final repo = await AnalyticsRepository.load(
         queueStorage: _MemoryConsentStorage(),
