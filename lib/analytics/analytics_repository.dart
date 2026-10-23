@@ -410,6 +410,78 @@ final class AnalyticsRepository {
     await _commitEvents([answered, resolved]);
   });
 
+  /// One in-play press. Word positions are used only for local deduplication.
+  /// The discovery flag observes gameplay; it does not change scoring sets.
+  Future<void> spotAttempt({
+    required String itemId,
+    required int itemIndex,
+    required int wordPosition,
+    required bool newlyCorrect,
+    required bool isWrong,
+    bool resolvesItem = false,
+  }) => _sessionAction(() async {
+    final pending = _pendingRound;
+    if (pending == null ||
+        pending.gameId != 'spot' ||
+        pending.lastShownItemId != itemId ||
+        pending.lastShownItemIndex != itemIndex ||
+        wordPosition < 0 ||
+        (newlyCorrect && isWrong))
+      return;
+    final key = '$itemIndex:$wordPosition';
+    final distinctWrong = isWrong && !pending.spotWrongPositions.contains(key);
+    final resolves = resolvesItem && !pending.itemResolved;
+    _pendingRound = pending.copyWith(
+      lastActivityAtUtc: _clock().toUtc(),
+      itemResolved: pending.itemResolved || resolves,
+      spotWrongPositions: distinctWrong
+          ? Set.unmodifiable({...pending.spotWrongPositions, key})
+          : pending.spotWrongPositions,
+    );
+    await _commitEvents([
+      _newEvent(
+        sessionId: pending.sessionId,
+        kind: AnalyticsEventKind.spotAttempt,
+        itemId: itemId,
+        itemIndex: itemIndex,
+        attemptDelta: 1,
+        correctDiscoveryDelta: newlyCorrect ? 1 : 0,
+        distinctWrongDelta: distinctWrong ? 1 : 0,
+      ),
+      if (resolves)
+        _newEvent(
+          sessionId: pending.sessionId,
+          kind: AnalyticsEventKind.itemResolved,
+          itemId: itemId,
+          itemIndex: itemIndex,
+        ),
+    ]);
+  });
+
+  /// Explicit text completion, including an already-complete empty-mistake text.
+  Future<void> itemResolved({required String itemId, required int itemIndex}) =>
+      _sessionAction(() async {
+        final pending = _pendingRound;
+        if (pending == null ||
+            pending.itemResolved ||
+            pending.gameId != 'spot' ||
+            pending.lastShownItemId != itemId ||
+            pending.lastShownItemIndex != itemIndex)
+          return;
+        _pendingRound = pending.copyWith(
+          itemResolved: true,
+          lastActivityAtUtc: _clock().toUtc(),
+        );
+        await _commitEvents([
+          _newEvent(
+            sessionId: pending.sessionId,
+            kind: AnalyticsEventKind.itemResolved,
+            itemId: itemId,
+            itemIndex: itemIndex,
+          ),
+        ]);
+      });
+
   Future<void> endRound({
     required AnalyticsRoundEndReason reason,
     String? itemId,
@@ -456,6 +528,9 @@ final class AnalyticsRepository {
     AnalyticsRoundEndReason? reason,
     AnalyticsItemState? itemState,
     DateTime? timestampUtc,
+    int? attemptDelta,
+    int? correctDiscoveryDelta,
+    int? distinctWrongDelta,
   }) {
     final pending = _pendingRound;
     return AnalyticsEvent(
@@ -474,6 +549,9 @@ final class AnalyticsRepository {
       outcome: outcome,
       reason: reason,
       itemState: itemState,
+      attemptDelta: attemptDelta,
+      correctDiscoveryDelta: correctDiscoveryDelta,
+      distinctWrongDelta: distinctWrongDelta,
     );
   }
 

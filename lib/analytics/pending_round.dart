@@ -17,6 +17,7 @@ final class PendingRound {
     this.lastShownItemId,
     this.lastShownItemIndex,
     this.itemResolved = false,
+    this.spotWrongPositions = const {},
   });
 
   final String sessionId;
@@ -29,11 +30,15 @@ final class PendingRound {
   final int? lastShownItemIndex;
   final bool itemResolved;
 
+  // Device-only text/position keys; never included in event payloads.
+  final Set<String> spotWrongPositions;
+
   PendingRound copyWith({
     DateTime? lastActivityAtUtc,
     String? lastShownItemId,
     int? lastShownItemIndex,
     bool? itemResolved,
+    Set<String>? spotWrongPositions,
   }) {
     return PendingRound(
       sessionId: sessionId,
@@ -45,6 +50,7 @@ final class PendingRound {
       lastShownItemId: lastShownItemId ?? this.lastShownItemId,
       lastShownItemIndex: lastShownItemIndex ?? this.lastShownItemIndex,
       itemResolved: itemResolved ?? this.itemResolved,
+      spotWrongPositions: spotWrongPositions ?? this.spotWrongPositions,
     );
   }
 
@@ -58,6 +64,7 @@ final class PendingRound {
     'lastShownItemId': lastShownItemId,
     'lastShownItemIndex': lastShownItemIndex,
     'itemResolved': itemResolved,
+    'spotWrongPositions': spotWrongPositions.toList(),
   };
 
   factory PendingRound.fromJson(Map<String, dynamic> json) {
@@ -73,6 +80,9 @@ final class PendingRound {
       lastShownItemId: json['lastShownItemId'] as String?,
       lastShownItemIndex: json['lastShownItemIndex'] as int?,
       itemResolved: json['itemResolved'] as bool? ?? false,
+      spotWrongPositions: (json['spotWrongPositions'] as List? ?? const [])
+          .cast<String>()
+          .toSet(),
     );
   }
 }

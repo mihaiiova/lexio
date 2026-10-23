@@ -44,6 +44,24 @@ beforeEach(async () => {
 });
 
 describe('POST /v1/events', () => {
+  it('accepts four games and Spot deltas idempotently without raw word positions', async () => {
+    for (const gameId of ['grammar', 'vocabulary', 'idioms', 'spot']) {
+      expect((await postEvents({events: [makeEvent({gameId})]})).status).toBe(202);
+    }
+    const attempt = makeEvent({gameId: 'spot', kind: 'spot_attempt', itemId: 'text_a', itemIndex: 0,
+      attemptDelta: 1, correctDiscoveryDelta: 0, distinctWrongDelta: 1});
+    expect((await postEvents({events: [attempt, attempt]})).status).toBe(202);
+    expect(await env.DB.prepare('SELECT COUNT(*) AS n, SUM(attempt_delta) AS attempts, SUM(distinct_wrong_delta) AS wrongs FROM events WHERE kind = ?').bind('spot_attempt').first()).toMatchObject({n: 1, attempts: 1, wrongs: 1});
+    expect((await postEvents({events: [makeEvent({gameId: 'spot', kind: 'round_ended', reason: 'timeout', itemId: 'text_a', itemIndex: 0, itemState: 'unresolved'})]})).status).toBe(202);
+    for (const change of [{wordPosition: 2}, {word: 'private'}, {attemptDelta: 2},
+      {correctDiscoveryDelta: 2}, {distinctWrongDelta: -1}, {gameId: 'grammar'},
+      {correctDiscoveryDelta: 1}, {itemId: null}, {outcome: 'wrong'}]) {
+      expect((await postEvents({events: [{...attempt, ...change}]})).status).toBe(400);
+    }
+    expect((await postEvents({events: [makeEvent({gameId: 'spot', kind: 'item_answered', itemId: 'text_a', itemIndex: 0, outcome: 'correct'})]})).status).toBe(400);
+    expect((await postEvents({events: [makeEvent({attemptDelta: 1})]})).status).toBe(400);
+  });
+
   it('requires credentials and rejects mixed installations and tampered secrets', async () => {
     expect((await postEvents({deletionSecret: undefined, events: [makeEvent()]})).status).toBe(400);
     const deletionSecret = 'a'.repeat(64);
@@ -281,6 +299,32 @@ describe('scheduled purge', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('retains Spot counter sums only above five distinct installations and purges atomically', async () => {
+    const old = new Date(Date.now() - 100 * DAY_MS).toISOString();
+    for (let i = 0; i < 6; i++) {
+      await insertEvent(`spot_${i}`, old, 'spot_attempt', 'spot');
+      await env.DB.prepare('UPDATE events SET installation_id = ?, attempt_delta = 1, correct_discovery_delta = ?, distinct_wrong_delta = ? WHERE event_id = ?')
+        .bind(`inst_${i}`, i < 2 ? 1 : 0, i >= 2 ? 1 : 0, `spot_${i}`).run();
+    }
+    for (let i = 0; i < 8; i++) {
+      await insertEvent(`sparse_spot_${i}`, old, 'spot_attempt', 'spot');
+      await env.DB.prepare("UPDATE events SET item_id = 'sparse', installation_id = ?, attempt_delta = 1, correct_discovery_delta = 0, distinct_wrong_delta = 1 WHERE event_id = ?")
+        .bind(`sparse_${i % 4}`, `sparse_spot_${i}`).run();
+    }
+    await env.DB.prepare("CREATE TRIGGER fail_spot_purge BEFORE DELETE ON events BEGIN SELECT RAISE(ABORT, 'forced failure'); END").run();
+    try {
+      await expect(worker.scheduled({} as ScheduledEvent, env)).rejects.toThrow();
+      expect(await env.DB.prepare('SELECT COUNT(*) AS n FROM aggregates').first()).toMatchObject({n: 0});
+    } finally { await env.DB.prepare('DROP TRIGGER fail_spot_purge').run(); }
+    await Promise.all([worker.scheduled({} as ScheduledEvent, env), worker.scheduled({} as ScheduledEvent, env)]);
+    const rows = await env.DB.prepare("SELECT count, attempts, correct_discoveries, distinct_wrong_positions FROM aggregates WHERE scope = 'item'").all();
+    expect(rows.results).toEqual([
+      {count: 6, attempts: 6, correct_discoveries: 2, distinct_wrong_positions: 4},
+      {count: 6, attempts: 6, correct_discoveries: 2, distinct_wrong_positions: 4},
+    ]);
+    expect(await env.DB.prepare('SELECT COUNT(*) AS n FROM events').first()).toMatchObject({n: 0});
   });
 
   it('suppresses many events from only one installation', async () => {
