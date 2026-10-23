@@ -19,6 +19,7 @@ class LexioButton extends StatelessWidget {
     this.icon,
     this.isExpanded = false,
     this.isLoading = false,
+    this.wrapLabel = false,
     this.semanticLabel,
   });
 
@@ -29,6 +30,7 @@ class LexioButton extends StatelessWidget {
   final IconData? icon;
   final bool isExpanded;
   final bool isLoading;
+  final bool wrapLabel;
   final String? semanticLabel;
 
   @override
@@ -122,7 +124,8 @@ class LexioButton extends StatelessWidget {
             label,
             style: textStyle.copyWith(color: foregroundColor),
             textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
+            softWrap: wrapLabel ? true : null,
+            overflow: wrapLabel ? TextOverflow.visible : TextOverflow.ellipsis,
           ),
         ),
       ],

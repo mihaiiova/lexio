@@ -27,34 +27,137 @@ class PrivacyScreen extends StatelessWidget {
           children: const [
             _PolicyIntro(),
             _PolicySection(
-              title: "Ce date colectăm",
+              title: 'Analiza este alegerea ta',
               body:
-                  "În mod implicit nu colectăm date despre utilizarea jocurilor. Numai după activarea explicită de către părinte sau tutore, trimitem către infrastructura noastră proprie Cloudflare un identificator aleatoriu de instalare, identificatori de eveniment și rundă, jocul, versiunea conținutului, identificatorul și poziția exercițiului, data și ora UTC. Înregistrăm începutul și sfârșitul rundelor, afișarea exercițiilor, primul rezultat corect/greșit și rezolvarea sau lăsarea nerezolvată a exercițiului. Sfârșitul poate indica finalizarea, ieșirea, repornirea sau o întrerupere dedusă la următoarea lansare; nu observăm închiderea forțată în timp real. Un exercițiu fără răspuns nu este considerat greșit. Nu trimitem textele exercițiilor, răspunsurile introduse sau alese, numele, emailul, identificatori publicitari ori locația. Progresul complet și scorurile rămân locale, dar rezultatele limitate corect/greșit descrise mai sus sunt transmise dacă analiza este activată.",
+                  'Analiza utilizării este oprită implicit. Trimitem date despre jocuri '
+                  'numai după ce alegi să o permiți. Refuzul nu schimbă jocurile sau '
+                  'funcțiile disponibile. Jocurile și progresul funcționează local și '
+                  'offline. Nu trimitem ulterior utilizarea dinaintea acordului.',
             ),
             _PolicySection(
-              title: "Analiza opțională și alegerea ta",
+              title: 'Ce informații trimitem',
               body:
-                  "Scopul este asigurarea calității exercițiilor. Datele sunt pseudonime, nu complet anonime: evenimentele aceleiași instalări pot fi corelate. Identificatorul nu reprezintă o persoană și nu unește dispozitivele; reinstalarea poate genera alt identificator. Confirmarea părintelui sau tutorelui este autodeclarată, nu verificată și nu reprezintă o garanție de conformitate legală. Poți retrage acordul din Setări. Colectarea se oprește imediat și coada locală este golită. Dacă salvarea retragerii eșuează, aplicația avertizează să reîncerci înainte de închidere: o eroare totală de stocare poate păstra vechea setare după relansare. Ștergerea serverului necesită conexiune; până la confirmare, păstrăm local doar identificatorul și secretul necesar reîncercării, iar reactivarea este blocată. După confirmare și curățarea locală, reactivarea creează o instalare nouă. Nu recuperăm utilizarea dinaintea acordului. Coada offline este limitată și poate pierde evenimente.",
+                  'Pentru a îmbunătăți Slove, înregistrăm jocurile și rundele începute '
+                  'sau încheiate, exercițiile afișate și rezolvate, precum și rezultatul '
+                  'corect sau greșit. Înregistrăm motivul încheierii și exercițiul la '
+                  'care te-ai oprit. Un exercițiu fără răspuns nu este considerat greșit. '
+                  'O întrerupere poate fi dedusă la următoarea lansare, nu observată '
+                  'exact în momentul închiderii.\n\n'
+                  'În «Găsește greșeala», numărăm apăsările, greșelile găsite și '
+                  'câte poziții greșite distincte au fost alese. Nu trimitem cuvintele '
+                  'apăsate sau pozițiile lor. Pentru celelalte jocuri trimitem rezultatul '
+                  'corect/greșit, nu răspunsul ales.\n\n'
+                  'Datele includ identificatori tehnici de instalare, rundă, eveniment '
+                  'și exercițiu, poziția exercițiului în rundă, versiunea conținutului '
+                  'și data și ora. Nu colectăm nume, emailuri, texte introduse, '
+                  'identificatori de publicitate sau locația. Textele exercițiilor, '
+                  'scorurile complete și progresul de învățare rămân pe dispozitiv.',
             ),
             _PolicySection(
-              title: "Păstrare și ștergere",
+              title: 'Un identificator pentru această instalare',
               body:
-                  "Evenimentele legate de instalare sunt eliminate după 90 de zile, printr-o operațiune zilnică (poate adăuga până la o zi; o defecțiune operațională poate întârzia ștergerea). Momentul primirii pe server limitează păstrarea chiar dacă ora dispozitivului este greșită. Credențialele instalărilor inactive sunt eliminate după 90 de zile fără trimitere și după eliminarea evenimentelor legate. Ștergerea din Setări elimină evenimentele încă legate de instalare. Pentru a bloca retransmiterile întârziate, serverul păstrează identificatorul, amprenta secretului de ștergere și datele tehnice ale revocării timp de 90 de zile de la prima cerere, apoi le elimină. Cererile repetate nu prelungesc perioada. Și aceste înregistrări sunt eliminate prin operațiunea zilnică, cu aceleași limite operaționale. Serverul respinge datele din viitor și pe cele vechi de cel puțin 90 de zile; precizia este normalizată la milisecunde. Nu există o zi suplimentară de păstrare a credențialelor. După această limită, retransmiterile originale sunt prea vechi, dar serverul nu poate recunoaște date noi falsificate cu o identitate expirată. Pot rămâne totaluri agregate pe zi/săptămână, fără identificatori de instalare, rundă sau eveniment. Fiecare grup păstrat necesită cel puțin cinci instalări distincte; grupurile rare sunt eliminate. Totalurile includ tipuri de evenimente, rezultate, motive de încheiere, starea de rezolvare și, unde pragul este îndeplinit, versiunea, exercițiul și poziția. Aceste totaluri deja separate de instalare nu pot fi retrase prin ștergerea ulterioară.",
+                  'La activare generăm un identificator aleatoriu. El ne permite să '
+                  'grupăm evenimentele aceleiași instalări, fără să cerem un cont sau '
+                  'numele persoanei. Aceste date nu sunt complet anonime: pot fi '
+                  'legate de instalare. Nu unim activitatea de pe dispozitive diferite. '
+                  'Reinstalarea poate genera alt identificator. Rapoartele sunt '
+                  'accesibile doar proprietarului aplicației, prin acces protejat.',
             ),
             _PolicySection(
-              title: "Găzduire și linkuri externe",
+              title: 'Cum oprești analiza',
               body:
-                  "Trimiterile folosesc HTTPS. Cloudflare poate procesa metadatele obișnuite ale conexiunii, inclusiv adresa IP, conform propriilor practici. Nu folosim IP-ul ca identitate de analiză; poate fi folosit tehnic pentru limitarea abuzului. Nu folosim datele pentru reclame și nu le vindem. Aplicația poate descărca separat actualizări statice ale exercițiilor. Linkurile DOOM se deschid în browser; site-ul extern primește metadatele obișnuite ale accesării și aplică propria politică.",
+                  'Deschide Setări și oprește «Analiză opțională». Colectarea viitoare '
+                  'se oprește imediat, iar evenimentele care așteaptă pe dispozitiv '
+                  'sunt eliminate. Pentru datele deja trimise, folosește și '
+                  '«Șterge datele de pe server».',
             ),
             _PolicySection(
-              title: "Copii și contact",
+              title: 'Cum ceri ștergerea',
               body:
-                  "Slove poate fi folosită și de copii sub 13 ani. Analiza este implicit oprită, iar activarea este adresată părintelui sau tutorelui. Această interfață nu dovedește singură consimțământul legal. Pentru întrebări: contact@didactiv.ro.",
+                  'În Setări, «Șterge datele de pe server» oprește analiza și cere '
+                  'eliminarea evenimentelor încă legate de această instalare. Este '
+                  'nevoie de internet. Dacă cererea nu reușește, păstrăm pe dispozitiv '
+                  'identificatorul și cheia necesară reîncercării. Mesajul de succes '
+                  'apare numai după confirmare și salvarea alegerii.\n\n'
+                  'Până la finalizarea ștergerii, analiza nu poate fi reactivată. '
+                  'După confirmare, reactivarea creează un identificator nou. '
+                  'Cererea privește această instalare, nu alte dispozitive.',
             ),
             _PolicySection(
-              title: "Condiție de publicare",
+              title: 'Cât timp păstrăm datele',
               body:
-                  "Acest text și declarațiile magazinelor sunt propuneri pentru revizuire. Publicarea colectorului și lansarea necesită verificare manuală juridică/de confidențialitate pentru copii, a politicilor magazinelor și a fluxurilor de acord, offline și ștergere. Nu afirmăm că aceste aprobări au avut loc. Versiunea aprobată trebuie publicată la URL-ul canonic și în aplicație înainte de lansare.",
+                  'Evenimentele legate de instalare expiră după 90 de zile. Ștergerea '
+                  'rulează zilnic, deci poate adăuga până la o zi; o defecțiune poate '
+                  'întârzia operațiunea. Folosim și momentul primirii pe server, '
+                  'pentru ca o oră greșită pe dispozitiv să nu prelungească păstrarea. '
+                  'Cheile instalărilor inactive sunt eliminate după 90 de zile fără '
+                  'trimitere, după eliminarea evenimentelor lor.\n\n'
+                  'După o cerere de ștergere, păstrăm timp de 90 de zile o înregistrare '
+                  'tehnică de blocare: identificatorul instalării, amprenta cheii de '
+                  'ștergere și data cererii. Astfel, trimiterile întârziate nu readuc '
+                  'datele șterse. Cererile repetate nu prelungesc această perioadă. '
+                  'Se aplică aceeași ștergere zilnică și aceleași posibile întârzieri. '
+                  'După expirare nu putem recunoaște date noi falsificate folosind '
+                  'un identificator vechi; trimiterile originale sunt deja prea vechi.',
+            ),
+            _PolicySection(
+              title: 'Ce poate rămâne după ștergere',
+              body:
+                  'Putem păstra totaluri pe zile sau săptămâni, separate de '
+                  'instalări: de exemplu, câte runde s-au încheiat sau câte exerciții '
+                  'au fost rezolvate. Ele nu conțin identificatori de instalare, '
+                  'rundă sau eveniment și nu mai pot fi retrase prin cererea acestei '
+                  'instalări. Totalurile pot include jocul, versiunea, exercițiul, '
+                  'poziția, rezultatul și motivul încheierii.\n\n'
+                  'Păstrăm numai grupuri cu cel puțin cinci instalări distincte. '
+                  'La numărătorile din «Găsește greșeala», fiecare numărătoare are '
+                  'nevoie de cinci instalări care au contribuit la ea. Grupurile '
+                  'rare sunt eliminate sau ascunse, nu afișate ca zero. '
+                  'De aceea, totalurile pot fi incomplete.',
+            ),
+            _PolicySection(
+              title: 'Dacă nu e internet sau alegerea nu se salvează',
+              body:
+                  'Jocurile rămân disponibile offline. Cu acordul activ, unele '
+                  'evenimente pot aștepta local până revine conexiunea. Spațiul este '
+                  'limitat, deci unele evenimente se pot pierde.\n\n'
+                  'Dacă oprirea analizei nu poate fi salvată, colectarea este oprită '
+                  'în sesiunea curentă, iar Setări arată un avertisment și o opțiune '
+                  'de reîncercare. Reîncearcă înainte de a închide aplicația: la '
+                  'redeschidere poate reveni setarea veche. Ștergerea de pe server '
+                  'necesită în continuare confirmare.',
+            ),
+            _PolicySection(
+              title: 'Găzduire și linkuri externe',
+              body:
+                  'Folosim infrastructura noastră pe Cloudflare și conexiuni HTTPS. '
+                  'Cloudflare poate procesa metadatele obișnuite ale conexiunii, '
+                  'inclusiv adresa IP. Nu folosim IP-ul ca identificator de analiză; '
+                  'poate fi folosit pentru protecția împotriva abuzului. Nu folosim '
+                  'datele pentru reclame și nu le vindem.\n\n'
+                  'Aplicația poate descărca separat actualizări statice ale '
+                  'exercițiilor. Linkurile DOOM se deschid în browser, unde site-ul '
+                  'extern primește datele obișnuite ale accesării și aplică propria '
+                  'politică de confidențialitate.',
+            ),
+            _PolicySection(
+              title: 'Pentru părinți sau tutori',
+              body:
+                  'Slove poate fi folosită și de copii sub 13 ani. Această opțiune '
+                  'este adresată părinților sau tutorilor, dar nu verifică vârsta '
+                  'sau identitatea. Înainte de activarea colectării pentru copii, '
+                  'trebuie verificate cerințele de acord parental, confidențialitate '
+                  'și regulile magazinelor. Aceste verificări nu sunt înlocuite de '
+                  'alegerea unui buton.',
+            ),
+            _PolicySection(
+              title: 'Întrebări și contact',
+              body:
+                  'Ne poți scrie la contact@didactiv.ro. Politica publică este la '
+                  'https://didactiv.ro/confidentialitate/slove/. Textul și '
+                  'declarațiile magazinelor necesită revizuire înainte de '
+                  'activarea colectorului și publicare; această pagină nu afirmă '
+                  'că verificările au fost finalizate.',
             ),
           ],
         ),
@@ -86,9 +189,8 @@ class _PolicyIntro extends StatelessWidget {
         ),
         const SizedBox(height: LexioSpacing.lg),
         Text(
-          'Slove este dezvoltată de un creator independent. Această politică '
-          'explică simplu ce informații folosim și ce rămâne doar pe '
-          'dispozitivul tău.',
+          'Slove este dezvoltată de un creator independent. Aici explicăm '
+          'ce informații folosim și cum îți poți schimba alegerea.',
           style: LexioTextStyles.bodyMedium.copyWith(
             color: LexioColors.textSecondary,
           ),

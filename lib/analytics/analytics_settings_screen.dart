@@ -5,8 +5,9 @@ import '../design/components/lexio_button.dart';
 import '../design/components/lexio_card.dart';
 import '../design/spacing.dart';
 import '../design/typography.dart';
+import '../privacy/privacy_screen.dart';
+import 'analytics_consent_screen.dart';
 import 'analytics_repository.dart';
-import 'analytics_consent_dialog.dart';
 
 /// Settings section for installation-linked, opt-in analytics.
 ///
@@ -71,29 +72,19 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                   ),
                   const SizedBox(height: LexioSpacing.sm),
                   Text(
-                    'Doar cu acordul tău, înregistrăm utilizarea exercițiilor '
-                    'pentru a asigura calitatea exercițiilor. Nu colectăm textele '
-                    'exercițiilor, răspunsurile tale sau date de contact.',
+                    'Analiza utilizării ne ajută să îmbunătățim jocurile. '
+                    'Nu colectăm nume, răspunsuri sau texte introduse. '
+                    'Jocurile funcționează la fel și fără acord.',
                     style: LexioTextStyles.bodyMedium.copyWith(
                       color: LexioColors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: LexioSpacing.sm),
                   Text(
-                    'Confirmarea este dată de părinte sau tutore și este '
-                    'declarată pe proprie răspundere.',
+                    'Opțiunea este pentru părinți sau tutori. '
+                    'Poți opri analiza oricând.',
                     style: LexioTextStyles.bodySmall.copyWith(
                       color: LexioColors.textTertiary,
-                    ),
-                  ),
-                  const SizedBox(height: LexioSpacing.sm),
-                  Text(
-                    'Datele sunt legate de un identificator aleatoriu al acestei '
-                    'instalări, nu al unei persoane, timp de cel mult 90 de zile. '
-                    'Apoi pot rămâne doar totaluri fără legătură cu instalarea. '
-                    'Jocul funcționează și fără acord sau internet.',
-                    style: LexioTextStyles.bodySmall.copyWith(
-                      color: LexioColors.textSecondary,
                     ),
                   ),
                   if (analytics.consentPersistenceFailed) ...[
@@ -108,6 +99,7 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                     ),
                     LexioButton(
                       label: 'Reîncearcă salvarea opririi',
+                      wrapLabel: true,
                       variant: LexioButtonVariant.secondary,
                       onPressed: () => _setConsent(false),
                     ),
@@ -127,6 +119,7 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                     const SizedBox(height: LexioSpacing.lg),
                     LexioButton(
                       label: 'Șterge datele de pe server',
+                      wrapLabel: true,
                       variant: LexioButtonVariant.danger,
                       size: LexioButtonSize.medium,
                       isExpanded: true,
@@ -137,6 +130,17 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                 ],
               ),
             ),
+            const SizedBox(height: LexioSpacing.md),
+            TextButton(
+              onPressed: () => Navigator.of(context).push<void>(
+                MaterialPageRoute(builder: (_) => const PrivacyScreen()),
+              ),
+              child: Text(
+                'Detalii despre confidențialitate',
+                textAlign: TextAlign.center,
+                style: LexioTextStyles.labelMedium,
+              ),
+            ),
           ],
         ),
       ),
@@ -145,7 +149,7 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
 
   Future<void> _setConsent(bool enabled) async {
     if (enabled) {
-      await showAnalyticsConsentDialog(context, widget.analytics);
+      await showAnalyticsConsentScreen(context, widget.analytics);
     } else {
       await widget.analytics.disable();
     }
