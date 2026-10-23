@@ -1,5 +1,6 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 import type { Env } from './index';
+import { QueryError, recentReport } from './report_queries';
 
 // One bounded, public-key-only cache; never retain tokens or owner identity.
 let keyCache: {issuer: string; keys: ReturnType<typeof createRemoteJWKSet>} | undefined;
@@ -31,6 +32,15 @@ export async function handleReport(request: Request, env: Env): Promise<Response
   const path = new URL(request.url).pathname;
   if (request.method === 'GET' && ['/private/report', '/private/report/'].includes(path)) {
     return reportResponse('<!doctype html><html lang="ro"><meta charset="utf-8"><title>Raport privat</title><h1>Raport privat</h1></html>', 200, 'text/html');
+  }
+  if (request.method === 'GET' && path === '/private/report/api/recent') {
+    try {
+      const body = JSON.stringify(await recentReport(new URL(request.url), env));
+      if (new TextEncoder().encode(body).length > 256000) throw new QueryError(422);
+      return reportResponse(body);
+    } catch (error) {
+      return reportResponse('{"error":"Interogare indisponibilă. Restrângeți filtrele."}', error instanceof QueryError ? error.status : 503);
+    }
   }
   return reportResponse('{"error":"Indisponibil"}', 404);
 }

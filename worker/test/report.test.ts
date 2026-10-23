@@ -37,3 +37,38 @@ it('cryptographically gates every private entry before database access', async (
   expect(page.headers.get('content-security-policy')).toContain("default-src 'none'");
   expect((await get('/unknown', await token())).status).toBe(404);
 });
+
+it('summarizes retained four-game sessions with separate units, filters and stable pagination', async () => {
+  const jwt = await token();
+  const timestamp = new Date(Date.now()-86400000).toISOString();
+  let n = 0;
+  async function insert(game: string, session: string, kind: string, extra: Record<string, unknown> = {}) {
+    const e = {item: null, index: null, outcome: null, reason: null, attempts: null, discoveries: null, wrongs: null, ...extra};
+    await env.DB.prepare(`INSERT INTO events(event_id, installation_id, session_id, game_id, content_version, timestamp_utc, kind, item_id, item_index, outcome, reason, attempt_delta, correct_discovery_delta, distinct_wrong_delta) VALUES (?, ?, ?, ?, 'v1', ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+      .bind(`fixture-${n++}`, 'install-a', session, game, timestamp, kind, e.item, e.index, e.outcome, e.reason, e.attempts, e.discoveries, e.wrongs).run();
+  }
+  for (const game of ['grammar', 'vocabulary', 'idioms', 'spot']) {
+    await insert(game, game, 'round_started');
+    await insert(game, game, 'item_shown', {item: '<img src=x onerror=alert(1)>', index: 0});
+    if (game !== 'spot') {
+      await insert(game, game, 'item_answered', {item: '<img src=x onerror=alert(1)>', index: 0, outcome: 'correct'});
+      await insert(game, game, 'item_resolved', {item: '<img src=x onerror=alert(1)>', index: 0});
+      await insert(game, game, 'round_ended', {reason: 'completed'});
+    } else {
+      for (const [discoveries, wrongs] of [[1,0],[0,0],[0,1],[0,0]]) await insert(game, game, 'spot_attempt', {item: '<img src=x onerror=alert(1)>', index: 0, attempts: 1, discoveries, wrongs});
+    }
+  }
+  const first = await (await get('/api/recent?limit=2', jwt)).json() as any;
+  expect(first.sessions).toHaveLength(2);
+  expect(first.summary.grammar).toMatchObject({started: 1, completed: 1, shown: 1, resolved: 1, left: 0, correct: 1, wrong: 0});
+  expect(first.summary.spot).toMatchObject({started: 1, inProgress: 1, shown: 1, resolved: 0, left: 1, attempts: 4, discoveries: 1, distinctWrong: 1});
+  const second = await (await get(`/api/recent?limit=2&cursor=${encodeURIComponent(first.nextCursor)}`, jwt)).json() as any;
+  expect(new Set([...first.sessions, ...second.sessions].map((s: any) => s.game)).size).toBe(4);
+  const filtered = await (await get('/api/recent?game=spot&version=v1&installation=install-a', jwt)).json() as any;
+  expect(filtered.sessions).toHaveLength(1);
+  expect(filtered.sessions[0]).toMatchObject({status: 'in_progress', lastItem: '<img src=x onerror=alert(1)>', missingStart: false});
+  expect(JSON.stringify(filtered)).not.toContain('fixture-');
+  for (const query of ['game=evil', 'sql=SELECT', 'sort=installation', 'limit=1000', 'from=2020-01-01&to=2026-01-01', 'version=', 'game=spot&game=grammar']) {
+    expect((await get(`/api/recent?${query}`, jwt)).status).toBe(400);
+  }
+});
