@@ -1,0 +1,40 @@
+import {test, expect} from '@playwright/test';
+const metrics = {started:1,completed:0,ended:0,inProgress:1,missingStart:0,shown:1,resolved:0,left:1,correct:0,wrong:0,attempts:4,discoveries:1,distinctWrong:1};
+const malicious = '<img src=x onerror="window.injected=true">';
+test('filters, installation drilldown, summary units and safe in-progress rendering', async ({page}) => {
+  const urls: URL[] = [];
+  await page.route('**/api/recent*', route => {
+    urls.push(new URL(route.request().url()));
+    return route.fulfill({json:{summary:{spot:{...metrics,endedByReason:{}}},sessions:[{installation:malicious,session:'s1',game:'spot',version:'v1',lastActivity:'2026-10-22T01:00:00.000Z',lastItem:malicious,status:'in_progress',missingStart:true,metrics,items:[{id:malicious,index:0,...metrics}]}],nextCursor:null}});
+  });
+  await page.goto('/private/report/');
+  await expect(page.getByRole('heading',{name:'General — numai instalări cu acord'})).toBeVisible();
+  await expect(page.getByText('În desfășurare / final necunoscut', {exact:false})).toBeVisible();
+  await expect(page.getByText('Apăsări acceptate: 4', {exact:false}).first()).toBeVisible();
+  await expect(page.getByText('Descoperiri distincte: 1', {exact:false}).first()).toBeVisible();
+  await expect(page.getByText('Poziții greșite distincte pe rundă: 1', {exact:false}).first()).toBeVisible();
+  await page.getByLabel('De la (UTC, inclusiv)').fill('2026-10-01');
+  await page.getByLabel('Până la (UTC, exclusiv)').fill('2026-10-20');
+  await page.getByLabel('Joc').selectOption('spot');
+  await page.getByLabel('Versiune conținut').fill('v1');
+  await page.getByRole('button',{name:'Aplică filtrele'}).click();
+  await expect.poll(() => urls.at(-1)?.searchParams.get('from')).toBe('2026-10-01');
+  expect(urls.at(-1)?.searchParams.get('to')).toBe('2026-10-20');
+  expect(urls.at(-1)?.searchParams.get('game')).toBe('spot');
+  expect(urls.at(-1)?.searchParams.get('version')).toBe('v1');
+  await page.getByRole('button',{name:'Vezi această instalare'}).click();
+  await expect.poll(() => urls.at(-1)?.searchParams.get('installation')).toBe(malicious);
+  expect(await page.evaluate(() => (window as any).injected)).toBeUndefined();
+  await expect(page.locator('img')).toHaveCount(0);
+});
+test('empty, denied and historical suppression are explicit', async ({page}) => {
+  await page.route('**/api/recent*', r => r.fulfill({json:{summary:{},sessions:[],nextCursor:null}}));
+  await page.route('**/api/history', r => r.fulfill({json:{weeks:[{bucket:'week:2026-W20',game:'spot',partial:true,shown:6,attempts:6,discoveries:null,distinctWrong:null}]}}));
+  await page.goto('/private/report/');
+  await expect(page.getByText('Nu există sesiuni în interval.')).toBeVisible();
+  await page.getByRole('button',{name:'Istoric săptămânal fix'}).click();
+  await expect(page.getByText('Descoperiri distincte: suprimat / necunoscut', {exact:false})).toBeVisible();
+  await page.route('**/api/recent*', r => r.fulfill({status:403,json:{error:'Acces refuzat'}}));
+  await page.getByRole('button',{name:'Aplică filtrele'}).click();
+  await expect(page.getByRole('status')).toHaveText('Acces refuzat. Autentificați-vă din nou prin Access.');
+});
