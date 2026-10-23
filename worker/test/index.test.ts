@@ -154,6 +154,19 @@ describe('POST /v1/delete', () => {
     expect((await postEvents({deletionSecret: body.deletionSecret, events: [makeEvent({installationId: body.installationId})]})).status).toBe(410);
   });
 
+  it('cannot recreate linked records when ingestion overlaps authenticated deletion', async () => {
+    const deletionSecret = 'd'.repeat(64);
+    const event = makeEvent({installationId: 'overlap'});
+    expect((await postEvents({deletionSecret, events: [event]})).status).toBe(202);
+    const [, deletion] = await Promise.all([
+      postEvents({deletionSecret, events: [makeEvent({installationId: 'overlap'})]}),
+      SELF.fetch('https://example.com/v1/delete', {method: 'POST', body: JSON.stringify({installationId: 'overlap', deletionSecret})}),
+    ]);
+    expect(deletion.status).toBe(200);
+    expect((await postEvents({deletionSecret, events: [event]})).status).toBe(410);
+    expect(await env.DB.prepare("SELECT COUNT(*) AS count FROM events WHERE installation_id = 'overlap'").first()).toMatchObject({count: 0});
+  });
+
   it('authorizes deletion only with the matching secret', async () => {
     await registerInstallation('c'.repeat(64));
 
@@ -265,6 +278,14 @@ describe('scheduled purge', () => {
       {item_id: 'n1', item_index: 0, content_version: 'bundled', outcome: 'wrong', count: 6},
       {item_id: 'n1', item_index: 0, content_version: 'bundled', outcome: 'wrong', count: 6},
     ]);
+  });
+
+  it('uses receipt retention even for a future client timestamp and leaves recent rows', async () => {
+    await insertEvent('receipt_expired', new Date(Date.now() + 4 * 60000).toISOString());
+    await env.DB.prepare('UPDATE events SET created_at = ? WHERE event_id = ?').bind(new Date(Date.now() - 91 * DAY_MS).toISOString(), 'receipt_expired').run();
+    await insertEvent('inside_window', new Date(Date.now() - 89 * DAY_MS).toISOString());
+    await worker.scheduled({} as ScheduledEvent, env);
+    expect((await env.DB.prepare('SELECT event_id FROM events').all()).results).toEqual([{event_id: 'inside_window'}]);
   });
 
   it('purges old linked events into non-linkable aggregates', async () => {
