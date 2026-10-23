@@ -6,6 +6,38 @@ import 'package:lexio/analytics/analytics_event.dart';
 import '../support/analytics_fakes.dart';
 
 void main() {
+  test(
+    'fresh Spot replay resets local distinct positions without reusing session ids',
+    () async {
+      final transport = RecordingAnalyticsTransport();
+      final repo = await analyticsRepository(transport);
+      for (var i = 0; i < 2; i++) {
+        await repo.startRound(gameId: 'spot', contentVersion: '1');
+        await repo.itemShown(itemId: 'same_text', itemIndex: 0);
+        await repo.spotAttempt(
+          itemId: 'same_text',
+          itemIndex: 0,
+          wordPosition: 1,
+          newlyCorrect: false,
+          isWrong: true,
+        );
+      }
+      await repo.endRound(reason: AnalyticsRoundEndReason.userBack);
+      await repo.flush();
+      final attempts = transport.events
+          .where((e) => e.kind == AnalyticsEventKind.spotAttempt)
+          .toList();
+      expect(attempts.map((e) => e.distinctWrongDelta), [1, 1]);
+      expect(attempts[0].sessionId, isNot(attempts[1].sessionId));
+      expect(
+        transport.events
+            .where((e) => e.kind == AnalyticsEventKind.roundEnded)
+            .map((e) => e.reason),
+        [AnalyticsRoundEndReason.restart, AnalyticsRoundEndReason.userBack],
+      );
+    },
+  );
+
   test('Dart schema accepts only bounded Spot deltas and known game ids', () {
     final base = AnalyticsEvent(
       eventId: 'event',
