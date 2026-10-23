@@ -114,7 +114,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 gameId: 'spot',
                 screen:
                     widget.spotScreenBuilder?.call() ??
-                    SpotScreen(progressRepository: widget.progressRepository),
+                    SpotScreen(
+                      progressRepository: widget.progressRepository,
+                      analytics: _analytics,
+                    ),
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
@@ -141,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     widget.vocabularyScreenBuilder?.call() ??
                     VocabularyScreen(
                       progressRepository: widget.progressRepository,
+                      analytics: _analytics,
                     ),
               ),
               const SizedBox(height: LexioSpacing.itemGap),
@@ -152,7 +156,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 gameId: 'idioms',
                 screen:
                     widget.idiomsScreenBuilder?.call() ??
-                    IdiomsScreen(progressRepository: widget.progressRepository),
+                    IdiomsScreen(
+                      progressRepository: widget.progressRepository,
+                      analytics: _analytics,
+                    ),
               ),
               const SizedBox(height: LexioSpacing.xxl),
               _buildLegalFooter(context),
