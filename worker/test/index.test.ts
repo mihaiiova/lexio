@@ -245,10 +245,18 @@ describe('scheduled purge', () => {
       .run();
   }
 
+  it('suppresses many events from only one installation', async () => {
+    const old = new Date(Date.now() - 100 * DAY_MS).toISOString();
+    for (let i = 0; i < 6; i++) await insertEvent(`sparse_${i}`, old);
+    await worker.scheduled({} as ScheduledEvent, env);
+    expect(await env.DB.prepare('SELECT COUNT(*) AS count FROM aggregates').first()).toMatchObject({count: 0});
+  });
+
   it('purges old linked events into non-linkable aggregates', async () => {
     const oldDay = new Date(Date.now() - 100 * DAY_MS).toISOString().slice(0, 10);
     for (let i = 0; i < 6; i++) {
       await insertEvent(`old_${i}`, `${oldDay}T00:00:00.000Z`);
+      await env.DB.prepare('UPDATE events SET installation_id = ? WHERE event_id = ?').bind(`inst_${i}`, `old_${i}`).run();
     }
     await insertEvent('recent', new Date().toISOString());
 

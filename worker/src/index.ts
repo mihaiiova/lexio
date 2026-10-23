@@ -15,8 +15,8 @@ const MAX_RATE_BUCKETS = 10_000;
 const rateBuckets = new Map<string, { windowStart: number; count: number }>();
 
 // Sparse day/week cells can identify a single installation, so aggregates are
-// only recorded when a bucket has at least this many events.
-const MIN_AGGREGATE_COUNT = 5;
+// only recorded when a bucket has at least this many distinct installations.
+const MIN_AGGREGATE_INSTALLATIONS = 5;
 const RETENTION_DAYS = 90;
 
 function jsonHeaders(): Headers {
@@ -258,7 +258,7 @@ export async function purgeExpired(env: Env): Promise<number> {
   const cutoffIso = cutoff.toISOString();
 
   const dayRows = await env.DB.prepare(
-    `SELECT game_id, kind, substr(timestamp_utc, 1, 10) AS day, COUNT(*) AS count
+    `SELECT game_id, kind, substr(timestamp_utc, 1, 10) AS day, COUNT(*) AS count, COUNT(DISTINCT installation_id) AS installations
      FROM events
      WHERE timestamp_utc < ?
      GROUP BY game_id, kind, day`,
@@ -268,13 +268,13 @@ export async function purgeExpired(env: Env): Promise<number> {
 
   for (const row of dayRows.results) {
     const count = Number(row.count);
-    if (count >= MIN_AGGREGATE_COUNT) {
+    if (Number(row.installations) >= MIN_AGGREGATE_INSTALLATIONS) {
       await upsertAggregate(env, `day:${row.day}`, String(row.game_id), String(row.kind), count);
     }
   }
 
   const weekRows = await env.DB.prepare(
-    `SELECT game_id, kind, strftime('%Y-W%W', timestamp_utc) AS week, COUNT(*) AS count
+    `SELECT game_id, kind, strftime('%Y-W%W', timestamp_utc) AS week, COUNT(*) AS count, COUNT(DISTINCT installation_id) AS installations
      FROM events
      WHERE timestamp_utc < ?
      GROUP BY game_id, kind, week`,
@@ -284,7 +284,7 @@ export async function purgeExpired(env: Env): Promise<number> {
 
   for (const row of weekRows.results) {
     const count = Number(row.count);
-    if (count >= MIN_AGGREGATE_COUNT) {
+    if (Number(row.installations) >= MIN_AGGREGATE_INSTALLATIONS) {
       await upsertAggregate(env, `week:${row.week}`, String(row.game_id), String(row.kind), count);
     }
   }
