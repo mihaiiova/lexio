@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 final class PendingRound {
   const PendingRound({
     required this.sessionId,
+    required this.installationId,
     required this.gameId,
     required this.contentVersion,
     required this.startedAtUtc,
@@ -18,6 +19,7 @@ final class PendingRound {
   });
 
   final String sessionId;
+  final String installationId;
   final String gameId;
   final String contentVersion;
   final DateTime startedAtUtc;
@@ -32,6 +34,7 @@ final class PendingRound {
   }) {
     return PendingRound(
       sessionId: sessionId,
+      installationId: installationId,
       gameId: gameId,
       contentVersion: contentVersion,
       startedAtUtc: startedAtUtc,
@@ -43,6 +46,7 @@ final class PendingRound {
 
   Map<String, dynamic> toJson() => {
     'sessionId': sessionId,
+    'installationId': installationId,
     'gameId': gameId,
     'contentVersion': contentVersion,
     'startedAtUtc': startedAtUtc.toUtc().toIso8601String(),
@@ -54,6 +58,7 @@ final class PendingRound {
   factory PendingRound.fromJson(Map<String, dynamic> json) {
     return PendingRound(
       sessionId: json['sessionId'] as String,
+      installationId: json['installationId'] as String,
       gameId: json['gameId'] as String,
       contentVersion: json['contentVersion'] as String,
       startedAtUtc: DateTime.parse(json['startedAtUtc'] as String).toUtc(),

@@ -40,6 +40,7 @@ final class AnalyticsRepository {
   ConsentState _consent;
   bool _consentWasPersisted;
   PendingRound? _pendingRound;
+  bool _hasInterruptedRound = false;
   int _generation = 0;
   Future<void> _operations = Future<void>.value();
 
@@ -138,6 +139,11 @@ final class AnalyticsRepository {
       repository._pendingRound = null;
       await repository._clearPendingRoundStorage();
     }
+    if (repository._pendingRound?.installationId != consent.installationId) {
+      repository._pendingRound = null;
+      await repository._clearPendingRoundStorage();
+    }
+    repository._hasInterruptedRound = repository._pendingRound != null;
     return repository;
   }
 
@@ -209,6 +215,10 @@ final class AnalyticsRepository {
     }
     var persisted = false;
     await _serialize(() async {
+      if (_consent.installationId != identity.installationId) {
+        persisted = true;
+        return;
+      }
       try {
         await _consentStorage!.write(encodeConsentState(ConsentState.disabled));
         _consent = ConsentState.disabled;
@@ -265,8 +275,14 @@ final class AnalyticsRepository {
 
   Future<void> startRound({required String gameId, required String contentVersion}) =>
       _sessionAction(() async {
-    if (_pendingRound != null) await _endRound(AnalyticsRoundEndReason.restart);
-    _pendingRound = PendingRound(sessionId: _randomToken(), gameId: gameId,
+    if (_pendingRound != null) {
+      await _endRound(_hasInterruptedRound
+        ? AnalyticsRoundEndReason.inferredInterruption : AnalyticsRoundEndReason.restart);
+      _hasInterruptedRound = false;
+    }
+    if (!_consent.enabled) return;
+    _pendingRound = PendingRound(sessionId: _randomToken(),
+      installationId: _consent.installationId!, gameId: gameId,
       contentVersion: contentVersion, startedAtUtc: DateTime.now().toUtc());
     final event = _newEvent(sessionId: _pendingRound!.sessionId,
       kind: AnalyticsEventKind.roundStarted);
@@ -321,7 +337,11 @@ final class AnalyticsRepository {
 
   /// Called once at app launch, regardless of the interrupted game's identity.
   Future<void> reconcileInterruptedRound({String? gameId}) =>
-      _sessionAction(() => _endRound(AnalyticsRoundEndReason.inferredInterruption));
+      _sessionAction(() async {
+        if (!_hasInterruptedRound) return;
+        _hasInterruptedRound = false;
+        await _endRound(AnalyticsRoundEndReason.inferredInterruption);
+      });
 
   AnalyticsEvent _newEvent({
     required String sessionId,

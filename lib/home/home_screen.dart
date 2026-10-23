@@ -40,7 +40,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   ProgressRepository? _progress;
   AnalyticsRepository? _analytics;
   Map<String, int>? _totals;
@@ -48,7 +48,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _init();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) unawaited(_analytics?.flush());
   }
 
   Future<void> _init() async {
@@ -58,6 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
           widget.progressRepository ?? await ProgressRepository.load();
       final analytics =
           widget.analyticsRepository ?? await AnalyticsRepository.load();
+      await analytics.reconcileInterruptedRound();
+      unawaited(analytics.flush());
       if (!mounted) return;
       setState(() {
         _totals = totals;

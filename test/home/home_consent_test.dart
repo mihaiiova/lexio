@@ -39,6 +39,33 @@ void main() {
     SpotContent.seed(const []);
   });
 
+  testWidgets('launch recovers a different game once without entering Grammar', (tester) async {
+    final consent = _MemoryConsentStorage();
+    final pending = _MemoryPendingRoundStorage();
+    final first = await AnalyticsRepository.load(storage: consent,
+      pendingRoundStorage: pending, transport: _FakeTransport());
+    await first.enable();
+    await first.startRound(gameId: 'spot', contentVersion: '1');
+    await first.itemShown(itemId: 'spot_1', itemIndex: 0);
+    await first.flush();
+    final transport = _FakeTransport();
+    final relaunched = await AnalyticsRepository.load(storage: consent,
+      pendingRoundStorage: pending, transport: transport);
+    final progress = await ProgressRepository.load(storage: _MemoryProgressStorage());
+    await tester.pumpWidget(MaterialApp(home: HomeScreen(
+      analyticsRepository: relaunched, progressRepository: progress)));
+    await tester.pumpAndSettle();
+    await relaunched.flush();
+    expect(transport.events, hasLength(1));
+    expect(transport.events.single.gameId, 'spot');
+    expect(transport.events.single.reason, AnalyticsRoundEndReason.inferredInterruption);
+    expect(transport.events.single.toJson()['itemState'], 'unresolved');
+    await tester.pump();
+    await relaunched.reconcileInterruptedRound();
+    await relaunched.flush();
+    expect(transport.events, hasLength(1));
+  });
+
   testWidgets('first-launch opt-in enables collection', (tester) async {
     final analytics = await _undecidedRepo();
     final progress = await ProgressRepository.load(
@@ -133,8 +160,9 @@ Future<AnalyticsRepository> _undecidedRepo() {
 }
 
 final class _FakeTransport implements AnalyticsTransport {
+  final events = <AnalyticsEvent>[];
   @override
-  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {}
+  Future<void> sendEvents(List<AnalyticsEvent> eventsToSend, {String? deletionSecret}) async { events.addAll(eventsToSend); }
 
   @override
   Future<void> requestDeletion({
