@@ -111,3 +111,49 @@ export async function recentReport(url: URL, env: Env): Promise<unknown> {
   return {scope: 'opted_in_only', from: new Date(from).toISOString(), toExclusive: new Date(to).toISOString(), summary,
     sessions: page, nextCursor: eligible.length > limit ? sessionKey(page[page.length-1]) : null};
 }
+
+function weekBucket(time: number): string {
+  const d = new Date(time);
+  const year = d.getUTCFullYear();
+  const first = Date.UTC(year, 0, 1);
+  const firstMonday = first + ((8-new Date(first).getUTCDay())%7)*day;
+  const week = time < firstMonday ? 0 : Math.floor((time-firstMonday)/(7*day))+1;
+  return `week:${year}-W${String(week).padStart(2,'0')}`;
+}
+export async function historicalReport(url: URL, env: Env): Promise<unknown> {
+  // One canonical surface: no day/item partitions, ranges, totals, or version/installation subsets.
+  params(url, []);
+  const cutoff = Date.now()-90*day;
+  const current = weekBucket(cutoff);
+  const buckets: string[] = [];
+  for (let time = date(new Date(cutoff).toISOString().slice(0,10)); buckets.length < 52; time -= day) {
+    const bucket = weekBucket(time);
+    if (bucket !== current && !buckets.includes(bucket)) buckets.push(bucket);
+  }
+  interface AggregateRow {bucket: string; game_id: string; kind: string; outcome: string; count: number; attempts: number | null; discoveries: number | null; distinctWrong: number | null}
+  const {results} = await env.DB.prepare(`SELECT bucket, game_id, kind, outcome, SUM(count) AS count,
+    CASE WHEN COUNT(attempts) = COUNT(*) THEN SUM(attempts) ELSE NULL END AS attempts,
+    CASE WHEN COUNT(correct_discoveries) = COUNT(*) THEN SUM(correct_discoveries) ELSE NULL END AS discoveries,
+    CASE WHEN COUNT(distinct_wrong_positions) = COUNT(*) THEN SUM(distinct_wrong_positions) ELSE NULL END AS distinctWrong
+    FROM aggregates WHERE scope = 'overall' AND bucket IN (${buckets.map(() => '?').join(',')})
+    GROUP BY bucket, game_id, kind, outcome ORDER BY bucket DESC, game_id, kind, outcome LIMIT 5001`).bind(...buckets).all<AggregateRow>();
+  if (results.length > 5000) throw new QueryError(422);
+  interface Week {bucket: string; game: string; partial: true; started: number | null; ended: number | null; shown: number | null; resolved: number | null; correct: number | null; wrong: number | null; attempts: number | null; discoveries: number | null; distinctWrong: number | null}
+  const weeks = new Map<string, Week>();
+  for (const row of results) {
+    const key = JSON.stringify([row.bucket,row.game_id]);
+    let w = weeks.get(key);
+    if (!w) {
+      w = {bucket:row.bucket,game:row.game_id,partial:true,started:null,ended:null,shown:null,resolved:null,correct:null,wrong:null,attempts:null,discoveries:null,distinctWrong:null};
+      weeks.set(key,w);
+    }
+    const metric = ({round_started:'started',round_ended:'ended',item_shown:'shown',item_resolved:'resolved'} as const)[row.kind as 'round_started'];
+    if (metric) w[metric] = (w[metric] ?? 0) + row.count;
+    if (row.kind === 'item_answered' && row.game_id !== 'spot') {
+      if (row.outcome === 'correct') w.correct = (w.correct ?? 0)+row.count;
+      if (row.outcome === 'wrong') w.wrong = (w.wrong ?? 0)+row.count;
+    }
+    if (row.kind === 'spot_attempt') { w.attempts = row.attempts; w.discoveries = row.discoveries; w.distinctWrong = row.distinctWrong; }
+  }
+  return {scope:'opted_in_only', partial:true, buckets, weeks:[...weeks.values()]};
+}

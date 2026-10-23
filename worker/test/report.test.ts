@@ -72,3 +72,42 @@ it('summarizes retained four-game sessions with separate units, filters and stab
     expect((await get(`/api/recent?${query}`, jwt)).status).toBe(400);
   }
 });
+
+it('expires linked rows logically, honors deletion and labels missing starts and recovered interruptions', async () => {
+  const jwt = await token();
+  const now = Date.now();
+  const old = new Date(now - 90*86400000-1000).toISOString();
+  const recent = new Date(now - 86400000).toISOString();
+  for (const [id, time, created] of [['old-event',old,recent], ['old-receipt',recent,old], ['kept',recent,recent]]) {
+    await env.DB.prepare(`INSERT INTO events(event_id, installation_id, session_id, game_id, content_version, timestamp_utc, created_at, kind, reason, item_id, item_index, item_state) VALUES (?, 'inst-linked', ?, 'grammar', 'v1', ?, ?, 'round_ended', 'inferred_interruption', 'last-item', 3, 'unresolved')`).bind(id,id,time,created).run();
+  }
+  await env.DB.prepare(`INSERT INTO installations(installation_id, deletion_secret_hash) VALUES ('credential-only', 'never-return-this')`).run();
+  const body = await (await get('/api/recent',jwt)).json() as any;
+  expect(body.sessions).toHaveLength(1);
+  expect(body.sessions[0]).toMatchObject({session: 'kept', missingStart: true, status: 'inferred_interruption', lastItem: 'last-item'});
+  expect(JSON.stringify(body)).not.toContain('credential-only');
+  const secret = 'd'.repeat(43);
+  const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(secret)))].map(b => b.toString(16).padStart(2,'0')).join('');
+  await env.DB.prepare(`INSERT INTO installations(installation_id, deletion_secret_hash) VALUES ('inst-linked', ?)`).bind(hash).run();
+  expect((await worker.fetch(new Request('https://example.test/v1/delete', {method:'POST', body: JSON.stringify({installationId:'inst-linked',deletionSecret:secret})}), env)).status).toBe(200);
+  expect((await (await get('/api/recent?installation=inst-linked',jwt)).json() as any).sessions).toEqual([]);
+});
+
+it('offers only canonical closed weekly overall history and preserves suppressed counters', async () => {
+  const jwt = await token();
+  const old = new Date(Date.now()-100*86400000).toISOString();
+  const bucket = await env.DB.prepare(`SELECT 'week:' || strftime('%Y-W%W', ?) AS bucket`).bind(old).first<string>('bucket');
+  for (const [scope, kind, outcome, count, attempts, discoveries, wrongs] of [
+    ['overall','spot_attempt','',6,6,null,null], ['item','spot_attempt','',123,123,123,123],
+    ['overall','item_shown','',10,null,null,null], ['overall','item_answered','correct',5,null,null,null],
+  ]) {
+    await env.DB.prepare(`INSERT INTO aggregates(bucket,scope,game_id,kind,content_version,item_id,item_index,outcome,reason,item_state,count,attempts,correct_discoveries,distinct_wrong_positions) VALUES (?, ?, ?, ?, '', '', -1, ?, '', '', ?, ?, ?, ?)`)
+      .bind(bucket,scope,kind === 'item_answered' ? 'grammar':'spot',kind,outcome,count,attempts,discoveries,wrongs).run();
+  }
+  const body = await (await get('/api/history',jwt)).json() as any;
+  expect(body.weeks).toContainEqual(expect.objectContaining({bucket, game:'spot', partial:true, shown:10, attempts:6, discoveries:null, distinctWrong:null}));
+  expect(JSON.stringify(body)).not.toContain('123');
+  for (const query of ['from=2020-01-01', 'installation=inst-linked', 'version=v1', 'scope=item', 'grain=day', 'bucket='+bucket, 'cursor=x']) {
+    expect((await get('/api/history?'+query,jwt)).status).toBe(400);
+  }
+});
