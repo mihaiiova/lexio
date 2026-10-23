@@ -129,6 +129,12 @@ describe('POST /v1/events', () => {
     expect(chunks).toBeLessThan(6);
   });
 
+  it('keeps public writes disabled until the deployment safety gate is enabled', async () => {
+    for (const path of ['events', 'delete']) {
+      expect((await worker.fetch(new Request(`https://example.com/v1/${path}`, {method: 'POST', body: '{}'}), {...env, PUBLIC_ENDPOINTS_ENABLED: 'false'})).status).toBe(503);
+    }
+  });
+
   it('rejects malformed JSON', async () => {
     const response = await SELF.fetch('https://example.com/v1/events', {
       method: 'POST',

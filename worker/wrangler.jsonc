@@ -10,6 +10,7 @@
       "migrations_dir": "migrations"
     }
   ],
+  "vars": { "PUBLIC_ENDPOINTS_ENABLED": "false" },
   "triggers": {
     "crons": ["0 3 * * *"]
   }

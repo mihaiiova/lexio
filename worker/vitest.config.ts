@@ -6,7 +6,7 @@ export default defineWorkersConfig({
       workers: {
         wrangler: { configPath: './wrangler.jsonc' },
         miniflare: {
-          bindings: { RATE_LIMIT_MAX: '1000' },
+          bindings: { RATE_LIMIT_MAX: '1000', PUBLIC_ENDPOINTS_ENABLED: 'true' },
         },
       },
     },

@@ -8,6 +8,7 @@ import {
 export interface Env {
   DB: D1Database;
   RATE_LIMIT_MAX?: string;
+  PUBLIC_ENDPOINTS_ENABLED?: string;
 }
 
 const RATE_WINDOW_MS = 60_000;
@@ -109,11 +110,6 @@ function validSecret(value: unknown): value is string {
 }
 
 async function handleEvents(request: Request, env: Env): Promise<Response> {
-  const ip = request.headers.get('cf-connecting-ip') ?? 'unknown';
-  if (!allowRequest(ip, readRateLimit(env))) {
-    return jsonResponse({ error: 'rate limited' }, 429);
-  }
-
   const body = await readBoundedBody(request);
   if (!body.ok) return body.response;
 
@@ -272,6 +268,13 @@ export async function purgeExpired(env: Env): Promise<number> {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    if (request.method === 'POST' && ['/v1/events', '/v1/delete'].includes(url.pathname)) {
+      if (env.PUBLIC_ENDPOINTS_ENABLED !== 'true') return jsonResponse({error: 'deployment safety gate closed'}, 503);
+      // Isolate-local backstop only; distributed enforcement is a release gate.
+      if (!allowRequest(request.headers.get('cf-connecting-ip') ?? 'unknown', readRateLimit(env))) {
+        return jsonResponse({error: 'rate limited'}, 429);
+      }
+    }
     if (url.pathname === '/v1/events' && request.method === 'POST') {
       return handleEvents(request, env);
     }
