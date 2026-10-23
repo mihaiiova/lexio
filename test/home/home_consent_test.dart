@@ -43,8 +43,10 @@ void main() {
     'launch recovers a different game once without entering Grammar',
     (tester) async {
       final consent = _MemoryConsentStorage();
+      final queue = _MemoryConsentStorage();
       final pending = _MemoryPendingRoundStorage();
       final first = await AnalyticsRepository.load(
+        queueStorage: queue,
         storage: consent,
         pendingRoundStorage: pending,
         transport: _FakeTransport(),
@@ -55,6 +57,7 @@ void main() {
       await first.flush();
       final transport = _FakeTransport();
       final relaunched = await AnalyticsRepository.load(
+        queueStorage: queue,
         storage: consent,
         pendingRoundStorage: pending,
         transport: transport,
@@ -172,6 +175,7 @@ void main() {
 
 Future<AnalyticsRepository> _undecidedRepo() {
   return AnalyticsRepository.load(
+    queueStorage: _MemoryConsentStorage(),
     storage: _MemoryConsentStorage(),
     pendingRoundStorage: _MemoryPendingRoundStorage(),
     transport: _FakeTransport(),

@@ -13,6 +13,7 @@ final class PendingRound {
     required this.gameId,
     required this.contentVersion,
     required this.startedAtUtc,
+    this.lastActivityAtUtc,
     this.lastShownItemId,
     this.lastShownItemIndex,
     this.itemResolved = false,
@@ -23,11 +24,13 @@ final class PendingRound {
   final String gameId;
   final String contentVersion;
   final DateTime startedAtUtc;
+  final DateTime? lastActivityAtUtc;
   final String? lastShownItemId;
   final int? lastShownItemIndex;
   final bool itemResolved;
 
   PendingRound copyWith({
+    DateTime? lastActivityAtUtc,
     String? lastShownItemId,
     int? lastShownItemIndex,
     bool? itemResolved,
@@ -38,6 +41,7 @@ final class PendingRound {
       gameId: gameId,
       contentVersion: contentVersion,
       startedAtUtc: startedAtUtc,
+      lastActivityAtUtc: lastActivityAtUtc ?? this.lastActivityAtUtc,
       lastShownItemId: lastShownItemId ?? this.lastShownItemId,
       lastShownItemIndex: lastShownItemIndex ?? this.lastShownItemIndex,
       itemResolved: itemResolved ?? this.itemResolved,
@@ -50,6 +54,7 @@ final class PendingRound {
     'gameId': gameId,
     'contentVersion': contentVersion,
     'startedAtUtc': startedAtUtc.toUtc().toIso8601String(),
+    'lastActivityAtUtc': lastActivityAtUtc?.toUtc().toIso8601String(),
     'lastShownItemId': lastShownItemId,
     'lastShownItemIndex': lastShownItemIndex,
     'itemResolved': itemResolved,
@@ -62,6 +67,9 @@ final class PendingRound {
       gameId: json['gameId'] as String,
       contentVersion: json['contentVersion'] as String,
       startedAtUtc: DateTime.parse(json['startedAtUtc'] as String).toUtc(),
+      lastActivityAtUtc: DateTime.tryParse(
+        json['lastActivityAtUtc'] as String? ?? '',
+      )?.toUtc(),
       lastShownItemId: json['lastShownItemId'] as String?,
       lastShownItemIndex: json['lastShownItemIndex'] as int?,
       itemResolved: json['itemResolved'] as bool? ?? false,

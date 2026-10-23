@@ -73,6 +73,7 @@ void main() {
   ) async {
     final storage = _MemoryConsentStorage();
     final repo = await AnalyticsRepository.load(
+      queueStorage: _MemoryConsentStorage(),
       storage: storage,
       pendingRoundStorage: _MemoryPendingRoundStorage(),
       transport: _FakeTransport(),
@@ -123,6 +124,7 @@ void main() {
 
 Future<AnalyticsRepository> _repo([_FakeTransport? transport]) {
   return AnalyticsRepository.load(
+    queueStorage: _MemoryConsentStorage(),
     storage: _MemoryConsentStorage(),
     pendingRoundStorage: _MemoryPendingRoundStorage(),
     transport: transport ?? _FakeTransport(),

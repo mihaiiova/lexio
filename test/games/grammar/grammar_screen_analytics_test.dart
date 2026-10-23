@@ -60,6 +60,7 @@ void main() {
     final transport = _FakeTransport();
     final pending = _MemoryPendingRoundStorage()..writeGate = Completer<void>();
     final repo = await AnalyticsRepository.load(
+      queueStorage: _MemoryConsentStorage(),
       storage: _MemoryConsentStorage(),
       pendingRoundStorage: pending,
       transport: transport,
@@ -207,6 +208,7 @@ void main() {
   testWidgets('does not emit without consent', (tester) async {
     final transport = _FakeTransport();
     final repo = await AnalyticsRepository.load(
+      queueStorage: _MemoryConsentStorage(),
       storage: _MemoryConsentStorage(),
       pendingRoundStorage: _MemoryPendingRoundStorage(),
       transport: transport,
@@ -297,6 +299,7 @@ void main() {
 
 Future<AnalyticsRepository> _enabledRepo(_FakeTransport transport) async {
   final repo = await AnalyticsRepository.load(
+    queueStorage: _MemoryConsentStorage(),
     storage: _MemoryConsentStorage(),
     pendingRoundStorage: _MemoryPendingRoundStorage(),
     transport: transport,

@@ -17,8 +17,213 @@ import '../../lib/analytics/pending_round.dart';
 
 void main() {
   group('AnalyticsRepository', () {
+    test(
+      'every durable action and acknowledgement reloads coherently',
+      () async {
+        final consent = _MemoryConsentStorage();
+        final queue = _MemoryConsentStorage();
+        final pending = _MemoryPendingRoundStorage();
+        final offline = _FakeTransport()..sendFailures = 1000;
+        final snapshots = <String>[];
+        queue.onWrite = snapshots.add;
+        final repo = await AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: pending,
+          transport: offline,
+        );
+        await repo.enable();
+        await repo.startRound(gameId: 'grammar', contentVersion: '1');
+        await repo.itemShown(itemId: 'a', itemIndex: 0);
+        await repo.itemAnswered(
+          itemId: 'a',
+          itemIndex: 0,
+          outcome: AnalyticsOutcome.correct,
+        );
+        // Capture acknowledged history too: it must not be recreated or lost
+        // when a later item is shown.
+        final accepted = _FakeTransport();
+        final checkpoint = await AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: pending,
+          transport: accepted,
+        );
+        await checkpoint.flush();
+        await checkpoint.itemShown(itemId: 'b', itemIndex: 1);
+        await checkpoint.endRound(reason: AnalyticsRoundEndReason.completed);
+        await checkpoint.flush();
+        final acknowledged = accepted.sentBatches.expand((b) => b).toList();
+        expect(
+          acknowledged.where((e) => e.kind == AnalyticsEventKind.itemAnswered),
+          hasLength(1),
+        );
+        expect(
+          acknowledged.where((e) => e.kind == AnalyticsEventKind.itemResolved),
+          hasLength(1),
+        );
+        for (final snapshot in snapshots.toList()) {
+          final replayQueue = _MemoryConsentStorage()..value = snapshot;
+          final replay = _FakeTransport();
+          final recovered = await AnalyticsRepository.load(
+            storage: consent,
+            queueStorage: replayQueue,
+            pendingRoundStorage: _MemoryPendingRoundStorage(),
+            transport: replay,
+          );
+          await recovered.reconcileInterruptedRound();
+          await recovered.flush();
+          final events = replay.sentBatches.expand((b) => b).toList();
+          final answers = events
+              .where((e) => e.kind == AnalyticsEventKind.itemAnswered)
+              .toList();
+          final resolutions = events
+              .where((e) => e.kind == AnalyticsEventKind.itemResolved)
+              .toList();
+          expect(answers.length, resolutions.length);
+          if (answers.isNotEmpty) {
+            expect(answers.single.outcome, AnalyticsOutcome.correct);
+            expect(
+              answers.single.eventId,
+              acknowledged
+                  .firstWhere((e) => e.kind == AnalyticsEventKind.itemAnswered)
+                  .eventId,
+            );
+            expect(
+              resolutions.single.eventId,
+              acknowledged
+                  .firstWhere((e) => e.kind == AnalyticsEventKind.itemResolved)
+                  .eventId,
+            );
+          }
+          expect(
+            events.where((e) => e.kind == AnalyticsEventKind.roundEnded).length,
+            lessThanOrEqualTo(1),
+          );
+        }
+      },
+    );
+
+    test(
+      'inferred interruption uses last activity bounded by recovery clock',
+      () async {
+        for (final recovery in [
+          DateTime.utc(2026, 4, 20),
+          DateTime.utc(2026, 4, 1),
+        ]) {
+          final consent = _MemoryConsentStorage();
+          final queue = _MemoryConsentStorage();
+          var now = DateTime.utc(2026, 4, 2);
+          final first = await AnalyticsRepository.load(
+            storage: consent,
+            queueStorage: queue,
+            pendingRoundStorage: _MemoryPendingRoundStorage(),
+            transport: _FakeTransport(),
+            clock: () => now,
+          );
+          await first.enable();
+          await first.startRound(gameId: 'grammar', contentVersion: '1');
+          now = DateTime.utc(2026, 4, 3);
+          await first.itemShown(itemId: 'a', itemIndex: 0);
+          await first.flush();
+          final transport = _FakeTransport();
+          final recovered = await AnalyticsRepository.load(
+            storage: consent,
+            queueStorage: queue,
+            pendingRoundStorage: _MemoryPendingRoundStorage(),
+            transport: transport,
+            clock: () => recovery,
+          );
+          await recovered.reconcileInterruptedRound();
+          await recovered.flush();
+          expect(
+            transport.sentBatches.expand((b) => b).last.timestampUtc,
+            recovery.day == 1 ? recovery : DateTime.utc(2026, 4, 3),
+          );
+        }
+      },
+    );
+
+    test(
+      'failed snapshot cannot publish events before a durable retry',
+      () async {
+        final queue = _MemoryConsentStorage()..writeFailures = 100;
+        final transport = _FakeTransport();
+        final repo = await AnalyticsRepository.load(
+          storage: _MemoryConsentStorage(),
+          queueStorage: queue,
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: transport,
+        );
+        await repo.enable();
+        await repo.startRound(gameId: 'grammar', contentVersion: '1');
+        await repo.flush();
+        expect(transport.sentBatches, isEmpty);
+        queue.writeFailures = 0;
+        await repo.itemShown(itemId: 'a', itemIndex: 0);
+        await repo.flush();
+        expect(transport.sentBatches.expand((b) => b).map((e) => e.kind), [
+          AnalyticsEventKind.roundStarted,
+          AnalyticsEventKind.itemShown,
+        ]);
+      },
+    );
+
+    test(
+      'legacy pending uses start time and terminal snapshot overrides failed cleanup',
+      () async {
+        final consent = _MemoryConsentStorage();
+        final queue = _MemoryConsentStorage();
+        final pending = _MemoryPendingRoundStorage();
+        final first = await AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: pending,
+          transport: _FakeTransport(),
+        );
+        await first.enable();
+        pending.value = encodePendingRound(
+          PendingRound(
+            sessionId: 'legacy',
+            installationId: first.installationId!,
+            gameId: 'grammar',
+            contentVersion: '1',
+            startedAtUtc: DateTime.utc(2026, 1, 1),
+            lastShownItemId: 'a',
+            lastShownItemIndex: 0,
+          ),
+        );
+        pending.clearFailures = 1;
+        final transport = _FakeTransport();
+        final recovered = await AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: pending,
+          transport: transport,
+          clock: () => DateTime.utc(2026, 1, 20),
+        );
+        await recovered.reconcileInterruptedRound();
+        await recovered.flush();
+        expect(
+          transport.sentBatches.single.single.timestampUtc,
+          DateTime.utc(2026, 1, 1),
+        );
+        expect(pending.value, isNotNull);
+        final reloaded = await AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: pending,
+          transport: transport,
+        );
+        await reloaded.reconcileInterruptedRound();
+        await reloaded.flush();
+        expect(transport.sentBatches, hasLength(1));
+      },
+    );
+
     test('defaults to off and undecided when storage is empty', () async {
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: _FakeTransport(),
@@ -33,6 +238,7 @@ void main() {
     test('treats a failed storage read as off and already decided', () async {
       final storage = _MemoryConsentStorage()..readFailures = 1;
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: storage,
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: _FakeTransport(),
@@ -46,6 +252,7 @@ void main() {
     test('enable stays off until durable storage succeeds', () async {
       final storage = _MemoryConsentStorage()..writeGate = Completer<void>();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: storage,
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: _FakeTransport(),
@@ -61,6 +268,7 @@ void main() {
     test('revocation fences an in-flight enable and survives reload', () async {
       final storage = _MemoryConsentStorage();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: storage,
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: _FakeTransport(),
@@ -74,6 +282,7 @@ void main() {
       await Future.wait([enabling, disabling]);
       expect(repo.isConsentEnabled, isFalse);
       final reloaded = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: storage,
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: _FakeTransport(),
@@ -86,6 +295,7 @@ void main() {
       () async {
         final storage = _MemoryConsentStorage();
         final repo = await AnalyticsRepository.load(
+          queueStorage: _MemoryConsentStorage(),
           storage: storage,
           pendingRoundStorage: _MemoryPendingRoundStorage(),
           transport: _FakeTransport(),
@@ -109,6 +319,7 @@ void main() {
       () async {
         final transport = _FakeTransport()..deleteGate = Completer<void>();
         final repo = await AnalyticsRepository.load(
+          queueStorage: _MemoryConsentStorage(),
           storage: _MemoryConsentStorage(),
           pendingRoundStorage: _MemoryPendingRoundStorage(),
           transport: transport,
@@ -128,6 +339,7 @@ void main() {
     test('enable creates and persists a fresh identity', () async {
       final storage = _MemoryConsentStorage();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: storage,
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: _FakeTransport(),
@@ -151,6 +363,7 @@ void main() {
     test('decline records a first-launch decision without identity', () async {
       final storage = _MemoryConsentStorage();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: storage,
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: _FakeTransport(),
@@ -167,6 +380,7 @@ void main() {
     test('never transmits before consent', () async {
       final transport = _FakeTransport();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -192,6 +406,7 @@ void main() {
     test('transmits a validated event after enable', () async {
       final transport = _FakeTransport();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -214,6 +429,7 @@ void main() {
     test('deduplicates events by id at the queue boundary', () async {
       final transport = _FakeTransport();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -241,6 +457,7 @@ void main() {
     test('retries a failed transmission without losing the event', () async {
       final transport = _FakeTransport()..sendFailures = 1;
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -262,6 +479,7 @@ void main() {
         final transport = _FakeTransport()..sendFailures = 1000;
         final storage = _MemoryConsentStorage();
         final repo = await AnalyticsRepository.load(
+          queueStorage: _MemoryConsentStorage(),
           storage: storage,
           pendingRoundStorage: _MemoryPendingRoundStorage(),
           transport: transport,
@@ -297,6 +515,7 @@ void main() {
 
     test('re-enable creates a fresh identity and deletion secret', () async {
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: _FakeTransport(),
@@ -317,6 +536,7 @@ void main() {
     test('disableAndDelete clears identity on acknowledgment', () async {
       final transport = _FakeTransport();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -337,6 +557,7 @@ void main() {
       final transport = _FakeTransport()..deleteFailures = 1;
       final storage = _MemoryConsentStorage();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: storage,
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -416,6 +637,7 @@ void main() {
     test('failed in-flight send cannot requeue after deletion', () async {
       final transport = _FakeTransport()..sendGate = Completer<void>();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -435,14 +657,14 @@ void main() {
     });
 
     test(
-      'session actions serialize while pending storage is delayed',
+      'session actions serialize while snapshot storage is delayed',
       () async {
-        final pending = _MemoryPendingRoundStorage()
-          ..writeGate = Completer<void>();
+        final pending = _MemoryConsentStorage()..writeGate = Completer<void>();
         final transport = _FakeTransport();
         final repo = await AnalyticsRepository.load(
+          queueStorage: pending,
           storage: _MemoryConsentStorage(),
-          pendingRoundStorage: pending,
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
           transport: transport,
         );
         await repo.enable();
@@ -467,48 +689,6 @@ void main() {
         ]);
         expect(events.map((e) => e.sessionId).toSet(), hasLength(1));
         expect(events.last.toJson()['itemState'], 'resolved');
-      },
-    );
-
-    test(
-      'terminal retries use a stable id if pending cleanup is interrupted',
-      () async {
-        final consent = _MemoryConsentStorage();
-        final pending = _MemoryPendingRoundStorage();
-        final transport = _FakeTransport();
-        final repo = await AnalyticsRepository.load(
-          storage: consent,
-          pendingRoundStorage: pending,
-          transport: transport,
-        );
-        await repo.enable();
-        await repo.startRound(gameId: 'grammar', contentVersion: '1');
-        await repo.itemShown(itemId: 'variant_a', itemIndex: 0);
-        await repo.itemAnswered(
-          itemId: 'variant_a',
-          itemIndex: 0,
-          outcome: AnalyticsOutcome.correct,
-        );
-        await repo.itemShown(itemId: 'variant_b', itemIndex: 1);
-        pending.clearFailures = 1;
-        await repo.endRound(reason: AnalyticsRoundEndReason.userBack);
-        await repo.flush();
-        expect(pending.value, isNotNull);
-        final relaunched = await AnalyticsRepository.load(
-          storage: consent,
-          pendingRoundStorage: pending,
-          transport: transport,
-        );
-        await relaunched.reconcileInterruptedRound();
-        await relaunched.flush();
-        final ends = transport.sentBatches
-            .expand((b) => b)
-            .where((e) => e.kind == AnalyticsEventKind.roundEnded)
-            .toList();
-        expect(ends, hasLength(2));
-        expect(ends.map((e) => e.eventId).toSet(), hasLength(1));
-        expect(ends.last.toJson()['itemState'], 'unresolved');
-        expect(ends.last.itemId, 'variant_b');
       },
     );
 
@@ -558,6 +738,7 @@ void main() {
       () async {
         final transport = _FakeTransport()..sendFailures = 1000;
         final repo = await AnalyticsRepository.load(
+          queueStorage: _MemoryConsentStorage(),
           storage: _MemoryConsentStorage(),
           pendingRoundStorage: _MemoryPendingRoundStorage(),
           transport: transport,
@@ -598,6 +779,7 @@ void main() {
     test('session methods emit the round lifecycle in order', () async {
       final transport = _FakeTransport();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -634,8 +816,10 @@ void main() {
     test('reconciles a pending round as inferred interruption', () async {
       final transport = _FakeTransport();
       final consentStorage = _MemoryConsentStorage();
+      final queue = _MemoryConsentStorage();
       final pendingStorage = _MemoryPendingRoundStorage();
       final repo = await AnalyticsRepository.load(
+        queueStorage: queue,
         storage: consentStorage,
         pendingRoundStorage: pendingStorage,
         transport: transport,
@@ -648,6 +832,7 @@ void main() {
       await repo.flush();
 
       final relaunched = await AnalyticsRepository.load(
+        queueStorage: queue,
         storage: consentStorage,
         pendingRoundStorage: pendingStorage,
         transport: transport,
@@ -668,6 +853,7 @@ void main() {
       () async {
         final transport = _FakeTransport();
         final repo = await AnalyticsRepository.load(
+          queueStorage: _MemoryConsentStorage(),
           storage: _MemoryConsentStorage(),
           pendingRoundStorage: _MemoryPendingRoundStorage(),
           transport: transport,
@@ -692,6 +878,7 @@ void main() {
     test('session methods no-op without consent', () async {
       final transport = _FakeTransport();
       final repo = await AnalyticsRepository.load(
+        queueStorage: _MemoryConsentStorage(),
         storage: _MemoryConsentStorage(),
         pendingRoundStorage: _MemoryPendingRoundStorage(),
         transport: transport,
@@ -727,6 +914,7 @@ AnalyticsEvent _event(String id, {required String installationId}) {
 
 final class _MemoryConsentStorage implements ConsentStorage {
   String? value;
+  void Function(String)? onWrite;
   int readFailures = 0;
   int writeFailures = 0;
   Completer<void>? writeGate;
@@ -745,6 +933,7 @@ final class _MemoryConsentStorage implements ConsentStorage {
     await writeGate?.future;
     if (writeFailures-- > 0) throw StateError('disk write failed');
     value = updated;
+    onWrite?.call(updated);
   }
 }
 

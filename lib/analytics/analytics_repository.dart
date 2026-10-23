@@ -26,6 +26,7 @@ final class AnalyticsRepository {
     this._consentWasPersisted,
     this._pendingRound,
     this._queueStorage,
+    this._clock,
   );
 
   final ConsentStorage? _consentStorage;
@@ -35,6 +36,8 @@ final class AnalyticsRepository {
   bool _flushScheduled = false;
   final AnalyticsTransport _transport;
   final Random _random;
+  final DateTime Function() _clock;
+  bool _snapshotDurable = false;
   final AnalyticsEventQueue _queue = AnalyticsEventQueue();
 
   ConsentState _consent;
@@ -59,6 +62,7 @@ final class AnalyticsRepository {
     PendingRoundStorage? pendingRoundStorage,
     AnalyticsTransport? transport,
     Random? random,
+    DateTime Function()? clock,
   }) async {
     ConsentStorage? effectiveStorage = storage;
     ConsentState consent = ConsentState.disabled;
@@ -123,12 +127,20 @@ final class AnalyticsRepository {
       consentWasPersisted,
       pendingRound,
       effectiveQueueStorage,
+      clock ?? DateTime.now,
     );
     try {
       final source = await repository._queueStorage?.read();
       if (source != null && consent.enabled) {
         final saved = jsonDecode(source) as Map<String, dynamic>;
         if (saved['installationId'] == consent.installationId) {
+          if (saved.containsKey('pendingRound')) {
+            repository._pendingRound = saved['pendingRound'] == null
+                ? null
+                : PendingRound.fromJson(
+                    saved['pendingRound'] as Map<String, dynamic>,
+                  );
+          }
           for (final entry in (saved['events'] as List).take(1000)) {
             final event = AnalyticsEvent.fromJson(
               entry as Map<String, dynamic>,
@@ -143,6 +155,7 @@ final class AnalyticsRepository {
       // Unknown, malformed, or unavailable queue data is never transmitted.
       repository._queue.clear();
     }
+    repository._snapshotDurable = true;
     if (!consent.enabled) {
       repository._pendingRound = null;
       await repository._clearPendingRoundStorage();
@@ -280,16 +293,23 @@ final class AnalyticsRepository {
   }
 
   Future<void> _persistQueue() {
+    _snapshotDurable = false;
+    final generation = _generation;
     _queueWrites = _queueWrites.then((_) async {
       try {
-        await _queueStorage?.write(
+        if (_queueStorage == null) return;
+        await _queueStorage.write(
           jsonEncode({
             'installationId': _consent.enabled ? _consent.installationId : null,
             'events': _queue.events.map((event) => event.toJson()).toList(),
+            'pendingRound': _pendingRound?.toJson(),
           }),
         );
+        if (generation == _generation) _snapshotDurable = true;
       } catch (_) {
-        // An unavailable queue store must not block offline play.
+        _snapshotDurable = false;
+        // No send until the complete snapshot is durable. Total I/O failure
+        // remains best-effort: gameplay continues, but crash loss is possible.
       }
     });
     return _queueWrites;
@@ -322,14 +342,13 @@ final class AnalyticsRepository {
       installationId: _consent.installationId!,
       gameId: gameId,
       contentVersion: contentVersion,
-      startedAtUtc: DateTime.now().toUtc(),
+      startedAtUtc: _clock().toUtc(),
     );
     final event = _newEvent(
       sessionId: _pendingRound!.sessionId,
       kind: AnalyticsEventKind.roundStarted,
     );
-    await _persistPendingRound();
-    await enqueue(event);
+    await _commitEvents([event]);
   });
 
   Future<void> itemShown({required String itemId, required int itemIndex}) =>
@@ -344,6 +363,7 @@ final class AnalyticsRepository {
           lastShownItemId: itemId,
           lastShownItemIndex: itemIndex,
           itemResolved: false,
+          lastActivityAtUtc: _clock().toUtc(),
         );
         final event = _newEvent(
           sessionId: pending.sessionId,
@@ -351,8 +371,7 @@ final class AnalyticsRepository {
           itemId: itemId,
           itemIndex: itemIndex,
         );
-        await _persistPendingRound();
-        await enqueue(event);
+        await _commitEvents([event]);
       });
 
   Future<void> itemAnswered({
@@ -367,7 +386,10 @@ final class AnalyticsRepository {
         pending.lastShownItemIndex != itemIndex) {
       return;
     }
-    _pendingRound = pending.copyWith(itemResolved: true);
+    _pendingRound = pending.copyWith(
+      itemResolved: true,
+      lastActivityAtUtc: _clock().toUtc(),
+    );
     final answered = _newEvent(
       sessionId: pending.sessionId,
       kind: AnalyticsEventKind.itemAnswered,
@@ -381,9 +403,7 @@ final class AnalyticsRepository {
       itemId: itemId,
       itemIndex: itemIndex,
     );
-    await _persistPendingRound();
-    await enqueue(answered);
-    await enqueue(resolved);
+    await _commitEvents([answered, resolved]);
   });
 
   Future<void> endRound({
@@ -401,6 +421,9 @@ final class AnalyticsRepository {
       itemId: pending.lastShownItemId,
       itemIndex: pending.lastShownItemIndex,
       reason: reason,
+      timestampUtc: reason == AnalyticsRoundEndReason.inferredInterruption
+          ? _boundedActivity(pending)
+          : null,
       itemState: pending.lastShownItemId == null
           ? null
           : pending.itemResolved
@@ -408,7 +431,7 @@ final class AnalyticsRepository {
           : AnalyticsItemState.unresolved,
     );
     _pendingRound = null;
-    await enqueue(event);
+    await _commitEvents([event]);
     await _clearPendingRoundStorage();
   }
 
@@ -442,7 +465,7 @@ final class AnalyticsRepository {
       contentVersion: pending.contentVersion,
       itemId: itemId,
       itemIndex: itemIndex,
-      timestampUtc: timestampUtc ?? DateTime.now().toUtc(),
+      timestampUtc: timestampUtc ?? _clock().toUtc(),
       kind: kind,
       outcome: outcome,
       reason: reason,
@@ -459,7 +482,9 @@ final class AnalyticsRepository {
   }
 
   Future<void> _flush() async {
-    if (!_consent.enabled) return;
+    await _operations;
+    await _queueWrites;
+    if (!_consent.enabled || !_snapshotDurable) return;
     final generation = _generation;
     final secret = _consent.deletionSecret;
     final events = _queue.batch();
@@ -467,8 +492,11 @@ final class AnalyticsRepository {
     try {
       await _transport.sendEvents(events, deletionSecret: secret);
       if (generation != _generation || !_consent.enabled) return;
-      _queue.acknowledge(events);
-      await _persistQueue();
+      await _serialize(() async {
+        if (generation != _generation || !_consent.enabled) return;
+        _queue.acknowledge(events);
+        await _persistQueue();
+      });
     } catch (_) {
       // Events stay in their identity-bound queue; revocation clears it.
     }
@@ -489,15 +517,24 @@ final class AnalyticsRepository {
     }
   }
 
-  Future<void> _persistPendingRound() async {
-    final storage = _pendingRoundStorage;
-    final pending = _pendingRound;
-    if (storage == null || pending == null) return;
-    try {
-      await storage.write(encodePendingRound(pending));
-    } catch (_) {
-      // Best-effort only.
+  // State and all events for an action share one atomic storage value. In
+  // particular an answer and its resolution can never be recovered separately.
+  Future<void> _commitEvents(List<AnalyticsEvent> events) async {
+    if (!_consent.enabled) return;
+    for (final event in events) {
+      event.validate();
+      _queue.add(event);
     }
+    await _persistQueue();
+    _scheduleFlush();
+  }
+
+  DateTime _boundedActivity(PendingRound pending) {
+    final now = _clock().toUtc();
+    final activity = pending.lastActivityAtUtc ?? pending.startedAtUtc;
+    // This is an activity estimate, not an observed termination time. A clock
+    // rollback must not put the inferred event in the recovery-time future.
+    return activity.isAfter(now) ? now : activity;
   }
 
   Future<void> _clearPendingRoundStorage() async {
