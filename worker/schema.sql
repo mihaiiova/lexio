@@ -62,3 +62,7 @@ ALTER TABLE events ADD COLUMN distinct_wrong_delta INTEGER;
 ALTER TABLE aggregates ADD COLUMN attempts INTEGER;
 ALTER TABLE aggregates ADD COLUMN correct_discoveries INTEGER;
 ALTER TABLE aggregates ADD COLUMN distinct_wrong_positions INTEGER;
+CREATE TABLE purge_marker (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  cutoff TEXT NOT NULL
+);

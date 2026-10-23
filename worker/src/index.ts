@@ -155,7 +155,8 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
         (event_id, session_id, installation_id, game_id, content_version,
          item_id, item_index, timestamp_utc, kind, outcome, reason, item_state, attempt_delta, correct_discovery_delta, distinct_wrong_delta)
        SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-       WHERE EXISTS (SELECT 1 FROM installations WHERE installation_id = ? AND deletion_secret_hash = ? AND revoked_at IS NULL)`,
+       WHERE EXISTS (SELECT 1 FROM installations WHERE installation_id = ? AND deletion_secret_hash = ? AND revoked_at IS NULL)
+         AND ? > COALESCE((SELECT cutoff FROM purge_marker WHERE id = 1), '')`,
     ).bind(
       event.eventId,
       event.sessionId,
@@ -172,7 +173,7 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
       event.attemptDelta,
       event.correctDiscoveryDelta,
       event.distinctWrongDelta,
-      installationId, hash,
+      installationId, hash, event.timestampUtc,
     ),
   );
 
@@ -279,6 +280,10 @@ export async function purgeExpired(env: Env): Promise<number> {
       (revoked_at IS NULL AND COALESCE(last_seen_at, created_at) <= ? AND NOT EXISTS
         (SELECT 1 FROM events WHERE events.installation_id = installations.installation_id))`)
       .bind(cutoff, cutoff),
+    // Report history publishes only weeks this committed cutoff proves final.
+    env.DB.prepare(`INSERT INTO purge_marker (id, cutoff) VALUES (1, ?)
+      ON CONFLICT(id) DO UPDATE SET cutoff = excluded.cutoff WHERE excluded.cutoff > purge_marker.cutoff`)
+      .bind(cutoff),
   ]);
   return results[4].meta.changes;
 }

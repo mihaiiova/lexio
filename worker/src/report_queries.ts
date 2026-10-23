@@ -21,15 +21,19 @@ function date(value: string): number {
 interface EventRow {
   session_id: string; installation_id: string; game_id: string; content_version: string;
   item_id: string | null; item_index: number | null; timestamp_utc: string;
-  kind: string; outcome: string | null; reason: string | null;
+  kind: string; outcome: string | null; reason: string | null; item_state: string | null;
   attempt_delta: number | null; correct_discovery_delta: number | null; distinct_wrong_delta: number | null;
 }
-function counters() { return {started: 0, completed: 0, ended: 0, inProgress: 0, missingStart: 0, shown: 0, resolved: 0, left: 0, correct: 0, wrong: 0, attempts: 0, discoveries: 0, distinctWrong: 0}; }
+function counters() { return {started: 0, completed: 0, ended: 0, inProgress: 0, missingStart: 0, shown: 0, resolved: 0, left: 0, openUnresolved: 0, correct: 0, wrong: 0, attempts: 0, discoveries: 0, distinctWrong: 0}; }
 type Counters = ReturnType<typeof counters>;
+interface Item {
+  id: string; index: number; terminalState: string | null; shown: number; resolved: number; left: number; openUnresolved: number;
+  correct: number; wrong: number; attempts: number; discoveries: number; distinctWrong: number;
+}
 interface Session {
   installation: string; session: string; game: string; version: string; lastActivity: string;
-  lastItem: string | null; status: string; missingStart: boolean; metrics: Counters;
-  items: {id: string; index: number; shown: number; resolved: number; left: number; correct: number; wrong: number; attempts: number; discoveries: number; distinctWrong: number}[];
+  lastItem: string | null; lastIndex: number | null; lastItemEvidence: 'terminal' | 'observed' | null;
+  status: string; missingStart: boolean; metrics: Counters; items: Item[];
 }
 function sessionKey(s: Session): string { return JSON.stringify([s.lastActivity, s.installation, s.session, s.game, s.version]); }
 export async function recentReport(url: URL, env: Env): Promise<unknown> {
@@ -60,28 +64,31 @@ export async function recentReport(url: URL, env: Env): Promise<unknown> {
   }
   // Index-bounded window, hard input cap, no credential-table inventory or joins.
   const {results} = await env.DB.prepare(`SELECT session_id, installation_id, game_id, content_version, item_id, item_index,
-    timestamp_utc, kind, outcome, reason, attempt_delta, correct_discovery_delta, distinct_wrong_delta
+    timestamp_utc, kind, outcome, reason, item_state, attempt_delta, correct_discovery_delta, distinct_wrong_delta
     FROM events WHERE ${clauses.join(' AND ')} ORDER BY timestamp_utc, event_id LIMIT ?`).bind(...values, maxEvents + 1).all<EventRow>();
   if (results.length > maxEvents) throw new QueryError(422);
-  const sessions = new Map<string, Session>();
+  // Event IDs are random, so equal timestamps carry no order; departure and the
+  // last position come only from round indexes and the terminal event.
+  const rounds = new Map<string, {s: Session; ended: boolean; terminal: Item | null}>();
   for (const e of results) {
     const key = JSON.stringify([e.installation_id, e.session_id, e.game_id, e.content_version]);
-    let s = sessions.get(key);
-    if (!s) {
-      s = {installation: e.installation_id, session: e.session_id, game: e.game_id, version: e.content_version,
-        lastActivity: e.timestamp_utc, lastItem: null, status: 'in_progress', missingStart: true, metrics: counters(), items: []};
-      sessions.set(key, s);
+    let round = rounds.get(key);
+    if (!round) {
+      round = {ended: false, terminal: null, s: {installation: e.installation_id, session: e.session_id, game: e.game_id, version: e.content_version,
+        lastActivity: e.timestamp_utc, lastItem: null, lastIndex: null, lastItemEvidence: null, status: 'in_progress', missingStart: true, metrics: counters(), items: []}};
+      rounds.set(key, round);
     }
+    const s = round.s;
     s.lastActivity = e.timestamp_utc;
-    if (e.item_id !== null) s.lastItem = e.item_id;
     if (e.kind === 'round_started') { s.metrics.started++; s.missingStart = false; }
-    if (e.kind === 'round_ended') { s.status = e.reason ?? 'unknown'; s.metrics.ended++; if (e.reason === 'completed') s.metrics.completed++; }
+    if (e.kind === 'round_ended') { round.ended = true; s.status = e.reason ?? 'unknown'; s.metrics.ended++; if (e.reason === 'completed') s.metrics.completed++; }
     if (e.item_id !== null && e.item_index !== null) {
       let item = s.items.find(i => i.id === e.item_id && i.index === e.item_index);
       if (!item) {
-        item = {id: e.item_id, index: e.item_index, shown: 0, resolved: 0, left: 0, correct: 0, wrong: 0, attempts: 0, discoveries: 0, distinctWrong: 0};
+        item = {id: e.item_id, index: e.item_index, terminalState: null, shown: 0, resolved: 0, left: 0, openUnresolved: 0, correct: 0, wrong: 0, attempts: 0, discoveries: 0, distinctWrong: 0};
         s.items.push(item);
       }
+      if (e.kind === 'round_ended') { item.terminalState = e.item_state; round.terminal = item; }
       if (e.kind === 'item_shown') item.shown++;
       if (e.kind === 'item_resolved') item.resolved++;
       if (e.kind === 'item_answered' && e.game_id !== 'spot') {
@@ -94,18 +101,31 @@ export async function recentReport(url: URL, env: Env): Promise<unknown> {
     }
   }
   const summary: Record<string, Counters & {endedByReason: Record<string, number>}> = {};
-  for (const s of sessions.values()) {
+  const sessions: Session[] = [];
+  for (const {s, ended, terminal} of rounds.values()) {
+    sessions.push(s);
     s.metrics.inProgress = s.status === 'in_progress' ? 1 : 0;
     s.metrics.missingStart = s.missingStart ? 1 : 0;
+    const frontier = s.items.reduce((max, i) => i.shown > 0 || i === terminal ? Math.max(max, i.index) : max, -1);
     for (const item of s.items) {
-      item.left = Math.max(0, item.shown - item.resolved);
-      for (const key of ['shown', 'resolved', 'left', 'correct', 'wrong', 'attempts', 'discoveries', 'distinctWrong'] as const) s.metrics[key] += item[key];
+      // Unfinished current work is not a departure; unresolved is never wrong.
+      if (item.resolved === 0 && item.terminalState !== 'resolved') {
+        if (item.terminalState === 'unresolved') item.left = 1;
+        else if (item.shown > 0 && (ended || item.index < frontier)) item.left = 1;
+        else if (item.shown > 0) item.openUnresolved = 1;
+      }
+      for (const key of ['shown', 'resolved', 'left', 'openUnresolved', 'correct', 'wrong', 'attempts', 'discoveries', 'distinctWrong'] as const) s.metrics[key] += item[key];
     }
+    const latest = terminal ?? s.items.reduce<Item | null>((best, i) =>
+      best === null || i.index > best.index || (i.index === best.index && i.id > best.id) ? i : best, null);
+    s.lastItem = latest?.id ?? null;
+    s.lastIndex = latest?.index ?? null;
+    s.lastItemEvidence = terminal ? 'terminal' : latest ? 'observed' : null;
     const total = summary[s.game] ??= {...counters(), endedByReason: {}};
     for (const key of Object.keys(s.metrics) as (keyof Counters)[]) total[key] += s.metrics[key];
     if (s.status !== 'in_progress') total.endedByReason[s.status] = (total.endedByReason[s.status] ?? 0) + 1;
   }
-  const sorted = [...sessions.values()].sort((a,b) => sessionKey(a) < sessionKey(b) ? 1 : sessionKey(a) > sessionKey(b) ? -1 : 0);
+  const sorted = sessions.sort((a,b) => sessionKey(a) < sessionKey(b) ? 1 : sessionKey(a) > sessionKey(b) ? -1 : 0);
   const eligible = cursor === null ? sorted : sorted.filter(s => sessionKey(s) < cursor!);
   const page = eligible.slice(0, limit);
   return {scope: 'opted_in_only', from: new Date(from).toISOString(), toExclusive: new Date(to).toISOString(), summary,
@@ -123,7 +143,13 @@ function weekBucket(time: number): string {
 export async function historicalReport(url: URL, env: Env): Promise<unknown> {
   // One canonical surface: no day/item partitions, ranges, totals, or version/installation subsets.
   params(url, []);
-  const cutoff = Date.now()-90*day;
+  // The ingestion INSERT checks the committed cutoff inside its D1 transaction,
+  // so requests validated earlier cannot append behind the publication boundary.
+  // Keep a conservative one-day publication buffer in addition to that fence.
+  const marker = await env.DB.prepare('SELECT cutoff FROM purge_marker WHERE id = 1').first<string>('cutoff');
+  if (marker === null) return {scope:'opted_in_only', published:false, partial:true, buckets:[], weeks:[]};
+  const cutoff = Date.parse(marker) - day;
+  if (!Number.isFinite(cutoff)) throw new QueryError(503);
   const current = weekBucket(cutoff);
   const buckets: string[] = [];
   for (let time = date(new Date(cutoff).toISOString().slice(0,10)); buckets.length < 52; time -= day) {
@@ -155,5 +181,5 @@ export async function historicalReport(url: URL, env: Env): Promise<unknown> {
     }
     if (row.kind === 'spot_attempt') { w.attempts = row.attempts; w.discoveries = row.discoveries; w.distinctWrong = row.distinctWrong; }
   }
-  return {scope:'opted_in_only', partial:true, buckets, weeks:[...weeks.values()]};
+  return {scope:'opted_in_only', published:true, partial:true, buckets, weeks:[...weeks.values()]};
 }
