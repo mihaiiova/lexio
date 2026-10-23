@@ -36,14 +36,19 @@ void main() {
     expect(find.byType(Switch), findsOneWidget);
   });
 
-  for (final state in ['off', 'enabled', 'awaiting deletion']) {
+  for (final state in ['off', 'enabled', 'paused', 'awaiting deletion']) {
     testWidgets('privacy details stay accessible when analytics is $state', (
       tester,
     ) async {
       final transport = _FakeTransport();
       final repo = await _repo(transport);
       if (state != 'off') await repo.enable();
-      if (state == 'awaiting deletion') await repo.disable();
+      if (state == 'paused') await repo.disable();
+      if (state == 'awaiting deletion') {
+        transport.failDeletion = true;
+        expect(await repo.disableAndDelete(), isFalse);
+      }
+      final deletionAttempts = transport.deletions.length;
       final enabled = repo.isConsentEnabled;
       final needsDeletion = repo.needsDeletion;
       await tester.pumpWidget(
@@ -61,14 +66,15 @@ void main() {
       await tester.pumpAndSettle();
       expect(repo.isConsentEnabled, enabled);
       expect(repo.needsDeletion, needsDeletion);
-      expect(transport.deletions, isEmpty);
+      expect(transport.deletions, hasLength(deletionAttempts));
     });
   }
 
-  testWidgets('enables and disables collection from the switch', (
+  testWidgets('enables, disables and re-enables collection without deletion', (
     tester,
   ) async {
-    final repo = await _repo();
+    final transport = _FakeTransport()..failDeletion = true;
+    final repo = await _repo(transport);
 
     await tester.pumpWidget(
       MaterialApp(
@@ -90,9 +96,14 @@ void main() {
     await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
     expect(repo.isConsentEnabled, isFalse);
-    expect(repo.needsDeletion, isTrue);
-    expect(tester.widget<Switch>(find.byType(Switch)).onChanged, isNull);
-    expect(find.textContaining('Înainte de reactivare'), findsOneWidget);
+    expect(tester.widget<Switch>(find.byType(Switch)).onChanged, isNotNull);
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Permite analiza utilizării'));
+    await tester.tap(find.text('Permite analiza utilizării'));
+    await tester.pumpAndSettle();
+    expect(repo.isConsentEnabled, isTrue);
+    expect(transport.deletions, isEmpty);
   });
 
   testWidgets('withdrawal stops future events and persists across launches', (
@@ -123,8 +134,34 @@ void main() {
     expect(transport.events, isEmpty);
     final restored = await load();
     expect(restored.isConsentEnabled, isFalse);
-    expect(restored.needsDeletion, isTrue);
+    expect(restored.needsDeletion, isFalse);
+    expect(restored.hasRetainedIdentity, isTrue);
   });
+
+  testWidgets(
+    'deletion stays available while off and a failed request blocks opt-in',
+    (tester) async {
+      final transport = _FakeTransport()..failDeletion = true;
+      final repo = await _repo(transport);
+      await repo.enable();
+      await repo.disable();
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: LexioTheme.light,
+          home: AnalyticsSettingsScreen(analytics: repo),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.widget<Switch>(find.byType(Switch)).onChanged, isNotNull);
+      await tester.ensureVisible(find.text('Șterge datele de pe server'));
+      await tester.tap(find.text('Șterge datele de pe server'));
+      await tester.pumpAndSettle();
+      expect(repo.isConsentEnabled, isFalse);
+      expect(repo.needsDeletion, isTrue);
+      expect(tester.widget<Switch>(find.byType(Switch)).onChanged, isNull);
+      expect(transport.deletions, hasLength(1));
+    },
+  );
 
   testWidgets('failed withdrawal save warns and offers a durable retry', (
     tester,
@@ -193,6 +230,7 @@ Future<AnalyticsRepository> _repo([_FakeTransport? transport]) {
 final class _FakeTransport implements AnalyticsTransport {
   final List<Map<String, String>> deletions = [];
   final List<AnalyticsEvent> events = [];
+  bool failDeletion = false;
 
   @override
   Future<void> sendEvents(
@@ -211,6 +249,7 @@ final class _FakeTransport implements AnalyticsTransport {
       'installationId': installationId,
       'deletionSecret': deletionSecret,
     });
+    if (failDeletion) throw StateError('offline');
   }
 }
 

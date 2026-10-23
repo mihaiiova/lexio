@@ -178,10 +178,12 @@ final class AnalyticsRepository {
 
   bool get needsDeletion => _consent.needsDeletion;
 
+  bool get hasRetainedIdentity => _consent.hasIdentity;
+
   String? get installationId =>
       _consent.enabled ? _consent.installationId : null;
 
-  /// Enables collection with a fresh installation identity and deletion secret.
+  /// Resumes the retained identity, or creates one after first opt-in/deletion.
   Future<void> enable() {
     final generation = _generation;
     if (_consentStorage == null) _consentPersistenceFailed = true;
@@ -192,7 +194,21 @@ final class AnalyticsRepository {
       if (generation != _generation || needsDeletion || _consent.enabled) {
         return;
       }
-      final identity = AnalyticsIdentity.generate(random: _random);
+      if (_consent.hasIdentity) {
+        // A failed withdrawal cleanup must not replay old events on resuming.
+        await _persistQueue();
+        if (generation != _generation || needsDeletion) return;
+        if (!_snapshotDurable) {
+          _consentPersistenceFailed = true;
+          return;
+        }
+      }
+      final identity = _consent.hasIdentity
+          ? AnalyticsIdentity(
+              installationId: _consent.installationId!,
+              deletionSecret: _consent.deletionSecret!,
+            )
+          : AnalyticsIdentity.generate(random: _random);
       final next = ConsentState(
         enabled: true,
         installationId: identity.installationId,
@@ -204,7 +220,10 @@ final class AnalyticsRepository {
         _consentWasPersisted = true;
         _consent = generation == _generation
             ? next
-            : next.copyWith(enabled: false, needsDeletion: true);
+            : next.copyWith(
+                enabled: false,
+                needsDeletion: _consent.needsDeletion,
+              );
       } catch (_) {
         _consentPersistenceFailed = true;
         // Never publish a consent decision that was not durably written.
@@ -212,21 +231,24 @@ final class AnalyticsRepository {
     });
   }
 
-  void _revoke() {
+  void _revoke({required bool requestDeletion}) {
     _generation++;
     _consent = _consent.copyWith(
       enabled: false,
-      needsDeletion: _consent.hasIdentity,
+      needsDeletion: _consent.needsDeletion || requestDeletion,
     );
     _consentWasPersisted = true;
     _queue.clear();
     _pendingRound = null;
+    _hasInterruptedRound = false;
   }
 
   Future<void> decline() => disable();
 
-  Future<void> disable() {
-    _revoke();
+  Future<void> disable() => _disable(requestDeletion: false);
+
+  Future<void> _disable({required bool requestDeletion}) {
+    _revoke(requestDeletion: requestDeletion);
     return _serialize(() async {
       await _persistConsent();
       await _persistQueue();
@@ -235,18 +257,19 @@ final class AnalyticsRepository {
   }
 
   Future<bool> disableAndDelete() async {
-    final disabling = disable(); // Revocation occurs before the first await.
+    final disabling = _disable(requestDeletion: true);
     await disabling;
     await _flushQueue; // An older send must finish before its identity is deleted.
     final identity = _consent;
-    if (!identity.hasIdentity) return true;
-    try {
-      await _transport.requestDeletion(
-        installationId: identity.installationId!,
-        deletionSecret: identity.deletionSecret!,
-      );
-    } catch (_) {
-      return false;
+    if (identity.hasIdentity) {
+      try {
+        await _transport.requestDeletion(
+          installationId: identity.installationId!,
+          deletionSecret: identity.deletionSecret!,
+        );
+      } catch (_) {
+        return false;
+      }
     }
     var persisted = false;
     await _serialize(() async {
@@ -302,7 +325,8 @@ final class AnalyticsRepository {
         if (_queueStorage == null) return;
         await _queueStorage.write(
           jsonEncode({
-            'installationId': _consent.enabled ? _consent.installationId : null,
+            // Empty snapshots must override uncleared legacy rounds on resume.
+            'installationId': _consent.installationId,
             'events': _queue.events.map((event) => event.toJson()).toList(),
             'pendingRound': _pendingRound?.toJson(),
           }),

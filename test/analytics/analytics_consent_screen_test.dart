@@ -10,7 +10,7 @@ import 'package:lexio/privacy/privacy_screen.dart';
 import '../support/analytics_fakes.dart';
 
 void main() {
-  testWidgets('both consent choices use prominent full-width buttons', (
+  testWidgets('both consent choices use white-on-black full-width buttons', (
     tester,
   ) async {
     final repo = await analyticsRepository(
@@ -18,16 +18,33 @@ void main() {
       enabled: false,
     );
     await _openConsent(tester, repo);
-    for (final (label, variant) in [
-      ('Permite analiza utilizării', LexioButtonVariant.primary),
-      ('Nu, mulțumesc', LexioButtonVariant.secondary),
-    ]) {
+    for (final label in ['Permite analiza utilizării', 'Nu, mulțumesc']) {
       final button = tester.widget<LexioButton>(
         find.widgetWithText(LexioButton, label),
       );
-      expect(button.variant, variant);
       expect(button.isExpanded, isTrue);
+      final control = tester.widget<ElevatedButton>(
+        find.widgetWithText(ElevatedButton, label),
+      );
+      expect(control.style!.backgroundColor!.resolve({}), Colors.black);
+      expect(control.style!.foregroundColor!.resolve({}), Colors.white);
     }
+  });
+
+  testWidgets('onboarding omits the removed assurances', (tester) async {
+    final repo = await analyticsRepository(
+      RecordingAnalyticsTransport(),
+      enabled: false,
+    );
+    await _openConsent(tester, repo);
+    expect(
+      find.text('Nu colectăm nume, răspunsuri sau texte introduse.'),
+      findsNothing,
+    );
+    expect(
+      find.text('Jocurile funcționează la fel și fără acord.'),
+      findsNothing,
+    );
   });
 
   testWidgets('reading privacy does not choose or enable analytics', (

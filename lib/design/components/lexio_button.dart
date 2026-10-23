@@ -5,7 +5,7 @@ import '../sizes.dart';
 import '../spacing.dart';
 import '../typography.dart';
 
-enum LexioButtonVariant { primary, secondary, ghost, danger }
+enum LexioButtonVariant { primary, secondary, monochrome, ghost, danger }
 
 enum LexioButtonSize { small, medium, large }
 
@@ -46,6 +46,12 @@ class LexioButton extends StatelessWidget {
         backgroundColor = isDisabled
             ? LexioColors.textTertiary
             : LexioColors.primary;
+        foregroundColor = LexioColors.textOnPrimary;
+        decoration = null;
+      case LexioButtonVariant.monochrome:
+        backgroundColor = isDisabled
+            ? LexioColors.textTertiary
+            : LexioColors.brandBlack;
         foregroundColor = LexioColors.textOnPrimary;
         decoration = null;
       case LexioButtonVariant.secondary:

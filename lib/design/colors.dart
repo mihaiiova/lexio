@@ -28,6 +28,9 @@ abstract class LexioColors {
   static const teal = Color(0xFF7FBAC3);
   static const tealMuted = Color(0xFFEEF7F8);
 
+  // --- Brand ---
+  static const brandBlack = Color(0xFF000000);
+
   // --- Semantic aliases ---
   static const primary = blue;
   static const primaryLight = Color(0xFF6FA3EF);

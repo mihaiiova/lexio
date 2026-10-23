@@ -115,7 +115,8 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                       ),
                     ),
                   ],
-                  if (enabled || analytics.needsDeletion) ...[
+                  if (analytics.hasRetainedIdentity ||
+                      analytics.needsDeletion) ...[
                     const SizedBox(height: LexioSpacing.lg),
                     LexioButton(
                       label: 'Șterge datele de pe server',

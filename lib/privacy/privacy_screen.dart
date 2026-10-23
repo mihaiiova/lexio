@@ -56,12 +56,15 @@ class PrivacyScreen extends StatelessWidget {
             _PolicySection(
               title: 'Un identificator pentru această instalare',
               body:
-                  'La activare generăm un identificator aleatoriu. El ne permite să '
+                  'La prima activare generăm un identificator aleatoriu. El ne permite să '
                   'grupăm evenimentele aceleiași instalări, fără să cerem un cont sau '
                   'numele persoanei. Aceste date nu sunt complet anonime: pot fi '
                   'legate de instalare. Nu unim activitatea de pe dispozitive diferite. '
-                  'Reinstalarea poate genera alt identificator. Rapoartele sunt '
-                  'accesibile doar proprietarului aplicației, prin acces protejat.',
+                  'Reinstalarea poate genera alt identificator. Dacă oprești și '
+                  'pornești din nou analiza fără ștergere, refolosim același '
+                  'identificator. Nu adăugăm activitatea din perioada în care '
+                  'analiza a fost oprită. Rapoartele sunt accesibile doar '
+                  'proprietarului aplicației, prin acces protejat.',
             ),
             _PolicySection(
               title: 'Cum oprești analiza',
@@ -69,8 +72,9 @@ class PrivacyScreen extends StatelessWidget {
                   'Deschide Setări și oprește «Analiză opțională». Colectarea viitoare '
                   'se oprește imediat, iar evenimentele care așteaptă pe dispozitiv '
                   'sunt eliminate. Pentru datele deja trimise, folosește și '
-                  '«Șterge datele de pe server». Pentru a permite din nou analiza '
-                  'după oprire, finalizează mai întâi ștergerea de pe server.',
+                  '«Șterge datele de pe server». Oprirea nu cere ștergerea. Poți '
+                  'porni din nou analiza din Setări, confirmând alegerea, chiar și '
+                  'offline.',
             ),
             _PolicySection(
               title: 'Cum ceri ștergerea',
@@ -80,8 +84,8 @@ class PrivacyScreen extends StatelessWidget {
                   'nevoie de internet. Dacă cererea nu reușește, păstrăm pe dispozitiv '
                   'identificatorul și cheia necesară reîncercării. Mesajul de succes '
                   'apare numai după confirmare și salvarea alegerii.\n\n'
-                  'Până la finalizarea ștergerii, analiza nu poate fi reactivată. '
-                  'După confirmare, reactivarea creează un identificator nou. '
+                  'După ce ceri ștergerea, reactivarea așteaptă confirmarea '
+                  'serverului. Apoi, reactivarea creează un identificator nou. '
                   'Cererea privește această instalare, nu alte dispozitive.',
             ),
             _PolicySection(

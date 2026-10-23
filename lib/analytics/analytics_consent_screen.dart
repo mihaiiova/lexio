@@ -100,20 +100,7 @@ class _AnalyticsConsentScreenState extends State<AnalyticsConsentScreen> {
                         color: LexioColors.textSecondary,
                       ),
                     ),
-                    const SizedBox(height: LexioSpacing.xl),
-                    Text(
-                      'Nu colectăm nume, răspunsuri sau texte introduse.',
-                      style: LexioTextStyles.bodyMedium.copyWith(
-                        color: LexioColors.textPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: LexioSpacing.sm),
-                    Text(
-                      'Jocurile funcționează la fel și fără acord.',
-                      style: LexioTextStyles.bodyMedium.copyWith(
-                        color: LexioColors.textPrimary,
-                      ),
-                    ),
+
                     const SizedBox(height: LexioSpacing.lg),
                     Text(
                       'Această opțiune este pentru părinți sau tutori. '
@@ -125,6 +112,7 @@ class _AnalyticsConsentScreenState extends State<AnalyticsConsentScreen> {
                     const SizedBox(height: LexioSpacing.xxl),
                     LexioButton(
                       label: 'Permite analiza utilizării',
+                      variant: LexioButtonVariant.monochrome,
                       isExpanded: true,
                       wrapLabel: true,
                       onPressed: _busy ? null : () => _submit(true),
@@ -132,7 +120,7 @@ class _AnalyticsConsentScreenState extends State<AnalyticsConsentScreen> {
                     const SizedBox(height: LexioSpacing.sm),
                     LexioButton(
                       label: 'Nu, mulțumesc',
-                      variant: LexioButtonVariant.secondary,
+                      variant: LexioButtonVariant.monochrome,
                       isExpanded: true,
                       wrapLabel: true,
                       onPressed: _busy ? null : () => _submit(false),
