@@ -59,7 +59,7 @@ function postEvents(body: unknown): Promise<Response> {
   return SELF.fetch('https://example.com/v1/events', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify(typeof body === 'object' && body !== null ? {deletionSecret: 'a'.repeat(64), ...body} : body),
   });
 }
 
@@ -76,6 +76,14 @@ beforeEach(async () => {
 });
 
 describe('POST /v1/events', () => {
+  it('requires credentials and rejects mixed installations and tampered secrets', async () => {
+    expect((await postEvents({deletionSecret: undefined, events: [makeEvent()]})).status).toBe(400);
+    const deletionSecret = 'a'.repeat(64);
+    expect((await postEvents({deletionSecret, events: [makeEvent()]})).status).toBe(202);
+    expect((await postEvents({deletionSecret: 'b'.repeat(64), events: [makeEvent()]})).status).toBe(401);
+    expect((await postEvents({deletionSecret, events: [makeEvent(), makeEvent({installationId: 'other'})]})).status).toBe(400);
+  });
+
   it('rejects malformed JSON', async () => {
     const response = await SELF.fetch('https://example.com/v1/events', {
       method: 'POST',
@@ -124,7 +132,6 @@ describe('POST /v1/events', () => {
 describe('POST /v1/delete', () => {
   async function registerInstallation(secret: string): Promise<void> {
     const response = await postEvents({
-      installationId: 'inst_delete',
       deletionSecret: secret,
       events: [makeEvent({ installationId: 'inst_delete' })],
     });
@@ -132,14 +139,14 @@ describe('POST /v1/delete', () => {
   }
 
   it('authorizes deletion only with the matching secret', async () => {
-    await registerInstallation('correct-secret');
+    await registerInstallation('c'.repeat(64));
 
     const wrong = await SELF.fetch('https://example.com/v1/delete', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         installationId: 'inst_delete',
-        deletionSecret: 'wrong-secret',
+        deletionSecret: 'w'.repeat(64),
       }),
     });
     expect(wrong.status).toBe(401);
@@ -149,7 +156,7 @@ describe('POST /v1/delete', () => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         installationId: 'inst_delete',
-        deletionSecret: 'correct-secret',
+        deletionSecret: 'c'.repeat(64),
       }),
     });
     expect(correct.status).toBe(200);
@@ -167,7 +174,7 @@ describe('POST /v1/delete', () => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         installationId: 'inst_delete',
-        deletionSecret: 'correct-secret',
+        deletionSecret: 'c'.repeat(64),
       }),
     });
     expect(replay.status).toBe(404);

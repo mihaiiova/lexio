@@ -1,4 +1,5 @@
 import {
+  type AnalyticsEvent,
   MAX_EVENTS_PER_BATCH,
   MAX_PAYLOAD_BYTES,
   validateEvent,
@@ -84,17 +85,8 @@ function timingSafeEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
-async function registerDeletionSecret(
-  env: Env,
-  installationId: string,
-  deletionSecret: string,
-): Promise<void> {
-  const hash = await sha256Hex(deletionSecret);
-  await env.DB.prepare(
-    'INSERT INTO installations (installation_id, deletion_secret_hash) VALUES (?, ?) ON CONFLICT(installation_id) DO NOTHING',
-  )
-    .bind(installationId, hash)
-    .run();
+function validSecret(value: unknown): value is string {
+  return typeof value === 'string' && /^[a-zA-Z0-9_-]{32,128}$/.test(value);
 }
 
 async function handleEvents(request: Request, env: Env): Promise<Response> {
@@ -113,7 +105,7 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
     return jsonResponse({ error: 'invalid JSON' }, 400);
   }
 
-  if (!isRecord(parsed) || !Array.isArray(parsed.events)) {
+  if (!isRecord(parsed) || Object.keys(parsed).some(key => !['events', 'deletionSecret'].includes(key)) || !Array.isArray(parsed.events)) {
     return jsonResponse({ error: 'events must be an array' }, 400);
   }
   if (parsed.events.length === 0) {
@@ -123,7 +115,7 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
     return jsonResponse({ error: 'too many events in batch' }, 413);
   }
 
-  const events = [];
+  const events: AnalyticsEvent[] = [];
   for (const raw of parsed.events) {
     const result = validateEvent(raw);
     if (!result.ok) {
@@ -132,8 +124,17 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
     events.push(result.event);
   }
 
-  if (typeof parsed.deletionSecret === 'string' && parsed.deletionSecret) {
-    await registerDeletionSecret(env, events[0].installationId, parsed.deletionSecret);
+  if (!validSecret(parsed.deletionSecret) || events.some(event => event.installationId !== events[0].installationId)) {
+    return jsonResponse({ error: 'invalid credentials or mixed installations' }, 400);
+  }
+  const installationId = events[0].installationId;
+  const hash = await sha256Hex(parsed.deletionSecret);
+  await env.DB.prepare(
+    'INSERT INTO installations (installation_id, deletion_secret_hash) VALUES (?, ?) ON CONFLICT DO NOTHING',
+  ).bind(installationId, hash).run();
+  const installation = await env.DB.prepare('SELECT deletion_secret_hash FROM installations WHERE installation_id = ?').bind(installationId).first();
+  if (!installation || !timingSafeEqual(String(installation.deletion_secret_hash), hash)) {
+    return jsonResponse({ error: 'unauthorized' }, 401);
   }
 
   const statements = events.map((event) =>
