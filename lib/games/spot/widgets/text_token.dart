@@ -37,7 +37,8 @@ class TextToken extends StatelessWidget {
           button: isTappable,
           label: originalText,
           child: GestureDetector(
-            onTap: isTappable ? onTap : null,
+            // Found tokens remain non-button semantics, but presses can be observed.
+            onTap: onTap,
             behavior: HitTestBehavior.opaque,
             child: _buildContent(),
           ),

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../analytics/analytics_event.dart';
+import '../../analytics/analytics_repository.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_button.dart';
 import '../../design/components/lexio_feedback.dart';
@@ -21,10 +23,16 @@ class SpotScreen extends StatefulWidget {
     super.key,
     this.texts,
     this.progressRepository,
+    this.analytics,
+    this.mode = SpotGameMode.timed,
+    this.clock,
   });
 
   final List<SpotText>? texts;
   final ProgressRepository? progressRepository;
+  final AnalyticsRepository? analytics;
+  final SpotGameMode mode;
+  final DateTime Function()? clock;
 
   @override
   State<SpotScreen> createState() => _SpotScreenState();
@@ -37,6 +45,11 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
   Timer? _timer;
   ProgressRepository? _progress;
   bool _hasSavedSession = false;
+  bool _roundStarted = false;
+  bool _roundEnded = false;
+  int? _renderedIndex;
+
+  DateTime _now() => widget.clock?.call() ?? DateTime.now();
 
   @override
   void initState() {
@@ -44,12 +57,15 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     final texts = widget.texts;
     if (texts != null) {
-      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+      _state = SpotGameState(
+        texts: texts,
+        mode: widget.mode,
+        startTime: _now(),
+      );
       _progress = widget.progressRepository;
       _isLoading = false;
-      if (texts.isNotEmpty) {
-        _startTimer();
-      }
+      _scheduleShown(start: true);
+      _startTimer();
     } else {
       _init();
     }
@@ -74,18 +90,24 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     }
   }
 
-  void _onResume() {
-    if (_state == null || _state!.isFinished) return;
-    setState(() {
-      final updated = _state!.checkTimerExpiry();
-      if (updated != _state) {
-        _state = updated;
-        if (_state!.isFinished) {
-          _timer?.cancel();
-          _finish(_state!);
-        }
-      }
-    });
+  void _onResume() => _checkTimer();
+
+  void _checkTimer() {
+    final state = _state;
+    if (state == null ||
+        state.isFinished ||
+        state.texts.isEmpty ||
+        widget.mode != SpotGameMode.timed)
+      return;
+    final updated = state.checkTimerExpiry(now: _now());
+    if (identical(updated, state)) return;
+    setState(() => _state = updated);
+    if (updated.isFinished) {
+      _timer?.cancel();
+      _finish(updated, reason: AnalyticsRoundEndReason.timeout);
+    } else {
+      _scheduleShown();
+    }
   }
 
   Future<void> _init() async {
@@ -97,10 +119,15 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       final texts = SpotContent.adaptiveSession(5, progress.forGame('spot'));
       if (!mounted) return;
       setState(() {
-        _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+        _state = SpotGameState(
+          texts: texts,
+          mode: widget.mode,
+          startTime: _now(),
+        );
         _progress = progress;
         _isLoading = false;
       });
+      _scheduleShown(start: true);
       _startTimer();
     } catch (e) {
       debugPrint('SpotScreen: failed to load content: $e');
@@ -114,28 +141,38 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   void _startTimer() {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (_state == null || _state!.isFinished) {
-        _timer?.cancel();
-        return;
-      }
-      setState(() {
-        final updated = _state!.checkTimerExpiry();
-        if (updated != _state) {
-          _state = updated;
-          if (_state!.isFinished) {
-            _timer?.cancel();
-            _finish(_state!);
-          }
-        }
-      });
-    });
+    if (_state == null ||
+        _state!.texts.isEmpty ||
+        widget.mode != SpotGameMode.timed)
+      return;
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) => _checkTimer());
   }
 
   void _handleTapWord(int wordIndex) {
-    if (_state == null || _state!.isChecking) return;
+    if (_state == null ||
+        _state!.isChecking ||
+        _state!.isFinished ||
+        _state!.allMistakesFoundInCurrentText ||
+        _roundEnded ||
+        _renderedIndex != _state!.currentTextIndex)
+      return;
+    if (widget.mode == SpotGameMode.timed &&
+        _state!.remainingSecondsAt(_now()) == 0) {
+      _checkTimer();
+      return;
+    }
 
     final outcome = _state!.tapWord(wordIndex);
+    unawaited(
+      widget.analytics?.spotAttempt(
+        itemId: _state!.currentText.id,
+        itemIndex: _state!.currentTextIndex,
+        wordPosition: wordIndex,
+        newlyCorrect: outcome.result == SpotTapResult.found,
+        isWrong: outcome.result == SpotTapResult.incorrect,
+        resolvesItem: outcome.state.allMistakesFoundInCurrentText,
+      ),
+    );
 
     if (outcome.result == SpotTapResult.found) {
       HapticFeedback.lightImpact();
@@ -165,12 +202,17 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
 
   void _handleNextText() {
     setState(() {
-      _state = _state!.nextText();
+      _state = _state!.nextText(now: _now());
     });
-    if (_state!.isFinished) _finish(_state!);
+    if (_state!.isFinished) {
+      _finish(_state!);
+    } else {
+      _scheduleShown();
+    }
   }
 
   Future<void> _handlePlayAgain() async {
+    _endRound(AnalyticsRoundEndReason.restart);
     await ContentRuntime.activatePending();
     if (!mounted) return;
     _timer?.cancel();
@@ -181,18 +223,31 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
           _progress?.forGame('spot') ?? const GameProgress(),
         );
     setState(() {
-      _state = SpotGameState(texts: texts, mode: SpotGameMode.timed);
+      _state = SpotGameState(
+        texts: texts,
+        mode: widget.mode,
+        startTime: _now(),
+      );
       _hasSavedSession = false;
     });
+    _roundStarted = false;
+    _roundEnded = false;
+    _renderedIndex = null;
+    _scheduleShown(start: true);
     _startTimer();
   }
 
   void _handleBack() {
+    _endRound(AnalyticsRoundEndReason.userBack);
     _timer?.cancel();
     Navigator.of(context).pop();
   }
 
-  void _finish(SpotGameState state) {
+  void _finish(
+    SpotGameState state, {
+    AnalyticsRoundEndReason reason = AnalyticsRoundEndReason.completed,
+  }) {
+    _endRound(reason);
     _saveSessionProgress(state);
   }
 
@@ -256,8 +311,59 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
     );
   }
 
+  void _endRound(AnalyticsRoundEndReason reason) {
+    if (!_roundStarted || _roundEnded) return;
+    _roundEnded = true;
+    unawaited(widget.analytics?.endRound(reason: reason));
+  }
+
+  void _scheduleShown({bool start = false}) {
+    final state = _state;
+    if (state == null || state.texts.isEmpty) return;
+    final index = state.currentTextIndex;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted ||
+          _roundEnded ||
+          _state!.isFinished ||
+          !identical(_state!.texts, state.texts) ||
+          _state!.currentTextIndex != index)
+        return;
+      _renderedIndex = index;
+      if (start) {
+        _roundStarted = true;
+        unawaited(
+          widget.analytics?.startRound(
+            gameId: 'spot',
+            contentVersion: ContentRuntime.activeContentVersion,
+          ),
+        );
+      }
+      unawaited(
+        widget.analytics?.itemShown(
+          itemId: state.currentText.id,
+          itemIndex: index,
+        ),
+      );
+      if (state.allMistakesFoundInCurrentText) {
+        unawaited(
+          widget.analytics?.itemResolved(
+            itemId: state.currentText.id,
+            itemIndex: index,
+          ),
+        );
+      }
+    });
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => PopScope(
+    onPopInvokedWithResult: (didPop, result) {
+      if (didPop) _endRound(AnalyticsRoundEndReason.userBack);
+    },
+    child: _buildContent(context),
+  );
+
+  Widget _buildContent(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
         backgroundColor: LexioColors.background,
@@ -339,12 +445,13 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         Padding(
           padding: const EdgeInsets.only(right: LexioSpacing.screenHorizontal),
           child: Semantics(
-            label: 'Timp rămas: ${_formatTime(state.remainingSeconds)}',
+            label:
+                'Timp rămas: ${_formatTime(state.remainingSecondsAt(_now()))}',
             liveRegion: true,
             child: Text(
-              _formatTime(state.remainingSeconds),
+              _formatTime(state.remainingSecondsAt(_now())),
               style: LexioTextStyles.labelLarge.copyWith(
-                color: state.remainingSeconds <= 10
+                color: state.remainingSecondsAt(_now()) <= 10
                     ? LexioColors.error
                     : LexioColors.textSecondary,
               ),
@@ -451,7 +558,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         correction = _getCorrectionForWord(state, i);
       }
 
-      final tappable = !state.isFoundMistakeWord(i) && !state.isChecking;
+      final tappable =
+          !state.isChecking && !state.allMistakesFoundInCurrentText;
 
       builders.add(
         TextToken(
@@ -489,8 +597,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
         child: state.isChecking
             ? _buildNextButton(state)
             : state.allMistakesFoundInCurrentText
-                ? _buildNextButton(state)
-                : _buildPlayActions(state),
+            ? _buildNextButton(state)
+            : _buildPlayActions(state),
       ),
     );
   }
