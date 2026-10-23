@@ -25,10 +25,14 @@ final class AnalyticsRepository {
     this._consent,
     this._consentWasPersisted,
     this._pendingRound,
+    this._queueStorage,
   );
 
   final ConsentStorage? _consentStorage;
   final PendingRoundStorage? _pendingRoundStorage;
+  final ConsentStorage? _queueStorage;
+  Future<void> _queueWrites = Future<void>.value();
+  bool _flushScheduled = false;
   final AnalyticsTransport _transport;
   final Random _random;
   final AnalyticsEventQueue _queue = AnalyticsEventQueue();
@@ -49,6 +53,7 @@ final class AnalyticsRepository {
 
   static Future<AnalyticsRepository> load({
     ConsentStorage? storage,
+    ConsentStorage? queueStorage,
     PendingRoundStorage? pendingRoundStorage,
     AnalyticsTransport? transport,
     Random? random,
@@ -98,7 +103,13 @@ final class AnalyticsRepository {
       pendingRound = null;
     }
 
-    return AnalyticsRepository._(
+    ConsentStorage? effectiveQueueStorage = queueStorage;
+    try {
+      effectiveQueueStorage ??= SharedPreferencesConsentStorage('analytics_queue_v1');
+    } catch (_) {
+      // Queue persistence may be unavailable; gameplay must remain offline-safe.
+    }
+    final repository = AnalyticsRepository._(
       effectiveStorage,
       effectivePendingStorage,
       transport ?? HttpAnalyticsTransport(),
@@ -106,7 +117,28 @@ final class AnalyticsRepository {
       consent,
       consentWasPersisted,
       pendingRound,
+      effectiveQueueStorage,
     );
+    try {
+      final source = await repository._queueStorage?.read();
+      if (source != null && consent.enabled) {
+        final saved = jsonDecode(source) as Map<String, dynamic>;
+        if (saved['installationId'] == consent.installationId) {
+          for (final entry in (saved['events'] as List).take(1000)) {
+            final event = AnalyticsEvent.fromJson(entry as Map<String, dynamic>);
+            if (event.installationId == consent.installationId) repository._queue.add(event);
+          }
+        }
+      }
+    } catch (_) {
+      // Unknown, malformed, or unavailable queue data is never transmitted.
+      repository._queue.clear();
+    }
+    if (!consent.enabled) {
+      repository._pendingRound = null;
+      await repository._clearPendingRoundStorage();
+    }
+    return repository;
   }
 
   bool get isConsentEnabled => _consent.enabled;
@@ -156,6 +188,7 @@ final class AnalyticsRepository {
   Future<void> disable() {
     _revoke();
     return _serialize(() async {
+      await _persistQueue();
       await _clearPendingRoundStorage();
       await _persistConsent();
     });
@@ -190,23 +223,35 @@ final class AnalyticsRepository {
   /// Queues a validated event for transmission when consent is enabled.
   ///
   /// This is intentionally nonblocking and never throws to the UI.
-  Future<void> enqueue(AnalyticsEvent event) {
-    if (!_consent.enabled) return Future<void>.value();
-    try {
-      event.validate();
-    } catch (_) {
-      return Future<void>.value();
-    }
-    if (!_queue.add(event)) return Future<void>.value();
+  Future<void> enqueue(AnalyticsEvent event) async {
+    if (!_consent.enabled || event.installationId != _consent.installationId) return;
+    try { event.validate(); } catch (_) { return; }
+    if (!_queue.add(event)) return;
+    await _persistQueue();
     _scheduleFlush();
-    return Future<void>.value();
   }
 
-  /// Waits for any in-flight transmission and attempts any remaining queue
-  /// (test support and explicit retry point).
-  Future<void> flush() {
+  /// One bounded attempt per retry point; never loops while offline.
+  Future<void> flush() async {
+    await _operations;
+    await _queueWrites;
+    if (_flushScheduled) await _flushQueue;
     _scheduleFlush();
-    return _flushQueue;
+    await _flushQueue;
+  }
+
+  Future<void> _persistQueue() {
+    _queueWrites = _queueWrites.then((_) async {
+      try {
+        await _queueStorage?.write(jsonEncode({
+          'installationId': _consent.enabled ? _consent.installationId : null,
+          'events': _queue.events.map((event) => event.toJson()).toList(),
+        }));
+      } catch (_) {
+        // An unavailable queue store must not block offline play.
+      }
+    });
+    return _queueWrites;
   }
 
   Future<void> _sessionAction(Future<void> Function() action) {
@@ -306,22 +351,26 @@ final class AnalyticsRepository {
   }
 
   void _scheduleFlush() {
-    _flushQueue = _flushQueue.then((_) => _flush());
+    if (_flushScheduled || !_consent.enabled) return;
+    _flushScheduled = true;
+    _flushQueue = _flushQueue.then((_) => _flush()).whenComplete(() {
+      _flushScheduled = false;
+    });
   }
 
   Future<void> _flush() async {
     if (!_consent.enabled) return;
     final generation = _generation;
     final secret = _consent.deletionSecret;
-    final events = _queue.drain();
+    final events = _queue.batch();
     if (events.isEmpty) return;
     try {
       await _transport.sendEvents(events, deletionSecret: secret);
-    } catch (_) {
       if (generation != _generation || !_consent.enabled) return;
-      for (final event in events) {
-        _queue.add(event);
-      }
+      _queue.acknowledge(events);
+      await _persistQueue();
+    } catch (_) {
+      // Events stay in their identity-bound queue; revocation clears it.
     }
   }
 

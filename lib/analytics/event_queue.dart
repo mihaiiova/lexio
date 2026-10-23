@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'analytics_event.dart';
 
 /// A bounded, deduplicating in-memory buffer for unsent events.
@@ -34,6 +36,26 @@ final class AnalyticsEventQueue {
     final snapshot = List<AnalyticsEvent>.from(_events);
     _events.clear();
     return snapshot;
+  }
+
+  List<AnalyticsEvent> get events => List.unmodifiable(_events);
+
+  /// Leaves retryable events in place until acknowledgment, at most 100 per request.
+  List<AnalyticsEvent> batch() {
+    final batch = <AnalyticsEvent>[];
+    var bytes = 256; // Envelope and deletion credential overhead.
+    for (final event in _events.take(100)) {
+      final size = utf8.encode(jsonEncode(event.toJson())).length + 1;
+      if (bytes + size > 60000) break;
+      bytes += size;
+      batch.add(event);
+    }
+    return batch;
+  }
+
+  void acknowledge(List<AnalyticsEvent> batch) {
+    final ids = batch.map((event) => event.eventId).toSet();
+    _events.removeWhere((event) => ids.contains(event.eventId));
   }
 
   void clear() => _events.clear();

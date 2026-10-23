@@ -135,7 +135,7 @@ void main() {
         random: Random(1),
       );
 
-      await repo.enqueue(_event('pre_consent'));
+      await repo.enqueue(_event('pre_consent', installationId: repo.installationId ?? 'pre_consent'));
       await repo.flush();
 
       expect(transport.sentBatches, isEmpty);
@@ -156,7 +156,7 @@ void main() {
       );
 
       await repo.enable();
-      await repo.enqueue(_event('post_consent'));
+      await repo.enqueue(_event('post_consent', installationId: repo.installationId ?? 'pre_consent'));
       await repo.flush();
 
       expect(transport.sentBatches, hasLength(1));
@@ -173,8 +173,8 @@ void main() {
       );
 
       await repo.enable();
-      repo.enqueue(_event('duplicate'));
-      repo.enqueue(_event('duplicate'));
+      repo.enqueue(_event('duplicate', installationId: repo.installationId ?? 'pre_consent'));
+      repo.enqueue(_event('duplicate', installationId: repo.installationId ?? 'pre_consent'));
       await repo.flush();
 
       expect(transport.sentBatches.single, hasLength(1));
@@ -190,7 +190,7 @@ void main() {
       );
 
       await repo.enable();
-      await repo.enqueue(_event('retry'));
+      await repo.enqueue(_event('retry', installationId: repo.installationId ?? 'pre_consent'));
       await repo.flush();
 
       expect(transport.sentBatches.single.single.eventId, 'retry');
@@ -207,7 +207,7 @@ void main() {
       );
 
       await repo.enable();
-      await repo.enqueue(_event('queued'));
+      await repo.enqueue(_event('queued', installationId: repo.installationId ?? 'pre_consent'));
       await repo.flush();
       expect(transport.sentBatches, isEmpty);
 
@@ -287,6 +287,55 @@ void main() {
       expect(persisted.needsDeletion, isTrue);
       expect(persisted.installationId, isNotNull);
       expect(persisted.deletionSecret, isNotNull);
+    });
+
+    test('offline queue survives launch and sends bounded identity-bound batches', () async {
+      final consent = _MemoryConsentStorage();
+      final queue = _MemoryConsentStorage();
+      final pending = _MemoryPendingRoundStorage();
+      final transport = _FakeTransport()..sendFailures = 10000;
+      final repo = await AnalyticsRepository.load(storage: consent,
+        pendingRoundStorage: pending, queueStorage: queue, transport: transport);
+      await repo.enable();
+      await repo.startRound(gameId: 'grammar', contentVersion: '1');
+      for (var i = 0; i < 210; i++) {
+        await repo.itemShown(itemId: 'variant_$i', itemIndex: i);
+      }
+      await repo.flush();
+      final online = _FakeTransport();
+      final relaunched = await AnalyticsRepository.load(storage: consent,
+        pendingRoundStorage: pending, queueStorage: queue, transport: online);
+      await relaunched.flush();
+      expect(online.sentBatches.single.length, lessThanOrEqualTo(100));
+      expect(utf8.encode(jsonEncode({'deletionSecret': 'x' * 43,
+        'events': online.sentBatches.single.map((e) => e.toJson()).toList()})).length,
+        lessThanOrEqualTo(60000));
+      await relaunched.flush();
+      await relaunched.flush();
+      expect(online.sentBatches.expand((b) => b).length, 211);
+      await relaunched.disable();
+      final revoked = await AnalyticsRepository.load(storage: consent,
+        pendingRoundStorage: pending, queueStorage: queue, transport: online);
+      await revoked.flush();
+      expect(online.sentBatches.expand((b) => b).length, 211);
+    });
+
+    test('failed in-flight send cannot requeue after deletion', () async {
+      final transport = _FakeTransport()..sendGate = Completer<void>();
+      final repo = await AnalyticsRepository.load(storage: _MemoryConsentStorage(),
+        pendingRoundStorage: _MemoryPendingRoundStorage(), transport: transport);
+      await repo.enable();
+      await repo.startRound(gameId: 'grammar', contentVersion: '1');
+      await Future<void>.delayed(Duration.zero);
+      final deleting = repo.disableAndDelete();
+      expect(repo.isConsentEnabled, isFalse);
+      expect(transport.deletions, isEmpty);
+      transport.sendGate!.completeError(StateError('offline'));
+      expect(await deleting, isTrue);
+      transport.sendGate = null;
+      await repo.enable();
+      await repo.flush();
+      expect(transport.sentBatches, isEmpty);
     });
 
     test('session actions serialize while pending storage is delayed', () async {
@@ -431,11 +480,11 @@ void main() {
   });
 }
 
-AnalyticsEvent _event(String id) {
+AnalyticsEvent _event(String id, {required String installationId}) {
   return AnalyticsEvent(
     eventId: id,
     sessionId: 's_1',
-    installationId: 'inst_1',
+    installationId: installationId,
     gameId: 'grammar',
     contentVersion: 'bundled',
     timestampUtc: DateTime.utc(2026),
@@ -489,9 +538,11 @@ final class _FakeTransport implements AnalyticsTransport {
   int sendFailures = 0;
   int deleteFailures = 0;
   Completer<void>? deleteGate;
+  Completer<void>? sendGate;
 
   @override
   Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {
+    await sendGate?.future;
     if (sendFailures > 0) {
       sendFailures--;
       throw Exception('send failed');
