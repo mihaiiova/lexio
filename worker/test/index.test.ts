@@ -270,6 +270,17 @@ describe('scheduled purge', () => {
     expect(counts.results.map(row => row.count)).toEqual([6, 6]);
   });
 
+  it('expires inactive credentials and bounded revocations, not recent revocations', async () => {
+    await postEvents({events: [makeEvent()]});
+    await env.DB.prepare('DELETE FROM events').run();
+    const old = new Date(Date.now() - 100 * DAY_MS).toISOString();
+    await env.DB.prepare('UPDATE installations SET last_seen_at = ?').bind(old).run();
+    await env.DB.prepare('INSERT INTO installations (installation_id, deletion_secret_hash, revoked_at, last_seen_at) VALUES (?, ?, ?, ?)').bind('old_revoked', 'hash', old, old).run();
+    await SELF.fetch('https://example.com/v1/delete', {method: 'POST', body: JSON.stringify({installationId: 'recent_revoked', deletionSecret: 'r'.repeat(64)})});
+    await worker.scheduled({} as ScheduledEvent, env);
+    expect((await env.DB.prepare('SELECT installation_id FROM installations').all()).results).toEqual([{installation_id: 'recent_revoked'}]);
+  });
+
   it('purges old linked events into non-linkable aggregates', async () => {
     const oldDay = new Date(Date.now() - 100 * DAY_MS).toISOString().slice(0, 10);
     for (let i = 0; i < 6; i++) {

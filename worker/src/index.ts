@@ -253,6 +253,11 @@ export async function purgeExpired(env: Env): Promise<number> {
   const results = await env.DB.batch([
     ...statements,
     env.DB.prepare('DELETE FROM events WHERE timestamp_utc < ? OR created_at < ?').bind(cutoff, cutoff),
+    env.DB.prepare(`DELETE FROM installations WHERE
+      (revoked_at IS NOT NULL AND revoked_at < ?) OR
+      (revoked_at IS NULL AND COALESCE(last_seen_at, created_at) < ? AND NOT EXISTS
+        (SELECT 1 FROM events WHERE events.installation_id = installations.installation_id))`)
+      .bind(new Date(Date.now() - 91 * 86400000).toISOString(), cutoff),
   ]);
   return results[2].meta.changes;
 }
