@@ -289,6 +289,27 @@ void main() {
       expect(persisted.deletionSecret, isNotNull);
     });
 
+    test('session actions serialize while pending storage is delayed', () async {
+      final pending = _MemoryPendingRoundStorage()..writeGate = Completer<void>();
+      final transport = _FakeTransport();
+      final repo = await AnalyticsRepository.load(storage: _MemoryConsentStorage(),
+        pendingRoundStorage: pending, transport: transport);
+      await repo.enable();
+      final start = repo.startRound(gameId: 'grammar', contentVersion: '1');
+      final shown = repo.itemShown(itemId: 'variant_1', itemIndex: 0);
+      final answer = repo.itemAnswered(itemId: 'variant_1', itemIndex: 0,
+        outcome: AnalyticsOutcome.correct);
+      final end = repo.endRound(reason: AnalyticsRoundEndReason.userBack);
+      pending.writeGate!.complete();
+      await Future.wait([start, shown, answer, end]);
+      await repo.flush();
+      final events = transport.sentBatches.expand((b) => b).toList();
+      expect(events.map((e) => e.kind.wireName),
+        ['round_started', 'item_shown', 'item_answered', 'item_resolved', 'round_ended']);
+      expect(events.map((e) => e.sessionId).toSet(), hasLength(1));
+      expect(events.last.toJson()['itemState'], 'resolved');
+    });
+
     test('session methods emit the round lifecycle in order', () async {
       final transport = _FakeTransport();
       final repo = await AnalyticsRepository.load(
@@ -316,6 +337,7 @@ void main() {
           AnalyticsEventKind.roundStarted,
           AnalyticsEventKind.itemShown,
           AnalyticsEventKind.itemAnswered,
+          AnalyticsEventKind.itemResolved,
           AnalyticsEventKind.roundEnded,
         ],
       );
@@ -444,12 +466,14 @@ final class _MemoryConsentStorage implements ConsentStorage {
 
 final class _MemoryPendingRoundStorage implements PendingRoundStorage {
   String? value;
+  Completer<void>? writeGate;
 
   @override
   Future<String?> read() async => value;
 
   @override
   Future<void> write(String updated) async {
+    await writeGate?.future;
     value = updated;
   }
 

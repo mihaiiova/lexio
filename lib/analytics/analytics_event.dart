@@ -8,6 +8,7 @@ enum AnalyticsEventKind {
   roundStarted('round_started'),
   itemShown('item_shown'),
   itemAnswered('item_answered'),
+  itemResolved('item_resolved'),
   roundEnded('round_ended');
 
   const AnalyticsEventKind(this.wireName);
@@ -42,6 +43,8 @@ enum AnalyticsRoundEndReason {
   final String wireName;
 }
 
+enum AnalyticsItemState { unresolved, resolved }
+
 final class AnalyticsEvent {
   static const int schemaVersion = 1;
   static const int maxIdLength = 128;
@@ -60,6 +63,7 @@ final class AnalyticsEvent {
     this.itemIndex,
     this.outcome,
     this.reason,
+    this.itemState,
   });
 
   final String eventId;
@@ -73,6 +77,7 @@ final class AnalyticsEvent {
   final AnalyticsEventKind kind;
   final AnalyticsOutcome? outcome;
   final AnalyticsRoundEndReason? reason;
+  final AnalyticsItemState? itemState;
 
   void validate() {
     _requireBounded(eventId, 'eventId', maxIdLength);
@@ -88,6 +93,9 @@ final class AnalyticsEvent {
       throw const FormatException('itemIndex must be non-negative');
     }
 
+    if (kind != AnalyticsEventKind.roundEnded && itemState != null) {
+      throw const FormatException('itemState is only valid on round_ended');
+    }
     switch (kind) {
       case AnalyticsEventKind.roundStarted:
         if (outcome != null ||
@@ -99,6 +107,7 @@ final class AnalyticsEvent {
           );
         }
       case AnalyticsEventKind.itemShown:
+      case AnalyticsEventKind.itemResolved:
         if (itemId == null ||
             itemIndex == null ||
             outcome != null ||
@@ -117,7 +126,9 @@ final class AnalyticsEvent {
           );
         }
       case AnalyticsEventKind.roundEnded:
-        if (reason == null || outcome != null) {
+        if (reason == null || outcome != null ||
+            (itemId == null) != (itemIndex == null) ||
+            (itemId == null) != (itemState == null)) {
           throw const FormatException(
             'round_ended requires a reason and no outcome',
           );
@@ -140,7 +151,29 @@ final class AnalyticsEvent {
       'kind': kind.wireName,
       'outcome': outcome?.wireName,
       'reason': reason?.wireName,
+      'itemState': itemState?.name,
     };
+  }
+
+  factory AnalyticsEvent.fromJson(Map<String, dynamic> json) {
+    if (json['v'] != schemaVersion) throw const FormatException('event version');
+    final event = AnalyticsEvent(
+      eventId: json['eventId'] as String,
+      sessionId: json['sessionId'] as String,
+      installationId: json['installationId'] as String,
+      gameId: json['gameId'] as String,
+      contentVersion: json['contentVersion'] as String,
+      timestampUtc: DateTime.parse(json['timestampUtc'] as String).toUtc(),
+      kind: AnalyticsEventKind.fromWireName(json['kind'] as String)!,
+      itemId: json['itemId'] as String?, itemIndex: json['itemIndex'] as int?,
+      outcome: json['outcome'] == null ? null : AnalyticsOutcome.values.firstWhere(
+        (value) => value.wireName == json['outcome']),
+      reason: json['reason'] == null ? null : AnalyticsRoundEndReason.values.firstWhere(
+        (value) => value.wireName == json['reason']),
+      itemState: json['itemState'] == null ? null : AnalyticsItemState.values.byName(json['itemState'] as String),
+    );
+    event.validate();
+    return event;
   }
 
   static void _requireBounded(String value, String name, int maxLength) {

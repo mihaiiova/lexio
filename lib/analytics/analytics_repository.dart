@@ -209,122 +209,74 @@ final class AnalyticsRepository {
     return _flushQueue;
   }
 
-  Future<void> startRound({
-    required String gameId,
-    required String contentVersion,
-  }) async {
-    if (!_consent.enabled || _consent.installationId == null) return;
-
-    _pendingRound = PendingRound(
-      sessionId: _randomToken(),
-      gameId: gameId,
-      contentVersion: contentVersion,
-      startedAtUtc: DateTime.now().toUtc(),
-    );
-    await _persistPendingRound();
-    await enqueue(
-      _newEvent(
-        sessionId: _pendingRound!.sessionId,
-        kind: AnalyticsEventKind.roundStarted,
-      ),
-    );
+  Future<void> _sessionAction(Future<void> Function() action) {
+    final generation = _generation;
+    if (!_consent.enabled) return Future<void>.value();
+    return _serialize(() async {
+      if (generation != _generation || !_consent.enabled) return;
+      await action();
+    });
   }
 
-  Future<void> itemShown({
-    required String itemId,
-    required int itemIndex,
-  }) async {
+  Future<void> startRound({required String gameId, required String contentVersion}) =>
+      _sessionAction(() async {
+    if (_pendingRound != null) await _endRound(AnalyticsRoundEndReason.restart);
+    _pendingRound = PendingRound(sessionId: _randomToken(), gameId: gameId,
+      contentVersion: contentVersion, startedAtUtc: DateTime.now().toUtc());
+    final event = _newEvent(sessionId: _pendingRound!.sessionId,
+      kind: AnalyticsEventKind.roundStarted);
+    await _persistPendingRound();
+    await enqueue(event);
+  });
+
+  Future<void> itemShown({required String itemId, required int itemIndex}) =>
+      _sessionAction(() async {
     final pending = _pendingRound;
-    if (pending == null || !_consent.enabled) return;
-
-    _pendingRound = pending.copyWith(
-      lastShownItemId: itemId,
-      lastShownItemIndex: itemIndex,
-    );
+    if (pending == null || (pending.lastShownItemId == itemId &&
+        pending.lastShownItemIndex == itemIndex)) return;
+    _pendingRound = pending.copyWith(lastShownItemId: itemId,
+      lastShownItemIndex: itemIndex, itemResolved: false);
+    final event = _newEvent(sessionId: pending.sessionId,
+      kind: AnalyticsEventKind.itemShown, itemId: itemId, itemIndex: itemIndex);
     await _persistPendingRound();
-    await enqueue(
-      _newEvent(
-        sessionId: pending.sessionId,
-        kind: AnalyticsEventKind.itemShown,
-        itemId: itemId,
-        itemIndex: itemIndex,
-      ),
-    );
-  }
+    await enqueue(event);
+  });
 
-  Future<void> itemAnswered({
-    required String itemId,
-    required int itemIndex,
-    required AnalyticsOutcome outcome,
-  }) async {
+  Future<void> itemAnswered({required String itemId, required int itemIndex,
+    required AnalyticsOutcome outcome}) => _sessionAction(() async {
     final pending = _pendingRound;
-    if (pending == null || !_consent.enabled) return;
-
-    _pendingRound = pending.copyWith(
-      lastShownItemId: itemId,
-      lastShownItemIndex: itemIndex,
-    );
+    if (pending == null || pending.itemResolved ||
+        pending.lastShownItemId != itemId || pending.lastShownItemIndex != itemIndex) return;
+    _pendingRound = pending.copyWith(itemResolved: true);
+    final answered = _newEvent(sessionId: pending.sessionId,
+      kind: AnalyticsEventKind.itemAnswered, itemId: itemId, itemIndex: itemIndex,
+      outcome: outcome);
+    final resolved = _newEvent(sessionId: pending.sessionId,
+      kind: AnalyticsEventKind.itemResolved, itemId: itemId, itemIndex: itemIndex);
     await _persistPendingRound();
-    await enqueue(
-      _newEvent(
-        sessionId: pending.sessionId,
-        kind: AnalyticsEventKind.itemAnswered,
-        itemId: itemId,
-        itemIndex: itemIndex,
-        outcome: outcome,
-      ),
-    );
-  }
+    await enqueue(answered);
+    await enqueue(resolved);
+  });
 
-  Future<void> endRound({
-    required AnalyticsRoundEndReason reason,
-    String? itemId,
-    int? itemIndex,
-  }) async {
+  Future<void> endRound({required AnalyticsRoundEndReason reason,
+    String? itemId, int? itemIndex}) => _sessionAction(() => _endRound(reason));
+
+  Future<void> _endRound(AnalyticsRoundEndReason reason) async {
     final pending = _pendingRound;
     if (pending == null) return;
-
-    if (_consent.enabled) {
-      await enqueue(
-        _newEvent(
-          sessionId: pending.sessionId,
-          kind: AnalyticsEventKind.roundEnded,
-          itemId: itemId ?? pending.lastShownItemId,
-          itemIndex: itemIndex ?? pending.lastShownItemIndex,
-          reason: reason,
-        ),
-      );
-    }
-
+    final event = _newEvent(sessionId: pending.sessionId,
+      kind: AnalyticsEventKind.roundEnded, itemId: pending.lastShownItemId,
+      itemIndex: pending.lastShownItemIndex, reason: reason,
+      itemState: pending.lastShownItemId == null ? null : pending.itemResolved
+        ? AnalyticsItemState.resolved : AnalyticsItemState.unresolved);
     _pendingRound = null;
+    await enqueue(event);
     await _clearPendingRoundStorage();
   }
 
-  /// Closes a round left pending from a previous launch as an inferred
-  /// interruption, using only the last shown item and its bounded timestamp.
-  Future<void> reconcileInterruptedRound({required String gameId}) async {
-    final pending = _pendingRound;
-    if (pending == null) return;
-
-    if (!_consent.enabled || pending.gameId != gameId) {
-      _pendingRound = null;
-      await _clearPendingRoundStorage();
-      return;
-    }
-
-    await enqueue(
-      _newEvent(
-        sessionId: pending.sessionId,
-        kind: AnalyticsEventKind.roundEnded,
-        itemId: pending.lastShownItemId,
-        itemIndex: pending.lastShownItemIndex,
-        reason: AnalyticsRoundEndReason.inferredInterruption,
-      ),
-    );
-
-    _pendingRound = null;
-    await _clearPendingRoundStorage();
-  }
+  /// Called once at app launch, regardless of the interrupted game's identity.
+  Future<void> reconcileInterruptedRound({String? gameId}) =>
+      _sessionAction(() => _endRound(AnalyticsRoundEndReason.inferredInterruption));
 
   AnalyticsEvent _newEvent({
     required String sessionId,
@@ -333,6 +285,7 @@ final class AnalyticsRepository {
     int? itemIndex,
     AnalyticsOutcome? outcome,
     AnalyticsRoundEndReason? reason,
+    AnalyticsItemState? itemState,
     DateTime? timestampUtc,
   }) {
     final pending = _pendingRound;
@@ -348,6 +301,7 @@ final class AnalyticsRepository {
       kind: kind,
       outcome: outcome,
       reason: reason,
+      itemState: itemState,
     );
   }
 

@@ -14,6 +14,7 @@ final class PendingRound {
     required this.startedAtUtc,
     this.lastShownItemId,
     this.lastShownItemIndex,
+    this.itemResolved = false,
   });
 
   final String sessionId;
@@ -22,10 +23,12 @@ final class PendingRound {
   final DateTime startedAtUtc;
   final String? lastShownItemId;
   final int? lastShownItemIndex;
+  final bool itemResolved;
 
   PendingRound copyWith({
     String? lastShownItemId,
     int? lastShownItemIndex,
+    bool? itemResolved,
   }) {
     return PendingRound(
       sessionId: sessionId,
@@ -34,6 +37,7 @@ final class PendingRound {
       startedAtUtc: startedAtUtc,
       lastShownItemId: lastShownItemId ?? this.lastShownItemId,
       lastShownItemIndex: lastShownItemIndex ?? this.lastShownItemIndex,
+      itemResolved: itemResolved ?? this.itemResolved,
     );
   }
 
@@ -44,6 +48,7 @@ final class PendingRound {
     'startedAtUtc': startedAtUtc.toUtc().toIso8601String(),
     'lastShownItemId': lastShownItemId,
     'lastShownItemIndex': lastShownItemIndex,
+    'itemResolved': itemResolved,
   };
 
   factory PendingRound.fromJson(Map<String, dynamic> json) {
@@ -54,6 +59,7 @@ final class PendingRound {
       startedAtUtc: DateTime.parse(json['startedAtUtc'] as String).toUtc(),
       lastShownItemId: json['lastShownItemId'] as String?,
       lastShownItemIndex: json['lastShownItemIndex'] as int?,
+      itemResolved: json['itemResolved'] as bool? ?? false,
     );
   }
 }
