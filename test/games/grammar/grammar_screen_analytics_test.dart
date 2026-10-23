@@ -58,11 +58,14 @@ void main() {
     tester,
   ) async {
     final transport = _FakeTransport();
-    final pending = _MemoryPendingRoundStorage()..writeGate = Completer<void>();
+    final queue = _MemoryConsentStorage()..writeGate = Completer<void>();
+    addTearDown(() {
+      if (!queue.writeGate!.isCompleted) queue.writeGate!.complete();
+    });
     final repo = await AnalyticsRepository.load(
-      queueStorage: _MemoryConsentStorage(),
+      queueStorage: queue,
       storage: _MemoryConsentStorage(),
-      pendingRoundStorage: pending,
+      pendingRoundStorage: _MemoryPendingRoundStorage(),
       transport: transport,
     );
     await repo.enable();
@@ -83,13 +86,18 @@ void main() {
     );
     await tester.tap(find.text('start'));
     await tester.pumpAndSettle();
+    expect(queue.writeStarted, isTrue);
+    expect(queue.writeGate!.isCompleted, isFalse);
     await tester.tap(
       find.text('Corect'),
     ); // Wrong answer keeps the item rendered.
     await tester.pumpAndSettle();
     await tester.pageBack();
     await tester.pumpAndSettle();
-    pending.writeGate!.complete();
+    expect(find.text('start'), findsOneWidget);
+    expect(queue.writeGate!.isCompleted, isFalse);
+    expect(transport.allEvents, isEmpty);
+    queue.writeGate!.complete();
     await repo.flush();
     expect(tester.takeException(), isNull);
     expect(transport.allEvents.map((e) => e.kind.wireName), [
@@ -352,12 +360,16 @@ final class _FakeTransport implements AnalyticsTransport {
 
 final class _MemoryConsentStorage implements ConsentStorage {
   String? value;
+  Completer<void>? writeGate;
+  bool writeStarted = false;
 
   @override
   Future<String?> read() async => value;
 
   @override
   Future<void> write(String updated) async {
+    writeStarted = true;
+    await writeGate?.future;
     value = updated;
   }
 }
