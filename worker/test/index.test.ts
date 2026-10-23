@@ -23,6 +23,8 @@ const DDL = [
   `CREATE TABLE IF NOT EXISTS installations (
     installation_id TEXT PRIMARY KEY,
     deletion_secret_hash TEXT NOT NULL,
+    revoked_at TEXT,
+    last_seen_at TEXT,
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
   )`,
   `CREATE TABLE IF NOT EXISTS aggregates (
@@ -138,6 +140,14 @@ describe('POST /v1/delete', () => {
     expect(response.status).toBe(202);
   }
 
+  it('acknowledges never-registered deletion and rejects delayed registration', async () => {
+    const body = {installationId: 'never_sent', deletionSecret: 'n'.repeat(64)};
+    for (let i = 0; i < 2; i++) {
+      expect((await SELF.fetch('https://example.com/v1/delete', {method: 'POST', body: JSON.stringify(body)})).status).toBe(200);
+    }
+    expect((await postEvents({deletionSecret: body.deletionSecret, events: [makeEvent({installationId: body.installationId})]})).status).toBe(410);
+  });
+
   it('authorizes deletion only with the matching secret', async () => {
     await registerInstallation('c'.repeat(64));
 
@@ -168,7 +178,7 @@ describe('POST /v1/delete', () => {
       .first();
     expect(Number(count?.count ?? 0)).toBe(0);
 
-    // Replay is harmless: the installation no longer exists.
+    // Replay is harmless: the bounded revocation record remains.
     const replay = await SELF.fetch('https://example.com/v1/delete', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -177,7 +187,8 @@ describe('POST /v1/delete', () => {
         deletionSecret: 'c'.repeat(64),
       }),
     });
-    expect(replay.status).toBe(404);
+    expect(replay.status).toBe(200);
+    expect((await postEvents({deletionSecret: 'c'.repeat(64), events: [makeEvent({installationId: 'inst_delete'})]})).status).toBe(410);
   });
 });
 

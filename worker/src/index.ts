@@ -129,20 +129,13 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
   }
   const installationId = events[0].installationId;
   const hash = await sha256Hex(parsed.deletionSecret);
-  await env.DB.prepare(
-    'INSERT INTO installations (installation_id, deletion_secret_hash) VALUES (?, ?) ON CONFLICT DO NOTHING',
-  ).bind(installationId, hash).run();
-  const installation = await env.DB.prepare('SELECT deletion_secret_hash FROM installations WHERE installation_id = ?').bind(installationId).first();
-  if (!installation || !timingSafeEqual(String(installation.deletion_secret_hash), hash)) {
-    return jsonResponse({ error: 'unauthorized' }, 401);
-  }
-
   const statements = events.map((event) =>
     env.DB.prepare(
       `INSERT OR IGNORE INTO events
         (event_id, session_id, installation_id, game_id, content_version,
          item_id, item_index, timestamp_utc, kind, outcome, reason)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+       WHERE EXISTS (SELECT 1 FROM installations WHERE installation_id = ? AND deletion_secret_hash = ? AND revoked_at IS NULL)`,
     ).bind(
       event.eventId,
       event.sessionId,
@@ -155,10 +148,23 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
       event.kind,
       event.outcome,
       event.reason,
+      installationId, hash,
     ),
   );
 
-  await env.DB.batch(statements);
+  await env.DB.batch([
+    env.DB.prepare(`INSERT INTO installations (installation_id, deletion_secret_hash, last_seen_at)
+      VALUES (?, ?, ?)
+      ON CONFLICT(installation_id) DO UPDATE SET last_seen_at = excluded.last_seen_at
+      WHERE deletion_secret_hash = excluded.deletion_secret_hash AND revoked_at IS NULL`)
+      .bind(installationId, hash, new Date().toISOString()),
+    ...statements,
+  ]);
+  const installation = await env.DB.prepare('SELECT deletion_secret_hash, revoked_at FROM installations WHERE installation_id = ?').bind(installationId).first();
+  if (!installation || !timingSafeEqual(String(installation.deletion_secret_hash), hash)) {
+    return jsonResponse({ error: 'unauthorized' }, 401);
+  }
+  if (installation.revoked_at !== null) return jsonResponse({ error: 'revoked' }, 410);
   // Data minimization: report counts only, never event bodies or secrets.
   return jsonResponse({ accepted: events.length }, 202);
 }
@@ -174,7 +180,7 @@ async function handleDelete(request: Request, env: Env): Promise<Response> {
     return jsonResponse({ error: 'invalid JSON' }, 400);
   }
 
-  if (!isRecord(parsed)) {
+  if (!isRecord(parsed) || Object.keys(parsed).some(key => !['installationId', 'deletionSecret'].includes(key))) {
     return jsonResponse({ error: 'invalid body' }, 400);
   }
   const installationId = parsed.installationId;
@@ -186,30 +192,26 @@ async function handleDelete(request: Request, env: Env): Promise<Response> {
   ) {
     return jsonResponse({ error: 'invalid installationId' }, 400);
   }
-  if (typeof deletionSecret !== 'string' || deletionSecret.length === 0) {
+  if (!validSecret(deletionSecret)) {
     return jsonResponse({ error: 'missing deletionSecret' }, 400);
   }
 
-  const row = await env.DB.prepare(
-    'SELECT deletion_secret_hash FROM installations WHERE installation_id = ?',
-  )
-    .bind(installationId)
-    .first();
-
-  if (!row) {
-    return jsonResponse({ error: 'unknown installation' }, 404);
-  }
-
-  const expectedHash = String(row.deletion_secret_hash);
   const providedHash = await sha256Hex(deletionSecret);
-  if (!timingSafeEqual(expectedHash, providedHash)) {
+  const now = new Date().toISOString();
+  await env.DB.batch([
+    env.DB.prepare(`INSERT INTO installations (installation_id, deletion_secret_hash, revoked_at, last_seen_at)
+      VALUES (?, ?, ?, ?)
+      ON CONFLICT(installation_id) DO UPDATE SET revoked_at = COALESCE(revoked_at, excluded.revoked_at)
+      WHERE deletion_secret_hash = excluded.deletion_secret_hash`)
+      .bind(installationId, providedHash, now, now),
+    env.DB.prepare(`DELETE FROM events WHERE installation_id = ? AND EXISTS
+      (SELECT 1 FROM installations WHERE installation_id = ? AND deletion_secret_hash = ? AND revoked_at IS NOT NULL)`)
+      .bind(installationId, installationId, providedHash),
+  ]);
+  const row = await env.DB.prepare('SELECT deletion_secret_hash FROM installations WHERE installation_id = ?').bind(installationId).first();
+  if (!row || !timingSafeEqual(String(row.deletion_secret_hash), providedHash)) {
     return jsonResponse({ error: 'unauthorized' }, 401);
   }
-
-  await env.DB.batch([
-    env.DB.prepare('DELETE FROM events WHERE installation_id = ?').bind(installationId),
-    env.DB.prepare('DELETE FROM installations WHERE installation_id = ?').bind(installationId),
-  ]);
 
   return jsonResponse({ deleted: true }, 200);
 }
