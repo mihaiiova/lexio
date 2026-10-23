@@ -69,7 +69,8 @@ class PrivacyScreen extends StatelessWidget {
                   'Deschide Setări și oprește «Analiză opțională». Colectarea viitoare '
                   'se oprește imediat, iar evenimentele care așteaptă pe dispozitiv '
                   'sunt eliminate. Pentru datele deja trimise, folosește și '
-                  '«Șterge datele de pe server».',
+                  '«Șterge datele de pe server». Pentru a permite din nou analiza '
+                  'după oprire, finalizează mai întâi ștergerea de pe server.',
             ),
             _PolicySection(
               title: 'Cum ceri ștergerea',

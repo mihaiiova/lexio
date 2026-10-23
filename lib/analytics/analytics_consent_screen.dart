@@ -132,7 +132,7 @@ class _AnalyticsConsentScreenState extends State<AnalyticsConsentScreen> {
                     const SizedBox(height: LexioSpacing.sm),
                     LexioButton(
                       label: 'Nu, mulțumesc',
-                      variant: LexioButtonVariant.ghost,
+                      variant: LexioButtonVariant.secondary,
                       isExpanded: true,
                       wrapLabel: true,
                       onPressed: _busy ? null : () => _submit(false),

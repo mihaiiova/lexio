@@ -3,12 +3,33 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lexio/analytics/analytics_consent_screen.dart';
 import 'package:lexio/analytics/analytics_repository.dart';
+import 'package:lexio/design/components/lexio_button.dart';
 import 'package:lexio/design/theme.dart';
 import 'package:lexio/privacy/privacy_screen.dart';
 
 import '../support/analytics_fakes.dart';
 
 void main() {
+  testWidgets('both consent choices use prominent full-width buttons', (
+    tester,
+  ) async {
+    final repo = await analyticsRepository(
+      RecordingAnalyticsTransport(),
+      enabled: false,
+    );
+    await _openConsent(tester, repo);
+    for (final (label, variant) in [
+      ('Permite analiza utilizării', LexioButtonVariant.primary),
+      ('Nu, mulțumesc', LexioButtonVariant.secondary),
+    ]) {
+      final button = tester.widget<LexioButton>(
+        find.widgetWithText(LexioButton, label),
+      );
+      expect(button.variant, variant);
+      expect(button.isExpanded, isTrue);
+    }
+  });
+
   testWidgets('reading privacy does not choose or enable analytics', (
     tester,
   ) async {

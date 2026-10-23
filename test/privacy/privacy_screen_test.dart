@@ -20,6 +20,10 @@ void main() {
       expect(find.textContaining('nu sunt complet anonime'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('Cum oprești analiza'), 300);
       expect(find.textContaining('se oprește imediat'), findsOneWidget);
+      expect(
+        find.textContaining('Pentru a permite din nou analiza după oprire'),
+        findsOneWidget,
+      );
       await tester.scrollUntilVisible(find.text('Cum ceri ștergerea'), 300);
       expect(find.textContaining('Este nevoie de internet'), findsOneWidget);
       expect(

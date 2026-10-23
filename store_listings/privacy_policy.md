@@ -24,7 +24,7 @@ La activare generăm un identificator aleatoriu. El ne permite să grupăm eveni
 
 ## Cum oprești analiza
 
-Deschide Setări și oprește «Analiză opțională». Colectarea viitoare se oprește imediat, iar evenimentele care așteaptă pe dispozitiv sunt eliminate. Pentru datele deja trimise, folosește și «Șterge datele de pe server».
+Deschide Setări și oprește «Analiză opțională». Colectarea viitoare se oprește imediat, iar evenimentele care așteaptă pe dispozitiv sunt eliminate. Pentru datele deja trimise, folosește și «Șterge datele de pe server». Pentru a permite din nou analiza după oprire, finalizează mai întâi ștergerea de pe server.
 
 ## Cum ceri ștergerea
 
