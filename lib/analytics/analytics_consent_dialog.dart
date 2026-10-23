@@ -29,89 +29,104 @@ Future<void> showAnalyticsConsentDialog(
   });
 }
 
-final class AnalyticsConsentDialog extends StatelessWidget {
+final class AnalyticsConsentDialog extends StatefulWidget {
   const AnalyticsConsentDialog({super.key, required this.repository});
 
   final AnalyticsRepository repository;
 
   @override
+  State<AnalyticsConsentDialog> createState() => _AnalyticsConsentDialogState();
+}
+
+class _AnalyticsConsentDialogState extends State<AnalyticsConsentDialog> {
+  bool _busy = false;
+
+  Future<void> _submit(bool enable) async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    if (enable) {
+      await widget.repository.enable();
+    } else {
+      await widget.repository.decline();
+    }
+    if (!mounted || ModalRoute.of(context)?.isCurrent != true) return;
+    if (enable && !widget.repository.isConsentEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Activarea nu a reușit. Colectarea rămâne oprită. '
+            'Verifică stocarea și eventualele cereri de ștergere din Setări.',
+          ),
+        ),
+      );
+    }
+    Navigator.of(context).pop();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: LexioCard(
-        padding: const EdgeInsets.all(LexioSpacing.cardPadding),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Analiză opțională',
-              style: LexioTextStyles.headingSmall.copyWith(
-                color: LexioColors.textPrimary,
+    return PopScope(
+      canPop: !_busy,
+      child: Dialog(
+        backgroundColor: LexioColors.transparent,
+        child: LexioCard(
+          padding: const EdgeInsets.all(LexioSpacing.cardPadding),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Analiză opțională',
+                style: LexioTextStyles.headingSmall.copyWith(
+                  color: LexioColors.textPrimary,
+                ),
               ),
-            ),
-            const SizedBox(height: LexioSpacing.sm),
-            Text(
-              'Putem înregistra utilizarea exercițiilor pe această instalare pentru a '
-              'asigura calitatea exercițiilor. Nu colectăm textele '
-              'exercițiilor, răspunsurile tale, numele sau date de contact.',
-              style: LexioTextStyles.bodyMedium.copyWith(
-                color: LexioColors.textSecondary,
+              const SizedBox(height: LexioSpacing.sm),
+              Text(
+                'Putem înregistra utilizarea exercițiilor pe această instalare pentru a '
+                'asigura calitatea exercițiilor. Nu colectăm textele '
+                'exercițiilor, răspunsurile tale, numele sau date de contact.',
+                style: LexioTextStyles.bodyMedium.copyWith(
+                  color: LexioColors.textSecondary,
+                ),
               ),
-            ),
-            const SizedBox(height: LexioSpacing.sm),
-            Text(
-              'Confirmarea este dată de părinte sau tutore și este declarată '
-              'pe proprie răspundere; aplicația nu verifică identitatea și nu '
-              'reprezintă o garanție de conformitate legală.',
-              style: LexioTextStyles.bodySmall.copyWith(
-                color: LexioColors.textTertiary,
+              const SizedBox(height: LexioSpacing.sm),
+              Text(
+                'Confirmarea este dată de părinte sau tutore și este declarată '
+                'pe proprie răspundere; aplicația nu verifică identitatea și nu '
+                'reprezintă o garanție de conformitate legală.',
+                style: LexioTextStyles.bodySmall.copyWith(
+                  color: LexioColors.textTertiary,
+                ),
               ),
-            ),
-            const SizedBox(height: LexioSpacing.sm),
-            Text(
-              'Datele sunt legate de un identificator aleatoriu al instalării '
-              'cel mult 90 de zile; apoi pot rămâne totaluri fără această legătură. '
-              'Poți opri colectarea și cere ștergerea din Setări. '
-              'Jocul rămâne disponibil fără acord sau internet.',
-              style: LexioTextStyles.bodySmall.copyWith(
-                color: LexioColors.textSecondary,
+              const SizedBox(height: LexioSpacing.sm),
+              Text(
+                'Datele sunt legate de un identificator aleatoriu al instalării '
+                'cel mult 90 de zile; apoi pot rămâne totaluri fără această legătură. '
+                'Poți opri colectarea și cere ștergerea din Setări. '
+                'Jocul rămâne disponibil fără acord sau internet.',
+                style: LexioTextStyles.bodySmall.copyWith(
+                  color: LexioColors.textSecondary,
+                ),
               ),
-            ),
-            const SizedBox(height: LexioSpacing.lg),
-            LexioButton(
-              label: 'Permite',
-              variant: LexioButtonVariant.primary,
-              size: LexioButtonSize.large,
-              isExpanded: true,
-              onPressed: () async {
-                await repository.enable();
-                if (!context.mounted) return;
-                if (!repository.isConsentEnabled) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Activarea nu a reușit. Colectarea rămâne oprită. '
-                        'Verifică stocarea și eventualele cereri de ștergere din Setări.',
-                      ),
-                    ),
-                  );
-                }
-                Navigator.of(context).pop();
-              },
-            ),
-            const SizedBox(height: LexioSpacing.sm),
-            LexioButton(
-              label: 'Nu, mulțumesc',
-              variant: LexioButtonVariant.ghost,
-              size: LexioButtonSize.large,
-              isExpanded: true,
-              onPressed: () async {
-                await repository.decline();
-                if (context.mounted) Navigator.of(context).pop();
-              },
-            ),
-          ],
+              const SizedBox(height: LexioSpacing.lg),
+              LexioButton(
+                label: 'Permite',
+                variant: LexioButtonVariant.primary,
+                size: LexioButtonSize.large,
+                isExpanded: true,
+                onPressed: _busy ? null : () => _submit(true),
+              ),
+              const SizedBox(height: LexioSpacing.sm),
+              LexioButton(
+                label: 'Nu, mulțumesc',
+                variant: LexioButtonVariant.ghost,
+                size: LexioButtonSize.large,
+                isExpanded: true,
+                onPressed: _busy ? null : () => _submit(false),
+              ),
+            ],
+          ),
         ),
       ),
     );
