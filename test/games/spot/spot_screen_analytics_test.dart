@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lexio/analytics/analytics_event.dart';
+import 'package:lexio/design/colors.dart';
 import 'package:lexio/design/theme.dart';
 import 'package:lexio/games/spot/spot_content.dart';
 import 'package:lexio/games/spot/spot_game.dart';
@@ -45,6 +46,56 @@ Future<void> settle(WidgetTester tester) async {
 }
 
 void main() {
+  testWidgets('idle countdown refreshes time and warning without collecting', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    var now = DateTime.utc(2026, 6, 1);
+    final transport = RecordingAnalyticsTransport();
+    final repo = await analyticsRepository(transport, clock: () => now);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SpotScreen(
+          texts: [text('a')],
+          analytics: repo,
+          clock: () => now,
+        ),
+      ),
+    );
+    await settle(tester);
+    await repo.flush();
+    final initialEvents = transport.events.length;
+    expect(find.text('01:00'), findsOneWidget);
+
+    now = now.add(const Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('00:59'), findsOneWidget);
+    expect(
+      find.bySemanticsLabel(RegExp('Timp rămas: 00:59')),
+      findsOneWidget,
+    );
+    expect(
+      tester.widget<Text>(find.text('00:59')).style!.color,
+      LexioColors.textSecondary,
+    );
+
+    now = now.add(const Duration(seconds: 49));
+    await tester.pump(const Duration(seconds: 49));
+    expect(find.text('00:10'), findsOneWidget);
+    expect(
+      find.bySemanticsLabel(RegExp('Timp rămas: 00:10')),
+      findsOneWidget,
+    );
+    expect(
+      tester.widget<Text>(find.text('00:10')).style!.color,
+      LexioColors.error,
+    );
+    await repo.flush();
+    expect(transport.events, hasLength(initialEvents));
+    semantics.dispose();
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets(
     'Spot observes repeat presses without changing discoveries or gameplay score',
     (tester) async {

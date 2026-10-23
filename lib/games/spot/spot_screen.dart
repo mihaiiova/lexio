@@ -101,8 +101,8 @@ class _SpotScreenState extends State<SpotScreen> with WidgetsBindingObserver {
       return;
     }
     final updated = state.checkTimerExpiry(now: _now());
-    if (identical(updated, state)) return;
     setState(() => _state = updated);
+    if (identical(updated, state)) return;
     if (updated.isFinished) {
       _timer?.cancel();
       _finish(updated, reason: AnalyticsRoundEndReason.timeout);
