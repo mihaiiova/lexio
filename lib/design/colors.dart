@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class LexioColors {
+  static const Color transparent = Color(0x00000000);
   LexioColors._();
 
   // --- Blue (primary) ---

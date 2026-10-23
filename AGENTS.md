@@ -127,3 +127,10 @@ flutter test             # Run tests
 - Add comments that explain "what" — only "why" if non-obvious
 - Introduce state management libraries
 - Add backend calls, auth, databases, or APIs (read-only HTTPS fetches of static content bundles are allowed)
+
+  **Narrow exception (issue #60):** the app may run a first-party, consent-gated
+  analytics collector. It uses an HTTPS endpoint only when the user explicitly
+  opts in, sends bounded schema-validated events (no raw content or answers),
+  and never blocks offline play. There are no accounts, auth, or vendor SDKs;
+  the deletion path is authenticated by a per-installation secret, not a random
+  id alone.

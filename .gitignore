@@ -54,3 +54,7 @@ app.*.map.json
 
 # Generated screenshots
 screenshots/
+
+# Node / Cloudflare Worker
+node_modules/
+.wrangler/

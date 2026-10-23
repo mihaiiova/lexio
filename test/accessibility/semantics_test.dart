@@ -46,7 +46,7 @@ void main() {
 
     expect(find.text('Politica de confidențialitate'), findsOneWidget);
     expect(find.text('Ce date colectăm'), findsOneWidget);
-    expect(find.textContaining('Nu colectăm'), findsWidgets);
+    expect(find.textContaining('În mod implicit nu colectăm'), findsWidgets);
   });
 
   testWidgets('App title text is present', (tester) async {

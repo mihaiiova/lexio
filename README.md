@@ -65,7 +65,7 @@ lib/
 - **Minimalist**: Only essential UI chrome
 - **Calm**: Gentle colors, subtle animations
 - **Premium**: Clean cards, consistent spacing, refined details
-- **Fast**: Local content and progress with no usage tracking
+- **Fast**: Local content and progress; optional analytics never blocks play
 
 ## Architecture Decisions
 
@@ -74,8 +74,8 @@ lib/
 - Content is stored as local JSON for easy addition of thousands of exercises
 - **Offline-first content**: bundled baseline plus a static bundle refreshed in the background; progress stays local
 - **Local persistence**: Progress tracked via `SharedPreferences` with spaced repetition
-- **No backend or auth** — learning content and progress remain local (a static CDN delivers content one-way)
-- **Privacy-conscious**: no usage tracking, advertising, accounts, or device identifiers; learning progress remains local
+- **Local learning, narrow analytics exception** — content and progress remain local (a static CDN delivers content one-way). Optional consent-gated first-party Worker/D1 analytics uses a separate per-installation secret for authenticated deletion; there are no accounts or general authentication backend.
+- **Privacy-conscious**: guardian-opt-in first-party analytics (default off), no advertising or accounts; full learning progress remains local
 - **Deadline-based timer**: Spot game uses wall-clock deadlines, not callback counting
 - **Lifecycle-safe**: App respects background/foreground transitions (WidgetsBindingObserver)
 - **Brand**: Primary blue `#4588E0`, NoticiaText font family, white surfaces
@@ -129,7 +129,13 @@ See [`docs/releasing.md`](docs/releasing.md) for how to version, test, and ship 
 
 - The Romanian privacy policy is available from the home-screen footer and at https://didactiv.ro/confidentialitate/slove/.
 - The canonical policy text is stored in `store_listings/privacy_policy.md`.
-- No usage-tracking SDK or remote user-data collection is configured.
+- There is no vendor tracking SDK. Optional first-party analytics is **off by default** and requires a guardian-directed opt-in. Guardian confirmation is self-declared, not verified legal consent. Play remains available after declining and offline.
+- Settings permits withdrawing consent and requesting deletion of this installation's linked records. Collection stops immediately; an offline/failed deletion retains its credential for retry and prevents re-enabling until acknowledgment. Re-enabling then creates a fresh random installation identity, not a person/account identifier.
+- Grammar sends only bounded lifecycle events, exercise IDs, bundle revision, timestamps and correct/wrong outcomes; never exercise text or raw answers. Installation-linked records are not irreversibly anonymous. Events expire at 90 days; inactive credentials expire after 90 days without ingestion once linked events are gone, and revocation records expire 90 days after first deletion, without retry extension. Daily scheduled purging can add up to a day (operational failures can delay it further and require monitoring); no extra credential-retention exception or indefinite inactive identity metadata is intended. Ingestion rejects future timestamps and events at/older than the 90-day horizon, so original payloads cannot replay after tombstone expiry. Only unlinked aggregate totals may remain; deletion does not reverse previously unlinked totals.
+- The first-party Cloudflare Worker/D1 implementation is in [`worker/`](worker/). Configure a reviewed HTTPS collector at build time with `flutter run --dart-define=ANALYTICS_ENDPOINT=https://your-collector.example` (or the same flag for `flutter build`). It uses `POST /v1/events` and authenticated `POST /v1/delete`; never embed administrative credentials in the app.
+- With the endpoint unset or the network unavailable, delivery fails safely: the bounded local queue retries at launch, resume, subsequent collection and explicit flush points, without an offline retry loop. Batches contain at most 100 events and stay below 60 KB. Revocation clears queued events; no pre-consent play is backfilled.
+- If local withdrawal cannot be saved, Settings warns that collection is off for this process but the old setting can return after relaunch; retry saving before closing. If all local writes fail, no durable revocation guarantee is possible. Server deletion acknowledgment is independent of local storage. Queue and round persistence are separate best-effort writes, so power loss may lose unsent analytics; stable terminal event IDs prevent duplicate terminal counts on retry.
+- Child-privacy/legal and store-policy review, manual first-run/offline testing, endpoint provisioning and production deployment remain release gates. This implementation is not evidence that those sign-offs occurred.
 
 ## License
 
