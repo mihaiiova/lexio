@@ -75,7 +75,7 @@ lib/
 - **Offline-first content**: bundled baseline plus a static bundle refreshed in the background; progress stays local
 - **Local persistence**: Progress tracked via `SharedPreferences` with spaced repetition
 - **No backend or auth** — learning content and progress remain local (a static CDN delivers content one-way)
-- **Privacy-conscious**: no usage tracking, advertising, accounts, or device identifiers; learning progress remains local
+- **Privacy-conscious**: guardian-opt-in first-party analytics (default off), no advertising or accounts; full learning progress remains local
 - **Deadline-based timer**: Spot game uses wall-clock deadlines, not callback counting
 - **Lifecycle-safe**: App respects background/foreground transitions (WidgetsBindingObserver)
 - **Brand**: Primary blue `#4588E0`, NoticiaText font family, white surfaces

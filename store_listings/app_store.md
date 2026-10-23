@@ -55,18 +55,18 @@ Română (intreaga aplicație este în limba română)
 - Fără cont sau autentificare necesară
 
 ## Confidențialitate
-Politica de confidențialitate este disponibilă în aplicație. Pentru publicarea în App Store trebuie furnizat și un URL public.
+Politica este disponibilă în aplicație; URL canonic: https://didactiv.ro/confidentialitate/slove/. Versiunea revizuită trebuie publicată înainte de trimitere.
 
 Slove nu folosește reclame, conturi sau identificatori de publicitate și, în mod implicit, nu urmărește utilizarea. Răspunsurile, scorurile, textele introduse și progresul de învățare rămân exclusiv pe dispozitiv.
 
-Analiza anonimă este opțională și dezactivată implicit. Dacă este activată de părinte sau tutore, pe proprie răspundere, aplicația trimite numai semnale limitate (identificator anonim de instalare, joc, exercițiu și corect/greșit) către infrastructura noastră proprie, fără textele exercițiilor sau răspunsurile. Utilizatorul poate dezactiva oricând analiza și poate șterge datele legate de această instalare din Setări.
+Analiza pseudonimă este opțională și dezactivată implicit. Dacă este activată de părinte sau tutore, pe proprie răspundere, aplicația trimite numai semnale limitate (identificator aleatoriu de instalare, rundă, joc, versiune, exercițiu/poziție, dată/oră, afișare, corect/greșit, rezolvare și motiv de încheiere) către infrastructura noastră proprie, fără textele exercițiilor sau răspunsurile. Utilizatorul poate dezactiva oricând analiza și poate șterge datele legate de această instalare din Setări.
 
 Aplicația poate descărca o versiune mai nouă a conținutului lingvistic dintr-un serviciu static (Cloudflare Pages). Descărcarea este unidirecțională — primește conținut, nu trimite progres, răspunsuri sau date personale — și nu necesită cont.
 
 ### Etichetele App Privacy
-- **Date asociate cu tine:** Niciuna — aplicația nu are conturi
+- **Date asociate cu tine:** De stabilit prin revizuirea App Privacy; identitatea de instalare este persistentă și pseudonimă, chiar fără cont
 - **Date utilizate pentru urmărirea ta:** Niciuna
-- **Date necolectate:** Analiză anonimă opțională (identificator de instalare, joc, exercițiu, corect/greșit); dezactivată implicit, fără texte sau răspunsuri
+- **Date colectate opțional (clasificare de verificat manual):** Analiză pseudonimă opțională (identificator de instalare, rundă, joc, versiune, exercițiu/poziție, dată/oră, afișare, corect/greșit, rezolvare și motiv de încheiere); dezactivată implicit, fără texte sau răspunsuri
 
 ## Website
 De publicat la un URL dedicat Slove înainte de trimiterea în App Store.
@@ -77,3 +77,9 @@ De publicat la un URL dedicat Slove înainte de trimiterea în App Store.
 
 ## Copyright
 © 2026 Slove. Toate drepturile rezervate.
+
+## Revizuire obligatorie înainte de lansare (#60)
+
+Datele legate de instalare sunt pseudonime, nu complet anonime. Evenimentele sunt păstrate 90 de zile, apoi eliminate prin operațiunea zilnică (până la o zi suplimentară; monitorizare obligatorie). Credențialele inactive expiră după 90 de zile fără trimitere, fără evenimente rămase. Ștergerea elimină datele încă legate; o înregistrare minimă de revocare rămâne 91 de zile pentru blocarea retransmiterilor. Totalurile deja separate de instalare, cu minimum cinci instalări distincte per grup, nu pot fi retrase ulterior. Detalii și limite: [politica de confidențialitate](privacy_policy.md).
+
+Acestea sunt texte propuse, nu declarații deja aprobate sau modificate în console. Confirmarea tutorelui este autodeclarată. Sunt obligatorii aprobarea manuală juridică/de confidențialitate pentru copii și a politicilor magazinelor, clasificarea exactă App Privacy/Data Safety, publicarea politicii canonice și testele manuale acord/offline/ștergere. Nicio aprobare manuală nu este afirmată aici.

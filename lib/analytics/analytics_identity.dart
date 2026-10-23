@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-/// Anonymous installation identity plus a separate deletion secret.
+/// Pseudonymous installation identity plus a separate deletion secret.
 ///
 /// The installation id is not a credential; deletion requests are authorized
 /// by the deletion secret and are server-verified. Both tokens are random and

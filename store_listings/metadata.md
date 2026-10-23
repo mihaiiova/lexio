@@ -19,7 +19,7 @@
 | Field | URL |
 |---|---|
 | Website | Public Slove URL to be configured before store submission |
-| Privacy policy | https://mihaiiova.github.io/lexio/ |
+| Privacy policy | https://didactiv.ro/confidentialitate/slove/ |
 
 ## Categories
 
@@ -37,7 +37,7 @@
 | In-app purchases | Nu |
 | Advertising | Nu |
 | Account required | Nu |
-| Data collection | Opțional — analiză anonimă dezactivată implicit; utilizarea și progresul rămân locale |
+| Data collection | Opțional — analiză pseudonimă dezactivată implicit; utilizarea și progresul rămân locale |
 | Unrestricted web access | Nu (doar linkuri DOOM) |
 | Gambling / simulated gambling | Nu |
 | Alcohol / tobacco / drug references | Nu |
@@ -47,27 +47,27 @@
 | Mature / suggestive themes | Nu |
 | Health / fitness data | Nu |
 | Location data | Nu |
-| User data transmitted | Opțional — doar dacă analiza anonimă este activată, semnale limitate (identificator anonim de instalare, joc, exercițiu, corect/greșit) |
-| Encryption | Nu se aplică datelor de utilizare; linkurile DOOM folosesc HTTPS |
+| User data transmitted | Opțional — doar dacă analiza pseudonimă este activată, semnale limitate (identificator aleatoriu de instalare, rundă, joc, versiune, exercițiu/poziție, dată/oră, afișare, corect/greșit, rezolvare și motiv de încheiere) |
+| Encryption | Analiza opțională și linkurile DOOM folosesc HTTPS |
 | Children under 13 | Aplicația poate fi folosită de copii sub 13 ani |
 
 ## App Privacy (App Store)
 
-- **Data Linked to You**: None
+- **Data Linked to You**: Requires manual App Privacy classification; a persistent installation identifier is pseudonymous even without accounts
 - **Data Used to Track You**: None
-- **Data Not Linked to You**: Optional anonymous analytics — installation id, game, exercise id/index, correct/wrong outcome (only after opt-in; off by default; no raw content or answers)
+- **Optional collection (classification requires review)**: Optional pseudonymous installation analytics — installation/event/session IDs, game, revision, exercise ID/index, UTC time, shown/answered/resolved, outcome and end reason (only after opt-in; off by default; no raw content or answers)
 
 ## Data Safety (Google Play)
 
-- **Data collected**: Optional anonymous analytics (opt-in, off by default)
+- **Data collected**: Optional pseudonymous installation analytics (opt-in, off by default)
 - **Data shared**: None
 - **Data encrypted in transit**: HTTPS for the optional analytics endpoint and DOOM links
 - **Data can be deleted**: Yes — from in-app Setări, the installation's linked records are deleted
-- **Data safety label**: Optional anonymous analytics, user can delete
+- **Data safety label**: Optional pseudonymous installation analytics, user can delete
 
 ## Export Compliance
 
-- Encryption: Linkurile DOOM folosesc HTTPS; aplicația nu transmite date de utilizare.
+- Encryption: Analiza opțională și linkurile DOOM folosesc HTTPS.
 - ITAR / EAR: Nu se aplică — aplicație educațională fără tehnologie de export-controlat.
 
 ## Contact
@@ -127,3 +127,9 @@ the 1024 × 500 feature graphic, and the approved store icons. Generate it again
 ```bash
 python3 scripts/prepare_store_assets.py
 ```
+
+## Revizuire obligatorie înainte de lansare (#60)
+
+Datele legate de instalare sunt pseudonime, nu complet anonime. Evenimentele sunt păstrate 90 de zile, apoi eliminate prin operațiunea zilnică (până la o zi suplimentară; monitorizare obligatorie). Credențialele inactive expiră după 90 de zile fără trimitere, fără evenimente rămase. Ștergerea elimină datele încă legate; o înregistrare minimă de revocare rămâne 91 de zile pentru blocarea retransmiterilor. Totalurile deja separate de instalare, cu minimum cinci instalări distincte per grup, nu pot fi retrase ulterior. Detalii și limite: [politica de confidențialitate](privacy_policy.md).
+
+Acestea sunt texte propuse, nu declarații deja aprobate sau modificate în console. Confirmarea tutorelui este autodeclarată. Sunt obligatorii aprobarea manuală juridică/de confidențialitate pentru copii și a politicilor magazinelor, clasificarea exactă App Privacy/Data Safety, publicarea politicii canonice și testele manuale acord/offline/ștergere. Nicio aprobare manuală nu este afirmată aici.
