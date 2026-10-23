@@ -1,3 +1,4 @@
+import { handleReport } from './report';
 import {
   type AnalyticsEvent,
   MAX_EVENTS_PER_BATCH,
@@ -7,6 +8,9 @@ import {
 
 export interface Env {
   DB: D1Database;
+  ACCESS_ISSUER?: string;
+  ACCESS_AUDIENCE?: string;
+  ACCESS_OWNER_EMAILS?: string;
   RATE_LIMIT_MAX?: string;
   PUBLIC_ENDPOINTS_ENABLED?: string;
 }
@@ -282,6 +286,7 @@ export async function purgeExpired(env: Env): Promise<number> {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    if (url.pathname === '/private' || url.pathname.startsWith('/private/')) return handleReport(request, env);
     if (request.method === 'POST' && ['/v1/events', '/v1/delete'].includes(url.pathname)) {
       if (env.PUBLIC_ENDPOINTS_ENABLED !== 'true') return jsonResponse({error: 'deployment safety gate closed'}, 503);
       // Isolate-local backstop only; distributed enforcement is a release gate.
