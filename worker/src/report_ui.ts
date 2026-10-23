@@ -23,6 +23,7 @@ const weeks = document.getElementById('weeks');
 const status = document.getElementById('status');
 const next = document.getElementById('next');
 let cursor = null;
+let appliedFilters = new URLSearchParams();
 let sequence = 0;
 const names = {grammar:'Gramatică',vocabulary:'Vocabular',idioms:'Expresii',spot:'Găsește greșeala'};
 const reasons = {in_progress:'În desfășurare / final necunoscut',completed:'Finalizată',user_back:'Ieșire voluntară',restart:'Reluată',timeout:'Timp expirat',inferred_interruption:'Întrerupere dedusă — ultima activitate estimată',unknown:'Final necunoscut'};
@@ -48,8 +49,11 @@ async function load(history = false, following = false) {
   next.hidden = true;
   recent.replaceChildren();
   weeks.replaceChildren();
-  const p = new URLSearchParams();
-  for (const input of form.elements) if (input.name && input.value) p.set(input.name,input.value);
+  const p = following ? new URLSearchParams(appliedFilters) : new URLSearchParams();
+  if (!following && !history) {
+    for (const input of form.elements) if (input.name && input.value) p.set(input.name,input.value);
+    appliedFilters = new URLSearchParams(p);
+  }
   if (following && cursor) p.set('cursor',cursor);
   try {
     const response = await fetch('/private/report/api/' + (history ? 'history' : 'recent?' + p), {cache:'no-store',redirect:'error'});

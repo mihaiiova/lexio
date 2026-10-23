@@ -41,7 +41,7 @@ test('empty, denied and historical suppression are explicit', async ({page}) => 
   await page.getByRole('button',{name:'Aplică filtrele'}).click();
   await expect(page.getByRole('status')).toHaveText('Acces refuzat. Autentificați-vă din nou prin Access.');
 });
-test('pagination keeps filters and labels terminal-only unresolved items honestly', async ({page}) => {
+test('pagination keeps applied filters despite unsaved edits and labels terminal-only items honestly', async ({page}) => {
   const urls: URL[] = [];
   const ended = {...metrics,inProgress:0,ended:1,shown:0,left:1,openUnresolved:0};
   const session = (id: string) => ({installation:'i1',session:id,game:'grammar',version:'v1',lastActivity:'2026-10-22T01:00:00.000Z',
@@ -62,11 +62,15 @@ test('pagination keeps filters and labels terminal-only unresolved items honestl
   await page.getByText('Detalii pe item', {exact:false}).click();
   await expect(page.getByText('Stare la final: nerezolvat (nu greșit)')).toBeVisible();
   await expect(page.getByText('Afișarea nu apare în interval și nu este numărată.')).toBeVisible();
+  await page.getByLabel('Joc').selectOption('spot');
   await page.getByRole('button',{name:'Pagina următoare'}).click();
   await expect(page.getByText('Sesiune: page-two', {exact:false})).toBeVisible();
   expect(urls.at(-1)?.searchParams.get('cursor')).toBe('["c1"]');
   expect(urls.at(-1)?.searchParams.get('game')).toBe('grammar');
   await expect(page.getByRole('button',{name:'Pagina următoare'})).toBeHidden();
+  await page.getByRole('button',{name:'Aplică filtrele'}).click();
+  await expect.poll(() => urls.at(-1)?.searchParams.get('game')).toBe('spot');
+  expect(urls.at(-1)?.searchParams.get('cursor')).toBeNull();
 });
 test('population item totals and ending locations do not require paging through sessions', async ({page}) => {
   await page.route('**/api/recent*', route => route.fulfill({json:{summary:{grammar:{...metrics,endedByReason:{user_back:2},
