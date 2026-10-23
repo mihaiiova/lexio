@@ -36,6 +36,15 @@ final class AnalyticsRepository {
   ConsentState _consent;
   bool _consentWasPersisted;
   PendingRound? _pendingRound;
+  int _generation = 0;
+  Future<void> _operations = Future<void>.value();
+
+  Future<void> _serialize(Future<void> Function() action) {
+    final result = _operations.then((_) => action());
+    _operations = result.catchError((Object _) {});
+    return result;
+  }
+
   Future<void> _flushQueue = Future<void>.value();
 
   static Future<AnalyticsRepository> load({
@@ -111,84 +120,71 @@ final class AnalyticsRepository {
       _consent.enabled ? _consent.installationId : null;
 
   /// Enables collection with a fresh installation identity and deletion secret.
-  Future<void> enable() async {
-    final identity = AnalyticsIdentity.generate(random: _random);
-    if (_consentStorage == null || needsDeletion || _consent.enabled) return;
-    final next = ConsentState(
-      enabled: true,
-      installationId: identity.installationId,
-      deletionSecret: identity.deletionSecret,
-    );
-    try {
-      await _consentStorage.write(encodeConsentState(next));
-      _consent = next;
-      _consentWasPersisted = true;
-      _pendingRound = null;
-      await _clearPendingRoundStorage();
-    } catch (_) {
-      _consent = ConsentState.disabled;
+  Future<void> enable() {
+    final generation = _generation;
+    if (_consentStorage == null || needsDeletion || _consent.enabled) {
+      return Future<void>.value();
     }
+    return _serialize(() async {
+      if (generation != _generation || needsDeletion || _consent.enabled) return;
+      final identity = AnalyticsIdentity.generate(random: _random);
+      final next = ConsentState(enabled: true,
+        installationId: identity.installationId,
+        deletionSecret: identity.deletionSecret);
+      try {
+        await _consentStorage.write(encodeConsentState(next));
+        _consentWasPersisted = true;
+        _consent = generation == _generation
+            ? next : next.copyWith(enabled: false, needsDeletion: true);
+      } catch (_) {
+        // Never publish a consent decision that was not durably written.
+      }
+    });
   }
 
-  /// Records a first-launch decline without any identity to delete.
-  Future<void> decline() async {
-    _consent = ConsentState.disabled;
+  void _revoke() {
+    _generation++;
+    _consent = _consent.copyWith(enabled: false,
+      needsDeletion: _consent.hasIdentity);
     _consentWasPersisted = true;
     _queue.clear();
     _pendingRound = null;
-    await _clearPendingRoundStorage();
-    await _persistConsent();
   }
 
-  /// Stops collection, clears the queue, and marks the retained identity as
-  /// needing server-side deletion.
-  Future<void> disable() async {
-    final hadIdentity = _consent.hasIdentity;
-    _consent = _consent.copyWith(
-      enabled: false,
-      needsDeletion: hadIdentity,
-    );
-    _consentWasPersisted = true;
-    _queue.clear();
-    _pendingRound = null;
-    await _clearPendingRoundStorage();
-    await _persistConsent();
-  }
+  Future<void> decline() => disable();
 
-  /// Requests server deletion for the retained identity and clears it on
-  /// acknowledgment. Returns false when the request failed and must be retried.
-  Future<bool> disableAndDelete() async {
-    final installationId = _consent.installationId;
-    final deletionSecret = _consent.deletionSecret;
-    _queue.clear();
-
-    if (!_consent.hasIdentity) {
-      _consent = ConsentState.disabled;
-      _consentWasPersisted = true;
-      _pendingRound = null;
+  Future<void> disable() {
+    _revoke();
+    return _serialize(() async {
       await _clearPendingRoundStorage();
       await _persistConsent();
-      return true;
-    }
+    });
+  }
 
+  Future<bool> disableAndDelete() async {
+    final disabling = disable(); // Revocation occurs before the first await.
+    await disabling;
+    await _flushQueue; // An older send must finish before its identity is deleted.
+    final identity = _consent;
+    if (!identity.hasIdentity) return true;
     try {
       await _transport.requestDeletion(
-        installationId: installationId!,
-        deletionSecret: deletionSecret!,
-      );
+        installationId: identity.installationId!,
+        deletionSecret: identity.deletionSecret!);
     } catch (_) {
-      _consent = _consent.copyWith(enabled: false, needsDeletion: true);
-      _consentWasPersisted = true;
-      await _persistConsent();
       return false;
     }
-
-    _consent = ConsentState.disabled;
-    _consentWasPersisted = true;
-    _pendingRound = null;
-    await _clearPendingRoundStorage();
-    await _persistConsent();
-    return true;
+    var persisted = false;
+    await _serialize(() async {
+      try {
+        await _consentStorage!.write(encodeConsentState(ConsentState.disabled));
+        _consent = ConsentState.disabled;
+        persisted = true;
+      } catch (_) {
+        // Keep the retry credential until acknowledgment is durably recorded.
+      }
+    });
+    return persisted;
   }
 
   /// Queues a validated event for transmission when consent is enabled.
@@ -360,11 +356,15 @@ final class AnalyticsRepository {
   }
 
   Future<void> _flush() async {
+    if (!_consent.enabled) return;
+    final generation = _generation;
+    final secret = _consent.deletionSecret;
     final events = _queue.drain();
     if (events.isEmpty) return;
     try {
-      await _transport.sendEvents(events, deletionSecret: _consent.deletionSecret);
+      await _transport.sendEvents(events, deletionSecret: secret);
     } catch (_) {
+      if (generation != _generation || !_consent.enabled) return;
       for (final event in events) {
         _queue.add(event);
       }

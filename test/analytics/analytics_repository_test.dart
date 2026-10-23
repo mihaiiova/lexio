@@ -55,6 +55,38 @@ void main() {
       expect(repo.isConsentEnabled, isFalse);
     });
 
+    test('revocation fences an in-flight enable and survives reload', () async {
+      final storage = _MemoryConsentStorage();
+      final repo = await AnalyticsRepository.load(storage: storage,
+        pendingRoundStorage: _MemoryPendingRoundStorage(), transport: _FakeTransport());
+      storage.writeGate = Completer<void>();
+      final enabling = repo.enable();
+      await Future<void>.delayed(Duration.zero);
+      final disabling = repo.disable();
+      expect(repo.isConsentEnabled, isFalse);
+      storage.writeGate!.complete();
+      await Future.wait([enabling, disabling]);
+      expect(repo.isConsentEnabled, isFalse);
+      final reloaded = await AnalyticsRepository.load(storage: storage,
+        pendingRoundStorage: _MemoryPendingRoundStorage(), transport: _FakeTransport());
+      expect(reloaded.isConsentEnabled, isFalse);
+    });
+
+    test('delete revokes before network and blocks re-enable until acknowledgment', () async {
+      final transport = _FakeTransport()..deleteGate = Completer<void>();
+      final repo = await AnalyticsRepository.load(storage: _MemoryConsentStorage(),
+        pendingRoundStorage: _MemoryPendingRoundStorage(), transport: transport);
+      await repo.enable();
+      final deleting = repo.disableAndDelete();
+      expect(repo.isConsentEnabled, isFalse);
+      await repo.enable();
+      expect(repo.isConsentEnabled, isFalse);
+      transport.deleteGate!.complete();
+      expect(await deleting, isTrue);
+      await repo.enable();
+      expect(repo.isConsentEnabled, isTrue);
+    });
+
     test('enable creates and persists a fresh identity', () async {
       final storage = _MemoryConsentStorage();
       final repo = await AnalyticsRepository.load(
@@ -205,7 +237,7 @@ void main() {
 
       await repo.enable();
       final first = repo.installationId;
-      await repo.disable();
+      await repo.disableAndDelete();
       await repo.enable();
       final second = repo.installationId;
 
@@ -432,6 +464,7 @@ final class _FakeTransport implements AnalyticsTransport {
   final List<Map<String, String>> deletions = [];
   int sendFailures = 0;
   int deleteFailures = 0;
+  Completer<void>? deleteGate;
 
   @override
   Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {
@@ -447,6 +480,7 @@ final class _FakeTransport implements AnalyticsTransport {
     required String installationId,
     required String deletionSecret,
   }) async {
+    await deleteGate?.future;
     if (deleteFailures > 0) {
       deleteFailures--;
       throw Exception('delete failed');
