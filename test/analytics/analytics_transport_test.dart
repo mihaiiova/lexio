@@ -11,7 +11,7 @@ import '../../lib/analytics/analytics_transport.dart';
 
 void main() {
   group('HttpAnalyticsTransport', () {
-    test('no-ops when the endpoint is unset', () async {
+    test('reports unavailable delivery when endpoint is unset', () async {
       var called = false;
       final client = MockClient((request) async {
         called = true;
@@ -19,11 +19,11 @@ void main() {
       });
 
       final transport = HttpAnalyticsTransport(client: client);
-      await transport.sendEvents([_event()]);
-      await transport.requestDeletion(
+      await expectLater(transport.sendEvents([_event()]), throwsStateError);
+      await expectLater(transport.requestDeletion(
         installationId: 'inst_1',
         deletionSecret: 'secret',
-      );
+      ), throwsStateError);
 
       expect(called, isFalse);
     });

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'analytics_event.dart';
@@ -19,8 +18,8 @@ abstract class AnalyticsTransport {
 /// Production transport backed by the already-present `http` package.
 ///
 /// The endpoint comes from `String.fromEnvironment('ANALYTICS_ENDPOINT')`.
-/// When it is unset, both operations no-op so the app stays safe offline and
-/// in development without any network traffic.
+/// An unset endpoint fails delivery so queued events and deletion credentials
+/// are retained for a later explicit retry.
 final class HttpAnalyticsTransport implements AnalyticsTransport {
   HttpAnalyticsTransport({
     String? baseUrl,
@@ -35,11 +34,9 @@ final class HttpAnalyticsTransport implements AnalyticsTransport {
 
   @override
   Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {
-    if (_baseUrl.isEmpty) {
-      debugPrint(
-        'AnalyticsTransport: ANALYTICS_ENDPOINT is unset; events are not sent.',
-      );
-      return;
+    if (_baseUrl.isEmpty) throw StateError('analytics endpoint unavailable');
+    if (Uri.parse(_baseUrl).scheme != 'https') {
+      throw StateError('analytics requires HTTPS');
     }
 
     final response = await _client
@@ -63,11 +60,9 @@ final class HttpAnalyticsTransport implements AnalyticsTransport {
     required String installationId,
     required String deletionSecret,
   }) async {
-    if (_baseUrl.isEmpty) {
-      debugPrint(
-        'AnalyticsTransport: ANALYTICS_ENDPOINT is unset; deletion is a no-op.',
-      );
-      return;
+    if (_baseUrl.isEmpty) throw StateError('analytics endpoint unavailable');
+    if (Uri.parse(_baseUrl).scheme != 'https') {
+      throw StateError('analytics requires HTTPS');
     }
 
     final response = await _client
