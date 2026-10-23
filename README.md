@@ -129,7 +129,13 @@ See [`docs/releasing.md`](docs/releasing.md) for how to version, test, and ship 
 
 - The Romanian privacy policy is available from the home-screen footer and at https://didactiv.ro/confidentialitate/slove/.
 - The canonical policy text is stored in `store_listings/privacy_policy.md`.
-- No usage-tracking SDK or remote user-data collection is configured.
+- There is no vendor tracking SDK. Optional first-party analytics is **off by default** and requires a guardian-directed opt-in. Guardian confirmation is self-declared, not verified legal consent. Play remains available after declining and offline.
+- Settings permits withdrawing consent and requesting deletion of this installation's linked records. Collection stops immediately; an offline/failed deletion retains its credential for retry and prevents re-enabling until acknowledgment. Re-enabling then creates a fresh random installation identity, not a person/account identifier.
+- Grammar sends only bounded lifecycle events, exercise IDs, bundle revision, timestamps and correct/wrong outcomes; never exercise text or raw answers. Installation-linked records are not irreversibly anonymous. The retention contract is 90 days, then only unlinked aggregate totals; deletion does not reverse previously unlinked totals.
+- The first-party Cloudflare Worker/D1 implementation is in [`worker/`](worker/). Configure a reviewed HTTPS collector at build time with `flutter run --dart-define=ANALYTICS_ENDPOINT=https://your-collector.example` (or the same flag for `flutter build`). It uses `POST /v1/events` and authenticated `POST /v1/delete`; never embed administrative credentials in the app.
+- With the endpoint unset or the network unavailable, delivery fails safely: the bounded local queue retries at launch, resume, subsequent collection and explicit flush points, without an offline retry loop. Batches contain at most 100 events and stay below 60 KB. Revocation clears queued events; no pre-consent play is backfilled.
+- If local withdrawal cannot be saved, Settings warns that collection is off for this process but the old setting can return after relaunch; retry saving before closing. If all local writes fail, no durable revocation guarantee is possible. Server deletion acknowledgment is independent of local storage. Queue and round persistence are separate best-effort writes, so power loss may lose unsent analytics; stable terminal event IDs prevent duplicate terminal counts on retry.
+- Child-privacy/legal and store-policy review, manual first-run/offline testing, endpoint provisioning and production deployment remain release gates. This implementation is not evidence that those sign-offs occurred.
 
 ## License
 

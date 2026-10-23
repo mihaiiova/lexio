@@ -19,7 +19,7 @@ import '../../lib/analytics/pending_round.dart';
 import '../../lib/design/theme.dart';
 
 void main() {
-  testWidgets('renders the anonymous analytics section and purpose', (
+  testWidgets('renders the optional analytics section and purpose', (
     tester,
   ) async {
     final repo = await _repo();
@@ -33,7 +33,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Setări'), findsOneWidget);
-    expect(find.text('Analiză anonimă'), findsOneWidget);
+    expect(find.text('Analiză opțională'), findsOneWidget);
     expect(find.textContaining('calitatea exercițiilor'), findsOneWidget);
     expect(find.textContaining('pe proprie răspundere'), findsOneWidget);
     expect(find.byType(Switch), findsOneWidget);
@@ -54,6 +54,9 @@ void main() {
 
     await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
+    expect(find.text('Permite'), findsOneWidget);
+    await tester.tap(find.text('Permite'));
+    await tester.pumpAndSettle();
     expect(repo.isConsentEnabled, isTrue);
     expect(find.text('Șterge datele de pe server'), findsOneWidget);
 
@@ -61,6 +64,35 @@ void main() {
     await tester.pumpAndSettle();
     expect(repo.isConsentEnabled, isFalse);
     expect(repo.needsDeletion, isTrue);
+    expect(tester.widget<Switch>(find.byType(Switch)).onChanged, isNull);
+    expect(find.textContaining('Înainte de reactivare'), findsOneWidget);
+  });
+
+  testWidgets('failed withdrawal save warns and offers a durable retry', (
+    tester,
+  ) async {
+    final storage = _MemoryConsentStorage();
+    final repo = await AnalyticsRepository.load(
+      storage: storage,
+      pendingRoundStorage: _MemoryPendingRoundStorage(),
+      transport: _FakeTransport(),
+    );
+    await repo.enable();
+    storage.failWrites = true;
+    await tester.pumpWidget(
+      MaterialApp(home: AnalyticsSettingsScreen(analytics: repo)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+    expect(repo.isConsentEnabled, isFalse);
+    expect(find.textContaining('nu a putut fi salvată'), findsOneWidget);
+    storage.failWrites = false;
+    await tester.ensureVisible(find.text('Reîncearcă salvarea opririi'));
+    await tester.tap(find.text('Reîncearcă salvarea opririi'));
+    await tester.pumpAndSettle();
+    expect(repo.consentPersistenceFailed, isFalse);
+    expect(find.textContaining('nu a putut fi salvată'), findsNothing);
   });
 
   testWidgets('deletes this installation server records', (tester) async {
@@ -82,8 +114,10 @@ void main() {
     expect(transport.deletions, hasLength(1));
     expect(repo.isConsentEnabled, isFalse);
     expect(repo.needsDeletion, isFalse);
-    expect(find.text('Datele legate de această instalare au fost șterse.'),
-        findsOneWidget);
+    expect(
+      find.text('Datele legate de această instalare au fost șterse.'),
+      findsOneWidget,
+    );
   });
 }
 
@@ -100,7 +134,10 @@ final class _FakeTransport implements AnalyticsTransport {
   final List<Map<String, String>> deletions = [];
 
   @override
-  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {}
+  Future<void> sendEvents(
+    List<AnalyticsEvent> events, {
+    String? deletionSecret,
+  }) async {}
 
   @override
   Future<void> requestDeletion({
@@ -116,12 +153,14 @@ final class _FakeTransport implements AnalyticsTransport {
 
 final class _MemoryConsentStorage implements ConsentStorage {
   String? value;
+  bool failWrites = false;
 
   @override
   Future<String?> read() async => value;
 
   @override
   Future<void> write(String updated) async {
+    if (failWrites) throw StateError('storage unavailable');
     value = updated;
   }
 }

@@ -126,7 +126,8 @@ final class AnalyticsEvent {
           );
         }
       case AnalyticsEventKind.roundEnded:
-        if (reason == null || outcome != null ||
+        if (reason == null ||
+            outcome != null ||
             (itemId == null) != (itemIndex == null) ||
             (itemId == null) != (itemState == null)) {
           throw const FormatException(
@@ -156,7 +157,9 @@ final class AnalyticsEvent {
   }
 
   factory AnalyticsEvent.fromJson(Map<String, dynamic> json) {
-    if (json['v'] != schemaVersion) throw const FormatException('event version');
+    if (json['v'] != schemaVersion) {
+      throw const FormatException('event version');
+    }
     final event = AnalyticsEvent(
       eventId: json['eventId'] as String,
       sessionId: json['sessionId'] as String,
@@ -165,12 +168,21 @@ final class AnalyticsEvent {
       contentVersion: json['contentVersion'] as String,
       timestampUtc: DateTime.parse(json['timestampUtc'] as String).toUtc(),
       kind: AnalyticsEventKind.fromWireName(json['kind'] as String)!,
-      itemId: json['itemId'] as String?, itemIndex: json['itemIndex'] as int?,
-      outcome: json['outcome'] == null ? null : AnalyticsOutcome.values.firstWhere(
-        (value) => value.wireName == json['outcome']),
-      reason: json['reason'] == null ? null : AnalyticsRoundEndReason.values.firstWhere(
-        (value) => value.wireName == json['reason']),
-      itemState: json['itemState'] == null ? null : AnalyticsItemState.values.byName(json['itemState'] as String),
+      itemId: json['itemId'] as String?,
+      itemIndex: json['itemIndex'] as int?,
+      outcome: json['outcome'] == null
+          ? null
+          : AnalyticsOutcome.values.firstWhere(
+              (value) => value.wireName == json['outcome'],
+            ),
+      reason: json['reason'] == null
+          ? null
+          : AnalyticsRoundEndReason.values.firstWhere(
+              (value) => value.wireName == json['reason'],
+            ),
+      itemState: json['itemState'] == null
+          ? null
+          : AnalyticsItemState.values.byName(json['itemState'] as String),
     );
     event.validate();
     return event;

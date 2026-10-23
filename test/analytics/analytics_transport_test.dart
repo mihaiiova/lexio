@@ -20,10 +20,13 @@ void main() {
 
       final transport = HttpAnalyticsTransport(client: client);
       await expectLater(transport.sendEvents([_event()]), throwsStateError);
-      await expectLater(transport.requestDeletion(
-        installationId: 'inst_1',
-        deletionSecret: 'secret',
-      ), throwsStateError);
+      await expectLater(
+        transport.requestDeletion(
+          installationId: 'inst_1',
+          deletionSecret: 'secret',
+        ),
+        throwsStateError,
+      );
 
       expect(called, isFalse);
     });

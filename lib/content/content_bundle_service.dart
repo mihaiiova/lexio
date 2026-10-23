@@ -144,7 +144,8 @@ final class ContentBundleService {
   ContentBundle? get pendingBundle => _pending;
 
   /// Manifest version of the active snapshot, including bundled revisions.
-  String get activeContentVersion => _activeVersion?.toString() ?? bundledContentVersion;
+  String get activeContentVersion =>
+      _activeVersion?.toString() ?? bundledContentVersion;
 
   Future<ContentBundle> start() async {
     final (bundle, version) = await _loadCachedOrBundled();

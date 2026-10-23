@@ -119,9 +119,7 @@ class _GrammarScreenState extends State<GrammarScreen>
       HapticFeedback.heavyImpact();
     }
     final exercise = updated.currentExercise;
-    unawaited(
-      _itemAnswered(exercise, updated.currentIndex, isRight),
-    );
+    unawaited(_itemAnswered(exercise, updated.currentIndex, isRight));
     _progress?.recordAnswer(
       gameId: 'grammar',
       notionId: exercise.notionId,
@@ -176,10 +174,14 @@ class _GrammarScreenState extends State<GrammarScreen>
       // Submit both actions before yielding, so a fast answer/back cannot
       // overtake the first exposure while persistence is in flight.
       await Future.wait([
-        analytics.startRound(gameId: 'grammar',
-          contentVersion: ContentRuntime.activeContentVersion),
-        analytics.itemShown(itemId: state.currentExercise.id,
-          itemIndex: state.currentIndex),
+        analytics.startRound(
+          gameId: 'grammar',
+          contentVersion: ContentRuntime.activeContentVersion,
+        ),
+        analytics.itemShown(
+          itemId: state.currentExercise.id,
+          itemIndex: state.currentIndex,
+        ),
       ]);
     } catch (_) {
       // Analytics must never block or break gameplay.

@@ -7,7 +7,7 @@ import '../design/spacing.dart';
 import '../design/typography.dart';
 import 'analytics_repository.dart';
 
-/// First-launch, guardian-directed opt-in for anonymous analytics.
+/// First-launch, guardian-directed opt-in for installation-linked analytics.
 ///
 /// It is dismissible without losing gameplay and defaults to off. The
 /// guardian confirmation is self-declared: we state that plainly instead of
@@ -45,14 +45,14 @@ final class AnalyticsConsentDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Analiză anonimă',
+              'Analiză opțională',
               style: LexioTextStyles.headingSmall.copyWith(
                 color: LexioColors.textPrimary,
               ),
             ),
             const SizedBox(height: LexioSpacing.sm),
             Text(
-              'Putem înregistra anonim cum sunt folosite exercițiile, pentru a '
+              'Putem înregistra utilizarea exercițiilor pe această instalare pentru a '
               'asigura calitatea exercițiilor. Nu colectăm textele '
               'exercițiilor, răspunsurile tale, numele sau date de contact.',
               style: LexioTextStyles.bodyMedium.copyWith(
@@ -68,6 +68,16 @@ final class AnalyticsConsentDialog extends StatelessWidget {
                 color: LexioColors.textTertiary,
               ),
             ),
+            const SizedBox(height: LexioSpacing.sm),
+            Text(
+              'Datele sunt legate de un identificator aleatoriu al instalării '
+              'cel mult 90 de zile; apoi pot rămâne totaluri fără această legătură. '
+              'Poți opri colectarea și cere ștergerea din Setări. '
+              'Jocul rămâne disponibil fără acord sau internet.',
+              style: LexioTextStyles.bodySmall.copyWith(
+                color: LexioColors.textSecondary,
+              ),
+            ),
             const SizedBox(height: LexioSpacing.lg),
             LexioButton(
               label: 'Permite',
@@ -76,7 +86,18 @@ final class AnalyticsConsentDialog extends StatelessWidget {
               isExpanded: true,
               onPressed: () async {
                 await repository.enable();
-                if (context.mounted) Navigator.of(context).pop();
+                if (!context.mounted) return;
+                if (!repository.isConsentEnabled) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Activarea nu a reușit. Colectarea rămâne oprită. '
+                        'Verifică stocarea și eventualele cereri de ștergere din Setări.',
+                      ),
+                    ),
+                  );
+                }
+                Navigator.of(context).pop();
               },
             ),
             const SizedBox(height: LexioSpacing.sm),

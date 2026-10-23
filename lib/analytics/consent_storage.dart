@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Persisted consent settings for the anonymous analytics collector.
+/// Persisted consent settings for the installation-linked analytics collector.
 ///
 /// Default is off. A failed or unknown read resolves to [ConsentState.disabled]
 /// so collection never turns on by accident.
@@ -24,8 +24,10 @@ final class ConsentState {
   final bool needsDeletion;
 
   bool get hasIdentity =>
-      installationId != null && installationId!.isNotEmpty &&
-      deletionSecret != null && deletionSecret!.isNotEmpty;
+      installationId != null &&
+      installationId!.isNotEmpty &&
+      deletionSecret != null &&
+      deletionSecret!.isNotEmpty;
 
   ConsentState copyWith({
     bool? enabled,

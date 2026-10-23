@@ -6,8 +6,9 @@ import '../design/components/lexio_card.dart';
 import '../design/spacing.dart';
 import '../design/typography.dart';
 import 'analytics_repository.dart';
+import 'analytics_consent_dialog.dart';
 
-/// Settings section for the anonymous analytics opt-in.
+/// Settings section for installation-linked, opt-in analytics.
 ///
 /// The user can enable, disable, or delete this installation's linked server
 /// records. All collection is opt-in and off by default.
@@ -54,7 +55,7 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          'Analiză anonimă',
+                          'Analiză opțională',
                           style: LexioTextStyles.headingSmall.copyWith(
                             color: LexioColors.textPrimary,
                           ),
@@ -62,14 +63,16 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                       ),
                       Switch(
                         value: enabled,
-                        onChanged: (value) => _setConsent(value),
+                        onChanged: _deleting || analytics.needsDeletion
+                            ? null
+                            : (value) => _setConsent(value),
                       ),
                     ],
                   ),
                   const SizedBox(height: LexioSpacing.sm),
                   Text(
-                    'Înregistrăm anonim cum sunt folosite exercițiile, pentru '
-                    'a asigura calitatea exercițiilor. Nu colectăm textele '
+                    'Doar cu acordul tău, înregistrăm utilizarea exercițiilor '
+                    'pentru a asigura calitatea exercițiilor. Nu colectăm textele '
                     'exercițiilor, răspunsurile tale sau date de contact.',
                     style: LexioTextStyles.bodyMedium.copyWith(
                       color: LexioColors.textSecondary,
@@ -83,6 +86,43 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                       color: LexioColors.textTertiary,
                     ),
                   ),
+                  const SizedBox(height: LexioSpacing.sm),
+                  Text(
+                    'Datele sunt legate de un identificator aleatoriu al acestei '
+                    'instalări, nu al unei persoane, timp de cel mult 90 de zile. '
+                    'Apoi pot rămâne doar totaluri fără legătură cu instalarea. '
+                    'Jocul funcționează și fără acord sau internet.',
+                    style: LexioTextStyles.bodySmall.copyWith(
+                      color: LexioColors.textSecondary,
+                    ),
+                  ),
+                  if (analytics.consentPersistenceFailed) ...[
+                    const SizedBox(height: LexioSpacing.sm),
+                    Text(
+                      'Setarea locală nu a putut fi salvată. Colectarea este oprită '
+                      'acum, dar reîncearcă salvarea înainte de a închide aplicația: '
+                      'la redeschidere poate reveni setarea veche.',
+                      style: LexioTextStyles.bodySmall.copyWith(
+                        color: LexioColors.textSecondary,
+                      ),
+                    ),
+                    LexioButton(
+                      label: 'Reîncearcă salvarea opririi',
+                      variant: LexioButtonVariant.secondary,
+                      onPressed: () => _setConsent(false),
+                    ),
+                  ],
+                  if (analytics.needsDeletion) ...[
+                    const SizedBox(height: LexioSpacing.sm),
+                    Text(
+                      'Colectarea este oprită. Înainte de reactivare, finalizează '
+                      'ștergerea datelor vechii instalări folosind butonul de mai jos. '
+                      'Dacă ești offline, încearcă din nou când ai internet.',
+                      style: LexioTextStyles.bodySmall.copyWith(
+                        color: LexioColors.textSecondary,
+                      ),
+                    ),
+                  ],
                   if (enabled || analytics.needsDeletion) ...[
                     const SizedBox(height: LexioSpacing.lg),
                     LexioButton(
@@ -105,7 +145,7 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
 
   Future<void> _setConsent(bool enabled) async {
     if (enabled) {
-      await widget.analytics.enable();
+      await showAnalyticsConsentDialog(context, widget.analytics);
     } else {
       await widget.analytics.disable();
     }

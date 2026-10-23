@@ -39,6 +39,7 @@ final class AnalyticsRepository {
 
   ConsentState _consent;
   bool _consentWasPersisted;
+  bool _consentPersistenceFailed = false;
   PendingRound? _pendingRound;
   bool _hasInterruptedRound = false;
   int _generation = 0;
@@ -83,6 +84,7 @@ final class AnalyticsRepository {
       consentWasPersisted = true;
     }
 
+    if (consent.needsDeletion) consent = consent.copyWith(enabled: false);
     if (consent.enabled && !consent.hasIdentity) {
       consent = ConsentState.disabled;
     }
@@ -106,7 +108,9 @@ final class AnalyticsRepository {
 
     ConsentStorage? effectiveQueueStorage = queueStorage;
     try {
-      effectiveQueueStorage ??= SharedPreferencesConsentStorage('analytics_queue_v1');
+      effectiveQueueStorage ??= SharedPreferencesConsentStorage(
+        'analytics_queue_v1',
+      );
     } catch (_) {
       // Queue persistence may be unavailable; gameplay must remain offline-safe.
     }
@@ -126,8 +130,12 @@ final class AnalyticsRepository {
         final saved = jsonDecode(source) as Map<String, dynamic>;
         if (saved['installationId'] == consent.installationId) {
           for (final entry in (saved['events'] as List).take(1000)) {
-            final event = AnalyticsEvent.fromJson(entry as Map<String, dynamic>);
-            if (event.installationId == consent.installationId) repository._queue.add(event);
+            final event = AnalyticsEvent.fromJson(
+              entry as Map<String, dynamic>,
+            );
+            if (event.installationId == consent.installationId) {
+              repository._queue.add(event);
+            }
           }
         }
       }
@@ -152,6 +160,8 @@ final class AnalyticsRepository {
   /// True until the user has made a first-launch consent decision.
   bool get isConsentUndecided => !_consentWasPersisted;
 
+  bool get consentPersistenceFailed => _consentPersistenceFailed;
+
   bool get needsDeletion => _consent.needsDeletion;
 
   String? get installationId =>
@@ -160,21 +170,29 @@ final class AnalyticsRepository {
   /// Enables collection with a fresh installation identity and deletion secret.
   Future<void> enable() {
     final generation = _generation;
+    if (_consentStorage == null) _consentPersistenceFailed = true;
     if (_consentStorage == null || needsDeletion || _consent.enabled) {
       return Future<void>.value();
     }
     return _serialize(() async {
-      if (generation != _generation || needsDeletion || _consent.enabled) return;
+      if (generation != _generation || needsDeletion || _consent.enabled) {
+        return;
+      }
       final identity = AnalyticsIdentity.generate(random: _random);
-      final next = ConsentState(enabled: true,
+      final next = ConsentState(
+        enabled: true,
         installationId: identity.installationId,
-        deletionSecret: identity.deletionSecret);
+        deletionSecret: identity.deletionSecret,
+      );
       try {
         await _consentStorage.write(encodeConsentState(next));
+        _consentPersistenceFailed = false;
         _consentWasPersisted = true;
         _consent = generation == _generation
-            ? next : next.copyWith(enabled: false, needsDeletion: true);
+            ? next
+            : next.copyWith(enabled: false, needsDeletion: true);
       } catch (_) {
+        _consentPersistenceFailed = true;
         // Never publish a consent decision that was not durably written.
       }
     });
@@ -182,8 +200,10 @@ final class AnalyticsRepository {
 
   void _revoke() {
     _generation++;
-    _consent = _consent.copyWith(enabled: false,
-      needsDeletion: _consent.hasIdentity);
+    _consent = _consent.copyWith(
+      enabled: false,
+      needsDeletion: _consent.hasIdentity,
+    );
     _consentWasPersisted = true;
     _queue.clear();
     _pendingRound = null;
@@ -194,9 +214,9 @@ final class AnalyticsRepository {
   Future<void> disable() {
     _revoke();
     return _serialize(() async {
+      await _persistConsent();
       await _persistQueue();
       await _clearPendingRoundStorage();
-      await _persistConsent();
     });
   }
 
@@ -209,7 +229,8 @@ final class AnalyticsRepository {
     try {
       await _transport.requestDeletion(
         installationId: identity.installationId!,
-        deletionSecret: identity.deletionSecret!);
+        deletionSecret: identity.deletionSecret!,
+      );
     } catch (_) {
       return false;
     }
@@ -222,8 +243,10 @@ final class AnalyticsRepository {
       try {
         await _consentStorage!.write(encodeConsentState(ConsentState.disabled));
         _consent = ConsentState.disabled;
+        _consentPersistenceFailed = false;
         persisted = true;
       } catch (_) {
+        _consentPersistenceFailed = true;
         // Keep the retry credential until acknowledgment is durably recorded.
       }
     });
@@ -234,8 +257,14 @@ final class AnalyticsRepository {
   ///
   /// This is intentionally nonblocking and never throws to the UI.
   Future<void> enqueue(AnalyticsEvent event) async {
-    if (!_consent.enabled || event.installationId != _consent.installationId) return;
-    try { event.validate(); } catch (_) { return; }
+    if (!_consent.enabled || event.installationId != _consent.installationId) {
+      return;
+    }
+    try {
+      event.validate();
+    } catch (_) {
+      return;
+    }
     if (!_queue.add(event)) return;
     await _persistQueue();
     _scheduleFlush();
@@ -253,10 +282,12 @@ final class AnalyticsRepository {
   Future<void> _persistQueue() {
     _queueWrites = _queueWrites.then((_) async {
       try {
-        await _queueStorage?.write(jsonEncode({
-          'installationId': _consent.enabled ? _consent.installationId : null,
-          'events': _queue.events.map((event) => event.toJson()).toList(),
-        }));
+        await _queueStorage?.write(
+          jsonEncode({
+            'installationId': _consent.enabled ? _consent.installationId : null,
+            'events': _queue.events.map((event) => event.toJson()).toList(),
+          }),
+        );
       } catch (_) {
         // An unavailable queue store must not block offline play.
       }
@@ -273,63 +304,109 @@ final class AnalyticsRepository {
     });
   }
 
-  Future<void> startRound({required String gameId, required String contentVersion}) =>
-      _sessionAction(() async {
+  Future<void> startRound({
+    required String gameId,
+    required String contentVersion,
+  }) => _sessionAction(() async {
     if (_pendingRound != null) {
-      await _endRound(_hasInterruptedRound
-        ? AnalyticsRoundEndReason.inferredInterruption : AnalyticsRoundEndReason.restart);
+      await _endRound(
+        _hasInterruptedRound
+            ? AnalyticsRoundEndReason.inferredInterruption
+            : AnalyticsRoundEndReason.restart,
+      );
       _hasInterruptedRound = false;
     }
     if (!_consent.enabled) return;
-    _pendingRound = PendingRound(sessionId: _randomToken(),
-      installationId: _consent.installationId!, gameId: gameId,
-      contentVersion: contentVersion, startedAtUtc: DateTime.now().toUtc());
-    final event = _newEvent(sessionId: _pendingRound!.sessionId,
-      kind: AnalyticsEventKind.roundStarted);
+    _pendingRound = PendingRound(
+      sessionId: _randomToken(),
+      installationId: _consent.installationId!,
+      gameId: gameId,
+      contentVersion: contentVersion,
+      startedAtUtc: DateTime.now().toUtc(),
+    );
+    final event = _newEvent(
+      sessionId: _pendingRound!.sessionId,
+      kind: AnalyticsEventKind.roundStarted,
+    );
     await _persistPendingRound();
     await enqueue(event);
   });
 
   Future<void> itemShown({required String itemId, required int itemIndex}) =>
       _sessionAction(() async {
-    final pending = _pendingRound;
-    if (pending == null || (pending.lastShownItemId == itemId &&
-        pending.lastShownItemIndex == itemIndex)) return;
-    _pendingRound = pending.copyWith(lastShownItemId: itemId,
-      lastShownItemIndex: itemIndex, itemResolved: false);
-    final event = _newEvent(sessionId: pending.sessionId,
-      kind: AnalyticsEventKind.itemShown, itemId: itemId, itemIndex: itemIndex);
-    await _persistPendingRound();
-    await enqueue(event);
-  });
+        final pending = _pendingRound;
+        if (pending == null ||
+            (pending.lastShownItemId == itemId &&
+                pending.lastShownItemIndex == itemIndex)) {
+          return;
+        }
+        _pendingRound = pending.copyWith(
+          lastShownItemId: itemId,
+          lastShownItemIndex: itemIndex,
+          itemResolved: false,
+        );
+        final event = _newEvent(
+          sessionId: pending.sessionId,
+          kind: AnalyticsEventKind.itemShown,
+          itemId: itemId,
+          itemIndex: itemIndex,
+        );
+        await _persistPendingRound();
+        await enqueue(event);
+      });
 
-  Future<void> itemAnswered({required String itemId, required int itemIndex,
-    required AnalyticsOutcome outcome}) => _sessionAction(() async {
+  Future<void> itemAnswered({
+    required String itemId,
+    required int itemIndex,
+    required AnalyticsOutcome outcome,
+  }) => _sessionAction(() async {
     final pending = _pendingRound;
-    if (pending == null || pending.itemResolved ||
-        pending.lastShownItemId != itemId || pending.lastShownItemIndex != itemIndex) return;
+    if (pending == null ||
+        pending.itemResolved ||
+        pending.lastShownItemId != itemId ||
+        pending.lastShownItemIndex != itemIndex) {
+      return;
+    }
     _pendingRound = pending.copyWith(itemResolved: true);
-    final answered = _newEvent(sessionId: pending.sessionId,
-      kind: AnalyticsEventKind.itemAnswered, itemId: itemId, itemIndex: itemIndex,
-      outcome: outcome);
-    final resolved = _newEvent(sessionId: pending.sessionId,
-      kind: AnalyticsEventKind.itemResolved, itemId: itemId, itemIndex: itemIndex);
+    final answered = _newEvent(
+      sessionId: pending.sessionId,
+      kind: AnalyticsEventKind.itemAnswered,
+      itemId: itemId,
+      itemIndex: itemIndex,
+      outcome: outcome,
+    );
+    final resolved = _newEvent(
+      sessionId: pending.sessionId,
+      kind: AnalyticsEventKind.itemResolved,
+      itemId: itemId,
+      itemIndex: itemIndex,
+    );
     await _persistPendingRound();
     await enqueue(answered);
     await enqueue(resolved);
   });
 
-  Future<void> endRound({required AnalyticsRoundEndReason reason,
-    String? itemId, int? itemIndex}) => _sessionAction(() => _endRound(reason));
+  Future<void> endRound({
+    required AnalyticsRoundEndReason reason,
+    String? itemId,
+    int? itemIndex,
+  }) => _sessionAction(() => _endRound(reason));
 
   Future<void> _endRound(AnalyticsRoundEndReason reason) async {
     final pending = _pendingRound;
     if (pending == null) return;
-    final event = _newEvent(sessionId: pending.sessionId,
-      kind: AnalyticsEventKind.roundEnded, itemId: pending.lastShownItemId,
-      itemIndex: pending.lastShownItemIndex, reason: reason,
-      itemState: pending.lastShownItemId == null ? null : pending.itemResolved
-        ? AnalyticsItemState.resolved : AnalyticsItemState.unresolved);
+    final event = _newEvent(
+      sessionId: pending.sessionId,
+      kind: AnalyticsEventKind.roundEnded,
+      itemId: pending.lastShownItemId,
+      itemIndex: pending.lastShownItemIndex,
+      reason: reason,
+      itemState: pending.lastShownItemId == null
+          ? null
+          : pending.itemResolved
+          ? AnalyticsItemState.resolved
+          : AnalyticsItemState.unresolved,
+    );
     _pendingRound = null;
     await enqueue(event);
     await _clearPendingRoundStorage();
@@ -355,7 +432,10 @@ final class AnalyticsRepository {
   }) {
     final pending = _pendingRound;
     return AnalyticsEvent(
-      eventId: _randomToken(),
+      // One terminal identity survives a crash between queue and pending writes.
+      eventId: kind == AnalyticsEventKind.roundEnded
+          ? sessionId
+          : _randomToken(),
       sessionId: sessionId,
       installationId: _consent.installationId!,
       gameId: pending!.gameId,
@@ -396,11 +476,16 @@ final class AnalyticsRepository {
 
   Future<void> _persistConsent() async {
     final storage = _consentStorage;
-    if (storage == null) return;
+    if (storage == null) {
+      _consentPersistenceFailed = true;
+      return;
+    }
     try {
       await storage.write(encodeConsentState(_consent));
+      _consentPersistenceFailed = false;
     } catch (_) {
-      // Persistence is best-effort; the in-memory decision still applies.
+      _consentPersistenceFailed = true;
+      // The UI must warn that this process is off but the setting was not saved.
     }
   }
 

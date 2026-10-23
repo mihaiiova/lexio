@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -24,21 +25,80 @@ void main() {
   testWidgets('empty content never starts a round', (tester) async {
     final transport = _FakeTransport();
     final repo = await _enabledRepo(transport);
-    await tester.pumpWidget(MaterialApp(home: GrammarScreen(exercises: const [], analytics: repo)));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: GrammarScreen(exercises: const [], analytics: repo),
+      ),
+    );
     await tester.pumpAndSettle();
     await repo.flush();
     expect(transport.allEvents, isEmpty);
   });
 
-  testWidgets('variants use exercise ids rather than shared notions', (tester) async {
+  testWidgets('variants use exercise ids rather than shared notions', (
+    tester,
+  ) async {
     final transport = _FakeTransport();
     final repo = await _enabledRepo(transport);
-    await tester.pumpWidget(MaterialApp(home: GrammarScreen(
-      exercises: [_exercise(id: 'variant_a', notionId: 'shared')], analytics: repo)));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: GrammarScreen(
+          exercises: [_exercise(id: 'variant_a', notionId: 'shared')],
+          analytics: repo,
+        ),
+      ),
+    );
     await tester.pumpAndSettle();
     await repo.flush();
     expect(transport.allEvents.last.itemId, 'variant_a');
     expect(transport.allEvents.first.contentVersion, '1');
+  });
+
+  testWidgets('fast answer and back retain sequencing during delayed storage', (
+    tester,
+  ) async {
+    final transport = _FakeTransport();
+    final pending = _MemoryPendingRoundStorage()..writeGate = Completer<void>();
+    final repo = await AnalyticsRepository.load(
+      storage: _MemoryConsentStorage(),
+      pendingRoundStorage: pending,
+      transport: transport,
+    );
+    await repo.enable();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (context) => TextButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) =>
+                    GrammarScreen(exercises: [_exercise()], analytics: repo),
+              ),
+            ),
+            child: const Text('start'),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('start'));
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.text('Corect'),
+    ); // Wrong answer keeps the item rendered.
+    await tester.pumpAndSettle();
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    pending.writeGate!.complete();
+    await repo.flush();
+    expect(tester.takeException(), isNull);
+    expect(transport.allEvents.map((e) => e.kind.wireName), [
+      'round_started',
+      'item_shown',
+      'item_answered',
+      'item_resolved',
+      'round_ended',
+    ]);
+    expect(transport.allEvents.last.toJson()['itemState'], 'resolved');
   });
 
   testWidgets('emits round_started and item_shown for a consented round', (
@@ -114,7 +174,10 @@ void main() {
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (_) => GrammarScreen(
-                    exercises: [_exercise(), _exercise(id: 'two')],
+                    exercises: [
+                      _exercise(),
+                      _exercise(id: 'two'),
+                    ],
                     analytics: repo,
                   ),
                 ),
@@ -243,7 +306,11 @@ Future<AnalyticsRepository> _enabledRepo(_FakeTransport transport) async {
   return repo;
 }
 
-GrammarExercise _exercise({String id = 'one', bool isCorrect = false, String? notionId}) {
+GrammarExercise _exercise({
+  String id = 'one',
+  bool isCorrect = false,
+  String? notionId,
+}) {
   return GrammarExercise(
     id: id,
     notionIdOverride: notionId,
@@ -266,7 +333,10 @@ final class _FakeTransport implements AnalyticsTransport {
       sentBatches.expand((batch) => batch).toList();
 
   @override
-  Future<void> sendEvents(List<AnalyticsEvent> events, {String? deletionSecret}) async {
+  Future<void> sendEvents(
+    List<AnalyticsEvent> events, {
+    String? deletionSecret,
+  }) async {
     sentBatches.add(events);
   }
 
@@ -291,12 +361,14 @@ final class _MemoryConsentStorage implements ConsentStorage {
 
 final class _MemoryPendingRoundStorage implements PendingRoundStorage {
   String? value;
+  Completer<void>? writeGate;
 
   @override
   Future<String?> read() async => value;
 
   @override
   Future<void> write(String updated) async {
+    await writeGate?.future;
     value = updated;
   }
 

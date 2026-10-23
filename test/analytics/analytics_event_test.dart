@@ -29,6 +29,7 @@ void main() {
         'kind': 'round_started',
         'outcome': null,
         'reason': null,
+        'itemState': null,
       });
     });
 
@@ -76,6 +77,7 @@ void main() {
         itemId: 'notion_1',
         itemIndex: 3,
         reason: AnalyticsRoundEndReason.userBack,
+        itemState: AnalyticsItemState.unresolved,
       );
       expect(event.toJson()['reason'], 'user_back');
       expect(event.toJson()['outcome'], isNull);
