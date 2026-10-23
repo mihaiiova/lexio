@@ -1,49 +1,8 @@
 import worker from '../src/index';
-import { SELF, env } from 'cloudflare:test';
+import { SELF, env, applyD1Migrations } from 'cloudflare:test';
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
-
-const DDL = [
-  `CREATE TABLE IF NOT EXISTS events (
-    event_id TEXT PRIMARY KEY,
-    session_id TEXT NOT NULL,
-    installation_id TEXT NOT NULL,
-    game_id TEXT NOT NULL,
-    content_version TEXT NOT NULL,
-    item_id TEXT,
-    item_index INTEGER,
-    timestamp_utc TEXT NOT NULL,
-    kind TEXT NOT NULL,
-    outcome TEXT,
-    reason TEXT,
-    item_state TEXT,
-    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
-  )`,
-  `CREATE INDEX IF NOT EXISTS idx_events_installation ON events(installation_id, created_at)`,
-  `CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events(timestamp_utc)`,
-  `CREATE TABLE IF NOT EXISTS installations (
-    installation_id TEXT PRIMARY KEY,
-    deletion_secret_hash TEXT NOT NULL,
-    revoked_at TEXT,
-    last_seen_at TEXT,
-    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
-  )`,
-  `CREATE TABLE IF NOT EXISTS aggregates (
-  bucket TEXT NOT NULL,
-  scope TEXT NOT NULL,
-  game_id TEXT NOT NULL,
-  kind TEXT NOT NULL,
-  content_version TEXT NOT NULL,
-  item_id TEXT NOT NULL,
-  item_index INTEGER NOT NULL,
-  outcome TEXT NOT NULL,
-  reason TEXT NOT NULL,
-  item_state TEXT NOT NULL,
-  count INTEGER NOT NULL,
-  PRIMARY KEY (bucket, scope, game_id, kind, content_version, item_id, item_index, outcome, reason, item_state)
-)`, 
-];
 
 let eventCounter = 0;
 
@@ -75,9 +34,7 @@ function postEvents(body: unknown): Promise<Response> {
 }
 
 beforeAll(async () => {
-  for (const sql of DDL) {
-    await env.DB.prepare(sql).run();
-  }
+  await applyD1Migrations(env.DB, env.TEST_MIGRATIONS);
 });
 
 beforeEach(async () => {
