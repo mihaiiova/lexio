@@ -15,6 +15,7 @@ export const EVENT_KINDS = [
   'round_started',
   'item_shown',
   'item_answered',
+  'spot_attempt',
   'item_resolved',
   'round_ended',
 ] as const;
@@ -25,6 +26,7 @@ export type Outcome = (typeof OUTCOMES)[number];
 
 export const ROUND_END_REASONS = [
   'completed',
+  'timeout',
   'user_back',
   'restart',
   'inferred_interruption',
@@ -45,6 +47,9 @@ export interface AnalyticsEvent {
   outcome: Outcome | null;
   reason: RoundEndReason | null;
   itemState: 'resolved' | 'unresolved' | null;
+  attemptDelta: number | null;
+  correctDiscoveryDelta: number | null;
+  distinctWrongDelta: number | null;
 }
 
 export type ValidationResult =
@@ -81,7 +86,7 @@ export function validateEvent(raw: unknown, now = Date.now()): ValidationResult 
     return { ok: false, error: 'event must be an object' };
   }
 
-  const fields = ['v', 'eventId', 'sessionId', 'installationId', 'gameId', 'contentVersion', 'timestampUtc', 'kind', 'itemId', 'itemIndex', 'outcome', 'reason', 'itemState'];
+  const fields = ['v', 'eventId', 'sessionId', 'installationId', 'gameId', 'contentVersion', 'timestampUtc', 'kind', 'itemId', 'itemIndex', 'outcome', 'reason', 'itemState', 'attemptDelta', 'correctDiscoveryDelta', 'distinctWrongDelta'];
   if (Object.keys(raw).some(key => !fields.includes(key))) return {ok: false, error: 'unknown field'};
   if (raw.v !== SCHEMA_VERSION) {
     return { ok: false, error: 'unsupported schema version' };
@@ -111,7 +116,7 @@ export function validateEvent(raw: unknown, now = Date.now()): ValidationResult 
   if (!isNonEmptyString(raw.installationId, MAX_ID_LENGTH)) {
     return { ok: false, error: 'installationId must be 1..128 characters' };
   }
-  if (raw.gameId !== 'grammar') {
+  if (!['grammar', 'vocabulary', 'idioms', 'spot'].includes(raw.gameId as string)) {
     return { ok: false, error: 'gameId must be 1..64 characters' };
   }
   if (!isNonEmptyString(raw.contentVersion, MAX_CONTENT_VERSION_LENGTH)) {
@@ -159,6 +164,22 @@ export function validateEvent(raw: unknown, now = Date.now()): ValidationResult 
   if (kind !== 'round_ended' && itemState !== null) return {ok: false, error: 'nonterminal itemState'};
   if (kind === 'round_ended' && ((itemId === null) !== (itemState === null))) return {ok: false, error: 'terminal itemState required with item'};
 
+  const attemptDelta = raw.attemptDelta ?? null;
+  const correctDiscoveryDelta = raw.correctDiscoveryDelta ?? null;
+  const distinctWrongDelta = raw.distinctWrongDelta ?? null;
+  if (kind === 'spot_attempt') {
+    if (raw.gameId !== 'spot' || attemptDelta !== 1 ||
+        ![0, 1].includes(correctDiscoveryDelta as number) || ![0, 1].includes(distinctWrongDelta as number) ||
+        (correctDiscoveryDelta as number) + (distinctWrongDelta as number) > 1 ||
+        itemId === null || itemIndex === null || outcome !== null || reason !== null) {
+      return {ok: false, error: 'invalid Spot attempt'};
+    }
+  } else if (attemptDelta !== null || correctDiscoveryDelta !== null || distinctWrongDelta !== null) {
+    return {ok: false, error: 'unexpected Spot deltas'};
+  }
+  if (raw.gameId === 'spot' && kind === 'item_answered') return {ok: false, error: 'Spot is not MC'};
+  if (reason === 'timeout' && raw.gameId !== 'spot') return {ok: false, error: 'timeout requires Spot'};
+
   if (kind === 'round_started') {
     if (itemId !== null || itemIndex !== null || outcome !== null || reason !== null) {
       return { ok: false, error: 'round_started must not carry item or outcome fields' };
@@ -194,6 +215,9 @@ export function validateEvent(raw: unknown, now = Date.now()): ValidationResult 
       outcome,
       reason,
       itemState,
+      attemptDelta: attemptDelta as number | null,
+      correctDiscoveryDelta: correctDiscoveryDelta as number | null,
+      distinctWrongDelta: distinctWrongDelta as number | null,
     },
   };
 }

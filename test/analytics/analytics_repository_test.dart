@@ -813,7 +813,7 @@ void main() {
               eventId: '${'字' * 120}$i',
               sessionId: '字' * 128,
               installationId: repo.installationId!,
-              gameId: '字' * 64,
+              gameId: 'grammar',
               contentVersion: '字' * 64,
               itemId: '字' * 128,
               itemIndex: i,

@@ -149,8 +149,8 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
     env.DB.prepare(
       `INSERT OR IGNORE INTO events
         (event_id, session_id, installation_id, game_id, content_version,
-         item_id, item_index, timestamp_utc, kind, outcome, reason, item_state)
-       SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+         item_id, item_index, timestamp_utc, kind, outcome, reason, item_state, attempt_delta, correct_discovery_delta, distinct_wrong_delta)
+       SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
        WHERE EXISTS (SELECT 1 FROM installations WHERE installation_id = ? AND deletion_secret_hash = ? AND revoked_at IS NULL)`,
     ).bind(
       event.eventId,
@@ -165,6 +165,9 @@ async function handleEvents(request: Request, env: Env): Promise<Response> {
       event.outcome,
       event.reason,
       event.itemState,
+      event.attemptDelta,
+      event.correctDiscoveryDelta,
+      event.distinctWrongDelta,
       installationId, hash,
     ),
   );
@@ -236,6 +239,7 @@ async function handleDelete(request: Request, env: Env): Promise<Response> {
 export async function purgeExpired(env: Env): Promise<number> {
   const cutoff = new Date(Date.now() - RETENTION_DAYS * 86400000).toISOString();
   const dimensions = 'bucket, scope, game_id, kind, content_version, item_id, item_index, outcome, reason, item_state';
+  // Nullable counter addition preserves suppression across later purge contributions.
   const statements = [
     "'day:' || substr(timestamp_utc, 1, 10)",
     "'week:' || strftime('%Y-W%W', timestamp_utc)",
@@ -244,13 +248,22 @@ export async function purgeExpired(env: Env): Promise<number> {
       ? "content_version, COALESCE(item_id, ''), COALESCE(item_index, -1)"
       : "'', '', -1";
     return env.DB.prepare(`
-      INSERT INTO aggregates (${dimensions}, count)
+      INSERT INTO aggregates (${dimensions}, count, attempts, correct_discoveries, distinct_wrong_positions)
       SELECT ${bucket}, '${scope}', game_id, kind, ${itemDimensions},
-        COALESCE(outcome, ''), COALESCE(reason, ''), COALESCE(item_state, ''), COUNT(*) FROM events
+        COALESCE(outcome, ''), COALESCE(reason, ''), COALESCE(item_state, ''), COUNT(*),
+        CASE WHEN COUNT(DISTINCT CASE WHEN attempt_delta > 0 THEN installation_id END) >= ${MIN_AGGREGATE_INSTALLATIONS}
+          THEN SUM(attempt_delta) ELSE NULL END,
+        CASE WHEN COUNT(DISTINCT CASE WHEN correct_discovery_delta > 0 THEN installation_id END) >= ${MIN_AGGREGATE_INSTALLATIONS}
+          THEN SUM(correct_discovery_delta) ELSE NULL END,
+        CASE WHEN COUNT(DISTINCT CASE WHEN distinct_wrong_delta > 0 THEN installation_id END) >= ${MIN_AGGREGATE_INSTALLATIONS}
+          THEN SUM(distinct_wrong_delta) ELSE NULL END FROM events
       WHERE timestamp_utc <= ? OR created_at <= ?
       GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       HAVING COUNT(DISTINCT installation_id) >= ?
-      ON CONFLICT(${dimensions}) DO UPDATE SET count = count + excluded.count
+      ON CONFLICT(${dimensions}) DO UPDATE SET count = count + excluded.count,
+        attempts = attempts + excluded.attempts,
+        correct_discoveries = correct_discoveries + excluded.correct_discoveries,
+        distinct_wrong_positions = distinct_wrong_positions + excluded.distinct_wrong_positions
     `).bind(cutoff, cutoff, MIN_AGGREGATE_INSTALLATIONS);
   }));
   // D1 batch is one transaction: a failure rolls back both counting and removal.
