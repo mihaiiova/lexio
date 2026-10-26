@@ -1,0 +1,13 @@
+{
+  "application_id": "4e1ff688-738e-43d7-8294-41acefc78f80",
+  "domain": "analytics-test.didactiv.ro/private",
+  "same_site_cookie_attribute": "lax",
+  "http_only_cookie_attribute": true,
+  "enable_binding_cookie": true,
+  "session_duration": "1h",
+  "mfa_config": {
+    "mfa_disabled": false,
+    "allowed_authenticators": ["totp", "biometrics", "security_key"],
+    "session_duration": "1h"
+  }
+}

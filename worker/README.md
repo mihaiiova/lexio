@@ -301,7 +301,17 @@ if that identity never uploaded events.
 
 The owner report is at `https://analytics-test.didactiv.ro/private/report/`.
 Cloudflare Access limits it to the owner and requires independent MFA, with a
-one-hour session. The Worker independently verifies the JWT issuer, signature,
+one-hour session. The expected application settings are recorded in
+`access_test_policy.json`. Its authorization cookie uses `SameSite=Lax`, allowing
+top-level GET redirects back from the separate Access identity domain; `Strict`
+can loop on first login even when a direct refresh succeeds. HttpOnly, the
+binding cookie, MFA and the Worker JWT checks remain enabled. When applying this
+partial policy through the Access API, merge it into the current application
+configuration; never replace or clear the owner policy or submit `application_id`
+as an application-body field. Verify policy identity, owner selectors, audience
+and MFA are unchanged afterward.
+
+The Worker independently verifies the JWT issuer, signature,
 audience, expiry and owner allowlist. The owner email is an encrypted Worker
 secret, not a player credential or an app setting. First login may require MFA
 enrollment through `https://iova.cloudflareaccess.com/AddMfaDevice`. Enter login
