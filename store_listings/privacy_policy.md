@@ -1,6 +1,6 @@
 # Politica de confidențialitate Slove
 
-**Ultima actualizare:** 23 octombrie 2026
+**Ultima actualizare:** 26 octombrie 2026
 
 URL canonic: https://didactiv.ro/confidentialitate/slove/
 
@@ -28,7 +28,7 @@ Deschide Setări și oprește «Analiză opțională». Colectarea viitoare se o
 
 ## Cum ceri ștergerea
 
-În Setări, «Șterge datele de pe server» oprește analiza și cere eliminarea evenimentelor încă legate de această instalare. Este nevoie de internet. Dacă cererea nu reușește, păstrăm pe dispozitiv identificatorul și cheia necesară reîncercării. Mesajul de succes apare numai după confirmare și salvarea alegerii.
+În Setări, «Șterge datele de pe server» oprește analiza și cere eliminarea evenimentelor încă legate de această instalare. Este nevoie de internet și de un server configurat în această versiune. Când serverul nu este configurat, butonul este indisponibil, fără să pornească o cerere nouă. Dacă cererea nu reușește, păstrăm pe dispozitiv identificatorul și cheia necesară reîncercării. Mesajul de succes apare numai după confirmare și salvarea alegerii.
 
 După ce ceri ștergerea, reactivarea așteaptă confirmarea serverului. Apoi, reactivarea creează un identificator nou. Cererea privește această instalare, nu alte dispozitive.
 

@@ -324,6 +324,9 @@ Future<AnalyticsRepository> _undecidedRepo() {
 }
 
 final class _FakeTransport implements AnalyticsTransport {
+  @override
+  bool get isConfigured => true;
+
   final events = <AnalyticsEvent>[];
   @override
   Future<void> sendEvents(

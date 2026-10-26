@@ -81,7 +81,9 @@ class PrivacyScreen extends StatelessWidget {
               body:
                   'În Setări, «Șterge datele de pe server» oprește analiza și cere '
                   'eliminarea evenimentelor încă legate de această instalare. Este '
-                  'nevoie de internet. Dacă cererea nu reușește, păstrăm pe dispozitiv '
+                  'nevoie de internet și de un server configurat în această versiune. '
+                  'Când serverul nu este configurat, butonul este indisponibil, fără '
+                  'să pornească o cerere nouă. Dacă cererea nu reușește, păstrăm pe dispozitiv '
                   'identificatorul și cheia necesară reîncercării. Mesajul de succes '
                   'apare numai după confirmare și salvarea alegerii.\n\n'
                   'După ce ceri ștergerea, reactivarea așteaptă confirmarea '
@@ -187,7 +189,7 @@ class _PolicyIntro extends StatelessWidget {
         ),
         const SizedBox(height: LexioSpacing.sm),
         Text(
-          'Ultima actualizare: 23 octombrie 2026',
+          'Ultima actualizare: 26 octombrie 2026',
           style: LexioTextStyles.labelSmall.copyWith(
             color: LexioColors.textTertiary,
           ),

@@ -31,6 +31,9 @@ class MemoryRoundStorage implements PendingRoundStorage {
 }
 
 class RecordingAnalyticsTransport implements AnalyticsTransport {
+  @override
+  bool get isConfigured => true;
+
   final events = <AnalyticsEvent>[];
   bool offline = false;
   @override

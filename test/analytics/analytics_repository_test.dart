@@ -1217,6 +1217,9 @@ final class _MemoryPendingRoundStorage implements PendingRoundStorage {
 }
 
 final class _FakeTransport implements AnalyticsTransport {
+  @override
+  bool get isConfigured => true;
+
   final List<List<AnalyticsEvent>> sentBatches = [];
   final List<Map<String, String>> deletions = [];
   int sendFailures = 0;

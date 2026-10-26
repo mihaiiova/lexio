@@ -107,9 +107,9 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                   if (analytics.needsDeletion) ...[
                     const SizedBox(height: LexioSpacing.sm),
                     Text(
-                      'Colectarea este oprită. Înainte de reactivare, finalizează '
-                      'ștergerea datelor vechii instalări folosind butonul de mai jos. '
-                      'Dacă ești offline, încearcă din nou când ai internet.',
+                      'Colectarea este oprită. Cererea de ștergere este în '
+                      'așteptare. Reactivarea este disponibilă după confirmarea '
+                      'ștergerii.',
                       style: LexioTextStyles.bodySmall.copyWith(
                         color: LexioColors.textSecondary,
                       ),
@@ -125,8 +125,20 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
                       size: LexioButtonSize.medium,
                       isExpanded: true,
                       isLoading: _deleting,
-                      onPressed: _deleting ? null : _delete,
+                      onPressed: _deleting || !analytics.isServerConfigured
+                          ? null
+                          : _delete,
                     ),
+                    if (!analytics.isServerConfigured) ...[
+                      const SizedBox(height: LexioSpacing.sm),
+                      Text(
+                        'Ștergerea de pe server nu este disponibilă: serverul de '
+                        'analiză nu este configurat în această versiune.',
+                        style: LexioTextStyles.bodySmall.copyWith(
+                          color: LexioColors.textSecondary,
+                        ),
+                      ),
+                    ],
                   ],
                 ],
               ),
@@ -158,6 +170,7 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
   }
 
   Future<void> _delete() async {
+    if (_deleting || !widget.analytics.isServerConfigured) return;
     setState(() => _deleting = true);
     final deleted = await widget.analytics.disableAndDelete();
     if (!mounted) return;

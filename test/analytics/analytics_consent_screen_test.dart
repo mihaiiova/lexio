@@ -45,6 +45,8 @@ void main() {
       find.text('Jocurile funcționează la fel și fără acord.'),
       findsNothing,
     );
+    expect(find.textContaining('părinți sau tutori'), findsNothing);
+    expect(find.textContaining('Poți schimba alegerea'), findsNothing);
   });
 
   testWidgets('reading privacy does not choose or enable analytics', (

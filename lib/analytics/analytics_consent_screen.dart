@@ -101,14 +101,6 @@ class _AnalyticsConsentScreenState extends State<AnalyticsConsentScreen> {
                       ),
                     ),
 
-                    const SizedBox(height: LexioSpacing.lg),
-                    Text(
-                      'Această opțiune este pentru părinți sau tutori. '
-                      'Poți schimba alegerea oricând din Setări.',
-                      style: LexioTextStyles.bodySmall.copyWith(
-                        color: LexioColors.textSecondary,
-                      ),
-                    ),
                     const SizedBox(height: LexioSpacing.xxl),
                     LexioButton(
                       label: 'Permite analiza utilizării',

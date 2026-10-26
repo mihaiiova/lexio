@@ -180,6 +180,8 @@ final class AnalyticsRepository {
 
   bool get hasRetainedIdentity => _consent.hasIdentity;
 
+  bool get isServerConfigured => _transport.isConfigured;
+
   String? get installationId =>
       _consent.enabled ? _consent.installationId : null;
 

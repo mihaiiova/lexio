@@ -2,12 +2,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:lexio/analytics/analytics_event.dart';
 import 'package:lexio/analytics/analytics_repository.dart';
 import 'package:lexio/analytics/analytics_settings_screen.dart';
 import 'package:lexio/analytics/analytics_transport.dart';
 import 'package:lexio/analytics/consent_storage.dart';
 import 'package:lexio/analytics/pending_round.dart';
+import 'package:lexio/design/components/lexio_button.dart';
 import 'package:lexio/design/theme.dart';
 import 'package:lexio/privacy/privacy_screen.dart';
 
@@ -191,6 +194,65 @@ void main() {
     expect(find.textContaining('nu a putut fi salvată'), findsNothing);
   });
 
+  for (final state in ['enabled', 'paused', 'pending deletion']) {
+    testWidgets('server deletion is unavailable without an endpoint ($state)', (
+      tester,
+    ) async {
+      var networkCalls = 0;
+      final client = MockClient((request) async {
+        networkCalls++;
+        return http.Response('{}', 200);
+      });
+      addTearDown(client.close);
+      final storage = _MemoryConsentStorage();
+      final repo = await AnalyticsRepository.load(
+        storage: storage,
+        queueStorage: _MemoryConsentStorage(),
+        pendingRoundStorage: _MemoryPendingRoundStorage(),
+        transport: HttpAnalyticsTransport(baseUrl: '', client: client),
+      );
+      await repo.enable();
+      if (state == 'paused') await repo.disable();
+      if (state == 'pending deletion') {
+        expect(await repo.disableAndDelete(), isFalse);
+      }
+      final savedConsent = storage.value;
+      final enabled = repo.isConsentEnabled;
+      final pendingDeletion = repo.needsDeletion;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: LexioTheme.light,
+          home: AnalyticsSettingsScreen(analytics: repo),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final button = find.widgetWithText(
+        LexioButton,
+        'Șterge datele de pe server',
+      );
+      expect(tester.widget<LexioButton>(button).onPressed, isNull);
+      expect(
+        find.textContaining('serverul de analiză nu este configurat'),
+        findsOneWidget,
+      );
+      await tester.ensureVisible(button);
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      expect(networkCalls, 0);
+      expect(storage.value, savedConsent);
+      expect(repo.isConsentEnabled, enabled);
+      expect(repo.needsDeletion, pendingDeletion);
+      expect(
+        find.text('Ștergerea nu a putut fi finalizată. Încearcă din nou.'),
+        findsNothing,
+      );
+      expect(
+        find.text('Datele legate de această instalare au fost șterse.'),
+        findsNothing,
+      );
+    });
+  }
+
   testWidgets('deletes this installation server records', (tester) async {
     final transport = _FakeTransport();
     final repo = await _repo(transport);
@@ -228,6 +290,9 @@ Future<AnalyticsRepository> _repo([_FakeTransport? transport]) {
 }
 
 final class _FakeTransport implements AnalyticsTransport {
+  @override
+  bool get isConfigured => true;
+
   final List<Map<String, String>> deletions = [];
   final List<AnalyticsEvent> events = [];
   bool failDeletion = false;

@@ -7,6 +7,9 @@ import 'analytics_event.dart';
 
 /// Sends bounded event batches and authenticated deletion requests.
 abstract class AnalyticsTransport {
+  /// Configuration only; this does not imply that the server is reachable.
+  bool get isConfigured;
+
   Future<void> sendEvents(
     List<AnalyticsEvent> events, {
     String? deletionSecret,
@@ -36,14 +39,19 @@ final class HttpAnalyticsTransport implements AnalyticsTransport {
   final Duration timeout;
 
   @override
+  bool get isConfigured {
+    final endpoint = Uri.tryParse(_baseUrl);
+    return endpoint != null &&
+        endpoint.scheme == 'https' &&
+        endpoint.host.isNotEmpty;
+  }
+
+  @override
   Future<void> sendEvents(
     List<AnalyticsEvent> events, {
     String? deletionSecret,
   }) async {
-    if (_baseUrl.isEmpty) throw StateError('analytics endpoint unavailable');
-    if (Uri.parse(_baseUrl).scheme != 'https') {
-      throw StateError('analytics requires HTTPS');
-    }
+    if (!isConfigured) throw StateError('analytics endpoint unavailable');
 
     final response = await _client
         .post(
@@ -66,10 +74,7 @@ final class HttpAnalyticsTransport implements AnalyticsTransport {
     required String installationId,
     required String deletionSecret,
   }) async {
-    if (_baseUrl.isEmpty) throw StateError('analytics endpoint unavailable');
-    if (Uri.parse(_baseUrl).scheme != 'https') {
-      throw StateError('analytics requires HTTPS');
-    }
+    if (!isConfigured) throw StateError('analytics endpoint unavailable');
 
     final response = await _client
         .post(
