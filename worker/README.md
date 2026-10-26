@@ -140,7 +140,8 @@ CSP, `nosniff` and `no-referrer`; the page renders text only (no `innerHTML`).
 | `/private/report/api/recent` | Linked recent sessions |
 | `/private/report/api/history` | Fixed unlinked weekly history |
 
-Configuration (placeholders only; no real endpoint is provisioned here):
+Production configuration example (placeholders; the isolated test profile is
+configured separately in `wrangler_test.jsonc`):
 
 ```jsonc
 "vars": {
@@ -238,10 +239,12 @@ Dependencies: `jose` (pinned 6.1.3) for standards-compliant JWT/JWKS verificatio
 instead of hand-written crypto. `@playwright/test` (pinned 1.58.2, dev only)
 runs the browser tests.
 
-## Closed deployment gate — no deployment authorized
+## Production collection gate
 
-`PUBLIC_ENDPOINTS_ENABLED` defaults to `false`; both public POST routes return
-503 until explicitly enabled. **Do not enable it or deploy from this task.**
+`PUBLIC_ENDPOINTS_ENABLED` defaults to `false` in `wrangler.jsonc`; both public
+POST routes return 503 until explicitly enabled. **Do not enable production
+collection without the release approvals below.** The separately scoped
+`wrangler_test.jsonc` profile is for adult/synthetic local testing only.
 The in-isolate IP Map is only a local backstop, not distributed/global rate
 limiting; it resets across isolates. Before enabling, the operator must configure
 and independently test Cloudflare edge rate-limit/WAF rules covering BOTH routes,
@@ -257,14 +260,15 @@ manual first-run/offline/deletion tests, child-privacy/legal and store-policy
 sign-off, and publication of the reviewed canonical policy at
 https://didactiv.ro/confidentialitate/slove/ before store submission. A reachable
 URL is not proof that the revised policy is published or approved. Guardian UI
-is not proof of lawful consent. None of these manual sign-offs happened here.
+is not proof of lawful consent. Provisioning the isolated test environment does
+not constitute child-privacy, legal or store-policy approval.
 
 References retrieved during implementation:
 - https://developers.cloudflare.com/d1/worker-api/d1-database/ (batch transactions)
 - https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/ (per-location limits)
 - https://developers.cloudflare.com/workers/best-practices/workers-best-practices/
 
-Report pre-release checklist (manual, not done here): provision the Access
+Report pre-release checklist (repeat for each rollout): provision the Access
 application and policy; confirm unauthenticated, non-owner and expired-session
 requests to every `/private` path are denied at the edge and by the Worker;
 log in as the owner and check the page, filters, drilldown and history against
@@ -274,3 +278,63 @@ records. Production deployment and store-console changes remain out of scope.
 
 Additional reference: https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/
 (Access JWT validation).
+
+## Isolated analytics test environment (#65)
+
+The test collector is `https://analytics-test.didactiv.ro`. Its D1 database is
+restricted to the EU. The default production configuration and store build
+workflows remain separate; they do not enable this endpoint automatically.
+
+Run the macOS app explicitly against this collector from the repository root:
+
+```bash
+bash scripts/run_macos_analytics_test.sh
+# Equivalent:
+flutter run -d macos --dart-define-from-file=config/analytics_test.json
+```
+
+Stop an older Flutter run before starting one with different Dart defines;
+hot reload or hot restart does not change the build's endpoint. Existing consent
+and pending deletion credentials remain in place. Do not reset them to test
+server deletion: the configured server can acknowledge a pending request, even
+if that identity never uploaded events.
+
+The owner report is at `https://analytics-test.didactiv.ro/private/report/`.
+Cloudflare Access limits it to the owner and requires independent MFA, with a
+one-hour session. The Worker independently verifies the JWT issuer, signature,
+audience, expiry and owner allowlist. The owner email is an encrypted Worker
+secret, not a player credential or an app setting. First login may require MFA
+enrollment through `https://iova.cloudflareaccess.com/AddMfaDevice`. Enter login
+codes and register authenticators in the browser, never in chat or source files.
+
+Test writes are restricted at the edge to the developer's configured IPv4 egress
+and IPv6 test network. Those addresses are managed privately, not committed.
+Changing networks or IPv6 prefixes can return 403 until the pilot rule is
+updated. Never remove the pilot restriction merely to resolve a failed request.
+An edge rule covers both `/v1/events` and `/v1/delete`: 20 requests per 10 seconds
+per IP **and edge location**, with a 10-second mitigation. This is not a strict
+worldwide counter or an aggregate spending cap. The isolate-local Map remains
+only a backstop. Both `workers.dev` and preview routing are disabled, and
+application/request-body logging is disabled.
+
+Use the pinned operational CLI without upgrading the project's existing test
+stack implicitly:
+
+```bash
+cd worker
+npm exec --yes --package=wrangler@4.152.0 -- wrangler deploy --config wrangler_test.jsonc --dry-run
+npm exec --yes --package=wrangler@4.152.0 -- wrangler d1 migrations list DB --config wrangler_test.jsonc --remote
+```
+
+To stop test ingestion, change only this profile's `PUBLIC_ENDPOINTS_ENABLED`
+to `"false"` and redeploy with the same explicit config. Keep Access, WAF and
+bypass restrictions in place during rollback. Do not point this profile at a
+production database or deploy the test flag with the production config.
+
+Before enabling a new test collector, independently check both edge POST routes,
+a non-pilot source, every private entry path, and disabled bypass hosts. Verify
+the real app transport can ingest all four games, deduplicate retries, reject
+wrong deletion credentials, acknowledge deletion (including never-registered
+identities), reject revoked identities, and leave no linked synthetic events.
+Owner/MFA browser smoke testing and monitoring the next scheduled retention run
+are separate operational checks; configuration alone does not prove them.
