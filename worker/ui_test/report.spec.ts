@@ -8,6 +8,7 @@ test('filters, installation drilldown, summary units and safe in-progress render
     return route.fulfill({json:{summary:{spot:{...metrics,endedByReason:{}}},sessions:[{installation:malicious,session:'s1',game:'spot',version:'v1',lastActivity:'2026-10-22T01:00:00.000Z',lastItem:malicious,lastIndex:0,lastItemEvidence:'observed',status:'in_progress',missingStart:true,metrics,items:[{id:malicious,index:0,terminalState:null,...metrics}]}],nextCursor:null}});
   });
   await page.goto('/private/report/');
+  await expect(page.getByLabel('ID instalare', {exact:true})).toBeVisible();
   await expect(page.getByRole('heading',{name:'General — numai instalări cu acord'})).toBeVisible();
   await expect(page.getByText('În desfășurare / final necunoscut', {exact:false})).toBeVisible();
   await expect(page.getByText('Apăsări acceptate: 4', {exact:false}).first()).toBeVisible();

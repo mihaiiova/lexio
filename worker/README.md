@@ -140,16 +140,19 @@ CSP, `nosniff` and `no-referrer`; the page renders text only (no `innerHTML`).
 | `/private/report/api/recent` | Linked recent sessions |
 | `/private/report/api/history` | Fixed unlinked weekly history |
 
-Production configuration example (placeholders; the isolated test profile is
-configured separately in `wrangler_test.jsonc`):
+Owner verification fields (actual non-secret values are in `wrangler.jsonc`;
+the isolated test profile is separate in `wrangler_test.jsonc`):
 
 ```jsonc
 "vars": {
   "ACCESS_ISSUER": "https://<team-name>.cloudflareaccess.com", // https, *.cloudflareaccess.com only
-  "ACCESS_AUDIENCE": "<Access application AUD tag>",           // 1–256 characters
-  "ACCESS_OWNER_EMAILS": "owner@example.com"                   // comma-separated, at most 10
+  "ACCESS_AUDIENCE": "<Access application AUD tag>"            // 1–256 characters
 }
 ```
+
+Set `ACCESS_OWNER_EMAILS` as a Worker secret (`wrangler secret put
+ACCESS_OWNER_EMAILS --config wrangler.jsonc`), never in committed vars. It is a
+comma-separated owner allowlist with at most ten entries.
 
 **Recent** accepts only `from`/`to` (`YYYY-MM-DD`, UTC, `from` inclusive, `to`
 exclusive), `game` (four game IDs), `version` (≤64), `installation` (≤128),
@@ -274,7 +277,8 @@ requests to every `/private` path are denied at the edge and by the Worker;
 log in as the owner and check the page, filters, drilldown and history against
 known local data; verify responses are not cached; review that the privacy
 policy and store data-safety answers describe owner access to installation-linked
-records. Production deployment and store-console changes remain out of scope.
+records. Public store submission and store-console approvals are separate from provisioning
+a closed production service and preparing internal builds.
 
 Additional reference: https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/
 (Access JWT validation).
@@ -348,3 +352,43 @@ wrong deletion credentials, acknowledge deletion (including never-registered
 identities), reject revoked identities, and leave no linked synthetic events.
 Owner/MFA browser smoke testing and monitoring the next scheduled retention run
 are separate operational checks; configuration alone does not prove them.
+
+## Production profile and internal rollout (#66)
+
+`wrangler.jsonc` targets the separate EU-jurisdiction database `slove-analytics`
+and `https://analytics.didactiv.ro`; the owner report is at
+`https://analytics.didactiv.ro/private/report/`. Its Access application is
+`72565362-6b24-457b-9fda-62153ecf99bc`, with a distinct audience, the same owner-only
+selectors, MFA/one-hour sessions, HttpOnly/binding cookie and SameSite=Lax. Keep
+the owner allowlist in a Worker secret. Alternate workers.dev/version URLs and
+body logging remain disabled.
+
+Keep `PUBLIC_ENDPOINTS_ENABLED` false until the production collection gate above
+is satisfied. Closed-route HTTP 503 and Access redirects establish protection,
+not successful ingestion or legal/store approval. Repeat the real transport,
+deletion/revocation, abuse and owner-browser tests before rollout. Check the
+first scheduled purge and monitor `purge_marker` using the query below; do not
+claim that setting a cron proves a successful run.
+
+The zone plan permits one edge rate-limit rule. The existing rule therefore
+covers **both** analytics hostnames and both write paths with one shared
+20-request/10-second budget per IP and edge location, followed by a 10-second
+mitigation. It is neither per-host nor a global/spending cap. The test-only pilot
+network restriction is unchanged; do not remove it to enable production.
+
+After the activation checks, set repository variable `ANALYTICS_ENDPOINT` to the
+production URL. Only `deploy-staging.yml` uses it for the TestFlight/Play internal
+rollout. The public-store workflow is deliberately unchanged. The local macOS
+helper continues to use the isolated **test** collector and test report.
+
+```bash
+cd worker
+npm exec --yes --package=wrangler@4.152.0 -- wrangler deploy --config wrangler.jsonc --dry-run
+npm exec --yes --package=wrangler@4.152.0 -- wrangler d1 migrations list DB --config wrangler.jsonc --remote
+npm exec --yes --package=wrangler@4.152.0 -- wrangler d1 execute DB --config wrangler.jsonc --remote --command 'SELECT cutoff FROM purge_marker;'
+```
+
+If the reviewed policy is not published or store/child-privacy approval is still
+pending, leave collection closed and do not merge an endpoint-enabled internal
+release. Staging validation rejects a missing or incorrect endpoint before any
+signed upload.

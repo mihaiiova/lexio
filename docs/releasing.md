@@ -6,9 +6,10 @@ testers and to the stores once released.
 ## The core constraint: content is bundled, with offline-first remote refresh
 
 Game content lives in `lib/content/*.json` and `data/*.json` and is loaded via
-`rootBundle.loadString()` as a bundled baseline. There is **no backend, no
-API, and no database** — but the app can now refresh content from a static
-Cloudflare Pages bundle while staying fully usable offline.
+`rootBundle.loadString()` as a bundled baseline. Gameplay needs **no account or
+backend connection**. Optional first-party analytics has a separate consent-gated
+Worker/D1 service; content can refresh from a static Cloudflare Pages bundle
+while the app stays fully usable offline.
 
 - The canonical Git JSON files remain the only editorial source.
 - CI validates them and generates one complete `content_bundle.json` plus a
@@ -102,6 +103,20 @@ feature/xxx ──PR──▶ staging ──push──▶ test builds go out aut
 | `deploy-content.yml` | manual dispatch on `master` | exercise-content bundle → Cloudflare Pages |
 
 Signing secrets are configured per `RELEASE_SIGNING.md`; never commit them.
+
+### Analytics in internal builds
+
+The staging workflow requires repository variable `ANALYTICS_ENDPOINT` to equal
+`https://analytics.didactiv.ro`. Set it only after the activation checks in
+`worker/README.md` are satisfied, including the reviewed public privacy policy
+and store disclosures. Both signed internal builds receive it through a Dart
+define; consent still defaults to off. Never use the network-restricted test
+collector in distributed builds. Missing or incorrect configuration fails before
+upload rather than shipping another disconnected analytics build.
+
+This rollout does not add analytics configuration to `deploy-prod.yml` and does
+not authorize a public store submission. Public-release collection remains a
+separate approval/configuration step.
 
 ### Screenshot integration workflow
 
