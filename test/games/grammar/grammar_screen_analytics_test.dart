@@ -338,6 +338,9 @@ GrammarExercise _exercise({
 }
 
 final class _FakeTransport implements AnalyticsTransport {
+  @override
+  bool get isConfigured => true;
+
   final List<List<AnalyticsEvent>> sentBatches = [];
 
   List<AnalyticsEvent> get allEvents =>

@@ -7,6 +7,9 @@ on:
 permissions:
   contents: read
 
+env:
+  ANALYTICS_ENDPOINT: ${{ vars.ANALYTICS_ENDPOINT }}
+
 concurrency:
   group: deploy-staging
   cancel-in-progress: true
@@ -16,6 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate internal analytics configuration
+        run: |
+          if [ "$ANALYTICS_ENDPOINT" != "https://analytics.didactiv.ro" ]; then
+            echo "::error::Set repository variable ANALYTICS_ENDPOINT to the approved production collector before uploading internal builds."
+            exit 1
+          fi
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.44.5'
@@ -63,7 +72,7 @@ jobs:
       - run: flutter pub get
 
       - name: Build AAB
-        run: flutter build appbundle --release --build-number="$(bash scripts/android_version_code.sh)"
+        run: flutter build appbundle --release --build-number="$(bash scripts/android_version_code.sh)" --dart-define="ANALYTICS_ENDPOINT=$ANALYTICS_ENDPOINT"
 
       - name: Upload to Play internal testing
         uses: r0adkll/upload-google-play@v1
@@ -174,7 +183,7 @@ jobs:
           EOF
 
       - name: Build IPA
-        run: flutter build ipa --release --build-number=${{ github.run_id }} --export-options-plist=ios/Runner/ExportOptions.plist
+        run: flutter build ipa --release --build-number=${{ github.run_id }} --dart-define="ANALYTICS_ENDPOINT=$ANALYTICS_ENDPOINT" --export-options-plist=ios/Runner/ExportOptions.plist
 
       - name: Upload to TestFlight
         env:

@@ -20,7 +20,7 @@ final class ConsentState {
   final String? installationId;
   final String? deletionSecret;
 
-  /// Whether server-side deletion is still owed for a retained identity.
+  /// An explicit deletion request is pending; ordinary opt-out keeps this off.
   final bool needsDeletion;
 
   bool get hasIdentity =>

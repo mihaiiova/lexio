@@ -1,6 +1,9 @@
 abstract class LexioSizes {
   LexioSizes._();
 
+  // Readable forms and onboarding
+  static const double readableContentMaxWidth = 480;
+
   // Progress indicators
   static const double progressBarActive = 4;
   static const double progressBarIdle = 3;

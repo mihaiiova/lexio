@@ -1,5 +1,14 @@
 {
   "mcpServers": {
+    "cloudflare-api": {
+      "url": "https://mcp.cloudflare.com/mcp",
+      "auth": "oauth",
+      "oauth": {
+        "scope": "offline_access user:read account:read access.write access-acct.write account-rulesets.write dns.read workers-scripts.read zone.read"
+      },
+      "protocolVersion": "auto",
+      "lifecycle": "lazy"
+    },
     "dart-mcp-server": {
       "command": "dart",
       "args": ["mcp-server"],

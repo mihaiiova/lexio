@@ -8,7 +8,7 @@ export const reportHtml = `<!doctype html>
 <label>Până la (UTC, exclusiv) <input name="to" type="date"></label>
 <label>Joc <select name="game"><option value="">Toate</option><option value="grammar">Gramatică</option><option value="vocabulary">Vocabular</option><option value="idioms">Expresii</option><option value="spot">Găsește greșeala</option></select></label>
 <label>Versiune conținut <input name="version" maxlength="64"></label>
-<label>ID instalare anonimă <input name="installation" maxlength="128"></label>
+<label>ID instalare <input name="installation" maxlength="128"></label>
 <button>Aplică filtrele</button></form>
 <p role="status" id="status"></p><section id="recent"></section><button id="next" hidden>Pagina următoare</button>
 <h2>Istoric fără legături cu instalările</h2><p>Suprafață fixă: până la 52 de săptămâni UTC încheiate înaintea ultimei curățări programate finalizate, separat pe joc. Fără o curățare finalizată nu se publică nimic. Filtrele de mai sus NU se aplică. Nu sunt disponibile intervale arbitrare, zile, itemi, versiuni sau instalări. Celulele rare lipsesc; valorile sunt parțiale, nu totaluri exacte. „Suprimat / necunoscut” nu înseamnă zero. Fără procente de corectitudine comune între jocuri.</p>

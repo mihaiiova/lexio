@@ -7,7 +7,7 @@ import '../design/colors.dart';
 import '../design/components/lexio_game_card.dart';
 import '../design/spacing.dart';
 import '../design/typography.dart';
-import '../analytics/analytics_consent_dialog.dart';
+import '../analytics/analytics_consent_screen.dart';
 import '../analytics/analytics_repository.dart';
 import '../analytics/analytics_settings_screen.dart';
 import '../games/grammar/grammar_screen.dart';
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         _analytics = analytics;
       });
       if (analytics.isConsentUndecided) {
-        unawaited(showAnalyticsConsentDialog(context, analytics));
+        unawaited(showAnalyticsConsentScreen(context, analytics));
       }
     } catch (error) {
       debugPrint('HomeScreen: failed to load discovery progress: $error');

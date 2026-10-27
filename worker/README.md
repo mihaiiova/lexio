@@ -140,15 +140,19 @@ CSP, `nosniff` and `no-referrer`; the page renders text only (no `innerHTML`).
 | `/private/report/api/recent` | Linked recent sessions |
 | `/private/report/api/history` | Fixed unlinked weekly history |
 
-Configuration (placeholders only; no real endpoint is provisioned here):
+Owner verification fields (actual non-secret values are in `wrangler.jsonc`;
+the isolated test profile is separate in `wrangler_test.jsonc`):
 
 ```jsonc
 "vars": {
   "ACCESS_ISSUER": "https://<team-name>.cloudflareaccess.com", // https, *.cloudflareaccess.com only
-  "ACCESS_AUDIENCE": "<Access application AUD tag>",           // 1–256 characters
-  "ACCESS_OWNER_EMAILS": "owner@example.com"                   // comma-separated, at most 10
+  "ACCESS_AUDIENCE": "<Access application AUD tag>"            // 1–256 characters
 }
 ```
+
+Set `ACCESS_OWNER_EMAILS` as a Worker secret (`wrangler secret put
+ACCESS_OWNER_EMAILS --config wrangler.jsonc`), never in committed vars. It is a
+comma-separated owner allowlist with at most ten entries.
 
 **Recent** accepts only `from`/`to` (`YYYY-MM-DD`, UTC, `from` inclusive, `to`
 exclusive), `game` (four game IDs), `version` (≤64), `installation` (≤128),
@@ -238,10 +242,12 @@ Dependencies: `jose` (pinned 6.1.3) for standards-compliant JWT/JWKS verificatio
 instead of hand-written crypto. `@playwright/test` (pinned 1.58.2, dev only)
 runs the browser tests.
 
-## Closed deployment gate — no deployment authorized
+## Production collection gate
 
-`PUBLIC_ENDPOINTS_ENABLED` defaults to `false`; both public POST routes return
-503 until explicitly enabled. **Do not enable it or deploy from this task.**
+`PUBLIC_ENDPOINTS_ENABLED` defaults to `false` in `wrangler.jsonc`; both public
+POST routes return 503 until explicitly enabled. **Do not enable production
+collection without the release approvals below.** The separately scoped
+`wrangler_test.jsonc` profile is for adult/synthetic local testing only.
 The in-isolate IP Map is only a local backstop, not distributed/global rate
 limiting; it resets across isolates. Before enabling, the operator must configure
 and independently test Cloudflare edge rate-limit/WAF rules covering BOTH routes,
@@ -257,20 +263,132 @@ manual first-run/offline/deletion tests, child-privacy/legal and store-policy
 sign-off, and publication of the reviewed canonical policy at
 https://didactiv.ro/confidentialitate/slove/ before store submission. A reachable
 URL is not proof that the revised policy is published or approved. Guardian UI
-is not proof of lawful consent. None of these manual sign-offs happened here.
+is not proof of lawful consent. Provisioning the isolated test environment does
+not constitute child-privacy, legal or store-policy approval.
 
 References retrieved during implementation:
 - https://developers.cloudflare.com/d1/worker-api/d1-database/ (batch transactions)
 - https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/ (per-location limits)
 - https://developers.cloudflare.com/workers/best-practices/workers-best-practices/
 
-Report pre-release checklist (manual, not done here): provision the Access
+Report pre-release checklist (repeat for each rollout): provision the Access
 application and policy; confirm unauthenticated, non-owner and expired-session
 requests to every `/private` path are denied at the edge and by the Worker;
 log in as the owner and check the page, filters, drilldown and history against
 known local data; verify responses are not cached; review that the privacy
 policy and store data-safety answers describe owner access to installation-linked
-records. Production deployment and store-console changes remain out of scope.
+records. Public store submission and store-console approvals are separate from provisioning
+a closed production service and preparing internal builds.
 
 Additional reference: https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/
 (Access JWT validation).
+
+## Isolated analytics test environment (#65)
+
+The test collector is `https://analytics-test.didactiv.ro`. Its D1 database is
+restricted to the EU. The default production configuration and store build
+workflows remain separate; they do not enable this endpoint automatically.
+
+Run the macOS app explicitly against this collector from the repository root:
+
+```bash
+bash scripts/run_macos_analytics_test.sh
+# Equivalent:
+flutter run -d macos --dart-define-from-file=config/analytics_test.json
+```
+
+Stop an older Flutter run before starting one with different Dart defines;
+hot reload or hot restart does not change the build's endpoint. Existing consent
+and pending deletion credentials remain in place. Do not reset them to test
+server deletion: the configured server can acknowledge a pending request, even
+if that identity never uploaded events.
+
+The owner report is at `https://analytics-test.didactiv.ro/private/report/`.
+Cloudflare Access limits it to the owner and requires independent MFA, with a
+one-hour session. The expected application settings are recorded in
+`access_test_policy.json`. Its authorization cookie uses `SameSite=Lax`, allowing
+top-level GET redirects back from the separate Access identity domain; `Strict`
+can loop on first login even when a direct refresh succeeds. HttpOnly, the
+binding cookie, MFA and the Worker JWT checks remain enabled. When applying this
+partial policy through the Access API, merge it into the current application
+configuration; never replace or clear the owner policy or submit `application_id`
+as an application-body field. Verify policy identity, owner selectors, audience
+and MFA are unchanged afterward.
+
+The Worker independently verifies the JWT issuer, signature,
+audience, expiry and owner allowlist. The owner email is an encrypted Worker
+secret, not a player credential or an app setting. First login may require MFA
+enrollment through `https://iova.cloudflareaccess.com/AddMfaDevice`. Enter login
+codes and register authenticators in the browser, never in chat or source files.
+
+Test writes are restricted at the edge to the developer's configured IPv4 egress
+and IPv6 test network. Those addresses are managed privately, not committed.
+Changing networks or IPv6 prefixes can return 403 until the pilot rule is
+updated. Never remove the pilot restriction merely to resolve a failed request.
+An edge rule covers both `/v1/events` and `/v1/delete`: 20 requests per 10 seconds
+per IP **and edge location**, with a 10-second mitigation. This is not a strict
+worldwide counter or an aggregate spending cap. The isolate-local Map remains
+only a backstop. Both `workers.dev` and preview routing are disabled, and
+application/request-body logging is disabled.
+
+Use the pinned operational CLI without upgrading the project's existing test
+stack implicitly:
+
+```bash
+cd worker
+npm exec --yes --package=wrangler@4.152.0 -- wrangler deploy --config wrangler_test.jsonc --dry-run
+npm exec --yes --package=wrangler@4.152.0 -- wrangler d1 migrations list DB --config wrangler_test.jsonc --remote
+```
+
+To stop test ingestion, change only this profile's `PUBLIC_ENDPOINTS_ENABLED`
+to `"false"` and redeploy with the same explicit config. Keep Access, WAF and
+bypass restrictions in place during rollback. Do not point this profile at a
+production database or deploy the test flag with the production config.
+
+Before enabling a new test collector, independently check both edge POST routes,
+a non-pilot source, every private entry path, and disabled bypass hosts. Verify
+the real app transport can ingest all four games, deduplicate retries, reject
+wrong deletion credentials, acknowledge deletion (including never-registered
+identities), reject revoked identities, and leave no linked synthetic events.
+Owner/MFA browser smoke testing and monitoring the next scheduled retention run
+are separate operational checks; configuration alone does not prove them.
+
+## Production profile and internal rollout (#66)
+
+`wrangler.jsonc` targets the separate EU-jurisdiction database `slove-analytics`
+and `https://analytics.didactiv.ro`; the owner report is at
+`https://analytics.didactiv.ro/private/report/`. Its Access application is
+`72565362-6b24-457b-9fda-62153ecf99bc`, with a distinct audience, the same owner-only
+selectors, MFA/one-hour sessions, HttpOnly/binding cookie and SameSite=Lax. Keep
+the owner allowlist in a Worker secret. Alternate workers.dev/version URLs and
+body logging remain disabled.
+
+Keep `PUBLIC_ENDPOINTS_ENABLED` false until the production collection gate above
+is satisfied. Closed-route HTTP 503 and Access redirects establish protection,
+not successful ingestion or legal/store approval. Repeat the real transport,
+deletion/revocation, abuse and owner-browser tests before rollout. Check the
+first scheduled purge and monitor `purge_marker` using the query below; do not
+claim that setting a cron proves a successful run.
+
+The zone plan permits one edge rate-limit rule. The existing rule therefore
+covers **both** analytics hostnames and both write paths with one shared
+20-request/10-second budget per IP and edge location, followed by a 10-second
+mitigation. It is neither per-host nor a global/spending cap. The test-only pilot
+network restriction is unchanged; do not remove it to enable production.
+
+After the activation checks, set repository variable `ANALYTICS_ENDPOINT` to the
+production URL. Only `deploy-staging.yml` uses it for the TestFlight/Play internal
+rollout. The public-store workflow is deliberately unchanged. The local macOS
+helper continues to use the isolated **test** collector and test report.
+
+```bash
+cd worker
+npm exec --yes --package=wrangler@4.152.0 -- wrangler deploy --config wrangler.jsonc --dry-run
+npm exec --yes --package=wrangler@4.152.0 -- wrangler d1 migrations list DB --config wrangler.jsonc --remote
+npm exec --yes --package=wrangler@4.152.0 -- wrangler d1 execute DB --config wrangler.jsonc --remote --command 'SELECT cutoff FROM purge_marker;'
+```
+
+If the reviewed policy is not published or store/child-privacy approval is still
+pending, leave collection closed and do not merge an endpoint-enabled internal
+release. Staging validation rejects a missing or incorrect endpoint before any
+signed upload.

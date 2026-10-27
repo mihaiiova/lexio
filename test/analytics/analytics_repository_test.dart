@@ -351,6 +351,9 @@ void main() {
         transport: _FakeTransport(),
       );
       expect(reloaded.isConsentEnabled, isFalse);
+      expect(reloaded.needsDeletion, isFalse);
+      await reloaded.enable();
+      expect(reloaded.isConsentEnabled, isTrue);
     });
 
     test(
@@ -367,7 +370,8 @@ void main() {
         storage.writeFailures = 1;
         await repo.disable();
         expect(repo.isConsentEnabled, isFalse);
-        expect(repo.needsDeletion, isTrue);
+        expect(repo.needsDeletion, isFalse);
+        expect(repo.hasRetainedIdentity, isTrue);
         expect(repo.consentPersistenceFailed, isTrue);
         expect(jsonDecode(storage.value!)['enabled'], isTrue);
         await repo.disable();
@@ -396,6 +400,52 @@ void main() {
         expect(await deleting, isTrue);
         await repo.enable();
         expect(repo.isConsentEnabled, isTrue);
+      },
+    );
+
+    test('explicit deletion fences an in-flight first activation', () async {
+      final storage = _MemoryConsentStorage();
+      final transport = _FakeTransport()..deleteGate = Completer<void>();
+      final repo = await AnalyticsRepository.load(
+        storage: storage,
+        queueStorage: _MemoryConsentStorage(),
+        pendingRoundStorage: _MemoryPendingRoundStorage(),
+        transport: transport,
+      );
+      storage.writeGate = Completer<void>();
+      final enabling = repo.enable();
+      await Future<void>.delayed(Duration.zero);
+      final deleting = repo.disableAndDelete();
+      expect(repo.needsDeletion, isTrue);
+      await repo.enable();
+      expect(repo.isConsentEnabled, isFalse);
+      storage.writeGate!.complete();
+      await enabling;
+      await Future<void>.delayed(Duration.zero);
+      final deletedIdentity = jsonDecode(storage.value!)['installationId'];
+      expect(deletedIdentity, isNotNull);
+      expect(repo.needsDeletion, isTrue);
+      transport.deleteGate!.complete();
+      expect(await deleting, isTrue);
+      await repo.enable();
+      expect(repo.isConsentEnabled, isTrue);
+      expect(repo.installationId, isNot(deletedIdentity));
+    });
+
+    test(
+      'deletion without an identity finishes without a network request',
+      () async {
+        final transport = _FakeTransport();
+        final repo = await AnalyticsRepository.load(
+          storage: _MemoryConsentStorage(),
+          queueStorage: _MemoryConsentStorage(),
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: transport,
+        );
+        expect(await repo.disableAndDelete(), isTrue);
+        expect(repo.needsDeletion, isFalse);
+        expect(repo.isConsentEnabled, isFalse);
+        expect(transport.deletions, isEmpty);
       },
     );
 
@@ -564,7 +614,8 @@ void main() {
         await repo.flush();
 
         expect(repo.isConsentEnabled, isFalse);
-        expect(repo.needsDeletion, isTrue);
+        expect(repo.needsDeletion, isFalse);
+        expect(repo.hasRetainedIdentity, isTrue);
         expect(transport.sentBatches, isEmpty);
 
         final persisted = ConsentState.fromJson(
@@ -573,6 +624,146 @@ void main() {
         expect(persisted.enabled, isFalse);
         expect(persisted.installationId, isNotNull);
         expect(persisted.deletionSecret, isNotNull);
+      },
+    );
+
+    test(
+      'resume cannot recover a revoked legacy round when cleanup fails',
+      () async {
+        final consent = _MemoryConsentStorage();
+        final queue = _MemoryConsentStorage();
+        final pending = _MemoryPendingRoundStorage();
+        final online = _FakeTransport();
+        Future<AnalyticsRepository> load() => AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: pending,
+          transport: online,
+        );
+        final repo = await load();
+        await repo.enable();
+        pending.value = encodePendingRound(
+          PendingRound(
+            sessionId: 'revoked_legacy_round',
+            installationId: repo.installationId!,
+            gameId: 'grammar',
+            contentVersion: '1',
+            startedAtUtc: DateTime.utc(2026, 10, 23),
+          ),
+        );
+        pending.clearFailures = 100;
+        await repo.disable();
+        await repo.enable();
+        final restored = await load();
+        await restored.reconcileInterruptedRound();
+        await restored.flush();
+        expect(online.sentBatches, isEmpty);
+      },
+    );
+
+    test(
+      'ordinary off and on works offline across relaunch without deletion',
+      () async {
+        final consent = _MemoryConsentStorage();
+        final queue = _MemoryConsentStorage();
+        final transport = _FakeTransport()..sendFailures = 1000;
+        Future<AnalyticsRepository> load() => AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: queue,
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: transport,
+        );
+        final repo = await load();
+        await repo.enable();
+        final identity = repo.installationId;
+        final secret = jsonDecode(consent.value!)['deletionSecret'];
+        await repo.startRound(gameId: 'grammar', contentVersion: '1');
+        await repo.itemShown(itemId: 'before_off', itemIndex: 0);
+        await repo.flush();
+        await repo.disable();
+        expect(repo.needsDeletion, isFalse);
+        await repo.startRound(gameId: 'grammar', contentVersion: '1');
+        final restored = await load();
+        expect(restored.isConsentEnabled, isFalse);
+        await restored.enable();
+        expect(restored.isConsentEnabled, isTrue);
+        expect(restored.installationId, identity);
+        expect(jsonDecode(consent.value!)['deletionSecret'], secret);
+        transport.sendFailures = 0;
+        await restored.flush();
+        expect(transport.sentBatches, isEmpty);
+        await restored.startRound(gameId: 'grammar', contentVersion: '1');
+        await restored.itemShown(itemId: 'after_opt_in', itemIndex: 0);
+        await restored.flush();
+        expect(
+          transport.sentBatches
+              .expand((batch) => batch)
+              .map((event) => event.kind),
+          [AnalyticsEventKind.roundStarted, AnalyticsEventKind.itemShown],
+        );
+        expect(transport.deletions, isEmpty);
+      },
+    );
+
+    test(
+      'resuming cannot resurrect a queue whose withdrawal cleanup failed',
+      () async {
+        final consent = _MemoryConsentStorage();
+        final queue = _MemoryConsentStorage();
+        final offline = _FakeTransport()..sendFailures = 1000;
+        Future<AnalyticsRepository> load(AnalyticsTransport transport) =>
+            AnalyticsRepository.load(
+              storage: consent,
+              queueStorage: queue,
+              pendingRoundStorage: _MemoryPendingRoundStorage(),
+              transport: transport,
+            );
+        final repo = await load(offline);
+        await repo.enable();
+        await repo.startRound(gameId: 'grammar', contentVersion: '1');
+        await repo.flush();
+        queue.writeFailures = 100;
+        await repo.disable();
+        final online = _FakeTransport();
+        final restored = await load(online);
+        await restored.enable();
+        expect(restored.isConsentEnabled, isFalse);
+        queue.writeFailures = 0;
+        await restored.enable();
+        expect(restored.isConsentEnabled, isTrue);
+        final relaunched = await load(online);
+        await relaunched.reconcileInterruptedRound();
+        await relaunched.flush();
+        expect(online.sentBatches, isEmpty);
+      },
+    );
+
+    test(
+      'failed explicit deletion stays blocked across off and relaunch',
+      () async {
+        final consent = _MemoryConsentStorage();
+        final transport = _FakeTransport()..deleteFailures = 1;
+        Future<AnalyticsRepository> load() => AnalyticsRepository.load(
+          storage: consent,
+          queueStorage: _MemoryConsentStorage(),
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: transport,
+        );
+        final repo = await load();
+        await repo.enable();
+        final identity = repo.installationId;
+        expect(await repo.disableAndDelete(), isFalse);
+        await repo.disable();
+        await repo.enable();
+        expect(repo.isConsentEnabled, isFalse);
+        final restored = await load();
+        await restored.enable();
+        expect(restored.isConsentEnabled, isFalse);
+        expect(restored.needsDeletion, isTrue);
+        expect(await restored.disableAndDelete(), isTrue);
+        await restored.enable();
+        expect(restored.isConsentEnabled, isTrue);
+        expect(restored.installationId, isNot(identity));
       },
     );
 
@@ -615,6 +806,105 @@ void main() {
       expect(repo.installationId, isNull);
       expect(transport.deletions, hasLength(1));
     });
+
+    test(
+      'flush retries a saved deletion without enabling collection',
+      () async {
+        final storage = _MemoryConsentStorage();
+        final offline = _FakeTransport()..deleteFailures = 1;
+        final first = await AnalyticsRepository.load(
+          storage: storage,
+          queueStorage: _MemoryConsentStorage(),
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: offline,
+        );
+        await first.enable();
+        expect(await first.disableAndDelete(), isFalse);
+        final online = _FakeTransport();
+        final restored = await AnalyticsRepository.load(
+          storage: storage,
+          queueStorage: _MemoryConsentStorage(),
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: online,
+        );
+        await restored.flush();
+        expect(restored.needsDeletion, isFalse);
+        expect(restored.hasRetainedIdentity, isFalse);
+        expect(restored.isConsentEnabled, isFalse);
+        expect(online.deletions, hasLength(1));
+        expect(online.sentBatches, isEmpty);
+      },
+    );
+
+    test(
+      'pending deletion retries are bounded and retain failed credentials',
+      () async {
+        final storage = _MemoryConsentStorage();
+        final transport = _FakeTransport()..deleteFailures = 100;
+        final repo = await AnalyticsRepository.load(
+          storage: storage,
+          queueStorage: _MemoryConsentStorage(),
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: transport,
+        );
+        await repo.enable();
+        expect(await repo.disableAndDelete(), isFalse);
+        final saved = storage.value;
+        await repo.flush();
+        expect(transport.deleteAttempts, 2);
+        expect(storage.value, saved);
+        expect(repo.needsDeletion, isTrue);
+        expect(repo.isConsentEnabled, isFalse);
+        transport.isConfigured = false;
+        await repo.flush();
+        expect(transport.deleteAttempts, 2);
+        expect(storage.value, saved);
+      },
+    );
+
+    test(
+      'concurrent deletion and lifecycle retries share one request',
+      () async {
+        final transport = _FakeTransport()..deleteGate = Completer<void>();
+        final repo = await AnalyticsRepository.load(
+          storage: _MemoryConsentStorage(),
+          queueStorage: _MemoryConsentStorage(),
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: transport,
+        );
+        await repo.enable();
+        final first = repo.disableAndDelete();
+        final second = repo.disableAndDelete();
+        final flushing = repo.flush();
+        await Future<void>.delayed(Duration.zero);
+        expect(transport.deleteAttempts, 1);
+        transport.deleteGate!.complete();
+        expect(await first, isTrue);
+        expect(await second, isTrue);
+        await flushing;
+        expect(repo.needsDeletion, isFalse);
+        expect(repo.isConsentEnabled, isFalse);
+      },
+    );
+
+    test(
+      'ordinary off never requests deletion during lifecycle flush',
+      () async {
+        final transport = _FakeTransport();
+        final repo = await AnalyticsRepository.load(
+          storage: _MemoryConsentStorage(),
+          queueStorage: _MemoryConsentStorage(),
+          pendingRoundStorage: _MemoryPendingRoundStorage(),
+          transport: transport,
+        );
+        await repo.enable();
+        await repo.disable();
+        await repo.flush();
+        expect(transport.deleteAttempts, 0);
+        expect(repo.hasRetainedIdentity, isTrue);
+        expect(repo.isConsentEnabled, isFalse);
+      },
+    );
 
     test('disableAndDelete keeps the deletion credential on failure', () async {
       final transport = _FakeTransport()..deleteFailures = 1;
@@ -777,7 +1067,7 @@ void main() {
         await Future<void>.delayed(Duration.zero);
         final saved = jsonDecode(consent.value!) as Map<String, dynamic>;
         expect(saved['enabled'], isFalse);
-        expect(saved['needsDeletion'], isTrue);
+        expect(saved['needsDeletion'], isFalse);
         expect(saved['deletionSecret'], isNotNull);
         final online = _FakeTransport();
         final relaunched = await AnalyticsRepository.load(
@@ -789,10 +1079,14 @@ void main() {
         await relaunched.reconcileInterruptedRound();
         await relaunched.flush();
         expect(online.sentBatches, isEmpty);
-        await relaunched.enable();
+        final resuming = relaunched.enable();
+        await Future<void>.delayed(Duration.zero);
         expect(relaunched.isConsentEnabled, isFalse);
         queue.writeGate!.complete();
-        await disabling;
+        await Future.wait([disabling, resuming]);
+        expect(relaunched.isConsentEnabled, isTrue);
+        await relaunched.flush();
+        expect(online.sentBatches, isEmpty);
       },
     );
 
@@ -1022,10 +1316,14 @@ final class _MemoryPendingRoundStorage implements PendingRoundStorage {
 }
 
 final class _FakeTransport implements AnalyticsTransport {
+  @override
+  bool isConfigured = true;
+
   final List<List<AnalyticsEvent>> sentBatches = [];
   final List<Map<String, String>> deletions = [];
   int sendFailures = 0;
   int deleteFailures = 0;
+  int deleteAttempts = 0;
   Completer<void>? deleteGate;
   Completer<void>? sendGate;
 
@@ -1047,6 +1345,7 @@ final class _FakeTransport implements AnalyticsTransport {
     required String installationId,
     required String deletionSecret,
   }) async {
+    deleteAttempts++;
     await deleteGate?.future;
     if (deleteFailures > 0) {
       deleteFailures--;

@@ -18,7 +18,8 @@ void main() {
         return http.Response('{}', 200);
       });
 
-      final transport = HttpAnalyticsTransport(client: client);
+      final transport = HttpAnalyticsTransport(baseUrl: '', client: client);
+      expect(transport.isConfigured, isFalse);
       await expectLater(transport.sendEvents([_event()]), throwsStateError);
       await expectLater(
         transport.requestDeletion(
@@ -31,6 +32,39 @@ void main() {
       expect(called, isFalse);
     });
 
+    for (final endpoint in [
+      'http://analytics.example',
+      'https://',
+      'not a URL',
+      'https://analytics.example:bad',
+    ]) {
+      test(
+        'invalid endpoint is unavailable without network calls: $endpoint',
+        () async {
+          var called = false;
+          final client = MockClient((request) async {
+            called = true;
+            return http.Response('{}', 200);
+          });
+          addTearDown(client.close);
+          final transport = HttpAnalyticsTransport(
+            baseUrl: endpoint,
+            client: client,
+          );
+          expect(transport.isConfigured, isFalse);
+          await expectLater(transport.sendEvents([_event()]), throwsStateError);
+          await expectLater(
+            transport.requestDeletion(
+              installationId: 'inst_1',
+              deletionSecret: 'secret',
+            ),
+            throwsStateError,
+          );
+          expect(called, isFalse);
+        },
+      );
+    }
+
     test('posts event batches to the events endpoint', () async {
       late http.Request captured;
       final client = MockClient((request) async {
@@ -42,6 +76,7 @@ void main() {
         baseUrl: 'https://analytics.example',
         client: client,
       );
+      expect(transport.isConfigured, isTrue);
       await transport.sendEvents([_event()]);
 
       expect(captured.method, 'POST');
