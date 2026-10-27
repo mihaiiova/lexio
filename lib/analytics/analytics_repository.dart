@@ -56,6 +56,7 @@ final class AnalyticsRepository {
   }
 
   Future<void> _flushQueue = Future<void>.value();
+  Future<bool>? _deletionInFlight;
 
   static Future<AnalyticsRepository> load({
     ConsentStorage? storage,
@@ -258,7 +259,13 @@ final class AnalyticsRepository {
     });
   }
 
-  Future<bool> disableAndDelete() async {
+  Future<bool> disableAndDelete() {
+    return _deletionInFlight ??= _performDeletion().whenComplete(() {
+      _deletionInFlight = null;
+    });
+  }
+
+  Future<bool> _performDeletion() async {
     final disabling = _disable(requestDeletion: true);
     await disabling;
     await _flushQueue; // An older send must finish before its identity is deleted.
@@ -313,6 +320,10 @@ final class AnalyticsRepository {
   Future<void> flush() async {
     await _operations;
     await _queueWrites;
+    if (needsDeletion) {
+      if (isServerConfigured && hasRetainedIdentity) await disableAndDelete();
+      return;
+    }
     if (_flushScheduled) await _flushQueue;
     _scheduleFlush();
     await _flushQueue;

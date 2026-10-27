@@ -42,6 +42,38 @@ void main() {
     SpotContent.seed(const []);
   });
 
+  testWidgets('launch retries a pending deletion without opting in', (
+    tester,
+  ) async {
+    final transport = _FakeTransport()..failDeletion = true;
+    final repo = await AnalyticsRepository.load(
+      storage: _MemoryConsentStorage(),
+      queueStorage: _MemoryConsentStorage(),
+      pendingRoundStorage: _MemoryPendingRoundStorage(),
+      transport: transport,
+    );
+    await repo.enable();
+    expect(await repo.disableAndDelete(), isFalse);
+    transport.failDeletion = false;
+    final progress = await ProgressRepository.load(
+      storage: _MemoryProgressStorage(),
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: HomeScreen(
+          analyticsRepository: repo,
+          progressRepository: progress,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(repo.needsDeletion, isFalse);
+    expect(repo.isConsentEnabled, isFalse);
+    expect(transport.deletionAttempts, 2);
+    expect(transport.events, isEmpty);
+    expect(find.text('Ne ajuți să îmbunătățim Slove?'), findsNothing);
+  });
+
   testWidgets(
     'launch recovers a different game once without entering Grammar',
     (tester) async {
@@ -328,6 +360,8 @@ final class _FakeTransport implements AnalyticsTransport {
   bool get isConfigured => true;
 
   final events = <AnalyticsEvent>[];
+  bool failDeletion = false;
+  int deletionAttempts = 0;
   @override
   Future<void> sendEvents(
     List<AnalyticsEvent> eventsToSend, {
@@ -340,7 +374,10 @@ final class _FakeTransport implements AnalyticsTransport {
   Future<void> requestDeletion({
     required String installationId,
     required String deletionSecret,
-  }) async {}
+  }) async {
+    deletionAttempts++;
+    if (failDeletion) throw StateError('offline');
+  }
 }
 
 final class _MemoryConsentStorage implements ConsentStorage {
