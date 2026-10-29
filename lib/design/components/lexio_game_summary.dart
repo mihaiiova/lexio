@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../../reviews/app_review_service.dart';
 import '../colors.dart';
 import '../spacing.dart';
 import '../typography.dart';
@@ -20,7 +23,7 @@ final class LexioReviewItem {
   final String explanation;
 }
 
-class LexioGameSummary extends StatelessWidget {
+class LexioGameSummary extends StatefulWidget {
   const LexioGameSummary({
     super.key,
     required this.accentColor,
@@ -31,6 +34,7 @@ class LexioGameSummary extends StatelessWidget {
     required this.onBack,
     this.discoveredCount,
     this.discoveredTotal,
+    this.reviewService,
   });
 
   final Color accentColor;
@@ -41,9 +45,12 @@ class LexioGameSummary extends StatelessWidget {
   final VoidCallback onBack;
   final int? discoveredCount;
   final int? discoveredTotal;
+  final AppReviewService? reviewService;
 
   @override
-  Widget build(BuildContext context) {
+  State<LexioGameSummary> createState() => _LexioGameSummaryState();
+
+  Widget _buildSummary(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
@@ -99,9 +106,9 @@ class LexioGameSummary extends StatelessWidget {
             child: Text(
               '$correctCount din $totalCount',
               style: LexioTextStyles.displayHero.copyWith(
-                  color: LexioColors.textPrimary,
-                  fontFamily: 'NoticiaText',
-                ),
+                color: LexioColors.textPrimary,
+                fontFamily: 'NoticiaText',
+              ),
             ),
           ),
           if (discoveredCount != null &&
@@ -163,6 +170,28 @@ class LexioGameSummary extends StatelessWidget {
   }
 }
 
+class _LexioGameSummaryState extends State<LexioGameSummary> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      unawaited(
+        (widget.reviewService ?? AppReviewService.instance).onRoundCompleted(
+          canPrompt: () =>
+              mounted &&
+              ModalRoute.of(context)?.isCurrent == true &&
+              WidgetsBinding.instance.lifecycleState ==
+                  AppLifecycleState.resumed,
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => widget._buildSummary(context);
+}
+
 class _ReviewItem extends StatelessWidget {
   const _ReviewItem({required this.index, required this.item});
 
@@ -196,9 +225,9 @@ class _ReviewItem extends StatelessWidget {
         Text(
           item.wrongAnswer,
           style: LexioTextStyles.bodyLarge.copyWith(
-              color: LexioColors.error,
-              fontFamily: 'NoticiaText',
-            ),
+            color: LexioColors.error,
+            fontFamily: 'NoticiaText',
+          ),
         ),
         const SizedBox(height: LexioSpacing.sm),
         Text.rich(
@@ -212,9 +241,9 @@ class _ReviewItem extends StatelessWidget {
             ],
           ),
           style: LexioTextStyles.bodyMedium.copyWith(
-              color: LexioColors.textPrimary,
-              fontFamily: 'NoticiaText',
-            ),
+            color: LexioColors.textPrimary,
+            fontFamily: 'NoticiaText',
+          ),
         ),
         const SizedBox(height: LexioSpacing.sm),
         Text(

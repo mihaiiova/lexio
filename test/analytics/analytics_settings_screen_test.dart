@@ -13,8 +13,66 @@ import 'package:lexio/analytics/pending_round.dart';
 import 'package:lexio/design/components/lexio_button.dart';
 import 'package:lexio/design/theme.dart';
 import 'package:lexio/privacy/privacy_screen.dart';
+import 'package:lexio/reviews/app_review_service.dart';
 
 void main() {
+  testWidgets(
+    'review button opens the store directly without a native prompt',
+    (tester) async {
+      var storeOpens = 0;
+      var requests = 0;
+      final repo = await _repo();
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: LexioTheme.light,
+          home: AnalyticsSettingsScreen(
+            analytics: repo,
+            reviewService: AppReviewService(
+              supported: true,
+              appStoreId: '123456789',
+              openStoreListing: () async {
+                storeOpens++;
+              },
+              requestReview: () async {
+                requests++;
+              },
+            ),
+          ),
+        ),
+      );
+      await tester.ensureVisible(find.text('Evaluează aplicația'));
+      await tester.tap(find.text('Evaluează aplicația'));
+      await tester.pumpAndSettle();
+      expect(storeOpens, 1);
+      expect(requests, 0);
+      expect(repo.isConsentEnabled, isFalse);
+    },
+  );
+
+  testWidgets('failed store link shows a Romanian error', (tester) async {
+    final repo = await _repo();
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: LexioTheme.light,
+        home: AnalyticsSettingsScreen(
+          analytics: repo,
+          reviewService: AppReviewService(
+            supported: true,
+            appStoreId: '123456789',
+            openStoreListing: () async => throw StateError('store'),
+          ),
+        ),
+      ),
+    );
+    await tester.ensureVisible(find.text('Evaluează aplicația'));
+    await tester.tap(find.text('Evaluează aplicația'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Magazinul nu a putut fi deschis. Încearcă din nou.'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('renders the optional analytics section and purpose', (
     tester,
   ) async {

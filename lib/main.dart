@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'app/app.dart';
 import 'content/content_bundle_service.dart';
 import 'content/content_runtime.dart';
+import 'reviews/app_review_service.dart';
 
 /// Compile-time base URL for static content. Empty in development and tests,
 /// where the app serves bundled content and never checks the manifest.
@@ -13,6 +14,7 @@ const _contentBaseUrl = String.fromEnvironment('CONTENT_BASE_URL');
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _startContentBundleService();
+  unawaited(AppReviewService.instance.initialize());
   runApp(const LexioApp());
 }
 
