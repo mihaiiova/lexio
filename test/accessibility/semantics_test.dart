@@ -45,8 +45,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Politica de confidențialitate'), findsOneWidget);
-    expect(find.text('Ce date colectăm'), findsOneWidget);
-    expect(find.textContaining('Nu colectăm'), findsWidgets);
+    expect(find.text('Ce informații trimitem'), findsOneWidget);
+    expect(find.textContaining('oprită implicit'), findsOneWidget);
   });
 
   testWidgets('App title text is present', (tester) async {

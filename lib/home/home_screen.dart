@@ -7,6 +7,9 @@ import '../design/colors.dart';
 import '../design/components/lexio_game_card.dart';
 import '../design/spacing.dart';
 import '../design/typography.dart';
+import '../analytics/analytics_consent_screen.dart';
+import '../analytics/analytics_repository.dart';
+import '../analytics/analytics_settings_screen.dart';
 import '../games/grammar/grammar_screen.dart';
 import '../games/idioms/idioms_screen.dart';
 import '../games/spot/spot_screen.dart';
@@ -19,6 +22,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
     this.progressRepository,
+    this.analyticsRepository,
     this.grammarScreenBuilder,
     this.vocabularyScreenBuilder,
     this.idiomsScreenBuilder,
@@ -26,6 +30,7 @@ class HomeScreen extends StatefulWidget {
   });
 
   final ProgressRepository? progressRepository;
+  final AnalyticsRepository? analyticsRepository;
   final Widget Function()? grammarScreenBuilder;
   final Widget Function()? vocabularyScreenBuilder;
   final Widget Function()? idiomsScreenBuilder;
@@ -35,14 +40,27 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   ProgressRepository? _progress;
+  AnalyticsRepository? _analytics;
   Map<String, int>? _totals;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _init();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) unawaited(_analytics?.flush());
   }
 
   Future<void> _init() async {
@@ -50,11 +68,19 @@ class _HomeScreenState extends State<HomeScreen> {
       final totals = await DiscoveryCatalog.totalNotionsByGame();
       final progress =
           widget.progressRepository ?? await ProgressRepository.load();
+      final analytics =
+          widget.analyticsRepository ?? await AnalyticsRepository.load();
+      await analytics.reconcileInterruptedRound();
+      unawaited(analytics.flush());
       if (!mounted) return;
       setState(() {
         _totals = totals;
         _progress = progress;
+        _analytics = analytics;
       });
+      if (analytics.isConsentUndecided) {
+        unawaited(showAnalyticsConsentScreen(context, analytics));
+      }
     } catch (error) {
       debugPrint('HomeScreen: failed to load discovery progress: $error');
     }
@@ -88,7 +114,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 gameId: 'spot',
                 screen:
                     widget.spotScreenBuilder?.call() ??
-                    SpotScreen(progressRepository: widget.progressRepository),
+                    SpotScreen(
+                      progressRepository: widget.progressRepository,
+                      analytics: _analytics,
+                    ),
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
@@ -99,7 +128,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 gameId: 'grammar',
                 screen:
                     widget.grammarScreenBuilder?.call() ??
-                    GrammarScreen(progressRepository: widget.progressRepository),
+                    GrammarScreen(
+                      progressRepository: widget.progressRepository,
+                      analytics: _analytics,
+                    ),
               ),
               const SizedBox(height: LexioSpacing.itemGap),
               _buildGameCard(
@@ -112,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     widget.vocabularyScreenBuilder?.call() ??
                     VocabularyScreen(
                       progressRepository: widget.progressRepository,
+                      analytics: _analytics,
                     ),
               ),
               const SizedBox(height: LexioSpacing.itemGap),
@@ -123,7 +156,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 gameId: 'idioms',
                 screen:
                     widget.idiomsScreenBuilder?.call() ??
-                    IdiomsScreen(progressRepository: widget.progressRepository),
+                    IdiomsScreen(
+                      progressRepository: widget.progressRepository,
+                      analytics: _analytics,
+                    ),
               ),
               const SizedBox(height: LexioSpacing.xxl),
               _buildLegalFooter(context),
@@ -228,21 +264,40 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildLegalFooter(BuildContext context) {
+    final analytics = _analytics;
     return Padding(
       padding: const EdgeInsets.only(
         top: LexioSpacing.md,
         bottom: LexioSpacing.xl,
       ),
-      child: Center(
-        child: TextButton(
-          onPressed: () => _open(context, const PrivacyScreen()),
-          child: Text(
-            'Confidențialitate',
-            style: LexioTextStyles.labelSmall.copyWith(
-              color: LexioColors.textTertiary,
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () => _open(context, const PrivacyScreen()),
+            child: Text(
+              'Confidențialitate',
+              style: LexioTextStyles.labelSmall.copyWith(
+                color: LexioColors.textTertiary,
+              ),
             ),
           ),
-        ),
+          TextButton(
+            onPressed: analytics == null
+                ? null
+                : () => _open(
+                    context,
+                    AnalyticsSettingsScreen(analytics: analytics),
+                  ),
+            child: Text(
+              'Setări',
+              style: LexioTextStyles.labelSmall.copyWith(
+                color: LexioColors.textTertiary,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

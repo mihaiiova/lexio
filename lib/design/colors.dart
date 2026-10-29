@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class LexioColors {
+  static const Color transparent = Color(0x00000000);
   LexioColors._();
 
   // --- Blue (primary) ---
@@ -26,6 +27,9 @@ abstract class LexioColors {
   // --- Teal (decorative) ---
   static const teal = Color(0xFF7FBAC3);
   static const tealMuted = Color(0xFFEEF7F8);
+
+  // --- Brand ---
+  static const brandBlack = Color(0xFF000000);
 
   // --- Semantic aliases ---
   static const primary = blue;

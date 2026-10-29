@@ -65,11 +65,14 @@ final class SpotGameState {
     for (var textIndex = 0; textIndex < texts.length; textIndex++) {
       final foundIndices = foundMistakeIndices[textIndex];
       final text = texts[textIndex];
-      for (var mistakeIndex = 0;
-          mistakeIndex < text.mistakes.length;
-          mistakeIndex++) {
-        results[text.mistakes[mistakeIndex].notionId] =
-            foundIndices.contains(mistakeIndex);
+      for (
+        var mistakeIndex = 0;
+        mistakeIndex < text.mistakes.length;
+        mistakeIndex++
+      ) {
+        results[text.mistakes[mistakeIndex].notionId] = foundIndices.contains(
+          mistakeIndex,
+        );
       }
     }
     return results;
@@ -200,33 +203,34 @@ final class SpotGameState {
     return _copyWith(shakingWordIndex: null, clearShaker: true);
   }
 
-  SpotGameState nextText() {
+  SpotGameState nextText({DateTime? now}) {
     if (isFinished || texts.isEmpty) return this;
     if (isLastText) {
       return _copyWith(
         isFinished: true,
         isChecking: false,
-        frozenRemainingSeconds: remainingSeconds,
+        frozenRemainingSeconds: remainingSecondsAt(now ?? DateTime.now()),
       );
     }
     return _copyWith(
       currentTextIndex: currentTextIndex + 1,
       isChecking: false,
-      startTime: DateTime.now(),
+      startTime: now ?? DateTime.now(),
     );
   }
 
-  SpotGameState checkTimerExpiry() {
-    if (isFinished || texts.isEmpty || !isTimerExpired) return this;
+  SpotGameState checkTimerExpiry({DateTime? now}) {
+    if (isFinished ||
+        texts.isEmpty ||
+        remainingSecondsAt(now ?? DateTime.now()) > 0) {
+      return this;
+    }
     if (isLastText) {
-      return _copyWith(
-        isFinished: true,
-        frozenRemainingSeconds: 0,
-      );
+      return _copyWith(isFinished: true, frozenRemainingSeconds: 0);
     }
     return _copyWith(
       currentTextIndex: currentTextIndex + 1,
-      startTime: DateTime.now(),
+      startTime: now ?? DateTime.now(),
     );
   }
 
@@ -257,8 +261,7 @@ final class SpotGameState {
       shakingWordIndex: clearShaker
           ? null
           : (shakingWordIndex ?? this.shakingWordIndex),
-      frozenRemainingSeconds:
-          frozenRemainingSeconds ?? _frozenRemainingSeconds,
+      frozenRemainingSeconds: frozenRemainingSeconds ?? _frozenRemainingSeconds,
     );
   }
 

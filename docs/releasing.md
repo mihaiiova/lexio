@@ -6,9 +6,10 @@ testers and to the stores once released.
 ## The core constraint: content is bundled, with offline-first remote refresh
 
 Game content lives in `lib/content/*.json` and `data/*.json` and is loaded via
-`rootBundle.loadString()` as a bundled baseline. There is **no backend, no
-API, and no database** — but the app can now refresh content from a static
-Cloudflare Pages bundle while staying fully usable offline.
+`rootBundle.loadString()` as a bundled baseline. Gameplay needs **no account or
+backend connection**. Optional first-party analytics has a separate consent-gated
+Worker/D1 service; content can refresh from a static Cloudflare Pages bundle
+while the app stays fully usable offline.
 
 - The canonical Git JSON files remain the only editorial source.
 - CI validates them and generates one complete `content_bundle.json` plus a
@@ -43,6 +44,29 @@ Cloudflare Pages bundle while staying fully usable offline.
 
 > **Note:** Cloudflare Pages publishing requires the Pages project and its
 > credentials to be configured once (see *One-time prerequisites*).
+
+## Store reviews
+
+Native review requests use StoreKit on iOS and Google Play In-App Review on
+Android through `in_app_review`. Requests occur on the round-summary screen
+regardless of score, after at least five completed rounds and seven days since
+first use of this version's review scheduler, with a persisted 120-day cooldown.
+The OS may suppress any request; the app cannot detect display or submission.
+There is no custom pre-prompt, incentive, or automatic store-page fallback.
+Scheduling is local only and independent of analytics consent.
+
+Settings offers **Evaluează aplicația**, opening the store listing directly.
+Android uses the application package ID. For iOS, set the GitHub Actions variable
+`APP_STORE_ID` to the numeric Apple ID from App Store Connect (not the bundle ID).
+Both IPA workflows pass it via `--dart-define=APP_STORE_ID=123456789`.
+Local builds need the same flag. Without a numeric ID, the iOS Settings link is
+hidden; native requests still work without it. Web and desktop have neither.
+
+Verify native dialogs on real store-capable devices: Android via an internal
+Play test track or internal app sharing; iOS via a development build. TestFlight
+does not display the review request. Development dialogs do not submit real
+reviews. Also check the Settings link against the published listing and verify
+that dismissing or suppressing a native dialog leaves gameplay unchanged.
 
 ## Versioning
 
@@ -102,6 +126,20 @@ feature/xxx ──PR──▶ staging ──push──▶ test builds go out aut
 | `deploy-content.yml` | manual dispatch on `master` | exercise-content bundle → Cloudflare Pages |
 
 Signing secrets are configured per `RELEASE_SIGNING.md`; never commit them.
+
+### Analytics in internal builds
+
+The staging workflow requires repository variable `ANALYTICS_ENDPOINT` to equal
+`https://analytics.didactiv.ro`. Set it only after the activation checks in
+`worker/README.md` are satisfied, including the reviewed public privacy policy
+and store disclosures. Both signed internal builds receive it through a Dart
+define; consent still defaults to off. Never use the network-restricted test
+collector in distributed builds. Missing or incorrect configuration fails before
+upload rather than shipping another disconnected analytics build.
+
+This rollout does not add analytics configuration to `deploy-prod.yml` and does
+not authorize a public store submission. Public-release collection remains a
+separate approval/configuration step.
 
 ### Screenshot integration workflow
 

@@ -61,11 +61,11 @@ Politica este disponibilă în aplicație și la https://didactiv.ro/confidentia
 | Întrebare | Răspuns |
 |---|---|
 | Partajează date cu terți? | Nu |
-| Colectează date? | Nu — progresul și utilizarea jocurilor rămân pe dispozitiv |
-| Criptează datele în tranzit? | Nu se aplică — aplicația nu transmite date de utilizare |
-| Utilizatorul poate șterge datele? | Nu se aplică — aplicația nu are conturi sau date de profil |
+| Colectează date? | Opțional — analiză pseudonimă dezactivată implicit; numai dacă este activată, trimite identificator aleatoriu de instalare, rundă, joc, versiune, exercițiu/poziție, dată/oră, afișare, corect/greșit, rezolvare și motiv de încheiere |
+| Criptează datele în tranzit? | Da — analiza pseudonimă și linkurile DOOM folosesc HTTPS |
+| Utilizatorul poate șterge datele? | Da — din secțiunea Setări, datele legate de această instalare pot fi șterse |
 | Colectează date de localizare? | Nu |
-| Colectează date personale? | Nu |
+| Colectează date personale? | Clasificare în așteptarea revizuirii — date OPȚIONALE PSEUDONIME ale instalării; nu declara „Nu” înainte de verificarea categoriilor Google Play |
 | Colectează date financiare? | Nu |
 | Colectează date de sănătate? | Nu |
 | Colectează mesaje sau emailuri? | Nu |
@@ -74,7 +74,7 @@ Politica este disponibilă în aplicație și la https://didactiv.ro/confidentia
 | Colectează istoric de navigare? | Nu |
 | Colectează contacte? | Nu |
 | Colectează date de activitate fizică? | Nu |
-| Colectează date de identificare a dispozitivului? | Nu |
+| Colectează date de identificare a dispozitivului? | Clasificare în așteptarea revizuirii — identificator aleatoriu persistent al instalării, OPȚIONAL și PSEUDONIM; verificare necesară pentru „Device or other IDs” înainte de trimitere |
 | Colectează date de performanță a aplicației? | Nu |
 
 ## Clasificare conținut
@@ -133,9 +133,9 @@ incluse în APK/AAB.
 Linkurile externe se deschid în browserul sistemului (către dexonline.ro
 pentru referințe DOOM). Nu există WebView-uri în aplicație.
 
-Progresul de învățare și utilizarea jocurilor sunt locale. Aplicația nu
-transmite răspunsuri, texte introduse, scoruri, progres, identificatori ai
-dispozitivului sau date personale.
+Progresul de învățare și utilizarea jocurilor sunt locale. În mod implicit, aplicația nu transmite răspunsuri, texte introduse, scoruri, progres, identificatori ai dispozitivului sau date personale.
+
+Aplicația poate activa o analiză pseudonimă opțională, dezactivată implicit, confirmată de părinte sau tutore pe proprie răspundere. Când este activată, trimite numai un identificator aleatoriu de instalare, runda, jocul, versiunea, exercițiul/poziția, data/ora, afișarea, rezultatul corect/greșit, rezolvarea și motivul de încheiere; nu trimite textele exercițiilor sau răspunsurile. Utilizatorul poate dezactiva oricând analiza și poate șterge datele legate de această instalare din Setări. Confirmarea părintelui/tutorelui este autodeclarată și nu înlocuiește verificarea cerințelor legale și a politicilor magazinului.
 
 Nu sunt declarate permisiuni speciale. Linkurile externe (DOOM) se deschid în browserul sistemului fără permisiuni suplimentare.
 
@@ -143,4 +143,10 @@ Aplicația poate descărca o versiune mai nouă a conținutului lingvistic dintr
 serviciu static (Cloudflare Pages) pentru a corecta sau adăuga exerciții fără o
 nouă lansare. Descărcarea este strict unidirecțională: aplicația primește
 conținut și nu trimite progres, răspunsuri sau date personale; nu este necesar
-un cont și nu se afișează o solicitare de consimțământ suplimentar.
+un cont. Consimțământul este cerut doar pentru analiza pseudonimă opțională.
+
+## Revizuire obligatorie înainte de lansare (#60)
+
+Datele legate de instalare sunt pseudonime, nu complet anonime. Evenimentele sunt păstrate 90 de zile, apoi eliminate prin operațiunea zilnică (până la o zi suplimentară; monitorizare obligatorie). Credențialele inactive expiră după 90 de zile fără trimitere, fără evenimente rămase. Ștergerea elimină datele încă legate; o înregistrare minimă de revocare expiră la 90 de zile de la prima cerere, fără prelungire la repetare, și este eliminată prin aceeași operațiune zilnică (defecțiunile pot întârzia ștergerea). Serverul respinge datele din viitor și pe cele vechi de cel puțin 90 de zile; nu există o excepție suplimentară de păstrare a credențialelor. Totalurile deja separate de instalare, cu minimum cinci instalări distincte per grup, nu pot fi retrase ulterior. Detalii și limite: [politica de confidențialitate](privacy_policy.md).
+
+Acestea sunt texte propuse, nu declarații deja aprobate sau modificate în console. Confirmarea tutorelui este autodeclarată. Sunt obligatorii aprobarea manuală juridică/de confidențialitate pentru copii și a politicilor magazinelor, clasificarea exactă App Privacy/Data Safety, publicarea politicii canonice și testele manuale acord/offline/ștergere. Nicio aprobare manuală nu este afirmată aici.

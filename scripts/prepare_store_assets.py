@@ -98,22 +98,51 @@ def create_app_store_creative_assets(directory: Path) -> None:
 
     header = Image.new("RGB", (3840, 1646), "#F2F3F5")
     draw = ImageDraw.Draw(header)
-    draw.text((250, 380), "Slove", font=load_font("NoticiaText-Bold.ttf", 320), fill="#17191C")
+
+    # Keep the message in the central crop; App Store shows only part of the
+    # wide header on iPhone, with navigation controls over its upper corners.
+    draw.rounded_rectangle((1010, 210, 2830, 1440), radius=100, fill="#E5E8EC")
+    draw.rounded_rectangle((990, 190, 2810, 1420), radius=100, fill="white")
+
+    for index, (_, color) in enumerate(games):
+        x = 1580 + index * 185
+        draw.rounded_rectangle((x, 365, x + 135, 380), radius=7, fill=color)
+
     draw.text(
-        (270, 790),
-        "Joacă-te cu limba română.",
-        font=load_font("NoticiaText-Regular.ttf", 102),
-        fill="#62666D",
+        (1900, 515),
+        "Slove",
+        font=load_font("NoticiaText-Bold.ttf", 305),
+        fill="#17191C",
+        anchor="mt",
     )
-    for index, (title, color) in enumerate(games):
-        x = 2100 + (index % 2) * 765
-        y = 300 + (index // 2) * 555
-        draw.rounded_rectangle((x, y, x + 700, y + 470), radius=56, fill="white")
-        draw.rounded_rectangle((x + 54, y + 58, x + 170, y + 70), radius=6, fill=color)
+    draw.text(
+        (1900, 950),
+        "Joacă-te cu limba română.",
+        font=load_font("NoticiaText-Regular.ttf", 86),
+        fill="#62666D",
+        anchor="mt",
+    )
+    draw.text(
+        (1900, 1190),
+        "GRAMATICĂ  ·  CUVINTE  ·  EXPRESII",
+        font=load_font("NoticiaText-Bold.ttf", 42),
+        fill="#4588E0",
+        anchor="mt",
+    )
+
+    # Peripheral word cards add context without carrying essential information.
+    for x, y, title, color in (
+        (260, 350, "Corect sau greșit?", "#4588E0"),
+        (2950, 300, "Ce înseamnă?", "#E04B40"),
+        (180, 1030, "Vorba vine", "#8ABAC5"),
+        (3000, 1000, "Găsește greșeala", "#E6981A"),
+    ):
+        draw.rounded_rectangle((x, y, x + 670, y + 330), radius=56, fill="white")
+        draw.rounded_rectangle((x + 45, y + 43, x + 155, y + 56), radius=6, fill=color)
         draw.text(
-            (x + 54, y + 160),
+            (x + 45, y + 124),
             title,
-            font=load_font("NoticiaText-Bold.ttf", 58),
+            font=load_font("NoticiaText-Bold.ttf", 52),
             fill="#17191C",
         )
 

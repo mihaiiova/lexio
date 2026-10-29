@@ -1,0 +1,117 @@
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
+/// A round that started but has not yet been closed.
+///
+/// Persisted so an app termination can be reconciled on the next launch as an
+/// `inferred_interruption` — we do not claim the kill was observed live.
+final class PendingRound {
+  const PendingRound({
+    required this.sessionId,
+    required this.installationId,
+    required this.gameId,
+    required this.contentVersion,
+    required this.startedAtUtc,
+    this.lastActivityAtUtc,
+    this.lastShownItemId,
+    this.lastShownItemIndex,
+    this.itemResolved = false,
+    this.spotWrongPositions = const {},
+  });
+
+  final String sessionId;
+  final String installationId;
+  final String gameId;
+  final String contentVersion;
+  final DateTime startedAtUtc;
+  final DateTime? lastActivityAtUtc;
+  final String? lastShownItemId;
+  final int? lastShownItemIndex;
+  final bool itemResolved;
+
+  // Device-only text/position keys; never included in event payloads.
+  final Set<String> spotWrongPositions;
+
+  PendingRound copyWith({
+    DateTime? lastActivityAtUtc,
+    String? lastShownItemId,
+    int? lastShownItemIndex,
+    bool? itemResolved,
+    Set<String>? spotWrongPositions,
+  }) {
+    return PendingRound(
+      sessionId: sessionId,
+      installationId: installationId,
+      gameId: gameId,
+      contentVersion: contentVersion,
+      startedAtUtc: startedAtUtc,
+      lastActivityAtUtc: lastActivityAtUtc ?? this.lastActivityAtUtc,
+      lastShownItemId: lastShownItemId ?? this.lastShownItemId,
+      lastShownItemIndex: lastShownItemIndex ?? this.lastShownItemIndex,
+      itemResolved: itemResolved ?? this.itemResolved,
+      spotWrongPositions: spotWrongPositions ?? this.spotWrongPositions,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'sessionId': sessionId,
+    'installationId': installationId,
+    'gameId': gameId,
+    'contentVersion': contentVersion,
+    'startedAtUtc': startedAtUtc.toUtc().toIso8601String(),
+    'lastActivityAtUtc': lastActivityAtUtc?.toUtc().toIso8601String(),
+    'lastShownItemId': lastShownItemId,
+    'lastShownItemIndex': lastShownItemIndex,
+    'itemResolved': itemResolved,
+    'spotWrongPositions': spotWrongPositions.toList(),
+  };
+
+  factory PendingRound.fromJson(Map<String, dynamic> json) {
+    return PendingRound(
+      sessionId: json['sessionId'] as String,
+      installationId: json['installationId'] as String,
+      gameId: json['gameId'] as String,
+      contentVersion: json['contentVersion'] as String,
+      startedAtUtc: DateTime.parse(json['startedAtUtc'] as String).toUtc(),
+      lastActivityAtUtc: DateTime.tryParse(
+        json['lastActivityAtUtc'] as String? ?? '',
+      )?.toUtc(),
+      lastShownItemId: json['lastShownItemId'] as String?,
+      lastShownItemIndex: json['lastShownItemIndex'] as int?,
+      itemResolved: json['itemResolved'] as bool? ?? false,
+      spotWrongPositions: (json['spotWrongPositions'] as List? ?? const [])
+          .cast<String>()
+          .toSet(),
+    );
+  }
+}
+
+abstract class PendingRoundStorage {
+  Future<String?> read();
+  Future<void> write(String value);
+  Future<void> clear();
+}
+
+final class SharedPreferencesPendingRoundStorage
+    implements PendingRoundStorage {
+  SharedPreferencesPendingRoundStorage(
+    this._key, [
+    SharedPreferencesAsync? preferences,
+  ]) : _preferences = preferences ?? SharedPreferencesAsync();
+
+  final String _key;
+  final SharedPreferencesAsync _preferences;
+
+  @override
+  Future<String?> read() => _preferences.getString(_key);
+
+  @override
+  Future<void> write(String value) => _preferences.setString(_key, value);
+
+  @override
+  Future<void> clear() => _preferences.remove(_key);
+}
+
+/// Encodes a [PendingRound] for persistence.
+String encodePendingRound(PendingRound round) => jsonEncode(round.toJson());

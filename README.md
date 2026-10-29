@@ -65,7 +65,7 @@ lib/
 - **Minimalist**: Only essential UI chrome
 - **Calm**: Gentle colors, subtle animations
 - **Premium**: Clean cards, consistent spacing, refined details
-- **Fast**: Local content and progress with no usage tracking
+- **Fast**: Local content and progress; optional analytics never blocks play
 
 ## Architecture Decisions
 
@@ -74,8 +74,8 @@ lib/
 - Content is stored as local JSON for easy addition of thousands of exercises
 - **Offline-first content**: bundled baseline plus a static bundle refreshed in the background; progress stays local
 - **Local persistence**: Progress tracked via `SharedPreferences` with spaced repetition
-- **No backend or auth** — learning content and progress remain local (a static CDN delivers content one-way)
-- **Privacy-conscious**: no usage tracking, advertising, accounts, or device identifiers; learning progress remains local
+- **Local learning, narrow analytics exception** — content and progress remain local (a static CDN delivers content one-way). Optional consent-gated first-party Worker/D1 analytics uses a separate per-installation secret for authenticated deletion; there are no player accounts or general authentication backend. The only reader is the owner, through a Cloudflare Access-protected private report in the Worker (never in the app).
+- **Privacy-conscious**: guardian-opt-in first-party analytics (default off), no advertising or accounts; full learning progress remains local
 - **Deadline-based timer**: Spot game uses wall-clock deadlines, not callback counting
 - **Lifecycle-safe**: App respects background/foreground transitions (WidgetsBindingObserver)
 - **Brand**: Primary blue `#4588E0`, NoticiaText font family, white surfaces
@@ -129,7 +129,50 @@ See [`docs/releasing.md`](docs/releasing.md) for how to version, test, and ship 
 
 - The Romanian privacy policy is available from the home-screen footer and at https://didactiv.ro/confidentialitate/slove/.
 - The canonical policy text is stored in `store_listings/privacy_policy.md`.
-- No usage-tracking SDK or remote user-data collection is configured.
+- There is no vendor tracking SDK. Optional first-party analytics is **off by default**. First launch shows a dedicated Romanian onboarding screen: choose **Permite analiza utilizării** or **Nu, mulțumesc**, with no extra confirmation. **Detalii despre confidențialitate** opens the full details without recording a choice and remains available in **Setări**. Both choices persist across launches; declining keeps all games available, including offline. The consent screen does not verify age or parental authority; child-privacy and store review remain required before enabling collection for children.
+- Settings permits withdrawing consent and requesting deletion of this installation's linked records. Switching off stops collection immediately and discards queued events; a later explicit opt-in resumes the retained installation identity, even offline, without replaying discarded events. Only an explicitly requested deletion blocks re-enabling until acknowledgment and retains its credential for retry. After confirmed deletion, opting in creates a fresh random installation identity, not a person/account identifier.
+- All four games send only bounded lifecycle events, exercise IDs, active bundle revision, timestamps and outcomes/count deltas; never exercise text, raw answers, words or selected positions. Installation-linked records are not irreversibly anonymous. Events expire at 90 days; inactive credentials expire after 90 days without ingestion once linked events are gone, and revocation records expire 90 days after first deletion, without retry extension. Daily scheduled purging can add up to a day (operational failures can delay it further and require monitoring); no extra credential-retention exception or indefinite inactive identity metadata is intended. Ingestion rejects future timestamps and events at/older than the 90-day horizon, so original payloads cannot replay after tombstone expiry. Only unlinked aggregate totals may remain; deletion does not reverse previously unlinked totals.
+- The first-party Cloudflare Worker/D1 implementation is in [`worker/`](worker/). Configure a reviewed HTTPS collector at build time with `flutter run --dart-define=ANALYTICS_ENDPOINT=https://your-collector.example` (or the same flag for `flutter build`). It uses `POST /v1/events` and authenticated `POST /v1/delete`; never embed administrative credentials in the app. The owner-only `/private/report/` page (Cloudflare Access JWT plus owner allowlist, `no-store`) shows opted-in installations only: linked sessions for at most 31 days within the 90-day retention window, and a fixed 52-week unlinked history published only after a completed purge. See [worker/README.md](worker/README.md#private-owner-report-62).
+- For explicit adult/synthetic local testing, run `bash scripts/run_macos_analytics_test.sh`. This uses `config/analytics_test.json`; it does not change the default endpoint or store builds. See [the isolated test runbook](worker/README.md#isolated-analytics-test-environment-65) for network restrictions and the private owner report.
+- Server deletion is disabled in Settings when no valid HTTPS collector is configured, with an explanation instead of a misleading network-retry error. Existing pending requests and deletion credentials remain intact. This is a configuration check, not a server-reachability test.
+- With the endpoint unset or the network unavailable, delivery fails safely: the bounded local queue retries at launch, resume, subsequent collection and explicit flush points, without an offline retry loop. Batches contain at most 100 events and stay below 60 KB. Revocation clears queued events; no pre-consent play is backfilled.
+- If local withdrawal cannot be saved, Settings warns that collection is off for this process but the old setting can return after relaunch; retry saving before closing. If all local writes fail, no durable revocation guarantee is possible. Server deletion acknowledgment is independent of local storage. Lifecycle state, device-only Spot distinct-position sets, and queued events share one durable snapshot per action; Spot discovery/resolution is atomic too. A total local storage failure can still lose unsent analytics. Stable event IDs prevent repeated delivery from duplicating metrics.
+- Child-privacy/legal and store-policy review, manual first-run/offline testing, endpoint provisioning and production deployment remain release gates. This implementation is not evidence that those sign-offs occurred.
+
+### Analytics metric units
+
+| Games | Shown / resolved unit | Interaction metrics |
+|---|---|---|
+| Grammar, Vocabulary, Idioms | One rendered exercise variant; resolved by its first committed answer | One correct/wrong answer per exercise |
+| Spot | One rendered text; resolved only when all its mistakes are found | All in-play word presses (including repeats), newly found mistakes, distinct wrong word positions per round |
+
+These are different units: do not add MC correct/wrong answers to Spot discoveries
+or distinct wrong positions. Revealing corrections is not Spot completion. The
+same wrong position in two different texts counts twice; a repeated wrong press
+in the same text counts only as another attempt. A repeated found-token press
+while the text is still unresolved counts as an attempt, not another discovery;
+legacy wrong-word presses after resolution, before leaving the text, still count
+as attempts/distinct wrong positions because gameplay still accepts them. They do
+not undo resolution or emit another resolution. No new found-token action is
+enabled after resolution; locked/ended input is not counted. Gameplay scoring sets
+are unchanged.
+Spot sends `spot_attempt` events with `attemptDelta: 1`,
+`correctDiscoveryDelta: 0|1`, and `distinctWrongDelta: 0|1`. Actual word positions
+stay on device. Retained
+Spot counters each require five distinct positive-delta contributing installations;
+insufficient cohorts are null/suppressed, never a measured zero. Suppression
+propagates through later aggregate updates. See the
+[bounded Worker schema](worker/README.md).
+
+Impressions run after rendering, never from build. Every replay has a fresh
+round session. Back exits retain the last rendered exercise/text and resolution;
+timed Spot expiry uses `timeout`. Backgrounding alone does not close a round.
+An unfinished round is inferred interrupted on next startup at its last observed
+activity (bounded by the recovery clock), not at an invented app-kill time.
+An unresolved exit is not a wrong answer. Earlier unresolved texts can be derived
+from text impressions lacking a corresponding resolution. Item IDs are exercise
+IDs, not shared learning notion IDs; item indices are round/text positions, never
+selected word or answer positions. No pre-consent play is backfilled.
 
 ## License
 

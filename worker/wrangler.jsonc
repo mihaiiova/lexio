@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "slove-analytics",
+  "account_id": "ba9bb449e270ff0b4a8de56a8903f598",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-27",
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": false },
+  "routes": [
+    { "pattern": "analytics.didactiv.ro", "custom_domain": true }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "slove-analytics",
+      "database_id": "3f63584c-8b10-4afb-ad52-d24f2db9c0a5",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "PUBLIC_ENDPOINTS_ENABLED": "false",
+    "ACCESS_ISSUER": "https://iova.cloudflareaccess.com",
+    "ACCESS_AUDIENCE": "403c7214eb5c0919822643b541272b64720d81a61b6eb927f71711d01f472ff8"
+  },
+  "triggers": { "crons": ["0 3 * * *"] }
+}

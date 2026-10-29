@@ -5,7 +5,7 @@ import '../sizes.dart';
 import '../spacing.dart';
 import '../typography.dart';
 
-enum LexioButtonVariant { primary, secondary, ghost, danger }
+enum LexioButtonVariant { primary, secondary, monochrome, ghost, danger }
 
 enum LexioButtonSize { small, medium, large }
 
@@ -19,6 +19,7 @@ class LexioButton extends StatelessWidget {
     this.icon,
     this.isExpanded = false,
     this.isLoading = false,
+    this.wrapLabel = false,
     this.semanticLabel,
   });
 
@@ -29,6 +30,7 @@ class LexioButton extends StatelessWidget {
   final IconData? icon;
   final bool isExpanded;
   final bool isLoading;
+  final bool wrapLabel;
   final String? semanticLabel;
 
   @override
@@ -44,6 +46,12 @@ class LexioButton extends StatelessWidget {
         backgroundColor = isDisabled
             ? LexioColors.textTertiary
             : LexioColors.primary;
+        foregroundColor = LexioColors.textOnPrimary;
+        decoration = null;
+      case LexioButtonVariant.monochrome:
+        backgroundColor = isDisabled
+            ? LexioColors.textTertiary
+            : LexioColors.brandBlack;
         foregroundColor = LexioColors.textOnPrimary;
         decoration = null;
       case LexioButtonVariant.secondary:
@@ -122,7 +130,8 @@ class LexioButton extends StatelessWidget {
             label,
             style: textStyle.copyWith(color: foregroundColor),
             textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
+            softWrap: wrapLabel ? true : null,
+            overflow: wrapLabel ? TextOverflow.visible : TextOverflow.ellipsis,
           ),
         ),
       ],

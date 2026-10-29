@@ -19,7 +19,7 @@
 | Field | URL |
 |---|---|
 | Website | Public Slove URL to be configured before store submission |
-| Privacy policy | https://mihaiiova.github.io/lexio/ |
+| Privacy policy | https://didactiv.ro/confidentialitate/slove/ |
 
 ## Categories
 
@@ -37,7 +37,7 @@
 | In-app purchases | Nu |
 | Advertising | Nu |
 | Account required | Nu |
-| Data collection | Nu — utilizarea și progresul rămân locale |
+| Data collection | Opțional — analiză pseudonimă dezactivată implicit; utilizarea și progresul rămân locale |
 | Unrestricted web access | Nu (doar linkuri DOOM) |
 | Gambling / simulated gambling | Nu |
 | Alcohol / tobacco / drug references | Nu |
@@ -47,27 +47,27 @@
 | Mature / suggestive themes | Nu |
 | Health / fitness data | Nu |
 | Location data | Nu |
-| User data transmitted | Nimic — aplicația nu transmite date de utilizare sau identificatori |
-| Encryption | Nu se aplică datelor de utilizare; linkurile DOOM folosesc HTTPS |
+| User data transmitted | Opțional — doar dacă analiza pseudonimă este activată, semnale limitate (identificator aleatoriu de instalare, rundă, joc, versiune, exercițiu/poziție, dată/oră, afișare, corect/greșit, rezolvare și motiv de încheiere) |
+| Encryption | Analiza opțională și linkurile DOOM folosesc HTTPS |
 | Children under 13 | Aplicația poate fi folosită de copii sub 13 ani |
 
 ## App Privacy (App Store)
 
-- **Data Linked to You**: None
+- **Data Linked to You**: Requires manual App Privacy classification; a persistent installation identifier is pseudonymous even without accounts
 - **Data Used to Track You**: None
-- **Data Not Linked to You**: None
+- **Optional collection (classification requires review)**: Optional pseudonymous installation analytics — installation/event/session IDs, game, revision, exercise ID/index, UTC time, shown/answered/resolved, outcome and end reason (only after opt-in; off by default; no raw content or answers)
 
 ## Data Safety (Google Play)
 
-- **Data collected**: None
+- **Data collected**: Optional pseudonymous installation analytics (opt-in, off by default)
 - **Data shared**: None
-- **Data encrypted in transit**: Not applicable to app data
-- **Data can be deleted**: N/A (no user accounts)
-- **Data safety label**: No data collected
+- **Data encrypted in transit**: HTTPS for the optional analytics endpoint and DOOM links
+- **Data can be deleted**: Yes — from in-app Setări, the installation's linked records are deleted
+- **Data safety label**: Optional pseudonymous installation analytics, user can delete
 
 ## Export Compliance
 
-- Encryption: Linkurile DOOM folosesc HTTPS; aplicația nu transmite date de utilizare.
+- Encryption: Analiza opțională și linkurile DOOM folosesc HTTPS.
 - ITAR / EAR: Nu se aplică — aplicație educațională fără tehnologie de export-controlat.
 
 ## Contact
@@ -83,8 +83,9 @@
 Slove este o aplicație educațională cu patru jocuri de limbă română.
 Nu necesită cont sau autentificare. Jocurile funcționează offline.
 
-Toate exercițiile, rezultatele și progresul sunt stocate local pe dispozitiv.
-Aplicația nu transmite date de utilizare sau identificatori.
+Exercițiile și progresul complet sunt stocate local pe dispozitiv. Analiza
+opțională, implicit oprită, transmite doar după activarea de către tutore
+evenimentele pseudonime de instalare și rezultatele limitate descrise mai sus.
 
 Linkurile externe se deschid doar în browserul sistemului și trimit către
 Dicționarul Ortografic, Ortoepic și Morfologic al Limbii Române (DOOM) —
@@ -127,3 +128,9 @@ the 1024 × 500 feature graphic, and the approved store icons. Generate it again
 ```bash
 python3 scripts/prepare_store_assets.py
 ```
+
+## Revizuire obligatorie înainte de lansare (#60)
+
+Datele legate de instalare sunt pseudonime, nu complet anonime. Evenimentele sunt păstrate 90 de zile, apoi eliminate prin operațiunea zilnică (până la o zi suplimentară; monitorizare obligatorie). Credențialele inactive expiră după 90 de zile fără trimitere, fără evenimente rămase. Ștergerea elimină datele încă legate; o înregistrare minimă de revocare expiră la 90 de zile de la prima cerere, fără prelungire la repetare, și este eliminată prin aceeași operațiune zilnică (defecțiunile pot întârzia ștergerea). Serverul respinge datele din viitor și pe cele vechi de cel puțin 90 de zile; nu există o excepție suplimentară de păstrare a credențialelor. Totalurile deja separate de instalare, cu minimum cinci instalări distincte per grup, nu pot fi retrase ulterior. Detalii și limite: [politica de confidențialitate](privacy_policy.md).
+
+Acestea sunt texte propuse, nu declarații deja aprobate sau modificate în console. Confirmarea tutorelui este autodeclarată. Sunt obligatorii aprobarea manuală juridică/de confidențialitate pentru copii și a politicilor magazinelor, clasificarea exactă App Privacy/Data Safety, publicarea politicii canonice și testele manuale acord/offline/ștergere. Nicio aprobare manuală nu este afirmată aici.

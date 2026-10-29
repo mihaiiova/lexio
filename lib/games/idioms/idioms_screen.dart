@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../analytics/analytics_event.dart';
+import '../../analytics/analytics_repository.dart';
 import '../../design/animations.dart';
 import '../../design/colors.dart';
 import '../../design/components/lexio_answer_button.dart';
@@ -18,10 +20,16 @@ import 'widgets/idiom_sentence.dart';
 import 'widgets/idioms_summary.dart';
 
 class IdiomsScreen extends StatefulWidget {
-  const IdiomsScreen({super.key, this.exercises, this.progressRepository});
+  const IdiomsScreen({
+    super.key,
+    this.exercises,
+    this.progressRepository,
+    this.analytics,
+  });
 
   final List<IdiomExercise>? exercises;
   final ProgressRepository? progressRepository;
+  final AnalyticsRepository? analytics;
 
   @override
   State<IdiomsScreen> createState() => _IdiomsScreenState();
@@ -35,6 +43,8 @@ class _IdiomsScreenState extends State<IdiomsScreen>
   bool _isLoading = true;
   bool _hasError = false;
   ProgressRepository? _progress;
+  bool _roundStarted = false;
+  bool _roundEnded = false;
 
   @override
   void initState() {
@@ -45,6 +55,7 @@ class _IdiomsScreenState extends State<IdiomsScreen>
       _state = IdiomsGameState(exercises: exercises);
       _progress = widget.progressRepository;
       _isLoading = false;
+      _scheduleShown(start: true);
     } else {
       _init();
     }
@@ -82,6 +93,7 @@ class _IdiomsScreenState extends State<IdiomsScreen>
         _progress = progress;
         _isLoading = false;
       });
+      _scheduleShown(start: true);
     } catch (error) {
       debugPrint('IdiomsScreen: failed to load content: $error');
       if (!mounted) return;
@@ -94,10 +106,20 @@ class _IdiomsScreenState extends State<IdiomsScreen>
 
   void _answer(int optionIndex) {
     final state = _state;
-    if (state == null || state.hasAnswered) return;
+    if (state == null || state.hasAnswered || _roundEnded) return;
 
     final updated = state.answer(optionIndex);
+    if (identical(updated, state)) return;
     final exercise = updated.currentExercise;
+    unawaited(
+      widget.analytics?.itemAnswered(
+        itemId: exercise.id,
+        itemIndex: updated.currentIndex,
+        outcome: updated.lastAnswerCorrect == true
+            ? AnalyticsOutcome.correct
+            : AnalyticsOutcome.wrong,
+      ),
+    );
     _progress?.recordAnswer(
       gameId: 'idioms',
       notionId: exercise.notionId,
@@ -107,9 +129,10 @@ class _IdiomsScreenState extends State<IdiomsScreen>
       HapticFeedback.lightImpact();
       setState(() => _state = updated);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
+        if (!mounted || _roundEnded) return;
         final next = updated.next();
         setState(() => _state = next);
+        _afterAdvance();
       });
     } else {
       HapticFeedback.heavyImpact();
@@ -119,18 +142,21 @@ class _IdiomsScreenState extends State<IdiomsScreen>
 
   void _next() {
     final state = _state;
-    if (state == null) return;
+    if (state == null || _roundEnded) return;
     final next = state.next();
     setState(() => _state = next);
+    _afterAdvance();
   }
 
   Future<void> _handleBack() async {
+    _endRound(AnalyticsRoundEndReason.userBack);
     await _progress?.flush();
     if (!mounted) return;
     Navigator.of(context).maybePop();
   }
 
   Future<void> _playAgain() async {
+    _endRound(AnalyticsRoundEndReason.restart);
     await ContentRuntime.activatePending();
     if (!mounted) return;
     final suppliedExercises = widget.exercises;
@@ -141,10 +167,64 @@ class _IdiomsScreenState extends State<IdiomsScreen>
           _progress?.forGame('idioms') ?? const GameProgress(),
         );
     setState(() => _state = IdiomsGameState(exercises: exercises));
+    _roundStarted = false;
+    _roundEnded = false;
+    _scheduleShown(start: true);
+  }
+
+  void _endRound(AnalyticsRoundEndReason reason) {
+    if (_roundEnded) return;
+    _roundEnded = true;
+    if (!_roundStarted) return;
+    unawaited(widget.analytics?.endRound(reason: reason));
+  }
+
+  void _afterAdvance() {
+    if (_state!.isFinished) {
+      _endRound(AnalyticsRoundEndReason.completed);
+    } else {
+      _scheduleShown();
+    }
+  }
+
+  void _scheduleShown({bool start = false}) {
+    final state = _state;
+    if (state == null || state.exercises.isEmpty) return;
+    final index = state.currentIndex;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted ||
+          _roundEnded ||
+          _state!.isFinished ||
+          _state!.currentIndex != index) {
+        return;
+      }
+      if (start) {
+        _roundStarted = true;
+        unawaited(
+          widget.analytics?.startRound(
+            gameId: 'idioms',
+            contentVersion: ContentRuntime.activeContentVersion,
+          ),
+        );
+      }
+      unawaited(
+        widget.analytics?.itemShown(
+          itemId: state.currentExercise.id,
+          itemIndex: index,
+        ),
+      );
+    });
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => PopScope(
+    onPopInvokedWithResult: (didPop, result) {
+      if (didPop) _endRound(AnalyticsRoundEndReason.userBack);
+    },
+    child: _buildContent(context),
+  );
+
+  Widget _buildContent(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(
         backgroundColor: LexioColors.background,
@@ -173,10 +253,7 @@ class _IdiomsScreenState extends State<IdiomsScreen>
     return Scaffold(
       backgroundColor: LexioColors.background,
       appBar: AppBar(
-        leading: Semantics(
-          label: 'Înapoi la jocuri',
-          child: BackButton(),
-        ),
+        leading: Semantics(label: 'Înapoi la jocuri', child: BackButton()),
         title: _buildProgressBar(state),
         titleSpacing: 0,
       ),
@@ -228,31 +305,33 @@ class _IdiomsScreenState extends State<IdiomsScreen>
       child: Semantics(
         label: 'Progres: ${state.correctCount} din ${state.exercises.length}',
         child: Row(
-        children: List.generate(state.exercises.length, (index) {
-          final result = state.results[index];
-          final isCurrent = index == state.currentIndex && result == null;
-          final color = switch (result) {
-            true => LexioColors.success,
-            false => LexioColors.error,
-            null when isCurrent => LexioColors.primary,
-            _ => LexioColors.divider,
-          };
+          children: List.generate(state.exercises.length, (index) {
+            final result = state.results[index];
+            final isCurrent = index == state.currentIndex && result == null;
+            final color = switch (result) {
+              true => LexioColors.success,
+              false => LexioColors.error,
+              null when isCurrent => LexioColors.primary,
+              _ => LexioColors.divider,
+            };
 
-          return Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: index == 0 ? 0 : LexioSpacing.xxs),
-              child: AnimatedContainer(
-                duration: LexioDurations.fast,
-                height: isCurrent ? LexioSpacing.xs : LexioSpacing.xxs,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(LexioRadius.sm),
+            return Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: index == 0 ? 0 : LexioSpacing.xxs,
+                ),
+                child: AnimatedContainer(
+                  duration: LexioDurations.fast,
+                  height: isCurrent ? LexioSpacing.xs : LexioSpacing.xxs,
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(LexioRadius.sm),
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
-      ),
+            );
+          }),
+        ),
       ),
     );
   }
