@@ -45,6 +45,29 @@ while the app stays fully usable offline.
 > **Note:** Cloudflare Pages publishing requires the Pages project and its
 > credentials to be configured once (see *One-time prerequisites*).
 
+## Store reviews
+
+Native review requests use StoreKit on iOS and Google Play In-App Review on
+Android through `in_app_review`. Requests occur on the round-summary screen
+regardless of score, after at least five completed rounds and seven days since
+first use of this version's review scheduler, with a persisted 120-day cooldown.
+The OS may suppress any request; the app cannot detect display or submission.
+There is no custom pre-prompt, incentive, or automatic store-page fallback.
+Scheduling is local only and independent of analytics consent.
+
+Settings offers **Evaluează aplicația**, opening the store listing directly.
+Android uses the application package ID. For iOS, set the GitHub Actions variable
+`APP_STORE_ID` to the numeric Apple ID from App Store Connect (not the bundle ID).
+Both IPA workflows pass it via `--dart-define=APP_STORE_ID=123456789`.
+Local builds need the same flag. Without a numeric ID, the iOS Settings link is
+hidden; native requests still work without it. Web and desktop have neither.
+
+Verify native dialogs on real store-capable devices: Android via an internal
+Play test track or internal app sharing; iOS via a development build. TestFlight
+does not display the review request. Development dialogs do not submit real
+reviews. Also check the Settings link against the published listing and verify
+that dismissing or suppressing a native dialog leaves gameplay unchanged.
+
 ## Versioning
 
 `pubspec.yaml` holds the marketing version:

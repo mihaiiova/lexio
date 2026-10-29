@@ -6,6 +6,7 @@ import '../design/components/lexio_card.dart';
 import '../design/spacing.dart';
 import '../design/typography.dart';
 import '../privacy/privacy_screen.dart';
+import '../reviews/app_review_service.dart';
 import 'analytics_consent_screen.dart';
 import 'analytics_repository.dart';
 
@@ -14,9 +15,14 @@ import 'analytics_repository.dart';
 /// The user can enable, disable, or delete this installation's linked server
 /// records. All collection is opt-in and off by default.
 class AnalyticsSettingsScreen extends StatefulWidget {
-  const AnalyticsSettingsScreen({super.key, required this.analytics});
+  const AnalyticsSettingsScreen({
+    super.key,
+    required this.analytics,
+    this.reviewService,
+  });
 
   final AnalyticsRepository analytics;
+  final AppReviewService? reviewService;
 
   @override
   State<AnalyticsSettingsScreen> createState() =>
@@ -144,6 +150,15 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
               ),
             ),
             const SizedBox(height: LexioSpacing.md),
+            if ((widget.reviewService ?? AppReviewService.instance)
+                .canOpenStore)
+              TextButton(
+                onPressed: _openReview,
+                child: Text(
+                  'Evaluează aplicația',
+                  style: LexioTextStyles.labelMedium,
+                ),
+              ),
             TextButton(
               onPressed: () => Navigator.of(context).push<void>(
                 MaterialPageRoute(builder: (_) => const PrivacyScreen()),
@@ -156,6 +171,17 @@ class _AnalyticsSettingsScreenState extends State<AnalyticsSettingsScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Future<void> _openReview() async {
+    final opened = await (widget.reviewService ?? AppReviewService.instance)
+        .openStore();
+    if (!mounted || opened) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Magazinul nu a putut fi deschis. Încearcă din nou.'),
       ),
     );
   }

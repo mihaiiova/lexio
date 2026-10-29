@@ -188,7 +188,8 @@ jobs:
       - name: Build IPA
         env:
           CONTENT_PAGES_URL: ${{ vars.CONTENT_PAGES_URL }}
-        run: flutter build ipa --release --build-number=${{ github.run_id }} --dart-define="CONTENT_BASE_URL=$CONTENT_PAGES_URL" --export-options-plist=ios/Runner/ExportOptions.plist
+          APP_STORE_ID: ${{ vars.APP_STORE_ID }}
+        run: flutter build ipa --release --build-number=${{ github.run_id }} --dart-define="CONTENT_BASE_URL=$CONTENT_PAGES_URL" --dart-define="APP_STORE_ID=$APP_STORE_ID" --export-options-plist=ios/Runner/ExportOptions.plist
 
       - name: Upload to App Store Connect
         env:
